@@ -148,10 +148,10 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/admin/add_learner' ,'AdminLearnerController@store_new_learner');
     Route::get('/admin/view_learner/{learner}', 'AdminLearnerController@view_learner');
     Route::put('/admin/approve_learner/{learner}', 'AdminLearnerController@approveLearner');
-    Route::put('/admin/reject_learner/{learner}', 'AdminLearnerController@rejectLearner');
+    Route::put('/admin/block_learner/{learner}', 'AdminLearnerController@blockLearner');
     Route::put('/admin/pending_learner/{learner}', 'AdminLearnerController@pendingLearner');
     Route::put('/admin/view_learner/{learner}' , 'AdminLearnerController@update_learner');
-    Route::post('/admin/view_learner/{learner}/delete_learner', 'AdminLearnerController@destroy_learner');
+    // Route::post('/admin/view_learner/{learner}/delete_learner', 'AdminLearnerController@destroy_learner');
 });
 
 Route::namespace('App\Http\Controllers')->group(function () {
@@ -160,10 +160,10 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/admin/add_instructor', 'AdminInstructorController@store_new_instructor');
     Route::get('/admin/view_instructor/{instructor}' , 'AdminInstructorController@view_instructor');
     Route::put('/admin/approve_instructor/{instructor}', 'AdminInstructorController@approveInstructor');
-    Route::put('/admin/reject_instructor/{instructor}', 'AdminInstructorController@rejectInstructor');
+    Route::put('/admin/block_instructor/{instructor}', 'AdminInstructorController@blockInstructor');
     Route::put('/admin/pending_instructor/{instructor}', 'AdminInstructorController@pendingInstructor');
     Route::post('/admin/view_instructor/{instructor}/update' , 'AdminInstructorController@update_instructor');
-    Route::post('/admin/view_instructor/{instructor}/delete_instructor', 'AdminInstructorController@destroy_instructor');
+    // Route::post('/admin/view_instructor/{instructor}/delete_instructor', 'AdminInstructorController@destroy_instructor');
 });
 
 
