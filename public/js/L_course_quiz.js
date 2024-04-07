@@ -442,7 +442,7 @@ function process_files(session_id) {
                 var syllabusData = response['syllabus'];
 
                 var learner_id = learner['learner_id'];
-                process_files(learner_id)
+                // process_files(learner_id)1
 
                 $('.submitQuestion').on('click', function(e) {
                     e.preventDefault();

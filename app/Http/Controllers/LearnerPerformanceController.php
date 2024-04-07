@@ -60,7 +60,6 @@ class LearnerPerformanceController extends Controller
 
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
 
                     'instructor.instructor_fname',
@@ -105,7 +104,6 @@ class LearnerPerformanceController extends Controller
                     'learner_course_progress.finish_period',
 
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
 
                     'instructor.instructor_fname',
@@ -259,7 +257,6 @@ class LearnerPerformanceController extends Controller
                         'learner_syllabus_progress.status',
                         
                         'course.course_name',
-                        'course.course_code',
                     )
                     ->join('course', 'learner_syllabus_progress.course_id', '=', 'course.course_id')
                     ->where('learner_syllabus_progress.learner_id', $learner->learner_id)
@@ -277,7 +274,6 @@ class LearnerPerformanceController extends Controller
                         'learner_syllabus_progress.status',
                   
                         'course.course_name',
-                        'course.course_code',
                         
                     )
                     ->join('course', 'learner_syllabus_progress.course_id', '=', 'course.course_id')
@@ -433,7 +429,6 @@ class LearnerPerformanceController extends Controller
 
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
 
                     'instructor.instructor_fname',

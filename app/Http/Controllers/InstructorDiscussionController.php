@@ -288,7 +288,6 @@ class InstructorDiscussionController extends Controller
                 ->select(
                     'course_id',
                     'course_name',
-                    'course_code',
                 )
                 ->where('instructor_id', $instructor->instructor_id)
                 ->get();

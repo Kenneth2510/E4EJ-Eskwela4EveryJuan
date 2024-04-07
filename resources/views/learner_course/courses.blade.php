@@ -44,7 +44,7 @@
                                 <h1 class="mb-2 overflow-hidden text-lg font-bold text-white whitespace-no-wrap">{{ $course->course_name }}</h1>
         
                                 <div class="text-sm text-gray-100 ">
-                                    <p>{{ $course->course_code }}</p>
+                                    <p>Course ID: {{ $course->course_id }}</p>
                                     <h3>{{ $course->instructor_fname }} {{ $course->instructor_lname }}</h3>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                                 <h1 class="mb-2 overflow-hidden text-lg font-bold text-white whitespace-no-wrap">{{ $course->course_name }}</h1>
         
                                 <div class="text-sm text-gray-100 ">
-                                    <p>{{ $course->course_code }}</p>
+                                    <p>Course ID: {{ $course->course_id }}</p>
                                     <h3>{{ $course->instructor_fname }} {{ $course->instructor_lname }}</h3>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                                 <h1 class="mb-2 overflow-hidden text-lg font-bold text-white whitespace-no-wrap">{{ $coursedata->course_name }}</h1>
         
                                 <div class="text-sm text-gray-100 ">
-                                    <p>{{ $coursedata->course_code }}</p>
+                                    <p>Course ID: {{ $coursedata->course_id }}</p>
                                     <h3>{{ $coursedata->instructor_fname }} {{ $coursedata->instructor_lname }}</h3>
                                 </div>
                             </div>

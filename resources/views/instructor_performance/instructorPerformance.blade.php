@@ -110,7 +110,7 @@
                 <table class="table w-full table-fixed rounded-xl">
                     <thead class="py-3 text-white bg-darthmouthgreen">
                         <th class="w-[130px]">Course Name</th>
-                        <th class="w-[130px]">Course Code</th>
+                        <th class="w-[130px]">Course ID</th>
                         <th class="w-[130px]">Number of Active Enrolles</th>
                         <th class="w-[130px]">Date Created</th>
                         <th class="w-[130px]">Status</th>

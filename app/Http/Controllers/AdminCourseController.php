@@ -68,7 +68,6 @@ public function search_course() {
                 ->select(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_status',
                     'course.course_difficulty',
                     'course.course_description',
@@ -168,7 +167,6 @@ public function store_new_course(Request $request) {
             'instructor_id' => ['required'],
         ]);
 
-        $courseData['course_code'] = Str::random(6);
 
         
         $folderName = $courseData['course_name'];
@@ -225,7 +223,6 @@ public function view_course($id) {
             ->select(
                 'course.course_id',
                 'course.course_name',
-                'course.course_code',
                 'course.course_status',
                 'course.course_difficulty',
                 'course.course_description',
@@ -400,7 +397,6 @@ public function manage_course (Course $course) {
             ->select(
                 'course.course_id',
                 'course.course_name',
-                'course.course_code',
                 'course.course_status',
                 'course.course_difficulty',
                 'course.instructor_id',
@@ -438,7 +434,6 @@ public function manage_course (Course $course) {
 //                 ->select(
 //                     'course.course_id',
 //                     'course.course_name',
-//                     'course.course_code',
 //                     'course.course_status',
 //                     'course.course_difficulty',
 //                     'course.instructor_id',
@@ -907,7 +902,6 @@ public function course_enrollees (Request $request, Course $course) {
             ->select(
                 "course.course_id",
                 "course.course_name",
-                "course.course_code",
                 "course.course_status",
                 "course.course_difficulty",
                 "course.course_description",

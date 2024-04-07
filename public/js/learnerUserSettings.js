@@ -84,7 +84,7 @@ $(document).ready(function () {
 
                     var learner = response['learner']
     
-                    process_files(learner)
+                    // process_files(learner)
 
                     
                     $('.loaderArea').addClass('hidden');

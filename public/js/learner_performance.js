@@ -108,7 +108,7 @@ $(document).ready(function() {
             courseDataDisp += `
             <div class="w-full text-center text-[100px]"><i class="fa-solid fa-book-open-reader text-[100px] text-darthmouthgreen"></i></div>
             <h1 class="text-2xl h-1/3 text-darthmouthgreen font-semibold">${courseData[0]['course_name']}</h1>
-            <p class=""><span class="" id="">${courseData[0]['course_code']}</span></p>
+            <p class=""><span class="" id="">${courseData[0]['course_id']}</span></p>
             <p class="">Created at: <span class="" id="">${response['learnerCourseProgressData']['start_period']}</span></p>
            
             <div class="mt-10 flex justify-between">
@@ -286,7 +286,6 @@ $(document).ready(function() {
         for (let i = 0; i < learnerCourseData.length; i++) {
             const course_id = learnerCourseData[i]['course_id'];
             const course_name = learnerCourseData[i]['course_name'];
-            const course_code = learnerCourseData[i]['course_code'];
             const course_progress = learnerCourseData[i]['course_progress'];
             const start_period = learnerCourseData[i]['start_period'];
             const finish_period = learnerCourseData[i]['finish_period'];
@@ -300,7 +299,7 @@ $(document).ready(function() {
             courseListAreaDisp += `
             <tr class="rowCourseData my-5 text-center">
                 <td class="mt-5 py-5">${course_name}</td>
-                <td>${course_code}</td>
+                <td>${course_id}</td>
                 <td>${instructor_fname} ${instructor_lname}</td>
                 <td>${course_progress}</td>
                 <td>${start_period}</td>
@@ -421,7 +420,7 @@ $(document).ready(function() {
                         init_chatbot(session_id),
                         add_learner_data(session_id)
                     ).then (function() {
-                        process_files(session_id)
+                        // process_files(session_id)
 
                         $('.submitQuestion').on('click', function(e) {
                             e.preventDefault();

@@ -64,7 +64,6 @@ class InstructorCourseController extends Controller
                     ->select(
                         "course.course_id",
                         "course.course_name",
-                        "course.course_code",
                         "instructor.instructor_lname",
                         "instructor.instructor_fname",
                         "instructor.profile_picture"
@@ -100,7 +99,6 @@ class InstructorCourseController extends Controller
             ->select(
                 "course.course_id",
                 "course.course_name",
-                "course.course_code",
                 "instructor.instructor_lname",
                 "instructor.instructor_fname",
                 "instructor.profile_picture"
@@ -153,7 +151,6 @@ class InstructorCourseController extends Controller
     //                 'course_difficulty' => ['required'],
     //             ]);
 
-    //             $courseData['course_code'] = Str::random(6);
     //             $courseData['instructor_id'] = $instructor->instructor_id;
     
                 
@@ -216,7 +213,6 @@ class InstructorCourseController extends Controller
                     return response()->json(['message' => 'Course already exists', 'redirect_url' => '/instructor/courses']);
                 }
     
-                $courseData['course_code'] = Str::random(6);
                 $courseData['instructor_id'] = $instructor->instructor_id;
     
                 $course = Course::create($courseData);
@@ -305,7 +301,6 @@ class InstructorCourseController extends Controller
                 ->select(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',
@@ -716,7 +711,6 @@ class InstructorCourseController extends Controller
                 ->select(
                     "course.course_id",
                     "course.course_name",
-                    "course.course_code",
                     "course.course_status",
                     "course.course_difficulty",
                     "course.course_description",
@@ -998,7 +992,6 @@ class InstructorCourseController extends Controller
                 ->select(
                     "course.course_id",
                     "course.course_name",
-                    "course.course_code",
                     "course.course_description",
                     "course.course_status",
                     "course.course_difficulty",

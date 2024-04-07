@@ -48,14 +48,14 @@
                                 @csrf
                                 <button class="px-5 py-3 mx-2 my-1 text-lg text-white bg-yellow-500 hover:border-2 hover:bg-white hover:border-yellow-500 hover:text-yellow-500 rounded-xl">change to pending</button>
                             </form>
-                            <form action="/admin/reject_instructor/{{$instructor->instructor_id}}" method="POST">
+                            <form action="/admin/block_instructor/{{$instructor->instructor_id}}" method="POST">
                                 @method('PUT')
                                 @csrf
-                                <button class="px-5 py-3 mx-2 my-1 text-lg text-white bg-red-600 hover:border-2 hover:bg-white hover:border-red-600 hover:text-red-600 rounded-xl">reject now</button>
+                                <button class="px-5 py-3 mx-2 my-1 text-lg text-white bg-red-600 hover:border-2 hover:bg-white hover:border-red-600 hover:text-red-600 rounded-xl">block now</button>
                             </form>
                         </div> 
-                    @elseif ($instructor->status == 'Rejected')
-                        <div id="status" class="px-5 py-3 my-1 text-lg text-white bg-red-500 rounded-xl">Rejected</div>
+                    @elseif ($instructor->status == 'Blocked')
+                        <div id="status" class="px-5 py-3 my-1 text-lg text-white bg-red-500 rounded-xl">Blocked</div>
                         <div id="button" class="flex flex-col hidden mx-4">
                             <form action="/admin/pending_instructor/{{$instructor->instructor_id}}" method="POST">
                                 @method('put')
@@ -77,10 +77,10 @@
                                 <button type="submit" class="px-5 py-3 my-1 text-lg text-white bg-darthmouthgreen hover:border-2 hover:bg-white hover:border-darthmouthgreen hover:text-darthmouthgreen rounded-xl">approve now</button>
                             </form>
                             
-                            <form action="/admin/reject_instructor/{{$instructor->instructor_id}}" method="POST">
+                            <form action="/admin/block_instructor/{{$instructor->instructor_id}}" method="POST">
                                 @method('PUT')
                                 @csrf
-                                <button class="px-5 py-3 mx-2 my-1 text-lg text-white bg-red-600 hover:border-2 hover:bg-white hover:border-red-600 hover:text-red-600 rounded-xl">reject</button>
+                                <button class="px-5 py-3 mx-2 my-1 text-lg text-white bg-red-600 hover:border-2 hover:bg-white hover:border-red-600 hover:text-red-600 rounded-xl">block now</button>
                             </form>
                             
                         </div> 
@@ -97,7 +97,7 @@
                         <button type="button" class="hidden px-5 py-3 mx-2 my-1 text-lg text-white bg-darthmouthgreen hover:border-2 hover:bg-white hover:border-darthmouthgreen hover:text-darthmouthgreen rounded-xl" id="apply_change_btn">Apply Changes</button>
     
        
-                        <button type="button" class="hidden px-5 py-3 mx-2 my-1 text-lg text-white bg-red-600 hover:border-2 hover:bg-white hover:border-red-600 hover:text-red-600 rounded-xl" id="delete_btn">Delete</button>
+                        {{-- <button type="button" class="hidden px-5 py-3 mx-2 my-1 text-lg text-white bg-red-600 hover:border-2 hover:bg-white hover:border-red-600 hover:text-red-600 rounded-xl" id="delete_btn">Delete</button> --}}
     
                         <button type="button" class="hidden px-5 py-3 my-1 text-lg text-white bg-gray-500 hover:border-2 hover:bg-white hover:border-gray-500 hover:text-gray-500 rounded-xl" id="cancel_btn">cancel</button>
                     
@@ -567,30 +567,31 @@
 
 
 
-        $('#delete_btn').on('click', function() {
-            var url = baseUrl + "/delete_instructor";
-            $('#loaderModal').removeClass('hidden');
+        // $('#delete_btn').on('click', function() {
+        //     var url = baseUrl + "/delete_instructor";
+        //     $('#loaderModal').removeClass('hidden');
 
-            $.ajax ({
-                type: "POST",
-                url: url,
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                success: function (response){
-                    console.log(response)
-                    if (response.redirect_url) {
-                        $('#loaderModal').addClass('hidden');
+        //     $.ajax ({
+        //         type: "POST",
+        //         url: url,
+        //         headers: {
+        //             'X-CSRF-TOKEN': csrfToken
+        //         },
+        //         success: function (response){
+        //             console.log(response)
+        //             if (response.redirect_url) {
+        //                 $('#loaderModal').addClass('hidden');
 
-                    window.location.href = response.redirect_url;
-        }
-                    // window.location.reload();
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            })
-        })
+        //             window.location.href = response.redirect_url;
+        // }
+        //             // window.location.reload();
+        //         },
+        //         error: function(error) {
+        //             console.log(error);
+        //         }
+        //     })
+        // })
+        
     })
 </script>
 @include('partials.footer')

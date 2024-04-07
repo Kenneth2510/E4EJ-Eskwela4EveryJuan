@@ -63,6 +63,15 @@ class InstructorController extends Controller
         $instructorData = DB::table('instructor')
             ->where('instructor_username', $username)
             ->first();
+
+            if($instructorData->status === "Blocked") {
+                session()->flash('message', 'Your Account is Blocked, Please contact the Administrator');
+                return back();
+            } else if ($instructorData->status === "Expired") {
+                session()->flash('message', 'Your Account is Expired, Please contact the Administrator for re activation');
+                return back();
+            }
+    
     
         if ($instructorData && Hash::check($password, $instructorData->password)) {
             Cache::put('instructor_authenticated', $instructorData->instructor_id);
@@ -485,7 +494,6 @@ class InstructorController extends Controller
             ->select(
                 'course.course_id',
                 'course.course_name',
-                'course.course_code',
                 'course.course_status',
                 'course.course_difficulty',
                 'course.instructor_id',
@@ -543,7 +551,6 @@ class InstructorController extends Controller
                 ->select(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',
@@ -557,7 +564,6 @@ class InstructorController extends Controller
                 ->groupBy(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',

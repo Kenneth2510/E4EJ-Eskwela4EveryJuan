@@ -78,7 +78,6 @@ class AdminCourseManageController extends Controller
                     ->select(
                         'course.course_id',
                         'course.course_name',
-                        'course.course_code',
                         'course.course_status',
                         'course.course_difficulty',
                         'course.course_description',
@@ -141,7 +140,6 @@ class AdminCourseManageController extends Controller
                     ->select(
                         'course.course_id',
                         'course.course_name',
-                        'course.course_code',
                         'course.course_description',
                         'course.course_status',
                         'course.course_difficulty',
@@ -412,7 +410,6 @@ class AdminCourseManageController extends Controller
                 ->select(
                     "course.course_id",
                     "course.course_name",
-                    "course.course_code",
                     "course.course_description",
                     "course.course_status",
                     "course.course_difficulty",

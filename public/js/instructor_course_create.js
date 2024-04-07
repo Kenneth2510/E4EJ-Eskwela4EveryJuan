@@ -209,8 +209,49 @@ $(document).ready(function () {
     $("#nextAddCourse").on("click", function (e) {
         e.preventDefault();
 
-        $("#secondCreateCourse").removeClass("hidden");
-        $("#firstCreateCourse").addClass("hidden");
+        var course_name = $("#course_name").val();
+        var course_description = $("#course_description").val();
+        var course_difficulty = $("#course_difficulty").val();
+
+        var isValid = true;
+
+        if (course_name === '') {
+            $('#courseNameError').text('Please enter a course name.');
+            isValid = false;
+            $("#secondCreateCourse").addClass("hidden");
+            $("#firstCreateCourse").removeClass("hidden");
+            $("#thirdCreateCourse").addClass("hidden");
+        } else {
+            $('#courseNameError').text('');
+        }
+
+        if (course_description === '') {
+            $('#courseDescriptionError').text('Please enter a course description.');
+            isValid = false;
+            $("#secondCreateCourse").addClass("hidden");
+            $("#firstCreateCourse").removeClass("hidden");
+            $("#thirdCreateCourse").addClass("hidden");
+        } else {
+            $('#courseDescriptionError').text('');
+        }
+
+        if (course_difficulty === '') {
+            $('#courseDifficultyError').text('Please enter a course name.');
+            isValid = false;
+            $("#secondCreateCourse").addClass("hidden");
+            $("#firstCreateCourse").removeClass("hidden");
+            $("#thirdCreateCourse").addClass("hidden");
+        } else {
+            $('#courseDifficultyError').text('');
+        }
+
+
+        if(isValid) {
+            $("#secondCreateCourse").removeClass("hidden");
+            $("#firstCreateCourse").addClass("hidden");
+        }
+
+
     });
 
     $("#nextAddCourse2").on("click", function (e) {
@@ -274,16 +315,6 @@ $("#addCourse").submit(function (e) {
         var course_description = $("#course_description").val();
         var course_difficulty = $("#course_difficulty").val();
 
-        // if (
-        //     course_name === "" ||
-        //     course_description === "" ||
-        //     course_difficulty === ""
-        // ) {
-        //     alert("Please fill all fields");
-
-        //     // Handle field validation errors (similar to your existing code)
-        //     // ...
-        // } else {
         var isValid = true;
 
         if (course_name === '') {

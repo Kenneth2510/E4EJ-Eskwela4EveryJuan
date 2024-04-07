@@ -14,32 +14,6 @@
 
                     <div class="w-full" id="message_list_area">
                         <ul id="sideMessageArea">
-
-                            {{-- <li class="border-b border-darthmouthgreen selectedMessage">
-                                <button class="w-full">
-                                    <div class="flex mx-5 my-2">
-                                        <div class="w-1/4" id="profile_photo_area">
-                                            <img class="z-0 w-10 h-10 rounded-full" src="{{ asset('storage/' . $learner->profile_picture) }}" alt="Profile Picture">
-                                        </div>
-                                        <div class="w-3/4">
-                                            <div class="flex flex-col items-start justify-start" id="userInfoArea">
-                                                <h1 class="font-semibold text-md">sample title</h1>
-                                                <h1 class="text-sm font-regular">fname lname</h1>
-                                                <h4 class="text-xs text-gray-700">02/14/2024</h4>
-                                            </div>
-                                            <div class="text-left " id="previewmessge">
-                                                <p class="text-sm opacity-30">sample message sample</p>
-                                            </div>
-                                        </div>
-                                        <div class="">
-                                            <div class="w-2 h-2 rounded-full bg-darthmouthgreen"></div>
-                                        </div>
-                                    </div>   
-                                </button>
-                            </li> --}}
-
-
-                            
                                 
                         </ul>
                     </div>
@@ -56,25 +30,7 @@
                             <div class="flex-grow overflow-y-auto" id="messageContainer">
 
                                 <div class="border-b border-darthmouthgreen" id="mainMessage">
-                                {{--     <div class="flex items-center justify-between" id="userInfoArea">
-                                        <div class="flex items-start">
-                                            <div class="" id="profile_photo_area">
-                                                <img class="z-0 w-12 h-12 rounded-full" src="{{ asset('storage/' . $learner->profile_picture) }}" alt="Profile Picture">
-                                            </div>
-                                            <div class="ml-3">
-                                                <h1 class="text-lg font-semibold">fname lname</h1>
-                                                <h4 class="text-gray-700 text-md">to sample@email.com</h4>
-                                            </div>
-                                        </div>
-
-                                        <div class="flex items-start justify-between pr-5 " id="userInfoArea">
-                                                <h4 class="text-gray-700 text-md">sample date</h4>
-                                        </div>
-                                    </div>
-
-                                    <div class="px-16 mt-10" id="messageContent">
-                                        <div><p>sample sample sample sample messaghe msapleam sapl;a</p></div>
-                                    </div>--}}
+                               
                                 </div> 
                     
                                 {{-- replies area --}}
@@ -128,6 +84,8 @@
         <h2 class="mb-2 text-2xl font-semibold text-darthmouthgreen">Create Message</h2>
         <div class="mt-4">
             <label for="recipient" class="text-lg font-semibold">Send to</label>
+            
+            <span id="mainRecipientsError" class="text-red-500"></span>
             <div class="flex items-center justify-between recipientArea">
                 <div class="block w-10/12 h-12 px-4 py-2 mt-2 overflow-y-auto border border-gray-300 rounded-md focus:ring focus:ring-seagreen focus:ring-opacity-50" id="recipientArea">
                     <table class="">
@@ -135,10 +93,10 @@
         
                         </tbody>
                     </table>
+                    
                 </div>
                 <button id="selectRecipientBtn" class="py-3 mt-3 text-white px-7 bg-darthmouthgreen rounded-xl hover:bg-white hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">Select</button>
             </div>
-            <span id="recipientError" class="text-red-500"></span>
            </div>
 
         <div class="mt-4">
@@ -199,7 +157,7 @@
             </button>
         </div>
         <h2 class="mb-2 text-2xl font-semibold text-darthmouthgreen">Select Recipients</h2>
-  
+        <span id="recipientsError" class="text-md text-red-600"></span>
         <input type="text" name="recipientName" id="recipientName" class="w-full px-3 py-1 bg-gray-100 text-md rounded-xl" placeholder="Enter email">
         <div class="hidden searchResultsArea">
             <ul class="overflow-y-auto max-h-40" id="searchResultsUlArea">

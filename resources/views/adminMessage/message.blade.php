@@ -111,6 +111,8 @@
         <h2 class="mb-2 text-2xl font-semibold text-darthmouthgreen">Create Message</h2>
         <div class="mt-4">
             <label for="recipient" class="text-lg font-semibold">Send to</label>
+            
+            <span id="mainRecipientsError" class="text-red-500"></span>
             <div class="flex items-center justify-between recipientArea">
                 <div class="block w-10/12 h-12 px-4 py-2 mt-2 overflow-y-auto border border-gray-300 rounded-md focus:ring focus:ring-seagreen focus:ring-opacity-50" id="recipientArea">
                     <table class="">
@@ -182,7 +184,7 @@
             </button>
         </div>
         <h2 class="mb-2 text-2xl font-semibold text-darthmouthgreen">Select Recipients</h2>
-  
+        <span id="recipientsError" class="text-md text-red-600"></span>
         <input type="text" name="recipientName" id="recipientName" class="w-full px-3 py-1 bg-gray-100 text-md rounded-xl" placeholder="Enter email">
         <div class="hidden searchResultsArea">
             <ul class="overflow-y-auto max-h-40" id="searchResultsUlArea">

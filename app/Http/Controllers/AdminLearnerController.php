@@ -378,10 +378,10 @@ class AdminLearnerController extends Controller
     }
 
 
-    public function rejectLearner(Learner $learner)
+    public function blockLearner(Learner $learner)
     {
         try {
-            $learner->update(['status' => 'Rejected']);  
+            $learner->update(['status' => 'Blocked']);  
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -539,5 +539,7 @@ class AdminLearnerController extends Controller
         }
 
     }
+
+
 
 }

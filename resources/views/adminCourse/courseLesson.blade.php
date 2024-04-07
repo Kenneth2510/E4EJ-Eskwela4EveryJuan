@@ -232,7 +232,6 @@
 <div class="hidden">
     <!-- start-generate-pdf -->
     <h1 style="font-size: 3rem; font-weight: bold;">{{ $course->course_name }}</h1>
-    <h3 style="font-size: 1.5rem; font-weight: semibold;">{{ $course->course_code }}</h3>
     <h3>{{ $course->course_difficulty }}</h3>
     <h3>{{ $course->course_status }}</h3>
     <hr>

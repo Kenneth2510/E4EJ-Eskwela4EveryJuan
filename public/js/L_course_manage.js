@@ -168,7 +168,6 @@ $(document).ready(function() {
 
             var course_id = courseData['course_id'];
             var course_name = courseData['course_name'];
-            var course_code = courseData['course_code'];
             var course_description = courseData['course_description'];
             var course_difficulty = courseData['course_difficulty'];
             var course_status = courseData['course_status'];
@@ -228,10 +227,6 @@ $(document).ready(function() {
                             <label for="course_name" class="text-lg w-2/6">Course Name:</label>
                             <input type="text" id="course_name" name="course_name" value="`+ course_name +`" class="text-lg  w-4/6" disabled>
                         </div>
-                        <div class="flex justify-normal my-2 ">
-                            <label for="" class="text-lg w-2/6">Course Code:</label>
-                            <input type="text" value="`+ course_code +`" class="text-lg  w-4/6" disabled>
-                        </div>
                     </div>
                     
                     <div class="w-2/5 mx-5">
@@ -276,7 +271,6 @@ $(document).ready(function() {
                             <div class="w-2/5">
                                 <h1>Course Name: `+ course_name +`</h1>
                                 <h1>Course ID: `+ course_id +`</h1>
-                                <h1>Course Code: `+ course_code +`</h1>
                             </div>
                             <div class="w-2/5">
                                 <h1>Instructor: `+ instructor_fname +` `+ instructor_lname +`</h1>

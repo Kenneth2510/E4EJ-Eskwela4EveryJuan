@@ -107,7 +107,6 @@
                     <thead>
                         <th>Course Name</th>
                         <th>Course Status</th>
-                        <th>Course Code</th>
                         <th>Difficulty</th>
                         <th>Date Created</th>
                     </thead>
@@ -116,7 +115,6 @@
                             <tr>
                                 <td>{{$instructorCourse->course_name}}</td>
                                 <td>{{$instructorCourse->course_status}}</td>
-                                <td>{{$instructorCourse->course_code}}</td>
                                 <td>{{$instructorCourse->course_difficulty}}</td>
                                 <td>{{$instructorCourse->created_at}}</td>
                             </tr>
