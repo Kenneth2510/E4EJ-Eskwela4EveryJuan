@@ -31,6 +31,7 @@ use App\Http\Controllers\ChatBotController;
 
 class LearnerController extends Controller
 {
+
     public function index() {
 
         if (session()->has('learner')) {
@@ -46,6 +47,9 @@ class LearnerController extends Controller
 
         // return view('learner.login')->with('title', 'Learner Login');
     }
+
+
+
 
     
     public function login_process(Request $request) {
@@ -69,26 +73,19 @@ class LearnerController extends Controller
             ])->withInput($request->except('password'));
         }
 
-        // if (auth('learner')->attempt($learnerData)) {
-        //     $learner = auth('learner')->user();
-        //     $learner = Learner::find($learner->learner_id);
-        //     // dd($instructor);
-
-        //     if($learner) {
-        //         $request->session()->put("learner", $learner);
-        //         // dd(session('instructor'));
-        //         $request->session()->put("learner_authenticated", true);
-        //         // dd($request->session()->get("instructor_authenticated"));
-        //     }
-            
-        //     // $request->session()->regenerate();
-    
-        //     return redirect('/learner/authenticate')->with('message', "Welcome Back");
-        // }
 
         $learnerData = DB::table('learner')
         ->where('learner_username', $username)
         ->first();
+
+        if($learnerData->status === "Blocked") {
+            session()->flash('message', 'Your Account is Blocked, Please contact the Administrator');
+            return back();
+        } else if ($learnerData->status === "Expired") {
+            session()->flash('message', 'Your Account is Expired, Please contact the Administrator for re activation');
+            return back();
+        }
+
 
         if ($learnerData && Hash::check($password, $learnerData->password)) {
             Cache::put('learner_authenticated', $learnerData->learner_id);
@@ -439,17 +436,6 @@ class LearnerController extends Controller
             "learner_contactno" => ['required', Rule::unique('learner', 'learner_contactno')],
             "learner_email" => ['required', 'email', Rule::unique('learner', 'learner_email')],
         ]);
-/*        
-$LearnerPersonalData = [
-                "learner_fname" =>  $request->input('learner_fname'),
-                "learner_lname" => $request->input('learner_lname'),
-                "learner_bday" => $request->input('learner_bday'),
-                "learner_gender" => $request->input('learner_gender'),
-                "learner_email" => $request->input('learner_email'),
-                "learner_contactno" => $request->input('learner_contactno'),
-                "learner_username" => $request->input('learner_username'),
-                "password" => $request->input('password'),
-     ];*/
 
         $businessData = $request->validate ([
             "business_name" => ['required'],
@@ -462,16 +448,6 @@ $LearnerPersonalData = [
         ]);
  
  
-/*        $businessData = [
-                "business_name" => $request->input('business_name'),
-                "business_address" => $request->input('business_address'),
-                "business_owner_name" => $request->input('business_owner_name'),
-                "bplo_account_number" => $request->input('bplo_account_number'),
-                "business_category" => $request->input('business_category'),
-                "business_classification" => $request->input('business_classification'),
-                "business_description" => $request->input('business_description'),
-            ];
-*/
 
 
         $codeNumber = $request->validate([
@@ -483,22 +459,8 @@ $LearnerPersonalData = [
             "security_code_6" => ['required', 'alpha_num'],
         ]);
 
-        
-/*        $codeNumber = [
-                "security_code_1" => $request->input('security_code_1'),
-                "security_code_2" => $request->input('security_code_2'),
-                "security_code_3" => $request->input('security_code_3'),
-                "security_code_4" => $request->input('security_code_4'),
-                "security_code_5" => $request->input('security_code_5'),
-                "security_code_6" => $request->input('security_code_6'),
-            ];
-*/
 
         $securityCodeNumber = implode('', $codeNumber);
-        // dd($securityCodeNumber);
-
-
-        
 
         $LearnerData = array_merge($LearnerPersonalData , $LearnerLoginData , ["learner_security_code" => $securityCodeNumber]);
         $LearnerData['password'] = bcrypt($LearnerData['password']);

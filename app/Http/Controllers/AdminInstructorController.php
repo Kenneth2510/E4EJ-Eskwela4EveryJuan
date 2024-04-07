@@ -290,10 +290,10 @@ public function store_new_instructor(Request $request) {
         return redirect()->back()->with('message' , 'Instructor Status successfully changed');
     }
 
-    public function rejectInstructor(Instructor $instructor)
+    public function blockInstructor(Instructor $instructor)
     {
         try {
-            $instructor->update(['status' => 'Rejected']);  
+            $instructor->update(['status' => 'Blocked']);  
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -383,30 +383,30 @@ public function store_new_instructor(Request $request) {
     }
     
 
-    public function destroy_instructor(Instructor $instructor) {
+    // public function destroy_instructor(Instructor $instructor) {
         
-        try {
+    //     try {
 
-            $relativeFilePath = str_replace('public/', '', $instructor->instructor_credentials);
-            if (Storage::disk('public')->exists($relativeFilePath)) {
-                // Storage::disk('public')->delete($relativeFilePath);
-                $specifiedDir = explode('/', $relativeFilePath);
-                array_pop($specifiedDir);
+    //         $relativeFilePath = str_replace('public/', '', $instructor->instructor_credentials);
+    //         if (Storage::disk('public')->exists($relativeFilePath)) {
+    //             // Storage::disk('public')->delete($relativeFilePath);
+    //             $specifiedDir = explode('/', $relativeFilePath);
+    //             array_pop($specifiedDir);
 
-                $dirPath = implode('/', $specifiedDir);
+    //             $dirPath = implode('/', $specifiedDir);
 
-                // dd($dirPath);
-                Storage::disk('public')->deleteDirectory($dirPath);
-            }
+    //             // dd($dirPath);
+    //             Storage::disk('public')->deleteDirectory($dirPath);
+    //         }
     
-            $instructor->delete();
+    //         $instructor->delete();
     
-            session()->flash('message', 'Instructor deleted Successfully');
-            return response()->json(['message' => 'Instructor deleted successfully', 'redirect_url' => "/admin/instructors"]);
+    //         session()->flash('message', 'Instructor deleted Successfully');
+    //         return response()->json(['message' => 'Instructor deleted successfully', 'redirect_url' => "/admin/instructors"]);
             
         
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         dd($e->getMessage());
+    //     }
+    // }
 }
