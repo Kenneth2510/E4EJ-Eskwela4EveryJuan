@@ -291,7 +291,6 @@ class LearnerDiscussionController extends Controller
                     'learner_course.learner_course_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                 )
                 ->join('course', 'learner_course.course_id', '=', 'course.course_id')
                 ->where('learner_course.learner_id', $learner->learner_id)

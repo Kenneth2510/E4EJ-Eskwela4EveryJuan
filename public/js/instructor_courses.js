@@ -33,7 +33,6 @@ $(document).ready(function() {
         for (let i = 0; i < courseData.length; i++) {
             const course_id = courseData[i]['course_id'];
             const course_name = courseData[i]['course_name'];
-            const course_code = courseData[i]['course_code'];
             const instructor_lname = courseData[i]['instructor_lname'];
             const instructor_fname = courseData[i]['instructor_fname'];
             const profile_picture = courseData[i]['profile_picture'];
@@ -42,14 +41,14 @@ $(document).ready(function() {
             courseDisp += `
             <div style="background-color: #00693e" class="px-3 py-2 relative m-4 rounded-lg shadow-lg h-72 w-52">
                 <div style="background-color: #9DB0A3" class="relative h-32 mx-auto my-4 rounded w-44">
-                    <img class="absolute w-16 h-16 bg-yellow-500 rounded-full right-3 -bottom-4" src="../storage/app/public/${profile_picture}" alt="">
+                    <img class="absolute w-16 h-16 rounded-full right-3 -bottom-4" src="../storage/app/public/${profile_picture}" alt="">
                 </div>
                 
                 <div class="px-4">
                     <h1 class="mb-2 overflow-hidden text-lg font-bold text-white whitespace-no-wrap">${course_name}</h1>
 
                     <div class="text-sm text-gray-100 ">
-                        <p>${course_code}</p>
+                        <p>Course ID: ${course_id}</p>
                         <h3>${instructor_fname} ${instructor_lname}</h3>
                     </div>
                 </div>

@@ -47,7 +47,6 @@
                         <option value="">Search By</option>
                         <option value="course_id">Course ID</option>
                         <option value="course_name">Course Name</option>
-                        <option value="course_code">Course Code</option>
                         <option value="instructor">Instructor</option>
                     </select>
     
@@ -73,7 +72,6 @@
                 @forelse ($courses as $course)
                 <tr class="">
                     <td>{{ $course->course_id }}</td>
-                    <td>{{ $course->course_code }}</td>
                     <td class="w-3/12 py-3 text-lg font-normal">{{ $course->course_name }}</td>
                     <td class="w-3/12 py-1 text-lg font-normal">{{ $course->instructor_lname }}  {{ $course->instructor_fname }}</td>
                     <td class="w-1/12 py-1 text-lg font-normal">{{ $course->created_at }}</td>

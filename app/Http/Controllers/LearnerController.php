@@ -571,7 +571,6 @@ $LearnerPersonalData = [
                     ->select(
                         "course.course_id",
                         "course.course_name",
-                        "course.course_code",
                         "instructor.instructor_lname",
                         "instructor.instructor_fname",
                         "instructor.profile_picture"
@@ -590,7 +589,6 @@ $LearnerPersonalData = [
                         'learner_course.status',
                         'learner_course.created_at',
                         'course.course_name',
-                        'course.course_code',
                         'course.course_difficulty',
                         'course.instructor_id',
                         'instructor.instructor_fname',
@@ -641,7 +639,6 @@ $LearnerPersonalData = [
                     'learner_course_progress.finish_period',
 
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
 
                     'instructor.instructor_fname',

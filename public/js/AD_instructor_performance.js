@@ -129,7 +129,7 @@ $(document).ready(function() {
             courseDataDisp += `
             <div class="w-full text-center text-[100px]"><i class="fa-solid fa-book-open-reader text-[100px] text-darthmouthgreen"></i></div>
             <h1 class="text-2xl h-1/3 text-darthmouthgreen font-semibold">${courseData[0]['course_name']}</h1>
-            <p class=""><span class="" id="">${courseData[0]['course_code']}</span></p>
+            <p class=""><span class="" id="">Course ID: ${courseData[0]['course_id']}</span></p>
             <p class="">Created at: <span class="" id="">${courseData[0]['created_at']}</span></p>
             <p class="">Updated at: <span class="" id="">${courseData[0]['updated_at']}</span></p>
             <div class="">
@@ -264,7 +264,6 @@ $(document).ready(function() {
         for (let i = 0; i < allInstructorCourses.length; i++) {
             const course_id = allInstructorCourses[i]['course_id'];
             const course_name = allInstructorCourses[i]['course_name'];
-            const course_code = allInstructorCourses[i]['course_code'];
             const created_at = allInstructorCourses[i]['created_at'];
             const course_status = allInstructorCourses[i]['course_status'];
             const learnerCount = allInstructorCourses[i]['learnerCount'];
@@ -273,7 +272,7 @@ $(document).ready(function() {
             allInstructorCoursesTableDisp += `
             <tr class="rowCourseData my-5 text-center">
                 <td class="mt-5 py-5">${course_name}</td>
-                <td>${course_code}</td>
+                <td>${course_id}</td>
                 <td>${learnerCount} / ${approvedLearnerCount}</td>
                 <td>${created_at}</td>
                 <td>${course_status}</td>

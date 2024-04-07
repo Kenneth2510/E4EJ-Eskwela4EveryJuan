@@ -678,7 +678,6 @@ class AdminReportsGeneratorController extends Controller
             $instructorCourseData = DB::table('course')
             ->select(
                 'course.course_name',
-                'course.course_code',
                 'course.course_difficulty',
                 'course.course_status',
                 'course.created_at'
@@ -902,7 +901,6 @@ class AdminReportsGeneratorController extends Controller
             $course = DB::table('course')
             ->select(
                 'course.course_name',
-                'course.course_code',
                 'course.course_status',
                 'course.course_difficulty',
                 'course.created_at',
@@ -966,9 +964,9 @@ class AdminReportsGeneratorController extends Controller
 
             $courseData = DB::table('course')
             ->select(
+                'course.course_id',
                 'course.course_status',
                 'course.course_name',
-                'course.course_code',
                 'course.course_difficulty',
                 'course.course_description',
                 'course.created_at',

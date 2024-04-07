@@ -409,7 +409,7 @@ $(document).ready(function() {
                     //     init_chatbot(session_id),
                     //     add_learner_data(session_id)
                     // ).then (function() {
-                        process_files(session_id)
+                        // process_files(session_id)s
 
                         $('.submitQuestion').on('click', function(e) {
                             e.preventDefault();

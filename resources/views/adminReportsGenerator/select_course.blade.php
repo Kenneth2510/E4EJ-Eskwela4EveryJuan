@@ -90,8 +90,8 @@
     
             <div>
                 <h3>Course Information</h3>
+                <p><strong>Course ID:</strong> {{ $courseData->course_id }}</p>
                 <p><strong>Course Status:</strong> {{ $courseData->course_status }}</p>
-                <p><strong>Course Code:</strong> {{ $courseData->course_code }}</p>
                 <p><strong>Course Difficulty:</strong> {{ $courseData->course_difficulty}}</p>
                 <p><strong>Date Created:</strong> {{ $courseData->created_at }}</p>
                 <p><strong>Course Description:</strong><br> {{ $courseData->course_description }}</p>

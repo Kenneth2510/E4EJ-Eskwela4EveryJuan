@@ -56,8 +56,24 @@
                                 <label for="reply_photo_upload" class="grid w-12 h-12 text-white rounded-full bg-darthmouthgreen hover:bg-white hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen place-items-center"><i class="fa-solid fa-image" style="color: #ffffff;"></i></label>
                                 <input type="file" id="reply_photo_upload" name="reply_photo_upload[]" accept="image/*" multiple style="display: none;">
                                 <label for="reply_document_upload" class="grid w-12 h-12 text-white rounded-full place-items-center bg-darthmouthgreen hover:bg-white hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen"><i class="fa-solid fa-file" style="color: #ffffff;"></i></label>
-                                <input type="file" id="reply_document_upload" name="reply_document_upload[]" accept=".pdf,.doc,.docx" multiple style="display: none;">
+                                {{-- <input type="file" id="reply_document_upload" name="reply_document_upload[]" accept=".pdf,.doc,.docx" multiple style="display: none;"> --}}
                                 
+                                <input type="file" id="reply_document_upload" name="reply_document_upload[]" accept=".pdf,.doc,.docx" multiple style="display: none;" onchange="checkFileSize(this)">
+                                <script>
+                                    function checkFileSize(input) {
+                                        const files = input.files;
+                                        const maxSize = 10 * 1024 * 1024; // 10 MB in bytes
+                            
+                                        for (let i = 0; i < files.length; i++) {
+                                            if (files[i].size > maxSize) {
+                                                alert('File size exceeds the limit of 10 MB');
+                                                input.value = ''; // Clear the selected file
+                                                return;
+                                            }
+                                        }
+                                    }
+                                </script>
+
                                 <textarea style="height: 300px;" name="reply_textarea" id="reply_textarea" class="p-3 border rounded-lg max-w-10/12 border-darthmouthgreen"></textarea>
                                 <button id="replyNowBtn" class="btn btn-primary">Send</button>
                             </div>
@@ -79,6 +95,8 @@
         <h2 class="mb-2 text-2xl font-semibold text-darthmouthgreen">Create Message</h2>
         <div class="mt-4">
             <label for="recipient" class="text-lg font-semibold">Send to</label>
+
+            <span id="mainRecipientsError" class="text-red-500"></span>
             <div class="flex items-center justify-between recipientArea">
                 <div class="block w-10/12 h-12 px-4 py-2 mt-2 overflow-y-auto border border-gray-300 rounded-md focus:ring focus:ring-seagreen focus:ring-opacity-50" id="recipientArea">
                     <table class="">
@@ -113,11 +131,28 @@
         
         <div class="mt-4">
             <label for="attachments" class="text-lg font-semibold">Attach Photos/Documents</label>
-            <input class="w-full file-input file-input-bordered file-input-primary"
+            {{-- <input class="w-full file-input file-input-bordered file-input-primary"
             type="file"
             name="attachments"
             id="attachments"
-            multiple/>
+            multiple/> --}}
+            <input type="file" name="attachments" id="attachments" class="block w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:ring focus:ring-seagreen focus:ring-opacity-50" multiple onchange="checkTotalFileSize(this)">
+            <script>
+                function checkTotalFileSize(input) {
+                    const files = input.files;
+                    let totalSize = 0;
+                    const maxSize = 10 * 1024 * 1024; // 10 MB in bytes
+        
+                    for (let i = 0; i < files.length; i++) {
+                        totalSize += files[i].size;
+                    }
+        
+                    if (totalSize > maxSize) {
+                        alert('Total file size exceeds the limit of 10 MB');
+                        input.value = ''; // Clear the selected files
+                    }
+                }
+            </script>
             <div id="fileList"></div>
         </div>
         
@@ -137,7 +172,7 @@
             </button>
         </div>
         <h2 class="mb-2 text-2xl font-semibold text-darthmouthgreen">Select Recipients</h2>
-  
+        <span id="recipientsError" class="text-md text-red-600"></span>
         <input type="text" name="recipientName" id="recipientName" class="w-full px-3 py-1 bg-gray-100 text-md rounded-xl" placeholder="Enter email">
         <div class="hidden searchResultsArea">
             <ul class="overflow-y-auto max-h-40" id="searchResultsUlArea">

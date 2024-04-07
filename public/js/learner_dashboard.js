@@ -228,7 +228,7 @@ $(document).ready(function() {
                     $.when(
                         add_learner_data(learner_id)
                     ).then(function() {
-                        process_files(learner_id)
+                        // process_files(learner_id)
                     })
                 
     
