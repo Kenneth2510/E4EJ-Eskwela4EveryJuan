@@ -87,7 +87,7 @@ function process_files(session_id) {
     
                 
                 var learner_id = learner['learner_id'];
-                process_files(learner_id)
+                // process_files(learner_id)
 
 
                 var courseData = response['course'];

@@ -23,7 +23,7 @@
             <div class="flex justify-between px-5 mx-3" id="courseInfo">
                 <div class="" id="courseInfo_left">
                     <h1 class="text-6xl font-semibold">{{$course->course_name}}</h1>
-                    <h4 class="text-4xl">{{$course->course_code}}</h4>
+                    <h4 class="text-4xl">Course ID: {{$course->course_id}}</h4>
                     <h4 class="mt-10 text-xl">Course Level: {{$course->course_difficulty}}</h4>
                     <h4 class="text-xl"><i class="fa-regular fa-clock text-darthmouthgreen"></i> Est. Time:  {{$totalCourseTime}}</h4>
                     <h4 class="mt-3 text-xl">Total  Units: {{$totalSyllabusCount}}</h4>
@@ -156,7 +156,7 @@
 
                 <div class="w-4/5 py-5 mx-10" id="courseInfo_left">
                     <h1 class="text-6xl font-semibold" id="courseName">{{$course->course_name}}</h1>
-                    <h4 class="text-4xl">{{$course->course_code}}</h4>
+                    <h4 class="text-4xl">Course ID: {{$course->course_id}}</h4>
                     <h4 class="mt-10 text-xl">Course Level: {{$course->course_difficulty}}</h4>
                     <h4 class="text-xl"><i class="fa-regular fa-clock text-darthmouthgreen"></i> Est. Time:  {{$totalCourseTime}}</h4>
                     <h4 class="mt-3 text-xl">Total  Units: {{$totalSyllabusCount}}</h4>

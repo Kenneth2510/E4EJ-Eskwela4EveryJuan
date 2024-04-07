@@ -63,7 +63,7 @@
                     <h1 class="mb-5 font-bold text-transparent text-7xl from-gray-900 to-emerald-600 bg-gradient-to-r bg-clip-text">Next-Level Learning, Made Easy.</h1>
                     <p class="mb-5">Ready to dive into a world of knowledge at your own pace? Explore our personalized Learning Management System, along with a friendly chatbot, created for your needs and preferences.</p>
                     <div class="space-y-4">
-                        <a href="{{  url('/learner') }}" class="btn lg:btn-lg btn-primary btn-wide">Student</a>
+                        <a href="{{  url('/learner') }}" class="btn lg:btn-lg btn-primary btn-wide">Learner</a>
                         <a href="{{  url('/instructor') }}" class="btn lg:btn-lg btn-wide">Instructor</a>
                                     
                     </div>

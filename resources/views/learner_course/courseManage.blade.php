@@ -18,7 +18,7 @@
             <div class="flex flex-col fill-mainwhitebg">
                 <div class="flex flex-row my-2">
                     <svg class="mr-2 " xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-640h-80v280l-100-60-100 60v-280H240v640Zm0 0v-640 640Zm200-360 100-60 100 60-100-60-100 60Z"/></svg>
-                    <p>{{$course->course_code}}</p>
+                    <p>{{$course->course_id}}</p>
                 </div>
                 <div class="flex flex-row my-2">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 274-148-274-148-274 148 274 148Zm0 241 200-108v-151L480-360 280-470v151l200 108Zm0-241Zm0 90Zm0 0Z"/></svg>
@@ -172,10 +172,6 @@
                                         <label for="course_name" class="w-2/6 text-lg">Course Name:</label>
                                         <input type="text" id="course_name" name="course_name" value="{{ $course->course_name }}" class="w-4/6 text-lg" disabled>
                                     </div>
-                                    <div class="flex my-2 justify-normal ">
-                                        <label for="" class="w-2/6 text-lg">Course Code:</label>
-                                        <input type="text" value="{{ $course->course_code }}" class="w-4/6 text-lg" disabled>
-                                    </div>
                                 </div>
                                 
                                 <div class="w-2/5 mx-5">
@@ -301,7 +297,6 @@
                         <div class="w-2/5">
                             <h1>Course Name: {{ $course->course_name }}</h1>
                             <h1>Course ID: {{ $course->course_id }}</h1>
-                            <h1>Course Code: {{ $course->course_code }}</h1>
                         </div>
                         <div class="w-2/5">
                             <h1>Instructor: {{ $course->instructor_fname }} {{ $course->instructor_lname }}</h1>

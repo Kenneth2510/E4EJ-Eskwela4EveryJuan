@@ -54,7 +54,6 @@ class InstructorPerformanceController extends Controller
                     ->select(
                         "course.course_id",
                         "course.course_name",
-                        "course.course_code",
                         "instructor.instructor_lname",
                         "instructor.instructor_fname",
                         "instructor.profile_picture"
@@ -146,7 +145,6 @@ class InstructorPerformanceController extends Controller
                 ->select(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',
@@ -160,7 +158,6 @@ class InstructorPerformanceController extends Controller
                 ->groupBy(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',
@@ -321,7 +318,6 @@ class InstructorPerformanceController extends Controller
 
                         'course.course_name',
                         'course.course_status',
-                        'course.course_code',
                         'course.created_at',
                         'course.updated_at',
                     )
@@ -445,7 +441,6 @@ class InstructorPerformanceController extends Controller
                     ->select(
                         "course.course_id",
                         "course.course_name",
-                        "course.course_code",
                         "instructor.instructor_lname",
                         "instructor.instructor_fname",
                         "instructor.profile_picture"
@@ -729,7 +724,6 @@ class InstructorPerformanceController extends Controller
                 ->select(
                     'course_id',
                     'course_name',
-                    'course_code',
                     'course_description',
                     'course_status',
                 )
@@ -1364,7 +1358,6 @@ class InstructorPerformanceController extends Controller
                     ->select(
                         "course.course_id",
                         "course.course_name",
-                        "course.course_code",
                         "instructor.instructor_lname",
                         "instructor.instructor_fname",
                         "instructor.profile_picture"

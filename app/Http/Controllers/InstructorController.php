@@ -485,7 +485,6 @@ class InstructorController extends Controller
             ->select(
                 'course.course_id',
                 'course.course_name',
-                'course.course_code',
                 'course.course_status',
                 'course.course_difficulty',
                 'course.instructor_id',
@@ -543,7 +542,6 @@ class InstructorController extends Controller
                 ->select(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',
@@ -557,7 +555,6 @@ class InstructorController extends Controller
                 ->groupBy(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',

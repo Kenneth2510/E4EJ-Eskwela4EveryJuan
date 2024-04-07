@@ -509,7 +509,6 @@ class AdminPerformanceController extends Controller
         
                             'course.course_id',
                             'course.course_name',
-                            'course.course_code',
                             'course.instructor_id',
         
                             'instructor.instructor_fname',
@@ -561,7 +560,6 @@ class AdminPerformanceController extends Controller
                     'learner_course_progress.finish_period',
 
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
 
                     'instructor.instructor_fname',
@@ -715,7 +713,6 @@ class AdminPerformanceController extends Controller
                         'learner_syllabus_progress.status',
                         
                         'course.course_name',
-                        'course.course_code',
                     )
                     ->join('course', 'learner_syllabus_progress.course_id', '=', 'course.course_id')
                     ->where('learner_syllabus_progress.learner_id', $learner->learner_id)
@@ -733,7 +730,6 @@ class AdminPerformanceController extends Controller
                         'learner_syllabus_progress.status',
                   
                         'course.course_name',
-                        'course.course_code',
                         
                     )
                     ->join('course', 'learner_syllabus_progress.course_id', '=', 'course.course_id')
@@ -888,7 +884,6 @@ class AdminPerformanceController extends Controller
                     'learner_course_progress.finish_period',
                     
                     'course.course_name',
-                    'course.course_code',
                 )
                 ->join('course', 'course.course_id', '=', 'learner_course_progress.course_id')
                 ->where('learner_course_progress.course_id', $course)
@@ -1164,7 +1159,6 @@ class AdminPerformanceController extends Controller
 
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
 
                     'instructor.instructor_fname',
@@ -1375,7 +1369,6 @@ class AdminPerformanceController extends Controller
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -1480,7 +1473,6 @@ class AdminPerformanceController extends Controller
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -1594,7 +1586,6 @@ class AdminPerformanceController extends Controller
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -1727,7 +1718,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -2381,7 +2371,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     ->select(
                         "course.course_id",
                         "course.course_name",
-                        "course.course_code",
                         "instructor.instructor_lname",
                         "instructor.instructor_fname",
                         "instructor.profile_picture"
@@ -2483,7 +2472,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 ->select(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',
@@ -2497,7 +2485,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 ->groupBy(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',
@@ -2658,7 +2645,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
 
                         'course.course_name',
                         'course.course_status',
-                        'course.course_code',
                         'course.created_at',
                         'course.updated_at',
                     )
@@ -2798,7 +2784,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     ->select(
                         'course.course_id',
                         'course.course_name',
-                        'course.course_code',
                         'course.course_status',
                         'course.course_difficulty',
                         'course.course_description',
@@ -2860,7 +2845,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     ->select(
                         "course.course_id",
                         "course.course_name",
-                        "course.course_code",
                         "instructor.instructor_lname",
                         "instructor.instructor_fname",
                         "instructor.profile_picture"
@@ -3320,7 +3304,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 ->select(
                     'course_id',
                     'course_name',
-                    'course_code',
                     'course_description',
                     'course_status',
                 )

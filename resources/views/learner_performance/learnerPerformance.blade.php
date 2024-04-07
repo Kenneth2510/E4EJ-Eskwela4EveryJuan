@@ -105,7 +105,7 @@
             <table class="table table-fixed rounded-xl">
                 <thead class="py-3 text-white bg-darthmouthgreen">
                     <th class="w-[150px]">Course Name</th>
-                    <th class="w-[150px]">Course Code</th>
+                    <th class="w-[150px]">Course ID</th>
                     <th class="w-[150px]">Instructor</th>
                     <th class="w-[150px]">Status</th>
                     <th class="w-[150px]">Date Started</th>

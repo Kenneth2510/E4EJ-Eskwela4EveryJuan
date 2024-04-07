@@ -64,7 +64,6 @@ class LearnerCourseController extends Controller
                     'learner_course.status',
                     'learner_course.created_at',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_status',
                     'course.course_difficulty',
                     'instructor.instructor_fname',
@@ -81,7 +80,6 @@ class LearnerCourseController extends Controller
                 ->select(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_status',
                     'course.course_difficulty',
                     'instructor.instructor_fname',
@@ -124,7 +122,6 @@ class LearnerCourseController extends Controller
                 'learner_course.status',
                 'learner_course.created_at',
                 'course.course_name',
-                'course.course_code',
                 'course.course_status',
                 'course.course_difficulty',
                 'instructor.instructor_fname',
@@ -158,7 +155,6 @@ class LearnerCourseController extends Controller
                 ->select(
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.course_description',
                     'course.course_status',
                     'course.course_difficulty',
@@ -675,7 +671,6 @@ class LearnerCourseController extends Controller
                     'learner_course_progress.finish_period',
                     
                     'course.course_name',
-                    'course.course_code',
                 )
                 ->join('course', 'course.course_id', '=', 'learner_course_progress.course_id')
                 ->where('learner_course_progress.course_id', $course)
@@ -1013,7 +1008,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->select(
                     "course.course_id",
                     "course.course_name",
-                    "course.course_code",
                     "course.course_status",
                     "course.course_difficulty",
                     "course.course_description",
@@ -1127,7 +1121,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->select(
                     'course_id',
                     'course_name',
-                    'course_code',
                     'course_description',
                     'course_status',
                     'course_difficulty',
@@ -1287,7 +1280,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'learner_course.learner_course_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -1356,7 +1348,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -1583,7 +1574,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -1819,7 +1809,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -1917,7 +1906,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -3844,7 +3832,6 @@ $learnerQuizData = DB::table('learner_quiz_output')
                     'learner_course.learner_course_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -3983,7 +3970,6 @@ foreach ($postAssessmentData as $postAssessment) {
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -4206,7 +4192,6 @@ foreach ($postAssessmentData as $postAssessment) {
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -4440,7 +4425,6 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -4552,7 +4536,6 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                     'learner_course.learner_id',
                     'course.course_id',
                     'course.course_name',
-                    'course.course_code',
                     'course.instructor_id',
                     'instructor.instructor_fname',
                     'instructor.instructor_lname',
@@ -4887,7 +4870,6 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                     'learner_course_progress.finish_period',
                     
                     'course.course_name',
-                    'course.course_code',
                 )
                 ->join('course', 'course.course_id', '=', 'learner_course_progress.course_id')
                 ->where('learner_course_progress.course_id', $course->course_id)
@@ -5170,7 +5152,6 @@ $learnerPostAssessmentGrade = DB::table('learner_post_assessment_progress')
                     'learner_course_progress.finish_period',
                     'learner_course_progress.remarks',
                     'course.course_name',
-                    'course.course_code',
                 )
                 ->join('course', 'learner_course_progress.course_id', 'course.course_id')
                 ->where('learner_course_progress.learner_course_id', $learner_course->learner_course_id)

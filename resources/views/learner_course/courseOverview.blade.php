@@ -12,7 +12,7 @@
             <div class="flex justify-between w-full" id="courseInfo">
                 <div class="" id="courseInfo_left">
                     <h1 class="text-2xl font-semibold md:text-4xl">{{$course->course_name}}</h1>
-                    <h4 class="text-xl">{{$course->course_code}}</h4>
+                    <h4 class="text-xl">Course ID: {{$course->course_id}}</h4>
                     <h4 class="mt-10">Course Level: <span class="font-medium text-darhmouthgreen">{{$course->course_difficulty}}</span></h4>
                     <h4 class=""><i class="fa-regular fa-clock text-darthmouthgreen"></i> Est. Time:  {{$totalCourseTime}}</h4>
                     <h4 class="mt-3">Total  Units: {{$totalSyllabusCount}}</h4>
@@ -221,7 +221,7 @@
 
                     <div class="w-full py-5 mx-5 md:w-1/2" id="courseInfo_left">
                         <h1 class="text-2xl font-semibold md:text-4xl">{{$course->course_name}}</h1>
-                        <h4 class="text-xl">{{$course->course_code}}</h4>
+                        <h4 class="text-xl">Course ID: {{$course->course_id}}</h4>
                         <h4 class="mt-10">Course Level: <span class="font-medium text-darhmouthgreen">{{$course->course_difficulty}}</span></h4>
                         <h4 class=""><i class="fa-regular fa-clock text-darthmouthgreen"></i> Est. Time:  {{$totalCourseTime}}</h4>
                         <h4 class="mt-3">Total  Units: {{$totalSyllabusCount}}</h4>
