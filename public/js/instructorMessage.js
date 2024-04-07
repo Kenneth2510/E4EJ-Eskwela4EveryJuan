@@ -232,24 +232,34 @@ $(document).ready(function() {
     
 
     $('#confirmRecipientsBtn').on('click', function() {
-        console.log(tempRecipientList);
-    
-        // Loop through tempRecipientList
-        tempRecipientList.forEach(tempRecipient => {
-            // Check if the email is already in mainRecipientList
-            let isExisting = mainRecipientList.some(mainRecipient => mainRecipient.email === tempRecipient.email && mainRecipient.type === tempRecipient.type);
-    
-            // If the email is not in mainRecipientList, add it
-            if (!isExisting) {
-                mainRecipientList.push(tempRecipient);
-            }
-        });
-    
-        // Empty tempRecipientList
-        tempRecipientList = [];
-        displayMainRecipientList(mainRecipientList)
-        console.log(mainRecipientList);
-        $('#selectRecipientsModal').addClass('hidden');
+        // console.log(tempRecipientList);
+        isValid = true;
+        if (tempRecipientList.length === 0) {
+            $('#recipientsError').text('Please select recipients');
+            isValid = false;
+        } else {
+            $('#recipientsError').text('Please select recipients');
+        }
+
+        if(isValid) {
+            // Loop through tempRecipientList
+            tempRecipientList.forEach(tempRecipient => {
+                // Check if the email is already in mainRecipientList
+                let isExisting = mainRecipientList.some(mainRecipient => mainRecipient.email === tempRecipient.email && mainRecipient.type === tempRecipient.type);
+        
+                // If the email is not in mainRecipientList, add it
+                if (!isExisting) {
+                    mainRecipientList.push(tempRecipient);
+                }
+            });
+        
+            // Empty tempRecipientList
+            tempRecipientList = [];
+            displayMainRecipientList(mainRecipientList)
+            // console.log(mainRecipientList);
+            $('#selectRecipientsModal').addClass('hidden');
+        }
+
     });
     
 
@@ -321,14 +331,21 @@ $(document).ready(function() {
         var content = tinyMCE.get("createNewMessageArea").getContent();
         var emailToReceive = JSON.stringify(mainRecipientList); // Convert array to JSON string
         var filesToSend = filesArray;
-    
+        var mainList = mainRecipientList;
         var isValid = true;
-    
-        if (emailToReceive.length === 0) {
-            $('#recipientError').text('Please choose a recipient');
+
+        if (mainList.length === 0) {
+            $('#mainRecipientsError').text('Please select recipients');
             isValid = false;
         } else {
-            $('#recipientError').text('');
+            $('#mainRecipientsError').text('Please select recipients');
+        }
+    
+        if (emailToReceive === "[]") {
+            $('#mainRecipientsError').text('Please choose a recipient');
+            isValid = false;
+        } else {
+            $('#mainRecipientsError').text('');
         }
     
         if (subject === '') {
@@ -383,7 +400,6 @@ $(document).ready(function() {
         }
     
     });
-    
 
 
 
