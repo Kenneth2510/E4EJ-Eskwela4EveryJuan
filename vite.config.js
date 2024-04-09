@@ -3,8 +3,8 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
     server: {
-        host: 'eskwela4everyjuan.online',
-        port: 5173,
+        // host: 'eskwela4everyjuan.online',
+        // port: 5173,
     },
     plugins: [
         laravel({
