@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Data</title>
     <style>
         /* Reset default margin and padding */
-        body, h1, h2, h3, h4, h5, h6, p, table, th, td {
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        table,
+        th,
+        td {
             margin: 0;
             padding: 0;
         }
@@ -23,7 +34,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
@@ -34,7 +46,12 @@
         }
 
         /* Set styling for the headings */
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             margin-bottom: 10px;
         }
 
@@ -72,6 +89,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="datetime">
@@ -99,18 +117,18 @@
                 </thead>
                 <tbody>
                     @foreach ($gradeWithActivityData as $learner)
-                        <tr>
-                            <td>{{ $learner->learner_fname }} {{ $learner->learner_lname }}</td>
-                            <td>{{$learner->course_progress}}</td>
-                            <td>{{ $learner->grade }}</td>
-                            <td>{{ $learner->remarks }}</td>
-                            <td>{{ $learner->start_period }}</td>
-                            <td>{{ $learner->finish_period }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ $learner->learner_fname }} {{ $learner->learner_lname }}</td>
+                        <td>{{$learner->course_progress}}</td>
+                        <td>{{ $learner->grade }}</td>
+                        <td>{{ $learner->remarks }}</td>
+                        <td>{{ $learner->start_period }}</td>
+                        <td>{{ $learner->finish_period }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
-    
+
             <h2>Activities Scores and Progress</h2>
             @foreach ($gradeWithActivityData as $learner)
             <h3>{{ $learner->learner_fname }} {{ $learner->learner_lname }}</h3>
@@ -124,21 +142,22 @@
                 </thead>
                 <tbody>
                     @foreach ($learner->activities as $activity)
-                        @php
-                            $activitySyllabusCollection = collect($activitySyllabusData);
-                            $activitySyllabus = $activitySyllabusCollection->where('activity_id', $activity->activity_id)->first();
-                        @endphp
-                        <tr>
-                            <td>{{ $activity->activity_title }}</td>
-                            <td>{{ $activity->average_score }}</td>
-                            <td>{{ $activitySyllabus ? $activitySyllabus->total_score : '' }}</td>
-                        </tr>
+                    @php
+                    $activitySyllabusCollection = collect($activitySyllabusData);
+                    $activitySyllabus = $activitySyllabusCollection->where('activity_id',
+                    $activity->activity_id)->first();
+                    @endphp
+                    <tr>
+                        <td>{{ $activity->activity_title }}</td>
+                        <td>{{ $activity->average_score }}</td>
+                        <td>{{ $activitySyllabus ? $activitySyllabus->total_score : '' }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
-        @endforeach
-        
-    
+            @endforeach
+
+
             <h2>Quizzes Scores and Progress</h2>
             @foreach ($gradeWithActivityData as $learner)
             <h3>{{ $learner->learner_fname }} {{ $learner->learner_lname }}</h3>
@@ -152,76 +171,77 @@
                 </thead>
                 <tbody>
                     @foreach ($learner->quizzes as $quiz)
-                        @php
-                            $quizSyllabusCollection = collect($quizSyllabusData);
-                            $quizSyllabus = $quizSyllabusCollection->where('quiz_id', $quiz->quiz_id)->first();
-                        @endphp
-                        <tr>
-                            <td>{{ $quiz->quiz_title }}</td>
-                            <td>{{ $quiz->average_score }}</td>
-                            <td>{{ $quizSyllabus ? $quizSyllabus->total_score : '' }}</td>
-                        </tr>
+                    @php
+                    $quizSyllabusCollection = collect($quizSyllabusData);
+                    $quizSyllabus = $quizSyllabusCollection->where('quiz_id', $quiz->quiz_id)->first();
+                    @endphp
+                    <tr>
+                        <td>{{ $quiz->quiz_title }}</td>
+                        <td>{{ $quiz->average_score }}</td>
+                        <td>{{ $quizSyllabus ? $quizSyllabus->total_score : '' }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
-        @endforeach
-        
-
-    <!-- Pre-assessment -->
-    <h2>Pre-assessment</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Score</th>
-                <th>Remarks</th>
-                <th>Date Taken</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($learnerPreAssessmentData as $preAssessment)
-                <tr>
-                    <td>{{ $preAssessment->learner_fname }} {{ $preAssessment->learner_lname }}</td>
-                    <td>{{ $preAssessment->status }}</td>
-                    <td>{{ $preAssessment->score }}</td>
-                    <td>{{ $preAssessment->remarks }}</td>
-                    <td>{{ $preAssessment->start_period }}</td>
-                </tr>
             @endforeach
-        </tbody>
-    </table>
 
-    <!-- Post-assessment -->
-    <h2>Post-assessment</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Score</th>
-                <th>Remarks</th>
-                <th>Attempt</th>
-                <th>Date Taken</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($learnerPostAssessmentData as $postAssessment)
-                <tr>
-                    <td>{{ $postAssessment->learner_fname }} {{ $postAssessment->learner_lname }}</td>
-                    <td>{{ $postAssessment->status }}</td>
-                    <td>{{ $postAssessment->score }}</td>
-                    <td>{{ $postAssessment->remarks }}</td>
-                    <td>{{ $postAssessment->attempt }}</td>
-                    <td>{{ $postAssessment->start_period }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
 
-        
+            <!-- Pre-assessment -->
+            <h2>Pre-assessment</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Score</th>
+                        <th>Remarks</th>
+                        <th>Date Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($learnerPreAssessmentData as $preAssessment)
+                    <tr>
+                        <td>{{ $preAssessment->learner_fname }} {{ $preAssessment->learner_lname }}</td>
+                        <td>{{ $preAssessment->status }}</td>
+                        <td>{{ $preAssessment->score }}</td>
+                        <td>{{ $preAssessment->remarks }}</td>
+                        <td>{{ $preAssessment->start_period }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <!-- Post-assessment -->
+            <h2>Post-assessment</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Score</th>
+                        <th>Remarks</th>
+                        <th>Attempt</th>
+                        <th>Date Taken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($learnerPostAssessmentData as $postAssessment)
+                    <tr>
+                        <td>{{ $postAssessment->learner_fname }} {{ $postAssessment->learner_lname }}</td>
+                        <td>{{ $postAssessment->status }}</td>
+                        <td>{{ $postAssessment->score }}</td>
+                        <td>{{ $postAssessment->remarks }}</td>
+                        <td>{{ $postAssessment->attempt }}</td>
+                        <td>{{ $postAssessment->start_period }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+
         </div>
 
     </div>
 </body>
+
 </html>

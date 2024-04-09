@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Data</title>
     <style>
         /* Reset default margin and padding */
-        body, h1, h2, h3, h4, h5, h6, p, table, th, td {
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        table,
+        th,
+        td {
             margin: 0;
             padding: 0;
         }
@@ -23,7 +34,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
@@ -34,7 +46,12 @@
         }
 
         /* Set styling for the headings */
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             margin-bottom: 10px;
         }
 
@@ -72,6 +89,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -85,7 +103,7 @@
                 <h1 class="title">{{ $courseData->course_name }}</h1>
                 <h2>Course Details</h2>
             </div>
-    
+
             <div>
                 <h3>Course Information</h3>
                 <p><strong>Instructor:</strong> {{ $courseData->name }}</p>
@@ -93,18 +111,19 @@
                 <p><strong>Status:</strong> {{ $courseData->course_status }}</p>
                 <p><strong>Created At:</strong> {{ $courseData->created_at }}</p>
             </div>
-    
+
             <div>
                 <h3>Syllabus</h3>
                 @foreach ($syllabusData as $syllabus)
-                
-                    <p><strong>Category:</strong> {{ $syllabus->category }}</p>
-                    <h4>Topic: {{ $syllabus->topic_title }}</h4>
+
+                <p><strong>Category:</strong> {{ $syllabus->category }}</p>
+                <h4>Topic: {{ $syllabus->topic_title }}</h4>
                 @endforeach
             </div>
         </div>
 
-        
+
     </div>
 </body>
+
 </html>

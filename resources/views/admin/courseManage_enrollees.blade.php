@@ -1,25 +1,26 @@
 @include('partials.header')
 
 <section class="flex flex-row w-screen text-sm main-container bg-mainwhitebg md:text-base">
-@include('partials.sidebar')
+    @include('partials.sidebar')
 
 
 
 
-<section class="w-screen px-2 pt-[40px] mx-2 mt-2  overscroll-auto md:overflow-auto">
-    <div class="flex justify-between px-10">
-        <h1 class="text-6xl font-bold text-darthmouthgreen">Course Enrollees</h1>
-        <div class="">
-            <p class="text-xl font-semibold text-darthmouthgreen">{{$admin->admin_codename}}</p>
+    <section class="w-screen px-2 pt-[40px] mx-2 mt-2  overscroll-auto md:overflow-auto">
+        <div class="flex justify-between px-10">
+            <h1 class="text-6xl font-bold text-darthmouthgreen">Course Enrollees</h1>
+            <div class="">
+                <p class="text-xl font-semibold text-darthmouthgreen">{{$admin->admin_codename}}</p>
+            </div>
         </div>
-    </div>
 
-    <div class="w-full px-3 pb-4 mt-10 rounded-lg shadow-lg b">
+        <div class="w-full px-3 pb-4 mt-10 rounded-lg shadow-lg b">
 
 
             <div class="w-full" id="selectCourseArea">
                 <h1 class="text-3xl font-semibold text-darthmouthgreen">Select a Course</h1>
-                <select name="selectedCourse" id="selectedCourse" class="w-2/3 px-5 py-3 text-xl border border-darthmouthgreen">
+                <select name="selectedCourse" id="selectedCourse"
+                    class="w-2/3 px-5 py-3 text-xl border border-darthmouthgreen">
                     @forelse ($courses as $course)
                     <option value="{{$course->course_id}}">{{$course->course_name}}</option>
                     @empty
@@ -32,22 +33,28 @@
 
             <div class="flex items-center justify-end w-full pr-10 mt-10">
                 <div class="mx-2" id="addNewLearnerCourseBtn">
-                    
-                @if(in_array($admin->role, ['IT_DEPT', 'SUPER_ADMIN', 'COURSE_SUPERVISOR', 'COURSE_ASST_SUPERVISOR']))
-                    <a href="/admin/course/enrollment/addNew" class="px-5 py-3 text-white bg-darthmouthgreen rounded-xl hover:bg-white hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">Enroll New Learner</a>
-                @endif
+
+                    @if(in_array($admin->role, ['IT_DEPT', 'SUPER_ADMIN', 'COURSE_SUPERVISOR',
+                    'COURSE_ASST_SUPERVISOR']))
+                    <a href="/admin/course/enrollment/addNew"
+                        class="px-5 py-3 text-white bg-darthmouthgreen rounded-xl hover:bg-white hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">Enroll
+                        New Learner</a>
+                    @endif
                 </div>
                 <div class="mx-2" id="filterLearnerCourse">
-                    <select class="px-5 py-3 mx-2 border border-darthmouthgreen rounded-xl" name="filterByStatus" id="filterByStatus">
+                    <select class="px-5 py-3 mx-2 border border-darthmouthgreen rounded-xl" name="filterByStatus"
+                        id="filterByStatus">
                         <option value="">Show All</option>
                         <option value="Pending">Pending</option>
                         <option value="Approved">Approved</option>
                         <option value="Rejected">Rejected</option>
                     </select>
-                    <input class="px-5 py-3 mx-2 border border-darthmouthgreen rounded-xl" type="date" id="filterByDate">
+                    <input class="px-5 py-3 mx-2 border border-darthmouthgreen rounded-xl" type="date"
+                        id="filterByDate">
                 </div>
                 <div class="" id="searchLearnerCourse">
-                    <input class="px-5 py-3 mx-2 border border-darthmouthgreen rounded-xl" type="text" placeholder="search by name" id="searchLearner">
+                    <input class="px-5 py-3 mx-2 border border-darthmouthgreen rounded-xl" type="text"
+                        placeholder="search by name" id="searchLearner">
                 </div>
             </div>
 
@@ -64,14 +71,14 @@
                     </thead>
                     <tbody class="" id="learnerCourseTableDispArea">
 
-                        
+
                     </tbody>
                 </table>
             </div>
 
-            
-    </div>
-</section>
+
+        </div>
+    </section>
 </section>
 @include('partials.footer')
 
@@ -184,4 +191,4 @@ $('#filterByStatus, #filterByDate, #searchLearner').on('change keyup', function(
     });
 
 })
-    </script>
+</script>
