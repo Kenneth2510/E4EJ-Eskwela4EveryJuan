@@ -1,21 +1,21 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var baseUrl = window.location.href;
 
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
-    tinymce.init({  
-        selector: '#createNewMessageArea',  
-        width: 730
-       }); 
+    tinymce.init({
+        selector: "#createNewMessageArea",
+        width: 730,
+    });
 
-       tinymce.init({
-        selector: '#reply_textarea',
-        width: '100%', // Set TinyMCE width to 100%
-        height: $('#reply_textarea').css('height'), // Set TinyMCE height dynamically
+    tinymce.init({
+        selector: "#reply_textarea",
+        width: "100%", // Set TinyMCE width to 100%
+        height: $("#reply_textarea").css("height"), // Set TinyMCE height dynamically
         setup: function (editor) {
-            editor.on('ResizeEditor', function (e) {
+            editor.on("ResizeEditor", function (e) {
                 // Adjust the width dynamically when the editor is resized
-                editor.theme.resizeTo($('#reply_textarea').width(), null);
+                editor.theme.resizeTo($("#reply_textarea").width(), null);
             });
         },
     });
@@ -25,106 +25,91 @@ $(document).ready(function() {
 
     function checkUrlParam() {
         const urlParams = new URLSearchParams(window.location.search);
-        const email = urlParams.get('email');
-        const type = urlParams.get('type');
+        const email = urlParams.get("email");
+        const type = urlParams.get("type");
         if (email && type) {
             // console.log('Email:', email);
             paramData = {
                 email: email,
-                type: type
-            }
+                type: type,
+            };
 
             mainRecipientList.push(paramData);
             // console.log(mainRecipientList);
-        tinymce.get('reply_textarea').remove();
-        
-        displayMainRecipientList(mainRecipientList)
-            $('#createNewMessage').removeClass('hidden');
+            tinymce.get("reply_textarea").remove();
+
+            displayMainRecipientList(mainRecipientList);
+            $("#createNewMessage").removeClass("hidden");
         } else {
-            console.log('Email parameter is not present in the URL');
+            console.log("Email parameter is not present in the URL");
         }
     }
 
+    $("#createNewMessageBtn").on("click", function () {
+        $("#createNewMessage").removeClass("hidden");
 
+        tinymce.get("reply_textarea").remove();
+    });
 
-    $('#createNewMessageBtn').on('click', function(){
-        $('#createNewMessage').removeClass('hidden');
-
-        
-        tinymce.get('reply_textarea').remove();
-    })
-
-    $('.closeCreateNewMessage').on('click', function(){
-        $('#createNewMessage').addClass('hidden');
+    $(".closeCreateNewMessage").on("click", function () {
+        $("#createNewMessage").addClass("hidden");
 
         tinymce.init({
-            selector: '#reply_textarea',
-            width: '100%', // Set TinyMCE width to 100%
-            height: $('#reply_textarea').css('height'), // Set TinyMCE height dynamically
+            selector: "#reply_textarea",
+            width: "100%", // Set TinyMCE width to 100%
+            height: $("#reply_textarea").css("height"), // Set TinyMCE height dynamically
             setup: function (editor) {
-                editor.on('ResizeEditor', function (e) {
+                editor.on("ResizeEditor", function (e) {
                     // Adjust the width dynamically when the editor is resized
-                    editor.theme.resizeTo($('#reply_textarea').width(), null);
+                    editor.theme.resizeTo($("#reply_textarea").width(), null);
                 });
             },
         });
 
         const urlParams = new URLSearchParams(window.location.search);
-        const email = urlParams.get('email');
-        const type = urlParams.get('type');
+        const email = urlParams.get("email");
+        const type = urlParams.get("type");
         if (email && type) {
-    
-            var url = window.location.href.split('?')[0]; // Get the URL without query parameters
+            var url = window.location.href.split("?")[0]; // Get the URL without query parameters
             window.history.replaceState({}, document.title, url);
             window.location.reload();
         }
+    });
 
-    })
-
-
-    $('#selectRecipientBtn').on('click', function() {
-        $('#selectRecipientsModal').removeClass('hidden');    
+    $("#selectRecipientBtn").on("click", function () {
+        $("#selectRecipientsModal").removeClass("hidden");
         tempRecipientList = [];
+    });
 
-    })
+    $(".closeSelectRecipientsModal").on("click", function () {
+        $("#selectRecipientsModal").addClass("hidden");
+    });
 
-    $('.closeSelectRecipientsModal').on('click', function() {
-        $('#selectRecipientsModal').addClass('hidden');
-    })
-
-
-
-    $('#recipientName').on('input', function() {
-        
-        
-        $('.searchResultsArea').addClass('hidden')
+    $("#recipientName").on("input", function () {
+        $(".searchResultsArea").addClass("hidden");
         var val = $(this).val();
 
-        if (val.includes('@')) {
-
-
+        if (val.includes("@")) {
             var url = baseUrl + "/search_recipient";
-    
-    
+
             $.ajax({
                 type: "GET",
                 data: {
-                    search_recipient: val
+                    search_recipient: val,
                 },
                 url: url,
-                success: function(response) {
+                success: function (response) {
                     // console.log(response);
-                    
-                    var results = response['results'];
+
+                    var results = response["results"];
                     displaySearchResults(results);
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
-                }
+                },
             });
 
-
-            $('.searchResultsArea').removeClass('hidden')
+            $(".searchResultsArea").removeClass("hidden");
         }
     });
 
@@ -132,20 +117,19 @@ $(document).ready(function() {
     function displaySearchResults(results) {
         var searchResultDisp = ``;
         var searchRecipientList = [];
-        
-        for (let i = 0; i < results.length; i++) {
-            const fname = results[i]['fname'];
-            const lname = results[i]['lname'];
-            const email = results[i]['email'];
-            const profile = results[i]['profile'];
-            const type = results[i]['type'];
-    
-            let resultData = {
 
+        for (let i = 0; i < results.length; i++) {
+            const fname = results[i]["fname"];
+            const lname = results[i]["lname"];
+            const email = results[i]["email"];
+            const profile = results[i]["profile"];
+            const type = results[i]["type"];
+
+            let resultData = {
                 email: email,
-                type: type
+                type: type,
             };
-    
+
             searchRecipientList.push(resultData);
             // console.log(searchRecipientList);
             searchResultDisp += `
@@ -166,21 +150,26 @@ $(document).ready(function() {
                 </li>
             `;
         }
-    
-        $('#searchResultsUlArea').empty();
-        $('#searchResultsUlArea').append(searchResultDisp);
-    
-        $('#searchResultsUlArea').on('click', '.choose_search', function(e) {
+
+        $("#searchResultsUlArea").empty();
+        $("#searchResultsUlArea").append(searchResultDisp);
+
+        $("#searchResultsUlArea").on("click", ".choose_search", function (e) {
             e.preventDefault();
 
-            let userEmail = $(this).data('user-email');
-            let userType = $(this).data('user-type');
+            let userEmail = $(this).data("user-email");
+            let userType = $(this).data("user-type");
             console.log(searchRecipientList);
             // console.log(tempRecipientList);
-            let isExisting = tempRecipientList.some(result => result?.email === userEmail && result.type === userType);
-        
+            let isExisting = tempRecipientList.some(
+                (result) =>
+                    result?.email === userEmail && result.type === userType,
+            );
+
             if (!isExisting) {
-                let selectedResultData = searchRecipientList.find(result => result.email === userEmail);
+                let selectedResultData = searchRecipientList.find(
+                    (result) => result.email === userEmail,
+                );
                 if (selectedResultData) {
                     tempRecipientList.push(selectedResultData);
                     // console.log(tempRecipientList);
@@ -192,16 +181,15 @@ $(document).ready(function() {
                 console.log("Already exists in tempRecipientList");
             }
         });
-        
     }
-    
+
     function dispTempResultsData(tempRecipientList) {
         let tempRecipientDisp = ``;
         // console.log(tempRecipientList);
         for (let j = 0; j < tempRecipientList.length; j++) {
-            const email = tempRecipientList[j]['email'];
-            const type = tempRecipientList[j]['type'];
-    
+            const email = tempRecipientList[j]["email"];
+            const type = tempRecipientList[j]["type"];
+
             tempRecipientDisp += `
                 <tr>
                     <td>${email}</td>
@@ -213,64 +201,67 @@ $(document).ready(function() {
                 </tr>
             `;
         }
-    
-        $('.tempSelectedRecipientArea').empty();
-        $('.tempSelectedRecipientArea').append(tempRecipientDisp);
+
+        $(".tempSelectedRecipientArea").empty();
+        $(".tempSelectedRecipientArea").append(tempRecipientDisp);
     }
-    
+
     // Event delegation for tempListRemove buttons
-    $('.tempSelectedRecipientArea').on('click', '.tempListRemove', function() {
-        const emailToRemove = $(this).data('user-email');
-        const typeToRemove = $(this).data('user-type');
-        
+    $(".tempSelectedRecipientArea").on("click", ".tempListRemove", function () {
+        const emailToRemove = $(this).data("user-email");
+        const typeToRemove = $(this).data("user-type");
+
         // Remove the element from tempRecipientList
-        tempRecipientList = tempRecipientList.filter(item => item.email !== emailToRemove);
-    
+        tempRecipientList = tempRecipientList.filter(
+            (item) => item.email !== emailToRemove,
+        );
+
         // Re-display the updated tempRecipientDisp
         dispTempResultsData(tempRecipientList);
     });
-    
 
-    $('#confirmRecipientsBtn').on('click', function() {
+    $("#confirmRecipientsBtn").on("click", function () {
         // console.log(tempRecipientList);
         isValid = true;
         if (tempRecipientList.length === 0) {
-            $('#recipientsError').text('Please select recipients');
+            $("#recipientsError").text("Please select recipients");
             isValid = false;
         } else {
-            $('#recipientsError').text('Please select recipients');
+            $("#recipientsError").text("Please select recipients");
         }
 
-        if(isValid) {
+        if (isValid) {
             // Loop through tempRecipientList
-            tempRecipientList.forEach(tempRecipient => {
+            tempRecipientList.forEach((tempRecipient) => {
                 // Check if the email is already in mainRecipientList
-                let isExisting = mainRecipientList.some(mainRecipient => mainRecipient.email === tempRecipient.email && mainRecipient.type === tempRecipient.type);
-        
+                let isExisting = mainRecipientList.some(
+                    (mainRecipient) =>
+                        mainRecipient.email === tempRecipient.email &&
+                        mainRecipient.type === tempRecipient.type,
+                );
+
                 // If the email is not in mainRecipientList, add it
                 if (!isExisting) {
                     mainRecipientList.push(tempRecipient);
                 }
             });
-        
+
             // Empty tempRecipientList
             tempRecipientList = [];
-            displayMainRecipientList(mainRecipientList)
+            displayMainRecipientList(mainRecipientList);
             // console.log(mainRecipientList);
-            $('#selectRecipientsModal').addClass('hidden');
+            $("#selectRecipientsModal").addClass("hidden");
         }
-
     });
-    
 
     function displayMainRecipientList(mainRecipientList) {
         // console.log(tempRecipientList);
-        var mainRecipientListDisp = ``
+        var mainRecipientListDisp = ``;
 
         for (let i = 0; i < mainRecipientList.length; i++) {
-            const email = mainRecipientList[i]['email'];
-            const type = mainRecipientList[i]['type'];
-            
+            const email = mainRecipientList[i]["email"];
+            const type = mainRecipientList[i]["type"];
+
             mainRecipientListDisp += `
             <tr>
                 <td>${email}</td>
@@ -280,54 +271,56 @@ $(document).ready(function() {
                     </button>
                 </td>
             </tr>
-            `
+            `;
 
-            $('#mainRecipientListArea').empty()
-            $('#mainRecipientListArea').append(mainRecipientListDisp)
+            $("#mainRecipientListArea").empty();
+            $("#mainRecipientListArea").append(mainRecipientListDisp);
         }
     }
-    
-        $('#mainRecipientListArea').on('click', '.mainListRemove', function() {
-        const emailToRemove = $(this).data('user-email');
-        const typeToRemove = $(this).data('user-type');
-        
-        // Remove the element from tempRecipientList
-        mainRecipientList = mainRecipientList.filter(item => item.email !== emailToRemove);
-        displayMainRecipientList(mainRecipientList)
-    });
 
+    $("#mainRecipientListArea").on("click", ".mainListRemove", function () {
+        const emailToRemove = $(this).data("user-email");
+        const typeToRemove = $(this).data("user-type");
+
+        // Remove the element from tempRecipientList
+        mainRecipientList = mainRecipientList.filter(
+            (item) => item.email !== emailToRemove,
+        );
+        displayMainRecipientList(mainRecipientList);
+    });
 
     var filesArray = []; // Array to store files
 
-    $('#attachments').on('change', function() {
-        var fileList = $('#fileList');
+    $("#attachments").on("change", function () {
+        var fileList = $("#fileList");
 
-        $.each(this.files, function(i, file) {
+        $.each(this.files, function (i, file) {
             filesArray.push(file);
-            var fileItem = $('<div>').text(file.name);
-            var removeButton = $('<button>').html('<i class="fa-solid fa-xmark" style="color: #025c26;"></i>')
-                                            .addClass('removeFileBtn')
-                                            .attr('data-file-index', filesArray.length - 1); // Set data attribute to track file index
+            var fileItem = $("<div>").text(file.name);
+            var removeButton = $("<button>")
+                .html(
+                    '<i class="fa-solid fa-xmark" style="color: #025c26;"></i>',
+                )
+                .addClass("removeFileBtn")
+                .attr("data-file-index", filesArray.length - 1); // Set data attribute to track file index
             fileList.append(fileItem.append(removeButton));
         });
     });
 
     // Remove file when remove button is clicked
-    $(document).on('click', '.removeFileBtn', function() {
-        var fileIndex = $(this).attr('data-file-index');
+    $(document).on("click", ".removeFileBtn", function () {
+        var fileIndex = $(this).attr("data-file-index");
         filesArray.splice(fileIndex, 1); // Remove file from array
         $(this).parent().remove(); // Remove file item from list
 
         // Update data-file-index attribute for remaining file items
-        $('.removeFileBtn').each(function(index) {
-            $(this).attr('data-file-index', index);
+        $(".removeFileBtn").each(function (index) {
+            $(this).attr("data-file-index", index);
         });
     });
 
-
-
-    $('#confirmSendMessageBtn').on('click', function() {
-        var subject = $('#subject').val();
+    $("#confirmSendMessageBtn").on("click", function () {
+        var subject = $("#subject").val();
         var content = tinyMCE.get("createNewMessageArea").getContent();
         var emailToReceive = JSON.stringify(mainRecipientList); // Convert array to JSON string
         var filesToSend = filesArray;
@@ -335,79 +328,74 @@ $(document).ready(function() {
         var isValid = true;
 
         if (mainList.length === 0) {
-            $('#mainRecipientsError').text('Please select recipients');
+            $("#mainRecipientsError").text("Please select recipients");
             isValid = false;
         } else {
-            $('#mainRecipientsError').text('Please select recipients');
+            $("#mainRecipientsError").text("Please select recipients");
         }
-    
+
         if (emailToReceive === "[]") {
-            $('#mainRecipientsError').text('Please choose a recipient');
+            $("#mainRecipientsError").text("Please choose a recipient");
             isValid = false;
         } else {
-            $('#mainRecipientsError').text('');
+            $("#mainRecipientsError").text("");
         }
-    
-        if (subject === '') {
-            $('#subjectError').text('Please enter a message subject.');
+
+        if (subject === "") {
+            $("#subjectError").text("Please enter a message subject.");
             isValid = false;
         } else {
-            $('#subjectError').text('');
+            $("#subjectError").text("");
         }
-    
-        if (content === '') {
-            $('#contentError').text('Please enter a message.');
+
+        if (content === "") {
+            $("#contentError").text("Please enter a message.");
             isValid = false;
         } else {
-            $('#contentError').text('');
+            $("#contentError").text("");
         }
-    
+
         if (isValid) {
             var formData = new FormData();
-    
-            formData.append('subject', subject);
-            formData.append('emailToReceive', emailToReceive);
-            formData.append('content', content);
-    
+
+            formData.append("subject", subject);
+            formData.append("emailToReceive", emailToReceive);
+            formData.append("content", content);
+
             if (filesToSend.length > 0) {
                 for (var i = 0; i < filesToSend.length; i++) {
-                    formData.append('filesToSend[]', filesToSend[i]);
+                    formData.append("filesToSend[]", filesToSend[i]);
                 }
             }
-    
-            $('#loaderModal').removeClass('hidden');
+
+            $("#loaderModal").removeClass("hidden");
             var url = baseUrl + "/send";
-    
+
             $.ajax({
                 type: "POST",
                 url: url,
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken
+                    "X-CSRF-TOKEN": csrfToken,
                 },
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function(response) {
+                success: function (response) {
                     // console.log(response);
-                    
-        $('#loaderModal').addClass('hidden');
+
+                    $("#loaderModal").addClass("hidden");
                     window.location.reload();
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
-                }
+                },
             });
         }
-    
     });
 
-
-
-
     getMessages();
-    var searchVal  = "";
+    var searchVal = "";
     function getMessages(searchVal) {
-
         var url = baseUrl + "/getMessages";
 
         $.ajax({
@@ -416,47 +404,48 @@ $(document).ready(function() {
             data: {
                 searchVal: searchVal,
             },
-            success: function(response) {
+            success: function (response) {
                 // console.log(response)
 
-                var instructorData = response['instructor']
-                var messageData = response['messageData'];
-                dispSideMessageArea(messageData, instructorData)
+                var instructorData = response["instructor"];
+                var messageData = response["messageData"];
+                dispSideMessageArea(messageData, instructorData);
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
 
-    $('#search').on('input', function() {
+    $("#search").on("input", function () {
         searchVal = $(this).val();
 
-        getMessages(searchVal)
-    })
-
+        getMessages(searchVal);
+    });
 
     function dispSideMessageArea(messageData, instructorData) {
         var sideMessageAreaDisp = ``;
 
         for (let i = 0; i < messageData.length; i++) {
-            const message_id = messageData[i]['message_id'];
-            const message_content_id = messageData[i]['message_content_id'];
-            const sender_user_type = messageData[i]['sender_user_type'];
-            const sender_user_email = messageData[i]['sender_user_email'];
-            const sender_name = messageData[i]['sender_name'];
-            const sender_profile_picture = messageData[i]['sender_profile_picture'];
-            const receiver_user_type = messageData[i]['receiver_user_type'];
-            const receiver_user_email = messageData[i]['receiver_user_email'];
-            const receiver_name = messageData[i]['receiver_name'];
-            const receiver_profile_picture = messageData[i]['receiver_profile_picture'];
-            const date_sent = messageData[i]['date_sent'];
-            const isRead = messageData[i]['isRead'];
-            const date_read = messageData[i]['date_read'];
-            const message_subject = messageData[i]['message_subject'];
-            const message_content = messageData[i]['message_content'];
-            
-            if(instructorData['instructor_email'] === sender_user_email) {
+            const message_id = messageData[i]["message_id"];
+            const message_content_id = messageData[i]["message_content_id"];
+            const sender_user_type = messageData[i]["sender_user_type"];
+            const sender_user_email = messageData[i]["sender_user_email"];
+            const sender_name = messageData[i]["sender_name"];
+            const sender_profile_picture =
+                messageData[i]["sender_profile_picture"];
+            const receiver_user_type = messageData[i]["receiver_user_type"];
+            const receiver_user_email = messageData[i]["receiver_user_email"];
+            const receiver_name = messageData[i]["receiver_name"];
+            const receiver_profile_picture =
+                messageData[i]["receiver_profile_picture"];
+            const date_sent = messageData[i]["date_sent"];
+            const isRead = messageData[i]["isRead"];
+            const date_read = messageData[i]["date_read"];
+            const message_subject = messageData[i]["message_subject"];
+            const message_content = messageData[i]["message_content"];
+
+            if (instructorData["instructor_email"] === sender_user_email) {
                 // src="/storage/${profile}"
                 sideMessageAreaDisp += `
                 <li class="border-b border-darthmouthgreen hover:bg-gray-200">
@@ -477,12 +466,16 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             <div class="">
-                                ${isRead === 0 ? `<div class="w-2 h-2 rounded-full bg-darthmouthgreen"></div>` : ``}
+                                ${
+                                    isRead === 0
+                                        ? `<div class="w-2 h-2 rounded-full bg-darthmouthgreen"></div>`
+                                        : ``
+                                }
                             </div>
                         </div>   
                     </button>
                 </li>
-                `
+                `;
             } else {
                 sideMessageAreaDisp += `
                 <li class="border-b border-darthmouthgreen hover:bg-gray-200">
@@ -502,92 +495,86 @@ $(document).ready(function() {
                                 </div>
                             </div>
                             <div class="">
-                                ${isRead === 0 ? `<div class="w-2 h-2 rounded-full bg-darthmouthgreen"></div>` : ``}
+                                ${
+                                    isRead === 0
+                                        ? `<div class="w-2 h-2 rounded-full bg-darthmouthgreen"></div>`
+                                        : ``
+                                }
                             </div>
                         </div>   
                     </button>
                 </li>
-                `
+                `;
             }
-
-     
         }
 
-        $('#sideMessageArea').empty();
-        $('#sideMessageArea').append(sideMessageAreaDisp);
+        $("#sideMessageArea").empty();
+        $("#sideMessageArea").append(sideMessageAreaDisp);
         setTimeout(getFirstMessage, 100);
 
-
-        $('.selectThisMessage').on('click', function() {
-
-            var message_content_id = $(this).data('message-content-id')
+        $(".selectThisMessage").on("click", function () {
+            var message_content_id = $(this).data("message-content-id");
             // alert(message_content_id)
-            messageContentID = message_content_id
-            getSelectedMessage(message_content_id)
-        })
+            messageContentID = message_content_id;
+            getSelectedMessage(message_content_id);
+        });
     }
 
-    
-    var messageContentID
+    var messageContentID;
     function getFirstMessage() {
-        var firstLi = $('#sideMessageArea li:first-child')
+        var firstLi = $("#sideMessageArea li:first-child");
 
-        var message_content_id = firstLi.find('.selectThisMessage').data('message-content-id')
-        messageContentID = message_content_id
+        var message_content_id = firstLi
+            .find(".selectThisMessage")
+            .data("message-content-id");
+        messageContentID = message_content_id;
         // alert(message_content_id)
-        getSelectedMessage(message_content_id)
+        getSelectedMessage(message_content_id);
     }
-
-
-
 
     function getSelectedMessage(messageContent) {
+        var url = baseUrl + "/getSelectedMessage";
 
-            var url = baseUrl + "/getSelectedMessage";
-    
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: {
-                    messageContent: messageContent,
-                },
-                success: function(response) {
-                    // console.log(response)
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {
+                messageContent: messageContent,
+            },
+            success: function (response) {
+                // console.log(response)
 
-                    var instructorData = response['instructor']
-                    var messageData = response['messageData']
-                    var replyData = response['replyData']
+                var instructorData = response["instructor"];
+                var messageData = response["messageData"];
+                var replyData = response["replyData"];
 
-                    dispMessageArea(messageData, instructorData)
-                    dispReplyArea(replyData, instructorData)
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+                dispMessageArea(messageData, instructorData);
+                dispReplyArea(replyData, instructorData);
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
     }
-
-
 
     function dispMessageArea(messageData, instructor) {
         var messageAreaDisp = ``;
-        
-            const message_content_id = messageData['message_content_id'];
-            const message_subject = messageData['message_subject'];
-            const message_content = messageData['message_content'];
-            const message_has_file = messageData['message_has_file'];
-            const files = messageData['files'];
-            const date_sent = messageData['date_sent'];
-            const sender_user_type = messageData['sender_user_type'];
-            const sender_user_email = messageData['sender_user_email'];
-            const sender_profile_picture = messageData['sender_profile_picture'];
-            const messages = messageData['messages'];
-            const sender_name = messageData['sender_name'];
-            
 
-        $('#subjectArea').text(message_subject);
+        const message_content_id = messageData["message_content_id"];
+        const message_subject = messageData["message_subject"];
+        const message_content = messageData["message_content"];
+        const message_has_file = messageData["message_has_file"];
+        const files = messageData["files"];
+        const date_sent = messageData["date_sent"];
+        const sender_user_type = messageData["sender_user_type"];
+        const sender_user_email = messageData["sender_user_email"];
+        const sender_profile_picture = messageData["sender_profile_picture"];
+        const messages = messageData["messages"];
+        const sender_name = messageData["sender_name"];
+
+        $("#subjectArea").text(message_subject);
         // $('#replyNowBtn').data('message-content-id' , message_content_id)
-        messageContentID = message_content_id
+        messageContentID = message_content_id;
 
         messageAreaDisp += `
             <div class="flex items-center justify-between" id="userInfoArea">
@@ -597,24 +584,22 @@ $(document).ready(function() {
                     </div>
                     <div class="ml-3">
                         <h1 class="text-lg font-semibold">${sender_name}</h1>
-                        <h4 class="text-gray-700 text-md">to `
-                        messages.forEach((message, index) => {
-                            const type = message['receiver_user_type'].toLowerCase();
-                            const receiverEmail = message['receiver_user_email'];
-                            if (index !== messages.length - 1) {
-                                if (receiverEmail !== instructor['instructor_email']) {
-                                    messageAreaDisp += `<a href="/instructor/profile/${type}/${receiverEmail}">${receiverEmail}</a>, `;
-                                } else {
-                                    messageAreaDisp += `<a href="/instructor/profile">${receiverEmail}</a>, `;
-                                }
-                            } else {
-                                messageAreaDisp += `<a href="/instructor/profile/${type}/${receiverEmail}">${receiverEmail}</a>`;
-                            }
-                        });
-                        
+                        <h4 class="text-gray-700 text-md">to `;
+        messages.forEach((message, index) => {
+            const type = message["receiver_user_type"].toLowerCase();
+            const receiverEmail = message["receiver_user_email"];
+            if (index !== messages.length - 1) {
+                if (receiverEmail !== instructor["instructor_email"]) {
+                    messageAreaDisp += `<a href="/instructor/profile/${type}/${receiverEmail}">${receiverEmail}</a>, `;
+                } else {
+                    messageAreaDisp += `<a href="/instructor/profile">${receiverEmail}</a>, `;
+                }
+            } else {
+                messageAreaDisp += `<a href="/instructor/profile/${type}/${receiverEmail}">${receiverEmail}</a>`;
+            }
+        });
 
-
-        messageAreaDisp +=        `</h4>
+        messageAreaDisp += `</h4>
                     </div>
                 </div>
 
@@ -628,59 +613,72 @@ $(document).ready(function() {
             </div>
 
             <div class="px-16 mt-40 mb-16" id="messageContentPhotos">
-                <div class="flex flex-wrap photoArea">`
-                if (files && files.length > 0) {
-                files.forEach(file => {
-                    const filePath = file['message_content_file'];
-                    if (filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') || filePath.endsWith('.gif')) {
-                        // Display photo
-                        messageAreaDisp += `
+                <div class="flex flex-wrap photoArea">`;
+        if (files && files.length > 0) {
+            files.forEach((file) => {
+                const filePath = file["message_content_file"];
+                if (
+                    filePath.endsWith(".png") ||
+                    filePath.endsWith(".jpg") ||
+                    filePath.endsWith(".jpeg") ||
+                    filePath.endsWith(".gif")
+                ) {
+                    // Display photo
+                    messageAreaDisp += `
                             <img src="/storage/${filePath}" alt="Photo" class="w-48 h-48 m-2">
                         `;
-                    }
-                });
                 }
-                
-                messageAreaDisp +=    `</div>
+            });
+        }
+
+        messageAreaDisp += `</div>
             </div>
 
             <div class="px-16 mt-40" id="messageContentFiles">
-                <div class="flex flex-wrap fileArea">`
-                if (files && files.length > 0) {
-                files.forEach(file => {
-                    const filePath = file['message_content_file'];
-                    if (!(filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') || filePath.endsWith('.gif'))) {
-                        // Display downloadable link for document
-                        messageAreaDisp += `
-                            <a href="/storage/${filePath}" class="hover:text-darthmouthgreen" download="${filePath.split('/').pop()}">Download ${filePath.split('/').pop()}</a>
+                <div class="flex flex-wrap fileArea">`;
+        if (files && files.length > 0) {
+            files.forEach((file) => {
+                const filePath = file["message_content_file"];
+                if (
+                    !(
+                        filePath.endsWith(".png") ||
+                        filePath.endsWith(".jpg") ||
+                        filePath.endsWith(".jpeg") ||
+                        filePath.endsWith(".gif")
+                    )
+                ) {
+                    // Display downloadable link for document
+                    messageAreaDisp += `
+                            <a href="/storage/${filePath}" class="hover:text-darthmouthgreen" download="${filePath
+                                .split("/")
+                                .pop()}">Download ${filePath
+                                .split("/")
+                                .pop()}</a>
                         `;
-                    }
-                });
-            }
-                messageAreaDisp +=    `</div>
+                }
+            });
+        }
+        messageAreaDisp += `</div>
             </div>
         
-        `
+        `;
 
-
-            $('#mainMessage').empty();
-            $('#mainMessage').append(messageAreaDisp);
+        $("#mainMessage").empty();
+        $("#mainMessage").append(messageAreaDisp);
     }
-
 
     function dispReplyArea(replyData, instructor) {
         var replyAreaDisp = ``;
-    
+
         for (let i = 0; i < replyData.length; i++) {
-            const reply_user_email = replyData[i]['reply_user_email'];
-            const reply_user_type = replyData[i]['reply_user_type'];
-            const reply_profile_picture = replyData[i]['reply_profile_picture'];
-            const reply_name = replyData[i]['reply_name'];
-            const message_reply_content = replyData[i]['message_reply_content'];
-            const date_sent = replyData[i]['date_sent'];
-            const fileContents = replyData[i]['fileContents'];
-            
-    
+            const reply_user_email = replyData[i]["reply_user_email"];
+            const reply_user_type = replyData[i]["reply_user_type"];
+            const reply_profile_picture = replyData[i]["reply_profile_picture"];
+            const reply_name = replyData[i]["reply_name"];
+            const message_reply_content = replyData[i]["message_reply_content"];
+            const date_sent = replyData[i]["date_sent"];
+            const fileContents = replyData[i]["fileContents"];
+
             replyAreaDisp += `
             <div class="border-b border-darthmouthgreen mainMessageReplyArea">
                 <div class="flex items-center justify-between" id="userInfoArea">
@@ -690,17 +688,17 @@ $(document).ready(function() {
                         </div>
                         <div class="ml-3">
                             <h1 class="text-lg font-semibold">${reply_name}</h1>
-                            <h4 class="text-gray-700 text-md">`
-                            
-                            const type = reply_user_type.toLowerCase();
-                            const receiverEmail = reply_user_email;
-                            if (receiverEmail !== instructor['instructor_email']) {
-                                replyAreaDisp += `<a href="/instructor/profile/${type}/${reply_user_email}">${reply_user_email}</a>, `;
-                            } else {
-                                replyAreaDisp += `<a href="/instructor/profile">${receiverEmail}</a>, `;
-                            }
-                            
-            replyAreaDisp +=      `</h4>
+                            <h4 class="text-gray-700 text-md">`;
+
+            const type = reply_user_type.toLowerCase();
+            const receiverEmail = reply_user_email;
+            if (receiverEmail !== instructor["instructor_email"]) {
+                replyAreaDisp += `<a href="/instructor/profile/${type}/${reply_user_email}">${reply_user_email}</a>, `;
+            } else {
+                replyAreaDisp += `<a href="/instructor/profile">${receiverEmail}</a>, `;
+            }
+
+            replyAreaDisp += `</h4>
                         </div>
                     </div>
         
@@ -714,129 +712,141 @@ $(document).ready(function() {
                 </div>
         
                 <div class="px-16 mt-40 mb-16" id="messagereplyContentPhotos">
-                    <div class="flex flex-wrap replyPhotoArea">`
-                    if (fileContents && fileContents.length > 0) {
-                    fileContents.forEach(file => {
-                        const filePath = file['message_reply_content_file'];
-                        if (filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') || filePath.endsWith('.gif')) {
-                            // Display photo
-                            replyAreaDisp += `
+                    <div class="flex flex-wrap replyPhotoArea">`;
+            if (fileContents && fileContents.length > 0) {
+                fileContents.forEach((file) => {
+                    const filePath = file["message_reply_content_file"];
+                    if (
+                        filePath.endsWith(".png") ||
+                        filePath.endsWith(".jpg") ||
+                        filePath.endsWith(".jpeg") ||
+                        filePath.endsWith(".gif")
+                    ) {
+                        // Display photo
+                        replyAreaDisp += `
                                 <img src="/storage/${filePath}" alt="Photo" class="w-48 h-48 m-2">
                             `;
-                        }
-                    });
-                }
-                    replyAreaDisp +=    `</div>
+                    }
+                });
+            }
+            replyAreaDisp += `</div>
                 </div>
         
                 <div class="px-16 mt-40" id="messagereplyContentFiles">
-                    <div class="flex flex-wrap replyFileArea">`
-                    if (fileContents && fileContents.length > 0) {
-                    fileContents.forEach(file => {
-                        const filePath = file['message_reply_content_file'];
-                        if (!(filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') || filePath.endsWith('.gif'))) {
-                            // Display downloadable link for document
-                            replyAreaDisp += `
-                                <a href="/storage/${filePath}" class="hover:text-darthmouthgreen" download="${filePath.split('/').pop()}">Download ${filePath.split('/').pop()}</a>
+                    <div class="flex flex-wrap replyFileArea">`;
+            if (fileContents && fileContents.length > 0) {
+                fileContents.forEach((file) => {
+                    const filePath = file["message_reply_content_file"];
+                    if (
+                        !(
+                            filePath.endsWith(".png") ||
+                            filePath.endsWith(".jpg") ||
+                            filePath.endsWith(".jpeg") ||
+                            filePath.endsWith(".gif")
+                        )
+                    ) {
+                        // Display downloadable link for document
+                        replyAreaDisp += `
+                                <a href="/storage/${filePath}" class="hover:text-darthmouthgreen" download="${filePath
+                                    .split("/")
+                                    .pop()}">Download ${filePath
+                                    .split("/")
+                                    .pop()}</a>
                             `;
-                        }
-                    });
-                }
-                    replyAreaDisp +=     `</div>
+                    }
+                });
+            }
+            replyAreaDisp += `</div>
                 </div>
             </div>
         
-        `
-    
-    
+        `;
         }
-    
-        $('#mainMessageReplyContainer').empty();
-        $('#mainMessageReplyContainer').append(replyAreaDisp);
+
+        $("#mainMessageReplyContainer").empty();
+        $("#mainMessageReplyContainer").append(replyAreaDisp);
+
+        if ($("#mainMessage").children().length > 0) {
+            $("#conversationReplyArea").removeClass("hidden");
+            $("#no_msg").addClass("hidden");
+        }
     }
-    
-
-
 
     var replyNowFilesArray = [];
 
-    $('#reply_photo_upload, #reply_document_upload').on('change', function() {
-        var replyNowFileList = $('#replyNowFileList');
-    
-        $.each(this.files, function(i, file) {
+    $("#reply_photo_upload, #reply_document_upload").on("change", function () {
+        var replyNowFileList = $("#replyNowFileList");
+
+        $.each(this.files, function (i, file) {
             replyNowFilesArray.push(file);
-            var replyNowFileItem = $('<div>').text(file.name);
-            var removeButton = $('<button>').html('<i class="fa-solid fa-xmark" style="color: #025c26;"></i>')
-                                            .addClass('removeReplyNowFileBtn')
-                                            .attr('data-file-index', replyNowFilesArray.length - 1); // Set data attribute to track file index
+            var replyNowFileItem = $('<div class="badge m-1">').text(file.name);
+            var removeButton = $("<button>")
+                .html(
+                    '<i class="fa-solid fa-xmark" style="color: #025c26;"></i>',
+                )
+                .addClass("removeReplyNowFileBtn")
+                .attr("data-file-index", replyNowFilesArray.length - 1); // Set data attribute to track file index
             replyNowFileList.append(replyNowFileItem.append(removeButton));
         });
         // console.log(replyNowFilesArray);
     });
-    
-    $(document).on('click', '.removeReplyNowFileBtn', function() {
-        var fileIndex = $(this).attr('data-file-index');
+
+    $(document).on("click", ".removeReplyNowFileBtn", function () {
+        var fileIndex = $(this).attr("data-file-index");
         replyNowFilesArray.splice(fileIndex, 1); // Remove file from array
         $(this).parent().remove(); // Remove file item from list
-    
+
         // Update data-file-index attribute for remaining file items
-        $('.removeReplyNowFileBtn').each(function(index) {
-            $(this).attr('data-file-index', index);
+        $(".removeReplyNowFileBtn").each(function (index) {
+            $(this).attr("data-file-index", index);
         });
 
         // console.log(replyNowFilesArray);
     });
-    
 
-
-
-    $('#replyNowBtn').on('click', function() {
+    $("#replyNowBtn").on("click", function () {
         // alert(messageContentID)
         var content = tinyMCE.get("reply_textarea").getContent();
         var filesToSend = replyNowFilesArray;
-    
+
         var isValid = content.trim().length > 0 || filesToSend.length > 0;
-        $('#loaderModal').removeClass('hidden')
-    
+        $("#loaderModal").removeClass("hidden");
+
         if (!isValid) {
-            $('#replyError').text('Please enter your message');
+            $("#replyError").text("Please enter your message");
         } else {
             var formData = new FormData();
-    
-            formData.append('messageContentID', messageContentID);
-            formData.append('content', content);
-    
+
+            formData.append("messageContentID", messageContentID);
+            formData.append("content", content);
+
             if (filesToSend.length > 0) {
                 for (var i = 0; i < filesToSend.length; i++) {
-                    formData.append('filesToSend[]', filesToSend[i]);
+                    formData.append("filesToSend[]", filesToSend[i]);
                 }
             }
-    
+
             var url = baseUrl + "/reply";
-    
+
             $.ajax({
                 type: "POST",
                 url: url,
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken
+                    "X-CSRF-TOKEN": csrfToken,
                 },
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function(response) {
+                success: function (response) {
                     // console.log(response);
-                    
-                    $('#loaderModal').addClass('hidden')
+
+                    $("#loaderModal").addClass("hidden");
                     window.location.reload();
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
-                }
+                },
             });
         }
-    
     });
-    
-})
-
-
+});
