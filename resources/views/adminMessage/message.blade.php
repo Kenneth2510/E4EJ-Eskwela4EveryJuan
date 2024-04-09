@@ -32,7 +32,7 @@
                 </div>
 
             </div>
-            <div class="h-full bg-white shadow-lg lg:w-9/12 rounded-xl" id="upper_right_container">
+            <div class="h-full bg-white shadow-lg lg:w-9/12 rounded-xl min-h-[500px]" id="upper_right_container">
                 <h1 class="px-5 pt-10 text-2xl font-semibold text-darthmouthgreen" id="subjectArea"></h1>
 
                 <hr class="px-5 pt-10 border-t-2 border-gray-300">
@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    <div class="w-full p-4" style="height: 35%;" id="conversationReplyArea">
+                    <div class="hidden w-full p-4" id="conversationReplyArea">
                         <span id="replyError" class="text-red-500"></span>
                         <div class="flex flex-col w-full space-y-2">
                             <div class="flex flex-row items-center space-x-2">
@@ -71,7 +71,7 @@
                                     accept=".pdf,.doc,.docx" multiple style="display: none;"
                                     onchange="checkFileSize(this)">
                             </div>
-
+                            <div class="flex flex-wrap flex-grow px-2" id="replyNowFileList"></div>
                             <script>
                                 function checkFileSize(input) {
                                 const files = input.files;
@@ -91,10 +91,8 @@
                                 class="w-9/12 p-3 border rounded-lg max-w-10/12 border-darthmouthgreen"></textarea>
                             <button id="replyNowBtn" class="btn btn-primary">Send</button>
                         </div>
-                        <div id="replyNowFileList"></div>
                     </div>
-
-
+                    <div class="w-full text-center" id="no_msg">No Messages</div>
                 </div>
             </div>
         </div>

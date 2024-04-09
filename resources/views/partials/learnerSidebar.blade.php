@@ -301,19 +301,58 @@
 
 
 
-<section class="fixed z-20 hidden h-auto overflow-hidden text-black md:w-1/4 lg:w-1/5 md:relative" id="sidebar_half">
+<section class="fixed z-20 hidden w-full h-auto overflow-hidden text-black md:w-1/4 lg:w-1/5 md:relative"
+    id="sidebar_half">
 
 
-    <div class="fixed flex flex-col justify-between px-2 border-r-4 bg-mainwhitebg md:h-screen md:pt-16 md:relative border-darthmouthgreen"
+    <div class="fixed flex flex-row justify-between w-full px-2 border-r-4 md:flex-col bg-mainwhitebg md:h-screen md:pt-16 md:relative border-darthmouthgreen"
         id="instructorSidebar">
 
-        <div class="">
+        <div class="flex flex-col">
             <div class="">
                 <div class="flex items-center justify-center md:justify-start md:px-4 " id="logo_half">
                     <a href="{{ url('/learner/dashboard') }}">
                         <!-- {{-- <i class="mx-2 text-4xl fa-solid fa-book-bookmark"></i> --}}-->
 
-                        <img style="scale: 150%;" src="{{ asset('storage/images/e4ej_logo_icon.png')}}" alt="">
+                        <svg class="h-8 fill-darthmouthgreen" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 1080.000000 1223.000000" preserveAspectRatio="xMidYMid meet">
+                            <g transform="translate(0.000000,1223.000000) scale(0.100000,-0.100000)" stroke="none">
+                                <path d="M6870 10790 c-145 -26 -186 -35 -289 -67 -236 -72 -305 -106 -976
+                                                            -491 -225 -129 -734 -420 -1130 -647 -396 -227 -755 -433 -798 -458 -43 -26
+                                                            -80 -47 -82 -47 -3 0 -64 -35 -137 -78 -73 -43 -176 -102 -228 -131 -52 -30
+                                                            -158 -90 -235 -134 -452 -259 -441 -251 -477 -322 l-21 -40 7 -1590 c4 -874
+                                                            11 -2239 14 -3032 7 -1426 7 -1442 27 -1470 13 -18 65 -50 140 -88 96 -48 128
+                                                            -59 168 -60 43 0 52 4 70 28 l21 28 3 2957 c4 3306 -3 3008 77 3079 24 21 106
+                                                            74 182 117 77 44 301 175 499 291 198 116 448 263 555 325 107 62 258 150 335
+                                                            195 77 45 309 180 515 300 206 120 535 311 730 425 712 415 720 419 898 467
+                                                            212 56 419 39 607 -52 149 -72 252 -173 319 -315 28 -59 31 -74 31 -165 0 -89
+                                                            -3 -106 -27 -151 -15 -28 -39 -66 -54 -83 -56 -67 -2 -34 -1499 -916 -390
+                                                            -230 -903 -533 -1140 -673 -236 -140 -495 -292 -575 -339 -243 -143 -282 -171
+                                                            -310 -228 l-25 -50 -3 -535 c-1 -294 2 -1565 7 -2825 l8 -2290 23 -75 c105
+                                                            -349 397 -344 1020 18 311 181 457 266 515 302 33 20 83 49 110 65 85 47 512
+                                                            298 665 390 80 49 165 99 190 113 25 14 173 100 330 190 645 374 999 585 1065
+                                                            634 85 65 149 142 199 243 43 87 58 135 89 290 l22 110 0 2805 c0 2680 -1
+                                                            2810 -18 2910 -59 333 -157 539 -352 736 -163 165 -326 254 -590 319 -78 20
+                                                            -395 30 -475 15z m962 -1767 l23 -25 0 -2316 c0 -2141 -1 -2319 -17 -2347 -28
+                                                            -52 -66 -79 -323 -230 -137 -81 -304 -180 -370 -220 -66 -40 -226 -134 -355
+                                                            -210 -129 -76 -354 -209 -500 -295 -146 -86 -353 -209 -460 -272 -107 -63
+                                                            -399 -235 -648 -382 -488 -288 -520 -305 -569 -306 -28 0 -36 6 -53 40 -20 39
+                                                            -20 51 -20 2328 0 2582 -8 2352 79 2420 26 20 179 115 341 211 162 96 448 265
+                                                            635 376 396 235 1057 625 1265 747 80 47 258 152 395 233 480 284 484 286 530
+                                                            277 13 -2 34 -15 47 -29z m-1046 -5782 c95 -43 99 -183 8 -275 -39 -39 -89
+                                                            -72 -224 -148 -221 -125 -277 -146 -355 -128 -126 28 -123 198 5 299 71 56
+                                                            380 230 447 251 72 23 70 23 119 1z" />
+                                <path
+                                    d="M6723 9946 c-35 -13 -150 -74 -255 -136 -106 -63 -323 -190 -483
+                                                            -283 -159 -93 -382 -223 -495 -289 -113 -67 -439 -258 -725 -426 -286 -167
+                                                            -578 -339 -650 -382 -71 -42 -240 -141 -375 -220 -288 -168 -364 -220 -388
+                                                            -263 -16 -30 -17 -193 -17 -3007 l0 -2975 25 -50 c24 -48 31 -53 140 -107 119
+                                                            -60 167 -70 191 -41 12 13 15 484 19 2952 5 2823 6 2938 23 2984 32 81 -13 52
+                                                            1112 712 176 103 383 225 460 270 77 45 163 95 190 110 28 16 73 42 100 60 28
+                                                            18 154 93 280 167 127 74 354 208 505 298 151 90 331 194 399 232 164 92 216
+                                                            131 247 185 22 35 26 53 21 89 -13 121 -168 178 -324 120z" />
+                            </g>
+                        </svg>
                     </a>
                 </div>
                 <div class="hidden" id="logo_full">
@@ -328,8 +367,7 @@
 
             <ul class="flex flex-row justify-between mt-10 md:flex-col md:text-base">
                 <li id="" class="w-full py-3 rounded-lg instructor_dashboard hover:bg-darthmouthgreen group md:py-4">
-                    <a class="flex items-center justify-center md:justify-start md:px-4 "
-                        href="{{ url('/learner/dashboard')}}">
+                    <a class="flex items-center justify-center" href="{{ url('/learner/dashboard')}}">
                         <svg class="flex-shrink-0 mx-2 duration-500 stroke-black group-hover:stroke-white group-hover:animate-bounce"
                             width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g opacity="0.7">
@@ -343,7 +381,7 @@
                 </li>
 
                 <li id="" class="w-full py-3 rounded-lg instructor_discussions hover:bg-darthmouthgreen group md:py-4">
-                    <a class="flex items-center justify-center md:justify-start md:px-4" href="/learner/discussions">
+                    <a class="flex items-center justify-center" href="/learner/discussions">
                         <svg class="flex-shrink-0 mx-2 duration-500 fill-black group-hover:fill-white group-hover:animate-bounce"
                             width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -355,8 +393,7 @@
                 </li>
 
                 <li id="" class="w-full py-3 rounded-lg instructor_courses hover:bg-darthmouthgreen group md:py-4">
-                    <a class="flex items-center justify-center md:justify-start md:px-4"
-                        href="{{ url('/learner/courses') }}">
+                    <a class="flex items-center justify-center" href="{{ url('/learner/courses') }}">
 
                         <svg class="flex-shrink-0 mx-2 duration-500 fill-black group-hover:fill-white group-hover:animate-bounce"
                             width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -371,8 +408,7 @@
 
                 <li id=""
                     class="w-full py-3 rounded-lg instructor_courses hover:text-white hover:bg-darthmouthgreen group md:py-4">
-                    <a class="flex items-center justify-center md:justify-start md:px-4"
-                        href="{{ url('/learner/message') }}">
+                    <a class="flex items-center justify-center" href="{{ url('/learner/message') }}">
 
                         <i
                             class="mx-3 text-xl duration-500 fa-regular fa-message fill-black group-hover:fill-white group-hover:animate-bounce"></i>
@@ -382,7 +418,7 @@
                 </li>
 
                 <li id="" class="w-full py-3 rounded-lg instructor_performances hover:bg-darthmouthgreen group md:py-4">
-                    <a class="flex items-center justify-center md:justify-start md:px-4" href="{{ url("/learner/performances") }}">
+                    <a class="flex items-center justify-center" href="{{ url("/learner/performances") }}">
 
                         <svg class="flex-shrink-0 mx-3 duration-500 fill-black group-hover:fill-white group-hover:animate-bounce"
                             width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -396,7 +432,7 @@
                 </li>
 
                 {{-- <li id="instructor_calendar" class="w-full py-3 rounded-lg hover:bg-darthmouthgreen group md:py-4">
-                    <a class="flex items-center justify-center md:justify-start md:px-4" href="">
+                    <a class="flex items-center justify-center" href="">
 
                         <svg class="mx-2 duration-500 stroke-white group-hover:stroke-black group-hover:animate-bounce"
                             width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -416,8 +452,7 @@
                 </li> --}}
 
                 <li id="" class="w-full py-3 rounded-lg instructor_settings hover:bg-darthmouthgreen group md:py-4">
-                    <a class="flex items-center justify-center md:justify-start md:px-4"
-                        href="{{ url('/learner/profile') }}">
+                    <a class="flex items-center justify-center" href="{{ url('/learner/profile') }}">
 
                         <svg class="flex-shrink-0 mx-3 duration-500 fill-black group-hover:fill-white group-hover:animate-bounce"
                             width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -453,7 +488,7 @@
             </ul>
         </div>
 
-        <div class="flex flex-row items-center justify-center w-full h-12 hover:cursor-pointer" id="sidebar_full_btn">
+        <div class="flex flex-row items-center justify-center hidden w-full h-12 hover:cursor-pointer md:block" id="sidebar_full_btn">
             <i class="mb-5 text-3xl fa-regular fa-square-caret-right"></i>
         </div>
     </div>
