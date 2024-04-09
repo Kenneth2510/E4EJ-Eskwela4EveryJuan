@@ -52,13 +52,15 @@ use App\Http\Controllers\DateTime;
 use Carbon\Carbon;
 
 
+use App\Http\Controllers\ActivityLoggingController;
+
 class LearnerDiscussionController extends Controller
 {
 
     public function upvoteJuggling() {
 
         try {
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Manila');
             $timestampString = $now->toDateTimeString();
 
             $last_randomized_datetime_object = DB::table('thread_upvotes')
@@ -189,6 +191,16 @@ class LearnerDiscussionController extends Controller
         }
     }
 
+    public function log($action) {
+        $learner = session('learner');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $learner->learner_id;
+        $user_type = "Learner";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
+
 
     public function discussions() {
         if (session()->has('learner')) {
@@ -205,6 +217,9 @@ class LearnerDiscussionController extends Controller
                 'scripts' => ['learner_discussion.js'],
 
             ];
+
+            $action = "Opened Learner Discussion Forums";
+            $this->log($action);
 
             // dd($data);
             return view('learner_discussions.learnerDiscussion' , compact('learner'))
@@ -298,7 +313,7 @@ class LearnerDiscussionController extends Controller
 
                 
             $data = [
-                'title' => 'Performance',
+                'title' => 'Discussion',
                 'scripts' => ['learner_create_discussion.js'],
                 'courses' => $courseData,
             ];
@@ -344,7 +359,7 @@ class LearnerDiscussionController extends Controller
 
                 ThreadContents::create($threadContentData);
 
-                $now = Carbon::now();
+                $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
                 $min = 100;
@@ -361,10 +376,15 @@ class LearnerDiscussionController extends Controller
 
                 ThreadUpvotes::create($threadUpvoteData);
     
+                $action = "Posted New Thread ID:" . $newThreadRow->thread_id;
+                $this->log($action);
+
                 $data = [
                     'success' => true,
                     'redirect_url' => '/learner/discussions'
                 ];
+
+                
 
                 session()->flash('message', 'Thread successfully posted');
                 return response()->json($data);
@@ -428,7 +448,7 @@ class LearnerDiscussionController extends Controller
 
                 ThreadContents::create($threadContentData);
 
-                $now = Carbon::now();
+                $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
                 $min = 100;
@@ -444,6 +464,9 @@ class LearnerDiscussionController extends Controller
                 ];
 
                 ThreadUpvotes::create($threadUpvoteData);
+
+                $action = "Posted New Thread ID:" . $newThreadRow->thread_id;
+                $this->log($action);
 
                 $data = [
                     'success' => true,
@@ -506,6 +529,8 @@ class LearnerDiscussionController extends Controller
                 ->where('thread.thread_id', $thread->thread_id)
                 ->first();
 
+                $action = "Opened Thread ID:" . $thread->thread_id;
+                $this->log($action);
 
                 $data = [
                     'title' => 'Discussion',
@@ -667,6 +692,10 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'upvoted successfully',
                 ];
+
+                
+                $action = "Upvoted on Thread ID:" . $thread->thread_id;
+                $this->log($action);
     
                 return response()->json($data);
     
@@ -710,6 +739,9 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'upvoted successfully',
                 ];
+
+                $action = "Downvoted on Thread ID:" . $thread->thread_id;
+                $this->log($action);
     
                 return response()->json($data);
     
@@ -738,7 +770,7 @@ class LearnerDiscussionController extends Controller
 
                 $newThreadCommentRow = ThreadComments::create($rowData);
 
-                $now = Carbon::now();
+                $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
                 $min = 100;
@@ -760,6 +792,9 @@ class LearnerDiscussionController extends Controller
                     'message' => 'Comment successfully posted',
                 ];
     
+                $action = "Posted Comment Thread ID:" . $thread->thread_id;
+                $this->log($action);
+
                 session()->flash('message', 'Thread Comment successfully posted');
                 return response()->json($data);
     
@@ -791,7 +826,7 @@ class LearnerDiscussionController extends Controller
 
                 $newThreadCommentRow = ThreadCommentReplies::create($rowData);
 
-                $now = Carbon::now();
+                $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
                 $min = 100;
@@ -813,6 +848,9 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'Comment Reply successfully posted',
                 ];
+
+                $action = "Posted Comment Reply Thread ID:" . $thread->thread_id;
+                $this->log($action);
     
                 session()->flash('message', 'Thread Comment Reply successfully posted');
                 return response()->json($data);
@@ -847,7 +885,7 @@ class LearnerDiscussionController extends Controller
 
                 $newThreadReplyRow = ThreadReplyReplies::create($rowData);
 
-                $now = Carbon::now();
+                $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
                 $min = 100;
@@ -871,6 +909,9 @@ class LearnerDiscussionController extends Controller
                     'message' => 'Comment Reply successfully posted',
                 ];
     
+                $action = "Posted Comment Reply Reply Thread ID:" . $thread->thread_id;
+                $this->log($action);
+
                 session()->flash('message', 'Thread Comment Reply successfully posted');
                 return response()->json($data);
     
@@ -919,6 +960,9 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'upvoted successfully',
                 ];
+
+                $action = "Upvoted Thread Comment ID:" . $thread_comment->thread_comment_id;
+                $this->log($action);
     
                 return response()->json($data);
     
@@ -964,6 +1008,9 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'upvoted successfully',
                 ];
+
+                $action = "Downvoted Thread Comment ID:" . $thread_comment->thread_comment_id;
+                $this->log($action);
     
                 return response()->json($data);
     
@@ -1012,6 +1059,10 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'upvoted successfully',
                 ];
+
+                
+                $action = "Upvoted Thread Comment Reply ID:" . $thread_comment_reply->thread_comment_reply_id;
+                $this->log($action);
     
                 return response()->json($data);
     
@@ -1060,6 +1111,9 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'upvoted successfully',
                 ];
+
+                $action = "Downvoted Thread Comment Reply ID:" . $thread_comment_reply->thread_comment_reply_id;
+                $this->log($action);
     
                 return response()->json($data);
     
@@ -1111,6 +1165,9 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'upvoted successfully',
                 ];
+
+                $action = "Upvoted Thread Comment Reply Reply ID:" . $thread_reply_reply->thread_reply_reply_id;
+                $this->log($action);
     
                 return response()->json($data);
     
@@ -1161,6 +1218,9 @@ class LearnerDiscussionController extends Controller
                 $data = [
                     'message' => 'upvoted successfully',
                 ];
+
+                $action = "Downvoted Thread Comment Reply Reply ID:" . $thread_reply_reply->thread_reply_reply_id;
+                $this->log($action);
     
                 return response()->json($data);
     

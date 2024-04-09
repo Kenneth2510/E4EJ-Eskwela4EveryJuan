@@ -41,6 +41,8 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Http\Controllers\PDFGenerationController;
 
+use App\Http\Controllers\ActivityLoggingController;
+
 class AdminCourseController extends Controller
 {
    
@@ -48,6 +50,18 @@ class AdminCourseController extends Controller
 public function courses() {
     return $this->search_course();
 }
+
+
+public function log($action) {
+    $admin = session('admin');
+    $logging = new ActivityLoggingController();
+
+    $user_id = $admin->admin_id;
+    $user_type = "Admin";
+
+    $logging->log_activity($user_type, $user_id, $action);
+}
+
 
 public function search_course() {
 
@@ -183,6 +197,9 @@ public function store_new_course(Request $request) {
             'course_id' => $courseData->course_id,
         ]);
 
+        $action = "Created New Course, Course ID: " . $courseData->course_id . " Course Name: " . $courseData->course_name;
+        $this->log($action);
+
         session()->flash('message', 'Course Added successfully');
         $data = [
             'message' => 'Course added successfully',
@@ -248,6 +265,9 @@ public function view_course($id) {
             ->orderBy('instructor_fname', 'ASC')
             ->get();
 
+            $action = "Viewed Course ID: " . $course->course_id;
+            $this->log($action);
+
             return view('admin.view_course', compact('course'), [
                 'title' => 'Course Management',
                 'admin' => $adminSession,
@@ -290,6 +310,9 @@ public function update_course(Course $course, Request $request) {
 
             $reportController->courseDetails($course);
 
+            $action = "Updated Course Details, Course ID: ". $course->course_id;
+            $this->log($action);
+
             session()->flash('message', 'Course updated Successfully');
             return response()->json(['message' => 'Course updated successfully', 'redirect_url' => "/admin/view_course/$course->course_id"]);
             
@@ -316,7 +339,13 @@ public function update_course(Course $course, Request $request) {
 
 public function delete_course(Course $course) {
     try {
+
+        $action = "Deleted Course ID:  ". $course->course_id;
+        $this->log($action);
+
+
         $course->delete();
+
 
 
         session()->flash('message', 'Course deleted Successfully');
@@ -341,6 +370,9 @@ public function approveCourse(Course $course)
         $reportController->courseList();
         $reportController->courseDetails($course);
 
+        $action = "Updated Status into Approved, Course ID: ". $course->course_id;
+        $this->log($action);
+
     } catch (\Exception $e) {
         dd($e->getMessage());
     }
@@ -351,6 +383,10 @@ public function rejectCourse(Course $course)
 {
     try {
         $course->update(['course_status' => 'Rejected']);  
+
+        $action = "Updated Status into Rejected, Course ID: ". $course->course_id;
+        $this->log($action);
+
     } catch (\Exception $e) {
         dd($e->getMessage());
     }
@@ -362,6 +398,9 @@ public function pendingCourse(Course $course)
 {
     try {
         $course->update(['course_status' => 'Pending']);  
+
+        $action = "Updated Status into Pending, Course ID: ". $course->course_id;
+        $this->log($action);
     } catch (\Exception $e) {
         dd($e->getMessage());
     }
@@ -973,7 +1012,7 @@ public function course_enrollees (Request $request, Course $course) {
 public function approve_learner_course(LearnerCourse $learnerCourse) {
     try {
         // dd($learnerCourse);
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Manila');
         $timestampString = $now->toDateTimeString();
         // dd($learnerCourse);
         $learnerCourse->update([

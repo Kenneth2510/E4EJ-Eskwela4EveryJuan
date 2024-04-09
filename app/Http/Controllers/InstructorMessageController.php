@@ -49,8 +49,23 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
 use Codedge\Fpdf\Fpdf\Fpdf;
 
+
+use App\Http\Controllers\ActivityLoggingController;
+
 class InstructorMessageController extends Controller
 {
+
+    public function log($action) {
+        $instructor = session('instructor');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $instructor->instructor_id;
+        $user_type = "Instructor";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
+
+
     public function index() {
         if (session()->has('instructor')) {
             $instructor= session('instructor');
@@ -65,6 +80,9 @@ class InstructorMessageController extends Controller
                 'scripts' => ['instructorMessage.js'],
 
             ];
+
+            $action = "Opened Instructor Message";
+            $this->log($action);
 
             // dd($data);
             return view('instructor_message.message' , compact('instructor'))
@@ -158,7 +176,7 @@ class InstructorMessageController extends Controller
 
             $filesToSend = $request->file('filesToSend');
 
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Manila');
             $timestampString = $now->toDateTimeString();
 
             $hasFiles = is_array($filesToSend) && count($filesToSend) > 0 ? 1 : 0;
@@ -208,6 +226,9 @@ class InstructorMessageController extends Controller
                     MessageContentFile::create($rowMessageContentFileData);
                 }
             }
+
+            $action = "Sent a Message ID: " . $messageContent->message_content_id;
+            $this->log($action);
             
         $data = [
             'title' => 'Send Message',
@@ -498,7 +519,7 @@ class InstructorMessageController extends Controller
 
             $filesToSend = $request->file('filesToSend');
 
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Manila');
             $timestampString = $now->toDateTimeString();
 
             $hasFiles = is_array($filesToSend) && count($filesToSend) > 0 ? 1 : 0;
@@ -549,6 +570,9 @@ class InstructorMessageController extends Controller
                     MessageReplyContentFile::create($rowMessageContentFileData);
                 }
             }
+
+            $action = "Replied to a Message ID: " . $message_content_id;
+            $this->log($action);
             
         $data = [
             'title' => 'Send Message',

@@ -138,7 +138,7 @@ Route::controller(AdminController::class)->group(function() {
     Route::get('/admin/dashboard', 'dashboard');
     Route::get('/admin/dashboard/getCountData', 'getCountData');
     Route::get('/admin/dashboard/getCourseProgressData', 'getCourseProgressData');
-
+    Route::get('/admin/logs' , 'activityLogs');
 });
 
 

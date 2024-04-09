@@ -29,6 +29,9 @@ use App\Http\Controllers\PDFGenerationController;
 use App\Http\Controllers\ChatBotController;
 
 
+use App\Http\Controllers\ActivityLoggingController;
+
+
 class LearnerController extends Controller
 {
 
@@ -50,7 +53,15 @@ class LearnerController extends Controller
 
 
 
-
+    public function log($action) {
+        $learner = session('learner');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $learner->learner_id;
+        $user_type = "Learner";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
     
     public function login_process(Request $request) {
         
@@ -124,6 +135,10 @@ class LearnerController extends Controller
             )
             ->where('learner_email', '=', $email)
             ->first();
+
+            $action = "Password Reset Request Learner ID: " . $learner->learner_id;
+            $this->log($action);
+    
     
         if (!$learner) {
             return response()->json(['message' => 'Learner not found'], 404);
@@ -221,6 +236,13 @@ class LearnerController extends Controller
             ->where('token', $token)
             ->first();
     
+        $learner = DB::table('learner')
+        ->select(
+            'learner_id'
+        )
+        ->where("learner_email", $passwordResetToken)
+        ->first();
+
         if (!$passwordResetToken) {
             // Token not found or expired
             return redirect()->route('login')->withErrors(['email' => 'Invalid or expired token.']);
@@ -255,7 +277,9 @@ class LearnerController extends Controller
         DB::table('password_reset_tokens')
             ->where('token', $token)
             ->delete();
-    
+
+            $action = "Password Reset Request Learner ID: " . $learner->learner_id;
+            $this->log($action);
         // Redirect to a success page or login page
         return redirect('/learner')->with('status', 'Password successfully changed.');
     }
@@ -312,6 +336,10 @@ class LearnerController extends Controller
             Cache::forget('auth_attempts');
     
             if ($learner->status === 'Approved') {
+
+                $action = "Logged in";
+                $this->log($action);
+
                 return redirect('/learner/dashboard')->with('message', 'Authenticated Successfully');
             } else {
                 return redirect('/learner/wait')->with('message', 'Authenticated Successfully');
@@ -350,7 +378,7 @@ class LearnerController extends Controller
 
         $learner = session('learner');
 
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Manila');
         $timestampString = $now->toDateTimeString();
     
 
@@ -383,6 +411,8 @@ class LearnerController extends Controller
     //    $chatBotController = new ChatBotController();
     //    $chatBotController->reset($learner->learner_id);
 
+        $action = "Logged out";
+        $this->log($action);
 
         $client = new Client();
     
@@ -394,7 +424,7 @@ class LearnerController extends Controller
             echo $response->getBody();
         } catch (\Exception $e) {
             // Output any errors that occur
-            echo "Error resetting session $session_id: " . $e->getMessage();
+            echo "Error resetting session $session_data->session_log_id: " . $e->getMessage();
         }
         
         auth('learner')->logout();
@@ -413,9 +443,6 @@ class LearnerController extends Controller
             'scripts' => ['learnerRegister.js'] ,
         ]);
     }
-    // public function register1(){
-    //     return view('learner.register1')->with('title', 'Learner Register');
-    // }
 
 
     public function register_process(Request $request) {
@@ -507,6 +534,9 @@ class LearnerController extends Controller
         $reportController = new PDFGenerationController();
 
         $reportController->learnerData($newCreatedLearner->learner_id);
+
+        $action = "Registered new Learner ID: " . $newCreatedLearner;
+        $this->log($action);
 
         session()->flash('message', 'Learner Account Created successfully');
         return redirect('/learner')->with('title', 'Learner Management')->with('message' , 'Data was successfully stored');
@@ -848,6 +878,10 @@ class LearnerController extends Controller
         $reportController = new PDFGenerationController();
 
         $reportController->learnerData($learner->learner_id);
+
+               
+        $action = "Updated Details Learner ID: " . $learner->learner_id;
+        $this->log($action);
             
         session(['learner' => $learner]);
 
@@ -890,41 +924,6 @@ class LearnerController extends Controller
     }
 
 
-    // public function update_user_info(Request $request) {
-    //     if (session()->has('learner')) {
-    //         $learner = session('learner');
-    
-    //         try {
-    //             $updated_learnerData = $request->validate([
-    //                 "learner_fname" => ['required'],
-    //                 "learner_lname" => ['required'],
-    //                 "learner_bday" => ['required'],
-    //                 "learner_gender" => ['required'],
-    //             ]);
-    
-    //             $oldFolderName = "{$learner->learner_lname} {$learner->learner_fname}";
-                
-    //             Learner::where('learner_id', $learner->learner_id)
-    //                 ->update($updated_learnerData);
-    
-    //             $newFolderName = "{$updated_learnerData['learner_lname']} {$updated_learnerData['learner_fname']}";
-    
-    //             Storage::move("path_to_your_storage/{$oldFolderName}", "path_to_your_storage/{$newFolderName}");
-    
-    //             $reportController = new PDFGenerationController();
-    //             $reportController->learnerData($learner->learner_id);
-    
-    //             session()->flash('message', 'User Info changed successfully');
-    
-    //         } catch (\Exception $e) {
-    //             // Handle the exception
-    //             $e->getMessage();
-    //         }
-    //     } else {
-    //         return redirect('/learner');
-    //     }  
-    // }
-
     public function update_user_info(Request $request) {
         if (session()->has('learner')) {
             $learner = session('learner');
@@ -957,6 +956,9 @@ class LearnerController extends Controller
                 if (Storage::exists($oldFolderPath)) {
                     Storage::move($oldFolderPath, $folderPath);
                 }
+
+                $action = "Updated Details Learner ID: " . $learner->learner_id;
+                $this->log($action);
     
                 session()->flash('message', 'User Info changed successfully');
     
@@ -1001,6 +1003,9 @@ class LearnerController extends Controller
                 $reportController->learnerData($learner->learner_id);
 
 
+                $action = "Updated Details Learner ID: " . $learner->learner_id;
+                $this->log($action);
+
                 session()->flash('message', 'User Info changed successfully');
                 
                 // return redirect('/learner/profile')->with('message' , 'Profile updated successfully');
@@ -1042,6 +1047,8 @@ class LearnerController extends Controller
                     $message = 'Error Occurred';
                  }
 
+                 $action = "Updated Details Learner ID: " . $learner->learner_id;
+                 $this->log($action);
                 
                 // return redirect('/learner/profile')->with('message' , 'Profile updated successfully');
                 return response()->json(['message' => $message]);
@@ -1079,6 +1086,9 @@ class LearnerController extends Controller
 
                 $learner->profile_picture = $filePath;
                 session(['learner' => $learner]);
+
+                $action = "Updated Details Learner ID: " . $learner->learner_id;
+                $this->log($action);
 
                 return redirect('/learner/profile')->with('message', 'Profile picture updated successfully');
     
@@ -1120,6 +1130,9 @@ class LearnerController extends Controller
                 ->join('course', 'learner_course_progress.course_id', 'course.course_id')
                 ->where('learner_course_progress.learner_id', $learnerData->learner_id)
                 ->get();
+
+                $action = "Viewed Details of Learner ID: " . $learnerData->learner_id;
+                $this->log($action);
    
             $data = [
                 'title' => 'Profile',
@@ -1163,6 +1176,10 @@ class LearnerController extends Controller
                 )
                 ->get();
             
+                $action = "Viewed Details of Instructor ID: " . $instructorData->instructor_id;
+                $this->log($action);
+
+                
 
             $data = [
                 'title' => 'Profile',
