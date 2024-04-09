@@ -38,12 +38,26 @@ use App\Mail\MailNotify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\ActivityLoggingController;
+
 class AdminInstructorController extends Controller
 {
     // -----------------------admin instructor------------------------- 
     public function instructors() {
         return $this->search_instructor();
     }
+
+
+    public function log($action) {
+        $admin = session('admin');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $admin->admin_id;
+        $user_type = "Admin";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
+    
 
     public function search_instructor() {
 
@@ -187,7 +201,11 @@ public function store_new_instructor(Request $request) {
                     // add to database
                     $instructorData['profile_picture'] = $defaultPhoto_path;
                     $instructorData['instructor_credentials'] = $filePath;
-                    Instructor::create($instructorData);
+                    $instructor = Instructor::create($instructorData);
+
+
+                    $action = "Created New Instructor ID: " . $instructor->instructor_id;
+                    $this->log($action);
 
                     session()->flash('message', 'Instructor Added successfully');
                     $data = [
@@ -242,6 +260,9 @@ public function store_new_instructor(Request $request) {
                 ];
 
                 // dd($data);
+                
+                $action = "Viewed Instructor ID: " . $instructorData->instructor_id;
+                $this->log($action);
 
                 return view('admin.view_instructor')->with($data);
 
@@ -279,6 +300,9 @@ public function store_new_instructor(Request $request) {
                 Mail::to($instructor->instructor_email)->send($mailNotify);
                 
                 // return response()->json(['Great! check your mail box']);
+
+                $action = "Updated Status into Approved, Instructor ID: " . $instructor->instructor_id;
+                $this->log($action);
     
             } catch (\Exception $th) {
                 dd($th);
@@ -294,6 +318,10 @@ public function store_new_instructor(Request $request) {
     {
         try {
             $instructor->update(['status' => 'Blocked']);  
+
+            $action = "Blocked Instructor ID: " . $instructor->instructor_id;
+            $this->log($action);
+
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -305,6 +333,10 @@ public function store_new_instructor(Request $request) {
     {
         try {
             $instructor->update(['status' => 'Pending']);  
+
+            $action = "Updated Status into Pending Instructor ID: " . $instructor->instructor_id;
+            $this->log($action);
+
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -312,13 +344,86 @@ public function store_new_instructor(Request $request) {
         return redirect()->back()->with('message' , 'Instructor Status successfully changed');
     }
 
+    // public function update_instructor(Instructor $instructor, Request $request) {
+    //     if (auth('admin')->check()) {
+    //         $adminSession = session('admin');
+    
+    //         if (in_array($adminSession->role, ['IT_DEPT', 'SUPER_ADMIN', 'USER_MANAGER'])) {
+
+
+    //             $withPass = $request->input('withPass');
+    //             $instructorData = [
+    //                 "instructor_fname" => $request->input('instructor_fname'),
+    //                 "instructor_lname" => $request->input('instructor_lname'),
+    //                 "instructor_bday" => $request->input('instructor_bday'),
+    //                 "instructor_gender" => $request->input('instructor_gender'),
+    //                 "instructor_contactno" => $request->input('instructor_contactno'),
+    //                 "instructor_email" => $request->input('instructor_email'),
+    //                 "instructor_username" => $request->input('instructor_username'),
+    //             ];
+    //             // dd($instructorData);
+    
+    //             if ($withPass == 1) {
+    //                 $instructorData['password'] = bcrypt($request->input('password'));
+    //                 $instructorData['learner_security_code'] = $request->input('instructor_security_code');
+    //             }
+    
+    //             $folderName = Str::slug("{$instructorData['instructor_lname']} {$instructorData['instructor_fname']}", '_');
+    
+    //             if ($request->hasFile('instructor_credentials')) {
+    //                 $file = $request->file('instructor_credentials');
+    //                 $fileName = time() . '-' . $file->getClientOriginalName();
+    //                 $folderPath = 'instructors/' . $folderName;
+    //                 $filePath = $file->storeAs($folderPath, $fileName, 'public');
+    
+    //                 $instructorData['instructor_credentials'] = $filePath;
+    //             }
+    
+    //             $instructor->update($instructorData);
+
+    //             // Generate new folder name
+    //         $folderName = Str::slug("{$instructorData['instructor_lname']} {$instructorData['instructor_fname']}", '_');
+    //         $folderPath = 'instructors/' . $folderName;
+
+    //         // Rename the folder if the name has changed
+    //         $oldFolderName = Str::slug("{$instructor->original['instructor_lname']} {$instructor->original['instructor_fname']}", '_');
+    //         $oldFolderPath = 'instructors/' . $oldFolderName;
+
+    //         if (Storage::exists($oldFolderPath)) {
+    //             Storage::move($oldFolderPath, $folderPath);
+    //         }
+    
+            
+    //         $action = "Updated Details Instructor ID: " . $instructor->instructor_id;
+    //         $this->log($action);
+
+    //             session()->flash('message', 'Instructor Updated successfully');
+    //             $data = [
+    //                 'message' => 'Learner updated successfully',
+    //                 'redirect_url' => '/admin/view_instructor/' . $instructor->instructor_id,
+    //             ];
+    
+    //             return response()->json($data);
+    //         } else {
+    //             session()->flash('message', 'You cannot create new instructor account');
+    //             $data = [
+    //                 'message' => 'You cannot create new instructor account',
+    //                 'redirect_url' => '/admin/view_instructor/' . $instructor->instructor_id,
+    //             ];
+    
+    //             return response()->json($data);
+    //         }
+    //     } else {
+    //         return redirect('/admin');
+    //     }
+    // }
+    
+
     public function update_instructor(Instructor $instructor, Request $request) {
         if (auth('admin')->check()) {
             $adminSession = session('admin');
     
             if (in_array($adminSession->role, ['IT_DEPT', 'SUPER_ADMIN', 'USER_MANAGER'])) {
-
-
                 $withPass = $request->input('withPass');
                 $instructorData = [
                     "instructor_fname" => $request->input('instructor_fname'),
@@ -329,7 +434,6 @@ public function store_new_instructor(Request $request) {
                     "instructor_email" => $request->input('instructor_email'),
                     "instructor_username" => $request->input('instructor_username'),
                 ];
-                // dd($instructorData);
     
                 if ($withPass == 1) {
                     $instructorData['password'] = bcrypt($request->input('password'));
@@ -347,31 +451,39 @@ public function store_new_instructor(Request $request) {
                     $instructorData['instructor_credentials'] = $filePath;
                 }
     
-                $instructor->update($instructorData);
-
+                // Reload the instructor model to ensure it's up to date
+                $instructor = $instructor->fresh();
+    
                 // Generate new folder name
-            $folderName = Str::slug("{$instructorData['instructor_lname']} {$instructorData['instructor_fname']}", '_');
-            $folderPath = 'instructors/' . $folderName;
-
-            // Rename the folder if the name has changed
-            $oldFolderName = Str::slug("{$instructor->original['instructor_lname']} {$instructor->original['instructor_fname']}", '_');
-            $oldFolderPath = 'instructors/' . $oldFolderName;
-
-            if (Storage::exists($oldFolderPath)) {
-                Storage::move($oldFolderPath, $folderPath);
-            }
+                $folderName = Str::slug("{$instructorData['instructor_lname']} {$instructorData['instructor_fname']}", '_');
+                $folderPath = 'instructors/' . $folderName;
+    
+                // Rename the folder if the name has changed
+                if ($instructor && isset($instructor->original['instructor_lname']) && isset($instructor->original['instructor_fname'])) {
+                    $oldFolderName = Str::slug("{$instructor->original['instructor_lname']} {$instructor->original['instructor_fname']}", '_');
+                    $oldFolderPath = 'instructors/' . $oldFolderName;
+    
+                    if (Storage::exists($oldFolderPath)) {
+                        Storage::move($oldFolderPath, $folderPath);
+                    }
+                }
+    
+                $instructor->update($instructorData);
+    
+                $action = "Updated Details Instructor ID: " . $instructor->instructor_id;
+                $this->log($action);
     
                 session()->flash('message', 'Instructor Updated successfully');
                 $data = [
-                    'message' => 'Learner updated successfully',
+                    'message' => 'Instructor updated successfully',
                     'redirect_url' => '/admin/view_instructor/' . $instructor->instructor_id,
                 ];
     
                 return response()->json($data);
             } else {
-                session()->flash('message', 'You cannot create new instructor account');
+                session()->flash('message', 'You cannot create a new instructor account');
                 $data = [
-                    'message' => 'You cannot create new instructor account',
+                    'message' => 'You cannot create a new instructor account',
                     'redirect_url' => '/admin/view_instructor/' . $instructor->instructor_id,
                 ];
     
@@ -383,30 +495,4 @@ public function store_new_instructor(Request $request) {
     }
     
 
-    // public function destroy_instructor(Instructor $instructor) {
-        
-    //     try {
-
-    //         $relativeFilePath = str_replace('public/', '', $instructor->instructor_credentials);
-    //         if (Storage::disk('public')->exists($relativeFilePath)) {
-    //             // Storage::disk('public')->delete($relativeFilePath);
-    //             $specifiedDir = explode('/', $relativeFilePath);
-    //             array_pop($specifiedDir);
-
-    //             $dirPath = implode('/', $specifiedDir);
-
-    //             // dd($dirPath);
-    //             Storage::disk('public')->deleteDirectory($dirPath);
-    //         }
-    
-    //         $instructor->delete();
-    
-    //         session()->flash('message', 'Instructor deleted Successfully');
-    //         return response()->json(['message' => 'Instructor deleted successfully', 'redirect_url' => "/admin/instructors"]);
-            
-        
-    //     } catch (\Exception $e) {
-    //         dd($e->getMessage());
-    //     }
-    // }
 }

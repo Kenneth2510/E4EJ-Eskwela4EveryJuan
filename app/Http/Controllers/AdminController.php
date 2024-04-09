@@ -38,6 +38,8 @@ use App\Mail\MailNotify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\ActivityLoggingController;
+
 class AdminController extends Controller
 {
     public function index()
@@ -50,6 +52,16 @@ class AdminController extends Controller
     return view('admin.index')->with('title', 'Eskwela4EveryJuan Admin');
 }
 
+
+public function log($action) {
+    $admin = session('admin');
+    $logging = new ActivityLoggingController();
+
+    $user_id = $admin->admin_id;
+    $user_type = "Admin";
+
+    $logging->log_activity($user_type, $user_id, $action);
+}
 
 public function login_process(Request $request) {
     $adminData = $request->validate([
@@ -65,6 +77,8 @@ public function login_process(Request $request) {
 
         $request->session()->regenerate();
 
+        $action = "Logged In";
+        $this->log($action);
         return redirect('/admin/dashboard')->with('message', "Welcome Back");
     }
 
@@ -77,7 +91,8 @@ public function login_process(Request $request) {
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
+        $action = "Logged Out";
+        $this->log($action);
         return redirect('/admin')->with('message', 'Logout Successful');
     
     }
