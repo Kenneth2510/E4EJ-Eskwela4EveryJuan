@@ -1,16 +1,12 @@
-@include('partials.header')
+@extends('layouts.admin_layout')
 
-<section class="flex flex-row w-screen text-sm main-container bg-mainwhitebg md:text-base">
-    @include('partials.sidebar')
-
-
-
-
-    <section class="w-screen px-2 pt-[40px] mx-2 mt-2  overscroll-auto md:overflow-auto">
-        <div class="flex justify-between px-10">
-            <h1 class="text-6xl font-bold text-darthmouthgreen">Performance Overview</h1>
+@section('content')
+<section class="w-full h-auto text-black md:h-screen lg:w-10/12">
+    <div class="h-full px-2 py-4 pt-12 rounded-lg shadow-lg md:overflow-auto md:pt-6">
+        <div class="flex items-center justify-between p-3">
+            <h1 class="text-2xl font-bold text-darthmouthgreen md:text-3xl lg:text-4xl">Performance Overview</h1>
             <div class="">
-                <p class="text-xl font-semibold text-darthmouthgreen">{{$admin->admin_codename}}</p>
+                <p class="font-semibold text-darthmouthgreen md:text-lg">{{$admin->admin_codename}}</p>
             </div>
         </div>
 
@@ -24,81 +20,82 @@
             <hr class="my-6 border-t-2 border-gray-300">
         </div>
 
-        <div class="flex p-10 mt-5" id="genInfo">
-            <div class="w-3/5 h-[300px] border-2 border-darthmouthgreen" id="totalCourseArea">
-                <div class="flex justify-center mx-10 mt-10 text-center h-2/3 item-center">
-                    <i class="fa-solid fa-book-open-reader text-darthmouthgreen text-[175px]"></i>
-                    <p class="mx-5 mt-3 text-2xl font-bold py-14"><span class="text-darthmouthgreen text-[125px]"
+        <div class="flex w-full space-x-2" id="genInfo">
+            <div class="relative w-1/2 md:w-3/5 h-[300px] border-2 border-darthmouthgreen flex flex-col justify-between py-2 md:py-4"
+                id="totalCourseArea">
+                <div class="flex justify-center text-center item-center">
+                    <i
+                        class="absolute -translate-y-1/2 md:px-4 md:opacity-100 md:relative fa-solid fa-book-open-reader text-darthmouthgreen fa-10x opacity-20 top-1/2"></i>
+                    <p class="text-2xl font-bold"><span class="text-8xl text-darthmouthgreen"
                             id="totalCourseNum">0</span><br>Total Courses</p>
                 </div>
-                <div class="flex justify-center mt-5">
-                    <div class="flex items-center mx-5">
+                <div class="flex flex-col justify-center md:flex-row">
+                    <div class="flex items-center">
                         <div class="w-3 h-3 mx-3 rounded-full bg-darthmouthgreen"></div>
                         <p class="font-bold text-md">Approved: <span id="totalApprovedCourse" class="">0</span></p>
                     </div>
 
-                    <div class="flex items-center mx-5">
+                    <div class="flex items-center">
                         <div class="w-3 h-3 mx-3 bg-yellow-400 rounded-full"></div>
                         <p class="font-bold text-md">Pending: <span id="totalPendingCourse" class="">0</span></p>
                     </div>
 
-                    <div class="flex items-center mx-5">
+                    <div class="flex items-center">
                         <div class="w-3 h-3 mx-3 bg-red-700 rounded-full"></div>
                         <p class="font-bold text-md">Rejected: <span id="totalRejectedCourse" class="">0</span></p>
                     </div>
                 </div>
 
             </div>
-            <div class="mx-5 w-2/4 h-[300px] flex flex-col justify-between" id="totalCourseSubInfoArea">
-                <div class="h-[130px] border-2 border-darthmouthgreen flex items-center" id="enrolledLearnersArea">
-                    <div class="flex items-center py-5 ml-10">
-                        <i class="fa-solid fa-user text-darthmouthgreen text-[75px]"></i>
-                        <p class="px-5 pt-5 font-bold text-center text-md"><span
-                                class="text-darthmouthgreen text-[75px]" id="totalLearnersCount">0</span><br>Learners
-                        </p>
+            <div class="w-1/2 h-[300px] md:w-2/5 flex flex-col justify-between space-y-2" id="totalCourseSubInfoArea">
+                <div class="relative flex flex-col items-center border-2 md:flex-row h-1/2 border-darthmouthgreen md:justify-center"
+                    id="enrolledLearnersArea">
+                    <div class="flex items-center">
+                        <i
+                            class="absolute -translate-x-1/2 -translate-y-1/2 lg:px-4 lg:opacity-100 lg:relative fa-solid fa-user text-darthmouthgreen fa-5x top-1/2 left-1/2 opacity-20 lg:left-auto lg:-translate-x-0 lg:-translate-y-0"></i>
+                        <p class="font-bold text-center text-md"><span class="text-6xl text-darthmouthgreen"
+                                id="totalLearnersCount">0</span><br>Learners</p>
                     </div>
-                    <div class="">
-                        <div class="flex items-center mx-5">
+                    <div class="text-xs lg:text-base">
+                        <div class="flex items-center">
                             <div class="w-3 h-3 mx-3 rounded-full bg-darthmouthgreen"></div>
-                            <p class="font-bold text-md">Approved: <span id="totalApprovedLearnersCount"
-                                    class="">0</span></p>
+                            <p class="font-bold">Approved: <span id="totalApprovedLearnersCount" class="">0</span></p>
                         </div>
 
-                        <div class="flex items-center mx-5">
+                        <div class="flex items-center">
                             <div class="w-3 h-3 mx-3 bg-yellow-400 rounded-full"></div>
-                            <p class="font-bold text-md">Pending: <span id="totalPendingLearnersCount" class="">0</span>
-                            </p>
+                            <p class="font-bold">Pending: <span id="totalPendingLearnersCount" class="">0</span></p>
                         </div>
 
-                        <div class="flex items-center mx-5">
+                        <div class="flex items-center">
                             <div class="w-3 h-3 mx-3 bg-red-700 rounded-full"></div>
-                            <p class="font-bold text-md">Rejected: <span id="totalRejectedLearnersCount"
-                                    class="">0</span></p>
+                            <p class="font-bold">Rejected: <span id="totalRejectedLearnersCount" class="">0</span></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="h-[130px] border-2 border-darthmouthgreen flex items-center" id="syllabusContentsArea">
-                    <div class="flex items-center py-5 ml-10">
-                        <i class="fa-solid fa-book-bookmark text-darthmouthgreen text-[75px]"></i>
-                        <p class="px-8 pt-5 font-bold text-center text-md"><span
-                                class="text-darthmouthgreen text-[75px]" id="totalSyllabusCount">0</span><br>Topics</p>
+                <div class="relative flex flex-col items-center border-2 md:flex-row h-1/2 border-darthmouthgreen md:justify-center"
+                    id="syllabusContentsArea">
+                    <div class="flex items-center ">
+                        <i
+                            class="absolute -translate-x-1/2 -translate-y-1/2 lg:px-4 lg:left-auto lg:opacity-100 lg:-translate-x-0 lg:-translate-y-0 lg:relative left-1/2 fa-solid fa-book-bookmark text-darthmouthgreen fa-5x top-1/2 opacity-20"></i>
+                        <p class="font-bold text-center text-md"><span class="text-6xl text-darthmouthgreen"
+                                id="totalSyllabusCount">0</span><br>Topics</p>
                     </div>
-                    <div class="">
-                        <div class="flex items-center mx-5">
+                    <div class="text-xs lg:text-base">
+                        <div class="flex items-center">
                             <i class="mx-3 text-xl fa-solid fa-file text-darthmouthgreen"></i>
-                            <p class="font-bold text-md">Lessons: <span id="totalLessonsCount" class="">0</span></p>
+                            <p class="font-bold ">Lessons: <span id="totalLessonsCount" class="">0</span></p>
                         </div>
 
-                        <div class="flex items-center mx-5">
+                        <div class="flex items-center">
                             <i class="mx-3 text-xl fa-solid fa-clipboard text-darthmouthgreen"></i>
-                            <p class="font-bold text-md">Activities: <span id="totalActivitiesCount" class="">0</span>
-                            </p>
+                            <p class="font-bold ">Activities: <span id="totalActivitiesCount" class="">0</span></p>
                         </div>
 
-                        <div class="flex items-center mx-5">
+                        <div class="flex items-center">
                             <i class="mx-3 text-xl fa-solid fa-pen-to-square text-darthmouthgreen"></i>
-                            <p class="font-bold text-md">Quizzes: <span id="totalQuizzesCount" class="">0</span></p>
+                            <p class="font-bold ">Quizzes: <span id="totalQuizzesCount" class="">0</span></p>
                         </div>
                     </div>
                 </div>
@@ -107,7 +104,7 @@
 
         <hr class="my-6 border-t-2 border-gray-300">
 
-        <div class="w-full p-10" id="perCourseArea">
+        <div class="w-full space-y-2" id="perCourseArea">
             <select name="" class="w-full px-5 py-3 text-lg" id="perCourseSelectArea">
                 <option value="ALL" selected>ALL COURSES</option>
                 @foreach ($courses as $course)
@@ -115,10 +112,10 @@
                 @endforeach
             </select>
 
-            <div class="flex w-full mt-5" id="perCourseInfoArea">
-                <div class="w-1/3 h-[350px] border-2 border-darthmouthgreen p-5" id="courseInfo"></div>
+            <div class="flex flex-col w-full space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0" id="perCourseInfoArea">
+                <div class="w-full md:w-1/2 lg:h-[350px] border-2 border-darthmouthgreen" id="courseInfo"></div>
 
-                <div class="w-2/3 h-[350px] ml-5 border-2 border-darthmouthgreen" id="courseGraph">
+                <div class="w-full md:w-1/2 lg:h-[350px] border-2 border-darthmouthgreen" id="courseGraph">
                     <canvas id="courseDataChart"></canvas>
                 </div>
             </div>
@@ -126,16 +123,16 @@
 
         <hr class="my-6 border-t-2 border-gray-300">
 
-        <div class="w-full p-10" id="courseListArea">
-            <h1 class="mb-5 text-2xl font-semibold text-black">List of Courses</h1>
-            <table class="rounded-xl">
-                <thead class="py-3 text-xl text-white bg-darthmouthgreen">
-                    <th class="w-1/5">Course Name</th>
-                    <th class="w-1/5">Course Code</th>
-                    <th class="w-1/5">Number of Active Enrolles</th>
-                    <th class="w-1/5">Date Created</th>
-                    <th class="w-1/5">Status</th>
-                    <th class="w-1/5"></th>
+        <div class="w-full overflow-auto overflow-x-auto" id="courseListArea">
+            <h1 class="text-2xl font-semibold text-black ">List of Courses</h1>
+            <table class="table w-full table-fixed rounded-xl">
+                <thead class="py-3 text-white bg-darthmouthgreen">
+                    <th class="w-[130px]">Course Name</th>
+                    <th class="w-[130px]">Course ID</th>
+                    <th class="w-[130px]">Number of Active Enrolles</th>
+                    <th class="w-[130px]">Date Created</th>
+                    <th class="w-[130px]">Status</th>
+                    <th class="w-[130px]"></th>
                 </thead>
 
                 <tbody class="mt-5 rowCourseDataArea">
@@ -158,18 +155,15 @@
         <hr class="my-6 border-t-2 border-gray-300">
 
         <div class="flex justify-between">
-            <h1 class="mx-5 text-2xl font-semibold">Your session data</h1>
+            <h1 class="text-2xl font-semibold ">Your session data</h1>
         </div>
 
-        <div class="flex justify-center mt-5" id="instructorSessionDataArea">
-            <div class="mx-5 w-11/12 h-[350px] border-2 border-darthmouthgreen rounded-xl"
-                id="instructorSessionGraphArea">
+        <div class="flex justify-center py-4" id="instructorSessionDataArea">
+            <div class=" w-11/12 h-[350px] border-2 border-darthmouthgreen rounded-xl" id="instructorSessionGraphArea">
                 <canvas id="instructorSessionGraph"></canvas>
             </div>
         </div>
+    </div>
 
-
-    </section>
 </section>
-
-@include('partials.footer')
+@endsection

@@ -1,6 +1,6 @@
 <section class="fixed z-20 w-auto h-auto overflow-hidden text-black md:w-full lg:w-2/12 md:relative" id="sidebar_full">
     <div class="fixed flex flex-col justify-between w-full bg-mainwhitebg md:h-screen md:relative lg:border-r-4 border-darthmouthgreen"
-        id="instructorSidebar">
+        id="learnerSidebar">
 
         <div class="">
             <div class="p-2 md:p-4 md:pb-8">
