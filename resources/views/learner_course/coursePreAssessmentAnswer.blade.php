@@ -5,8 +5,7 @@
     <div class="h-full px-2 py-4 pt-24 overflow-auto rounded-lg shadow-lg md:pt-6">
 
         <div style="background-color:{{$mainBackgroundCol}};" class="z-50 p-2 text-white fill-white rounded-xl">
-            <a href="{{ url("/learner/course/manage/$learnerCourseData->course_id/overview") }}" class="my-2
-                bg-gray-300 rounded-full ">
+            <a href="{{ url("/learner/course/manage/$learnerCourseData->course_id/overview") }}" class="my-2 bg-gray-300 rounded-full ">
                 <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="24">
                     <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                 </svg>
@@ -111,13 +110,13 @@
                     </div>
 
 
+                    <div class="hidden w-full my-2 text-center" id="quizSubmitBtn">
+                        <button class="w-1/2 btn btn-primary">Submit Quiz</button>
+                    </div>
                 </div>
 
             </div>
 
-            <div class="w-full text-right" id="quizSubmitBtn">
-                <button class="btn btn-primary">Submit Quiz</button>
-            </div>
 
         </div>
 

@@ -110,12 +110,14 @@
                         <span id="currentPage" class="mx-4 text-lg font-semibold">Page 1</span>
                         <button id="nextPage" class="btn btn-primary">Next</button>
                     </div>
+
+                    <div class="hidden w-full my-2 text-center" id="quizSubmitBtn">
+                        <button class="w-1/2 btn btn-primary">Submit Quiz</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="w-full my-2 text-right" id="quizSubmitBtn">
-                <button class="btn btn-primary">Submit Quiz</button>
-            </div>
+
 
         </div>
     </div>
