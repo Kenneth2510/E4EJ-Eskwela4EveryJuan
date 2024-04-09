@@ -1,14 +1,10 @@
-@include('partials.header')
+@extends('layouts.admin_layout')
 
-<section class="flex flex-row w-screen text-sm main-container bg-mainwhitebg md:text-base">
-    @include('partials.sidebar')
-
-
-
-
-    <section class="w-screen px-2 pt-[40px] mx-2 mt-2  overscroll-auto md:overflow-auto">
+@section('content')
+<section class="w-full lg:h-screen md:w-3/4 lg:w-10/12">
+    <div class="h-full px-2 py-4 pt-24 rounded-lg shadow-lg md:overflow-hidden md:overflow-y-scroll md:pt-6">
         <div class="flex justify-between px-10">
-            <h1 class="text-6xl font-bold text-darthmouthgreen">Course Syllabus Management</h1>
+            <h1 class="text-4xl font-bold text-darthmouthgreen">Course Syllabus Management</h1>
             <div class="">
                 <p class="text-xl font-semibold text-darthmouthgreen">{{$admin->admin_codename}}</p>
             </div>
@@ -18,7 +14,6 @@
                 <i class="text-2xl md:text-3xl fa-solid fa-arrow-left" style="color: #000000;"></i>
             </a>
         </div>
-
 
         <div style="background-color:{{$mainBackgroundCol}};" class="z-50 p-2 text-white rounded-xl">
             <a href="{{ url("/admin/courseManage/$course->course_id") }}" class="my-2 bg-gray-400 rounded-full ">
@@ -135,8 +130,7 @@
                 <a href="{{url("/admin/courseManage/content/$course->course_id/$topic->syllabus_id/lesson")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 text-white rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 text-white rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_75_1498)">
@@ -161,8 +155,7 @@
                 <a href="{{url("/admin/courseManage/content/$course->course_id/$topic->syllabus_id/activity")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
                         <svg width="40" height="40" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -181,8 +174,7 @@
                 <a href="{{url("/admin/courseManage/content/$course->course_id/$topic->syllabus_id/quiz")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
                         <svg width="40" height="40" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -205,14 +197,12 @@
 
             </div>
         </div>
-
-
-    </section>
+    </div>
 </section>
 
 <div id="syllabusModal"
     class="fixed top-0 left-0 z-[98] flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
-    <div class="modal-content bg-white p-4 rounded-lg shadow-lg w-[1000px] h-[700px] overflow-y-auto">
+    <div class="w-full p-4 overflow-auto bg-white rounded-lg shadow-lg modal-content lg:w-2/5 h-3/4">
         <div class="flex justify-end w-full">
             <button id="removeModalBtn">
                 <i class="text-xl fa-solid fa-xmark" style="color: #949494;"></i>
@@ -220,27 +210,25 @@
         </div>
         <span class="absolute top-0 right-0 mt-2 mr-4 text-2xl text-gray-600 cursor-pointer close">&times;</span>
         <h2 class="mb-2 text-2xl font-semibold">Course Syllabus</h2>
-        <table class="w-full mt-5 border-collapse rounded-xl">
+        <table class="table w-full table-auto">
             <thead>
                 <tr class="text-white bg-seagreen border-seagreen">
-                    <th class="p-2 border">Topic ID</th>
-                    <th class="p-2 border">Topic Title</th>
-                    <th class="p-2 border">Category</th>
-                    <th class="p-2 border">Actions</th>
+                    <th class="w-[150px]">Topic ID</th>
+                    <th class="w-[150px]">Topic Title</th>
+                    <th class="w-[150px]">Category</th>
+                    <th class="w-[150px]">Actions</th>
                 </tr>
             </thead>
             <tbody id="syllabusTableBody" class="overflow-y-auto">
                 <!-- You can populate this with your syllabus data dynamically -->
             </tbody>
         </table>
-        <div class="flex justify-center w-full mt-5">
-            <button id="editSyllabusBtn"
-                class="px-4 py-2 mx-2 mt-4 text-white rounded bg-seagreen hover:bg-darkenedColor">Edit</button>
-            <button id="addChangesBtn" class="hidden px-4 py-2 mx-2 mt-4 text-white rounded bg-seagreen">Add</button>
-            <button id="saveChangesBtn" data-course-id="{{$course->course_id}}"
-                class="hidden px-4 py-2 mx-2 mt-4 text-white rounded bg-seagreen">Save Now</button>
-            <button id="cancelChangesBtn"
-                class="hidden px-4 py-2 mx-2 mt-4 text-white bg-red-500 rounded">Cancel</button>
+        <div class="flex justify-center w-full mt-5 space-x-2">
+            <button id="editSyllabusBtn" class="btn btn-primary">Edit</button>
+            <button id="addChangesBtn" class="hidden btn btn-warning">Add</button>
+            <button id="saveChangesBtn" data-course-id="{{$course->course_id}}" class="hidden btn btn-primary">Save
+                Now</button>
+            <button id="cancelChangesBtn" class="hidden btn btn-error">Cancel</button>
         </div>
     </div>
 </div>
@@ -294,12 +282,11 @@
 <div id="deleteCourseModal"
     class="fixed z-[98] top-0 left-0 flex items-center justify-center hidden w-screen h-screen bg-black bg-opacity-50">
 
-    <div class="p-5 text-center bg-white rounded-lg">
+    <div class="p-5 space-x-2 text-center bg-white rounded-lg">
         <p>Are you sure you want to delete this course?</p>
-        <button type="button" id="confirmDelete" data-course-id="{{$course->course_id}}"
-            class="px-4 py-2 m-2 text-white bg-red-600 rounded-md">Confirm</button>
-        <button type="button" id="cancelDelete"
-            class="px-4 py-2 m-2 text-gray-700 bg-gray-400 rounded-md">Cancel</button>
+        <button type="button" id="confirmDelete" data-course-id="{{$course->course_id}}" class="btn btn-error">Confirm
+            Delete</button>
+        <button type="button" id="cancelDelete" class="btn">Cancel</button>
     </div>
 </div>
 
@@ -314,6 +301,4 @@
     </div>
 </div>
 
-
-
-@include('partials.footer')
+@endsection

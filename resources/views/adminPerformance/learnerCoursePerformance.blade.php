@@ -282,8 +282,7 @@
                             <td>{{$learnerPreAssessmentData->finish_period}}</td>
                             <td>
                                 <a href="{{  url("/admin/performance/learners/view/$learnerCourseData->course_id/$learnerCourseData->learner_course_id/pre_assessment/view_output")}}"
-                                    class="px-5 py-3 text-white bg-darthmouthgreen rounded-xl hover:bg-white
-                                    hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">view</a>
+                                    class="px-5 py-3 text-white bg-darthmouthgreen rounded-xl hover:bg-white hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">view</a>
                             </td>
                         </tr>
                     </tbody>
@@ -320,8 +319,7 @@
                             <td>{{$postAssessment->finish_period}}</td>
                             <td>
                                 <a href="{{  url("/admin/performance/learners/view/$learnerCourseData->course_id/$learnerCourseData->learner_course_id/post_assessment/view_output/$postAssessment->attempt")}}"
-                                    class="px-5 py-3 text-white bg-darthmouthgreen rounded-xl hover:bg-white
-                                    hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">view</a>
+                                    class="px-5 py-3 text-white bg-darthmouthgreen rounded-xl hover:bg-white hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">view</a>
                             </td>
                         </tr>
                         @empty
