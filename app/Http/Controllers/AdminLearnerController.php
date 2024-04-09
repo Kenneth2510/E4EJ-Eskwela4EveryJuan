@@ -45,9 +45,48 @@ use App\Http\Controllers\ActivityLoggingController;
 class AdminLearnerController extends Controller
 {
      // -------------------admin learner area------------------------
+     
+     public function checkLearnerValidity() {
+        $threeMonthsAgo = Carbon::now('Asia/Manila')->subMonths(3);
+    
+        DB::table('learner')->select('learner_id', 'created_at')->orderBy('created_at')->chunk(100, function ($learners) use ($threeMonthsAgo) {
+            foreach ($learners as $learner) {
+                $lastSessionData = DB::table('session_logs')
+                    ->select('session_in')
+                    ->where('session_user_type', 'LEARNER')
+                    ->where('session_user_id', $learner->learner_id)
+                    ->orderBy('session_in', 'desc')
+                    ->first();
+    
+                if ($lastSessionData) {
+                    $lastSessionDate = Carbon::parse($lastSessionData->session_in);
+    
+                    if ($lastSessionDate->lessThan($threeMonthsAgo)) {
+                        DB::table('learner')
+                            ->where('learner_id', $learner->learner_id)
+                            ->update(['status' => 'Expired']);
+                    }
+                } else {
+                    // If no session data found, consider learner as expired
+                    if (Carbon::parse($learner->created_at)->lessThan($threeMonthsAgo)) {
+                        DB::table('learner')
+                            ->where('learner_id', $learner->learner_id)
+                            ->update(['status' => 'Expired']);
+                    }
+                }
+            }
+        });
+    }
+    
+    
+    
+    
+    
+     
      public function learners() {
         return $this->search_learner();
     }
+
 
 
     public function log($action) {
@@ -79,6 +118,11 @@ class AdminLearnerController extends Controller
 
 
         try {
+
+            
+        $this->checkLearnerValidity();
+        
+
             $query = DB::table('learner')
                 ->select(
                     'learner.learner_id',
@@ -122,6 +166,8 @@ class AdminLearnerController extends Controller
  
     
             $learners = $query->paginate(10);
+
+
     
             return view('admin.learners', compact('learners'))
             ->with(['title' => 'Learner Management', 

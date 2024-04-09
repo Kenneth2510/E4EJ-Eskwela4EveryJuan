@@ -70,6 +70,28 @@
                                 now</button>
                         </form>
                     </div>
+                    @elseif ($instructor->status == 'Expired')
+                    <div id="status" class="btn bg-gray-500 text-white btn-error">Expired
+                    </div>
+                    <div id="button" class="flex flex-col hidden space-y-2">
+                        <form action="/admin/pending_instructor/{{$instructor->instructor_id}}" method="POST">
+                            @method('put')
+                            @csrf
+                            <button class="btn btn-warning">change
+                                to pending</button>
+                        </form>
+                        <form action="/admin/approve_instructor/{{$instructor->instructor_id}}" method="POST">
+                            @method('put')
+                            @csrf
+                            <button type="submit" class="btn btn-primary">approve
+                                now</button>
+                        </form>
+                        <form action="/admin/block_instructor/{{$instructor->instructor_id}}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <button class="btn btn-error">Block Instuctor</button>
+                        </form>
+                    </div>
                     @else
                     <div id="status" class="btn btn-warning">pending
                     </div>
