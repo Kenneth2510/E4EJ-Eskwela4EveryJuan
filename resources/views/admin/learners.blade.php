@@ -26,7 +26,7 @@
                             <option value="">Select Status</option>
                             <option value="Pending">Pending</option>
                             <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
+                            <option value="Rejected">Blocked</option>
                         </select>
 
                         <button class="w-1/3 btn btn-primary" type="submit">Filter</button>

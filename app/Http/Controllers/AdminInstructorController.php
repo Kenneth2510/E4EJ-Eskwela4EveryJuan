@@ -43,6 +43,46 @@ use App\Http\Controllers\ActivityLoggingController;
 class AdminInstructorController extends Controller
 {
     // -----------------------admin instructor------------------------- 
+    
+    public function checkInstructorValidity() {
+        $threeMonthsAgo = Carbon::now('Asia/Manila')->subMonths(3);
+    
+        DB::table('instructor')->select('instructor_id', 'created_at')->orderBy('created_at')->chunk(100, function ($instructors) use ($threeMonthsAgo) {
+            foreach ($instructors as $instructor) {
+                $lastSessionData = DB::table('session_logs')
+                    ->select('session_in')
+                    ->where('session_user_type', 'INSTRUCTOR')
+                    ->where('session_user_id', $instructor->instructor_id)
+                    ->orderBy('session_in', 'desc')
+                    ->first();
+    
+                if ($lastSessionData) {
+                    $lastSessionDate = Carbon::parse($lastSessionData->session_in);
+    
+                    if ($lastSessionDate->lessThan($threeMonthsAgo)) {
+                        DB::table('instructor')
+                            ->where('instructor_id', $instructor->instructor_id)
+                            ->update(['status' => 'Expired']);
+                    }
+                } else {
+                    // If no session data found, consider learner as expired
+                    if (Carbon::parse($instructor->created_at)->lessThan($threeMonthsAgo)) {
+                        DB::table('instructor')
+                            ->where('instructor_id', $instructor->instructor_id)
+                            ->update(['status' => 'Expired']);
+                    }
+                }
+            }
+        });
+    }
+    
+    
+    
+    
+    
+     
+    
+    
     public function instructors() {
         return $this->search_instructor();
     }
@@ -77,6 +117,11 @@ class AdminInstructorController extends Controller
 
 
         try {
+
+            
+        $this->checkInstructorValidity();
+
+
             $query = DB::table('instructor')
                 ->orderBy('created_at', 'DESC');
 

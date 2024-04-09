@@ -13,7 +13,7 @@
         <div class="w-full py-4 rounded-lg shadow-lg">
 
             <div class="flex flex-col items-center space-y-2 lg:space-y-0 lg:flex-row lg:space-x-2">
-                @if($admin->role === 'IT_DEPT' || $admin->role === 'SUPER_ADMIN')
+                @if($admin->role === 'SUPER_ADMIN')
                 <a href="/admin/admins/add_admin" class="btn btn-primary">Add
                     New</a>
                 @endif
