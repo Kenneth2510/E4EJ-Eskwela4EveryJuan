@@ -21,7 +21,7 @@
                         <th class="w-[250px] text-base">Action</th>
                     </thead>
     
-                    <tbody>
+                    <tbody class="h-[1000px] overflow-y-auto">
                         @forelse ($logs as $log)
                             <tr>
                                 <td>{{$log->timestamp}}</td>

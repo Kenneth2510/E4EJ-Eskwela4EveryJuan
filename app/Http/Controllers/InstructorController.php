@@ -80,6 +80,11 @@ class InstructorController extends Controller
 
 
 
+
+    
+    
+        if ($instructorData && Hash::check($password, $instructorData->password)) {
+
             if($instructorData->status === "Blocked") {
                 session()->flash('message', 'Your Account is Blocked, Please contact the Administrator');
                 return back();
@@ -87,9 +92,8 @@ class InstructorController extends Controller
                 session()->flash('message', 'Your Account is Expired, Please contact the Administrator for re activation');
                 return back();
             }
-    
-    
-        if ($instructorData && Hash::check($password, $instructorData->password)) {
+
+            
             Cache::put('instructor_authenticated', $instructorData->instructor_id);
             return redirect('/instructor/authenticate')->with('message', "Welcome Back");
         }

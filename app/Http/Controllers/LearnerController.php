@@ -89,16 +89,19 @@ class LearnerController extends Controller
         ->where('learner_username', $username)
         ->first();
 
-        if($learnerData->status === "Blocked") {
-            session()->flash('message', 'Your Account is Blocked, Please contact the Administrator');
-            return back();
-        } else if ($learnerData->status === "Expired") {
-            session()->flash('message', 'Your Account is Expired, Please contact the Administrator for re activation');
-            return back();
-        }
+
 
 
         if ($learnerData && Hash::check($password, $learnerData->password)) {
+
+            if($learnerData->status === "Blocked") {
+                session()->flash('message', 'Your Account is Blocked, Please contact the Administrator');
+                return back();
+            } else if ($learnerData->status === "Expired") {
+                session()->flash('message', 'Your Account is Expired, Please contact the Administrator for re activation');
+                return back();
+            }
+            
             Cache::put('learner_authenticated', $learnerData->learner_id);
             return redirect('/learner/authenticate')->with('message', "Welcome Back");
         }

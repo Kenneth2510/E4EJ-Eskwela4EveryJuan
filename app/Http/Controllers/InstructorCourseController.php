@@ -2743,7 +2743,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
             ->get();
 
 
-            $activityData = DB::table('activity')
+            $activityData = DB::table('activities')
             ->select(
                 'activity_id',
                 'course_id',
