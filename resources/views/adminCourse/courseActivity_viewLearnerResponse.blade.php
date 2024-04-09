@@ -21,8 +21,7 @@
 
         <div class="p-3 pb-4 overflow-auto rounded-lg shadow-lg b overscroll-auto">
             <div style="background-color:{{$mainBackgroundCol}}" class="p-2 text-white fill-white rounded-xl">
-                <a href="{{ url("/admin/courseManage/content/$course->course_id") }}" class="my-2 bg-gray-300
-                    rounded-full ">
+                <a href="{{ url("/admin/courseManage/content/$course->course_id") }}" class="my-2 bg-gray-300 rounded-full ">
                     <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="24">
                         <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                     </svg>
@@ -158,8 +157,7 @@
                         @else
                         <div class="my-5">
                             <a href="{{ url("/admin/courseManage/content/activity/$learnerActivityOutput->learner_activity_output_id/$learnerActivityOutput->learner_course_id/$learnerActivityOutput->activity_id/$learnerActivityOutput->activity_content_id/$learnerActivityOutput->attempt/reattempt")
-                                }}" class="px-5 py-3 text-lg font-semibold text-white bg-darthmouthgreen
-                                hover:bg-green-950 rounded-xl">Allow Re-Attempt Activity</a>
+                                }}" class="px-5 py-3 text-lg font-semibold text-white bg-darthmouthgreen hover:bg-green-950 rounded-xl">Allow Re-Attempt Activity</a>
                         </div>
                         @endif
                         @endif
@@ -167,8 +165,7 @@
                         @else
                         <div class="my-5">
                             <a href="{{ url("/admin/courseManage/content/$activity->course_id/$activity->syllabus_id/activity/$learnerActivityOutput_2nd->learner_course_id/$learnerActivityOutput_2nd->attempt")
-                                }}" class="px-5 py-3 text-lg font-semibold text-white bg-darthmouthgreen
-                                hover:bg-green-950 rounded-xl">View Second Attempt</a>
+                                }}" class="px-5 py-3 text-lg font-semibold text-white bg-darthmouthgreen hover:bg-green-950 rounded-xl">View Second Attempt</a>
                         </div>
                         @endif
 

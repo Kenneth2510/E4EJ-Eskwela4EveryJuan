@@ -1,16 +1,12 @@
-@include('partials.header')
+@extends('layouts.admin_layout')
 
-<section class="flex flex-row w-screen text-sm main-container bg-mainwhitebg md:text-base">
-    @include('partials.sidebar')
-
-
-
-
-    <section class="w-screen px-2 pt-[40px] mx-2 mt-2  overscroll-auto md:overflow-auto">
-        <div class="flex justify-between px-10">
-            <h1 class="text-6xl font-bold text-darthmouthgreen">Performance Overview</h1>
+@section('content')
+<section class="w-full h-auto text-black md:w-3/4 md:h-screen lg:w-10/12">
+    <div class="h-full px-2 py-4 pt-12 rounded-lg shadow-lg md:overflow-auto md:pt-6">
+        <div class="flex items-center justify-between p-3">
+            <h1 class="text-2xl font-bold text-darthmouthgreen md:text-3xl lg:text-4xl">Performance Overview</h1>
             <div class="">
-                <p class="text-xl font-semibold text-darthmouthgreen">{{$admin->admin_codename}}</p>
+                <p class="font-semibold text-darthmouthgreen md:text-lg">{{$admin->admin_codename}}</p>
             </div>
         </div>
 
@@ -25,54 +21,57 @@
         </div>
 
 
-        <div class="flex p-10 mt-5" id="genInfo">
-            <div class="w-1/2 mx-3 h-[300px] border-2 border-darthmouthgreen" id="totalLearnersArea">
-                <div class="flex justify-center mx-10 mt-10 text-center h-2/3 item-center">
+        <div class="flex w-full space-x-2" id="genInfo">
+            <div class="relative w-1/2 md:w-3/5 lg:h-[300px] border-2 border-darthmouthgreen flex flex-col justify-between py-2 md:py-4"
+                id="totalLearnersArea">
+                <div class="flex justify-center text-center item-center">
 
-                    <i class="fa-solid fa-user text-darthmouthgreen text-[175px]"></i>
-                    <p class="mx-5 mt-3 text-2xl font-bold py-14"><span class="text-darthmouthgreen text-[125px]"
+                    <i
+                        class="absolute -translate-y-1/2 md:px-4 md:opacity-100 md:relative fa-solid fa-user text-darthmouthgreen fa-10x opacity-20 top-1/2"></i>
+                    <p class="text-2xl font-bold"><span class="text-8xl text-darthmouthgreen"
                             id="totalLearnerCourseCount">0</span><br>Total Learner</p>
                 </div>
-                <div class="flex justify-center mt-5">
-                    <div class="flex items-center mx-3">
+                <div class="flex flex-col justify-center md:flex-row">
+                    <div class="flex items-center">
                         <div class="w-3 h-3 mx-3 rounded-full bg-darthmouthgreen"></div>
-                        <p class="font-bold text-md">Approved: <span id="totalApprovedLearnerCourseCount"
-                                class="">0</span></p>
+                        <p class="font-bold text-md">Approved: <span id="totalApprovedCourse" class="">0</span></p>
                     </div>
 
-                    <div class="flex items-center mx-3">
+                    <div class="flex items-center">
                         <div class="w-3 h-3 mx-3 bg-yellow-400 rounded-full"></div>
-                        <p class="font-bold text-md">Pending: <span id="totalPendingLearnerCourseCount"
-                                class="">0</span></p>
+                        <p class="font-bold text-md">Pending: <span id="totalPendingCourse" class="">0</span></p>
                     </div>
 
-                    <div class="flex items-center mx-3">
+                    <div class="flex items-center">
                         <div class="w-3 h-3 mx-3 bg-red-700 rounded-full"></div>
-                        <p class="font-bold text-md">Rejected: <span id="totalRejectedLearnerCourseCount"
-                                class="">0</span></p>
+                        <p class="font-bold text-md">Rejected: <span id="totalRejectedCourse" class="">0</span></p>
                     </div>
                 </div>
             </div>
-            <div class="w-1/2 mx-3 h-[300px] border-2 border-darthmouthgreen" id="totalLearnersArea">
-                <div class="flex justify-center mx-10 mt-10 text-center h-2/3 item-center">
 
-                    <i class="fa-solid fa-book-bookmark text-darthmouthgreen text-[175px]"></i>
-                    <p class="mx-5 mt-3 text-2xl font-bold py-14"><span class="text-darthmouthgreen text-[125px]"
+            <div class="relative w-1/2 md:w-3/5 lg:h-[300px] border-2 border-darthmouthgreen flex flex-col justify-between py-2 md:py-4"
+                id="totalLearnersArea">
+                <div class="flex justify-center text-center item-center">
+
+                    <i
+                        class="absolute -translate-y-1/2 md:px-4 md:opacity-100 md:relative fa-solid fa-book-bookmark text-darthmouthgreen fa-10x opacity-20 top-1/2"></i>
+                    <p class="text-2xl font-bold"><span class="text-8xl text-darthmouthgreen"
                             id="totalSyllabusCount">0</span><br>Total Topics</p>
                 </div>
-                <div class="flex justify-center mt-5">
-                    <div class="flex items-center mx-3">
-                        <i class="mx-3 text-2xl fa-solid fa-file text-darthmouthgreen"></i>
+
+                <div class="flex flex-col justify-center md:flex-row">
+                    <div class="flex items-center mx-1">
+                        <i class="mx-3 text-xl fa-solid fa-file text-darthmouthgreen"></i>
                         <p class="font-bold text-md">Lessons: <span id="totalLessonsCount" class="">0</span></p>
                     </div>
 
-                    <div class="flex items-center mx-3">
-                        <i class="mx-3 text-2xl fa-solid fa-clipboard text-darthmouthgreen"></i>
+                    <div class="flex items-center mx-1">
+                        <i class="mx-3 text-xl fa-solid fa-clipboard text-darthmouthgreen"></i>
                         <p class="font-bold text-md">Activities: <span id="totalActivitiesCount" class="">0</span></p>
                     </div>
 
-                    <div class="flex items-center mx-3">
-                        <i class="mx-3 text-2xl fa-solid fa-pen-to-square text-darthmouthgreen"></i>
+                    <div class="flex items-center mx-1">
+                        <i class="mx-3 text-xl fa-solid fa-pen-to-square text-darthmouthgreen"></i>
                         <p class="font-bold text-md">Quizzes: <span id="totalQuizzesCount" class="">0</span></p>
                     </div>
                 </div>
@@ -81,15 +80,17 @@
 
         <hr class="my-6 border-t-2 border-gray-300">
 
-        <h1 class="mx-5 mb-5 text-2xl">Course Progress</h1>
-        <div class="flex justify-between" id="learnerCourseProgressArea">
-            <div class="w-3/5 h-[350px] ml-5 border-2 border-darthmouthgreen" id="learnerCourseProgressChart">
-                <canvas id="learnerCourseDataChart"></canvas>
+        <h1 class="p-3 text-2xl">Course Progress</h1>
+
+        <div class="flex flex-col justify-between space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2"
+            id="learnerCourseProgressArea">
+            <div class="lg:w-3/5 lg:h-[350px] border-2 border-darthmouthgreen" id="learnerCourseProgressChart">
+                <canvas class="p-5" id="learnerCourseDataChart"></canvas>
             </div>
 
-            <div class="w-2/5 h-[350px] ml-5 border-2 border-darthmouthgreen overflow-y-scroll"
+            <div class="lg:w-2/5 max-h-[350px] border-2 border-darthmouthgreen overflow-auto"
                 id="learnerCourseListArea">
-                <table id="learnerCourseTable" class="w-full table-fixed">
+                <table id="learnerCourseTable" class="table w-full table-auto">
                     <thead class="text-white bg-darthmouthgreen">
                         <th class="w-1/5">Name</th>
                         <th class="w-1/5">Date Enrolled</th>
@@ -107,35 +108,35 @@
 
         <hr class="my-6 border-t-2 border-gray-300">
 
-        <h1 class="mx-5 mb-5 text-2xl h-">Grades Overview</h1>
-        <div class="w-full mx-3 h-[400px] overflow-y-auto border-2 border-darthmouthgreen" id="gradesheet">
-            <h1 class="text-4xl font-semibold">Enrollee Gradesheet</h1>
-            <div class="m-5 px-5 overflow-auto overflow-x-auto h-[350px]">
-                <table id="gradesheet" class="table-fixed w-[3000px]">
-                    <thead class="px-3 text-center text-white bg-darthmouthgreen">
-                        <th class="w-4/12 pl-5">Name</th>
-                        <th class="w-4/12">Status</th>
-                        <th class="w-4/12">Date Started</th>
-                        <th class="w-4/12">Pre Assessment</th>
+        <h1 class="p-3 text-2xl h-">Grades Overview</h1>
+        <div class="w-full overflow-y-auto border-2 border-darthmouthgreen" id="gradesheet">
+            <h1 class="p-3 text-4xl font-semibold">Enrollee Gradesheet</h1>
+            <div class=" overflow-auto h-[350px]">
+                <table id="gradesheet" class="table w-full table-auto">
+                    <thead class="text-center text-white bg-darthmouthgreen">
+                        <th class="w-[150px]">Name</th>
+                        <th class="w-[150px]">Status</th>
+                        <th class="w-[150px]">Date Started</th>
+                        <th class="w-[150px]">Pre Assessment</th>
 
                         @foreach ($activitySyllabus as $activity)
-                        <th class="w-4/12">{{ $activity->activity_title }} /({{$activity->total_score}})</th>
+                        <th class="w-[150px]">{{ $activity->activity_title }} /({{$activity->total_score}})</th>
                         @endforeach
 
                         @foreach ($quizSyllabus as $quiz)
-                        <th class="w-4/12">{{ $quiz->quiz_title }} /({{$quiz->total_score}})</th>
+                        <th class="w-[150px]">{{ $quiz->quiz_title }} /({{$quiz->total_score}})</th>
                         @endforeach
 
-                        <th class="w-4/12">Post Assessment</th>
-                        <th class="w-4/12">Grade</th>
-                        <th class="w-4/12">Remarks</th>
-                        <th class="w-4/12">Date Finished</th>
+                        <th class="w-[150px]">Post Assessment</th>
+                        <th class="w-[150px]">Grade</th>
+                        <th class="w-[150px]">Remarks</th>
+                        <th class="w-[150px]">Date Finished</th>
                     </thead>
 
                     <tbody class="text-center">
                         @forelse ($gradesheet as $grade)
                         <tr>
-                            <td class="py-3 pl-5">{{ $grade->learner_fname }} {{ $grade->learner_lname }}</td>
+                            <td class="">{{ $grade->learner_fname }} {{ $grade->learner_lname }}</td>
                             <td>{{ $grade->course_progress }}</td>
                             <td>{{ $grade->start_period }}</td>
                             <td>{{$grade->pre_assessment->score}}</td>
@@ -175,21 +176,21 @@
         @if($learnerPreAssessmentData)
         <hr class="my-6 border-t-2 border-gray-300">
 
-        <h1 class="mx-5 mb-5 text-2xl">Pre Assessment Overview</h1>
-        <div class="flex p-10 mt-5" id="preAssessmentData">
-            <div class="w-full h-[250px] ml-5 border-2 overflow-y-auto border-darthmouthgreen"
+        <h1 class="p-3 text-2xl ">Pre Assessment Overview</h1>
+        <div class="flex" id="preAssessmentData">
+            <div class="w-full max-h-[500px] overflow-auto border-2 border-darthmouthgreen"
                 id="preAssessmentDataTableArea">
-                <table>
-                    <thead class="py-3 text-lg text-white bg-darthmouthgreen">
-                        <th class="w-2/12">Name</th>
-                        <th class="w-2/12">Date Taken</th>
-                        <th class="w-1/12">Status</th>
-                        <th class="w-1/12">Score</th>
-                        <th class="w-1/12">Remarks</th>
-                        <th class="w-2/12">Finish Period</th>
-                        <th class="w-2/12"></th>
+                <table class="table w-full table-auto">
+                    <thead class="text-white bg-darthmouthgreen">
+                        <th class="w-[150px]">Name</th>
+                        <th class="w-[150px]">Date Taken</th>
+                        <th class="w-[150px]">Status</th>
+                        <th class="w-[150px]">Score</th>
+                        <th class="w-[150px]">Remarks</th>
+                        <th class="w-[150px]">Finish Period</th>
+                        <th class="w-[150px]"></th>
                     </thead>
-                    <tbody class="text-lg text-center">
+                    <tbody class="text-center ">
                         @forelse ($learnerPreAssessmentData as $preAssessmentData)
                         <tr>
                             <td>{{$preAssessmentData->learner_fname}} {{$preAssessmentData->learner_lname}}</td>
@@ -200,8 +201,7 @@
                             <td>{{$preAssessmentData->finish_period}}</td>
                             <td>
                                 <a href="{{  url("/admin/performance/learners/view/$preAssessmentData->course_id/$preAssessmentData->learner_course_id/pre_assessment/view_output")}}"
-                                    class="px-5 py-3 text-white bg-darthmouthgreen rounded-xl hover:bg-white
-                                    hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">view</a>
+                                    class="btn btn-primary">view</a>
                             </td>
                         </tr>
                         @empty
@@ -219,27 +219,27 @@
         @if($learnerPostAssessmentData)
         <hr class="my-6 border-t-2 border-gray-300">
 
-        <h1 class="mx-5 mb-5 text-2xl">Post Assessment Overview</h1>
-        <div class="flex p-10 mt-5" id="postAssessmentData">
-            <div class="w-full h-[250px] ml-5 border-2 overflow-y-auto border-darthmouthgreen"
+        <h1 class="p-3 text-2xl">Post Assessment Overview</h1>
+        <div class="flex" id="postAssessmentData">
+            <div class="w-full max-h-[500px] border-2 overflow-auto border-darthmouthgreen"
                 id="postAssessmentDataTableArea">
-                <table>
-                    <thead class="py-3 text-lg text-white bg-darthmouthgreen">
+                <table class="table w-full table-auto">
+                    <thead class="text-white bg-darthmouthgreen">
 
-                        <th class="w-2/12">Name</th>
-                        <th class="w-2/12">Date Taken</th>
-                        <th class="w-1/12">Status</th>
-                        <th class="w-1/12">Score</th>
-                        <th class="w-1/12">Attempts</th>
-                        <th class="w-1/12">Remarks</th>
-                        <th class="w-2/12">Finish Period</th>
-                        <th class="w-2/12"></th>
+                        <th class="w-[150px]">Name</th>
+                        <th class="w-[150px]">Date Taken</th>
+                        <th class="w-[150px]">Status</th>
+                        <th class="w-[150px]">Score</th>
+                        <th class="w-[150px]">Attempts</th>
+                        <th class="w-[150px]">Remarks</th>
+                        <th class="w-[150px]">Finish Period</th>
+                        <th class="w-[150px]"></th>
                     </thead>
-                    <tbody class="text-lg text-center">
+                    <tbody class="text-center">
                         @forelse ($learnerPostAssessmentData as $postAssessment)
                         <tr>
                             <td>{{$postAssessment->learner_fname}} {{$postAssessment->learner_lname}}</td>
-                            <td class="py-1">{{$postAssessment->start_period}}</td>
+                            <td class="">{{$postAssessment->start_period}}</td>
                             <td>{{$postAssessment->status}}</td>
                             <td>{{$postAssessment->score}}</td>
                             <td>{{$postAssessment->attempt}}</td>
@@ -247,8 +247,7 @@
                             <td>{{$postAssessment->finish_period}}</td>
                             <td>
                                 <a href="{{  url("/admin/performance/learners/view/$postAssessment->course_id/$postAssessment->learner_course_id/post_assessment/view_output/$postAssessment->attempt")}}"
-                                    class="px-5 py-3 text-white bg-darthmouthgreen rounded-xl hover:bg-white
-                                    hover:text-darthmouthgreen hover:border hover:border-darthmouthgreen">view</a>
+                                    class="btn btn-primary">view</a>
                             </td>
                         </tr>
                         @empty
@@ -265,9 +264,9 @@
         <hr class="my-6 border-t-2 border-gray-300">
         <h1 class="mx-5 mb-5 text-2xl">Syllabus Overview</h1>
 
-        <div class="flex flex-col items-center justify-center w-full mt-5" id="topicDetailsArea">
+        <div class="flex flex-col items-center justify-center w-full space-y-2" id="topicDetailsArea">
             <div class="w-full" id="selectTopicArea">
-                <select name="" class="w-full px-5 py-3 text-lg border-2 border-darthmouthgreen" id="selectTopic">
+                <select name="" class="w-full input input-bordered focus:input-primary" id="selectTopic">
                     <option value="" disabled selected>Choose Topic</option>
                     @foreach ($syllabus as $topic)
                     <option value="{{ $topic->syllabus_id }}">{{ $topic->topic_title }}</option>
@@ -275,32 +274,30 @@
                 </select>
             </div>
 
-            <div class="w-full mx-10 mt-5 h-[400px] border-2 border-darthmouthgreen"
-                id="learnerCourseTopicProgressChart">
+            <div class="w-full max-h-[400px] border-2 border-darthmouthgreen" id="learnerCourseTopicProgressChart">
                 <canvas id="learnerTopicDataChart"></canvas>
             </div>
 
-            <div class="flex flex-col w-full px-10 mt-5" id="learnerCourseTopicProgressTable">
-                <a href="" method="GET"
-                    class="text-xl text-right underline text-darthmouthgreen hover:text-green-950">view more details</a>
-                <table id="learnerSyllabusTable" class="w-full mt-5">
-                    <thead class="text-white bg-darthmouthgreen">
-                        <th class="w-1/5">Name</th>
-                        <th class="w-1/5">Date Enrolled</th>
-                        <th class="w-1/5">Progress</th>
-                        <th class="w-1/5">Start Date</th>
-                        <th class="w-1/5">Finish Date</th>
-                        <th class="w-1/5"></th>
-                    </thead>
-                    <tbody class="learnerSyllabusRowData">
+            <div class="flex flex-col w-full" id="learnerCourseTopicProgressTable">
+                <a href="" method="GET" class="text-right underline text-primary">view more details</a>
+                <div class="overflow-auto mt-7">
+                    <table id="learnerSyllabusTable" class="table w-full table-auto">
+                        <thead class="text-white bg-darthmouthgreen">
+                            <th class="w-[150px]">Name</th>
+                            <th class="w-[150px]">Date Enrolled</th>
+                            <th class="w-[150px]">Progress</th>
+                            <th class="w-[150px]">Start Date</th>
+                            <th class="w-[150px]">Finish Date</th>
+                            <th class="w-[150px]"></th>
+                        </thead>
+                        <tbody class="learnerSyllabusRowData">
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
-
-
-    </section>
+    </div>
 </section>
-
-@include('partials.footer')
+@endsection

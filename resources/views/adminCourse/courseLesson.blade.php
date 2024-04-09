@@ -1,14 +1,10 @@
-@include('partials.header')
+@extends('layouts.admin_layout')
 
-<section class="flex flex-row w-screen text-sm main-container bg-mainwhitebg md:text-base">
-    @include('partials.sidebar')
-
-
-
-
-    <section class="w-screen px-2 pt-[40px] mx-2 mt-2  overscroll-auto md:overflow-auto">
+@section('content')
+<section class="w-full lg:h-screen md:w-3/4 lg:w-10/12">
+    <div class="h-full px-2 py-4 pt-24 rounded-lg shadow-lg md:overflow-hidden md:overflow-y-scroll md:pt-6">
         <div class="flex justify-between px-10">
-            <h1 class="text-6xl font-bold text-darthmouthgreen">Course Syllabus Management</h1>
+            <h1 class="text-4xl font-bold text-darthmouthgreen">Course Syllabus Management</h1>
             <div class="">
                 <p class="text-xl font-semibold text-darthmouthgreen">{{$admin->admin_codename}}</p>
             </div>
@@ -20,11 +16,8 @@
         </div>
 
         <div class="page_content">
-
-
             <div style="background-color:#025c26;" class="z-50 p-2 text-white rounded-xl">
-                <a href="{{ url("/admin/courseManage/content/$course->course_id") }}" class="my-2 bg-gray-300
-                    rounded-full ">
+                <a href="{{ url("/admin/courseManage/content/$course->course_id") }}" class="my-2 bg-gray-300 rounded-full ">
                     <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="24">
                         <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                     </svg>
@@ -57,7 +50,8 @@
                                     d="M28 5H4a2.002 2.002 0 0 0-2 2v18a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2V7a2.002 2.002 0 0 0-2-2ZM4 7h11v18H4Zm13 18V7h11v18Z" />
                             </svg>
                             <div id="lesson_title" class="pl-[50px] text-3xl font-bold border-none"
-                                contenteditable="false">{{ $lessonInfo->lesson_title }}</div>
+                                contenteditable="false">
+                                {{ $lessonInfo->lesson_title }}</div>
                         </div>
                         <button id="edit_lesson_title" class="hidden">
                             <svg class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" height="24"
@@ -69,12 +63,10 @@
                         <div id="edit_lesson_btns" class="hidden">
                             <button id="save_lesson_btn" data-lesson-id="{{$lessonInfo->lesson_id}}"
                                 data-course-id="{{$lessonInfo->course_id}}"
-                                data-syllabus-id="{{$lessonInfo->syllabus_id}}"
-                                class="px-5 py-3 text-white rounded-xl bg-darthmouthgreen hover:bg-green-800">
+                                data-syllabus-id="{{$lessonInfo->syllabus_id}}" class="btn btn-primary">
                                 Save
                             </button>
-                            <button id="cancel_lesson_btn"
-                                class="px-5 py-3 text-white rounded-xl bg-darthmouthgreen hover:bg-green-800">
+                            <button id="cancel_lesson_btn" class="btn btn-error">
                                 Cancel
                             </button>
                         </div>
@@ -92,8 +84,7 @@
                             placeholder="0"
                             value="{{ isset($formattedDuration) ? explode(':', $formattedDuration)[1] : '' }}" required>
                         <br>
-                        <button id="saveEstTimeCompletion"
-                            class="px-5 py-3 mt-3 text-white bg-darthmouthgreen rounded-xl hover:border-2 hover:border-darthmouthgreen hover:text-darthmouthgreen hover:bg-white">Save</button>
+                        <button id="saveEstTimeCompletion" class="btn btn-primary">Save</button>
                     </div>
 
                     <hr class="my-6 border-t-2 border-gray-300">
@@ -125,7 +116,7 @@
                         class="flex justify-end hidden">
                         <button id="" data-lesson-id="{{$lessonInfo->lesson_id}}"
                             data-course-id="{{$lessonInfo->course_id}}" data-syllabus-id="{{$lessonInfo->syllabus_id}}"
-                            class="flex px-5 py-3 mr-3 text-white add_lesson_picture_btn rounded-xl bg-darthmouthgreen hover:bg-green-800">
+                            class="btn btn-warning">
                             Change Photo
                         </button>
                     </div>
@@ -135,7 +126,7 @@
                         class="flex justify-end hidden">
                         <button id="" data-lesson-id="{{$lessonInfo->lesson_id}}"
                             data-course-id="{{$lessonInfo->course_id}}" data-syllabus-id="{{$lessonInfo->syllabus_id}}"
-                            class="flex px-5 py-3 mr-3 text-white add_lesson_picture_btn rounded-xl bg-darthmouthgreen hover:bg-green-800">
+                            class="btn btn-warning">
                             Add Photo
                         </button>
                     </div>
@@ -160,15 +151,16 @@
                             <!-- Modal body -->
                             <div class="mb-4">
                                 <!-- Your form for uploading pictures goes here -->
-                                <form id="pictureUploadForm" data-lesson-id="{{$lessonInfo->lesson_id}}"
+                                <form class="space-y-2" id="pictureUploadForm"
+                                    data-lesson-id="{{$lessonInfo->lesson_id}}"
                                     data-course-id="{{$lessonInfo->course_id}}"
                                     data-syllabus-id="{{$lessonInfo->syllabus_id}}" enctype="multipart/form-data">
-                                    <input type="file" name="picture" id="lesson_title_picture" accept="image/*">
-                                    <div class="flex justify-between mt-4">
-                                        <button type="submit"
-                                            class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-900">Confirm</button>
-                                        <button id="cancelUpload"
-                                            class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                                    <input class="w-full file-input file-input-primary" type="file" name="picture"
+                                        id="lesson_title_picture" accept="image/*">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button id="cancelUpload" class="btn btn-error">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Confirm</button>
+
                                     </div>
                                 </form>
                             </div>
@@ -222,18 +214,15 @@
                         @else
                         @endif
 
-                        <div class="flex justify-end hidden w-full edit_lesson_content_btns">
-                            <button id=""
-                                class="px-5 py-3 mx-1 text-white save_lesson_content_btn rounded-xl bg-darthmouthgreen hover:bg-green-800">
-                                Save
+                        <div class="flex justify-end hidden w-full space-x-2 edit_lesson_content_btns">
+                            <button id="" class="cancel_lesson_content_btn btn">
+                                Cancel
                             </button>
-                            <button id=""
-                                class="px-5 py-3 mx-1 text-white bg-red-600 delete_lesson_content_btn rounded-xl hover:bg-red-800">
+                            <button id="" class="delete_lesson_content_btn btn btn-error">
                                 Delete
                             </button>
-                            <button id=""
-                                class="px-5 py-3 mx-1 text-white cancel_lesson_content_btn rounded-xl bg-darthmouthgreen hover:bg-green-800">
-                                Cancel
+                            <button id="" class="ave_lesson_content_btn btn btn-primary">
+                                Save
                             </button>
                         </div>
                     </div>
@@ -247,9 +236,7 @@
 
                 </div>
 
-                <button
-                    class="flex items-center hidden w-full px-10 py-4 mt-4 rounded-lg shadow-lg ring-2 ring-seagreen"
-                    id="lessonAddContent">
+                <button class="flex items-center hidden w-full my-3 btn btn-outline" id="lessonAddContent">
                     <svg class="mx-2" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960"
                         width="24">
                         <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
@@ -260,17 +247,14 @@
                 <div class="flex justify-center w-full">
                     <button id="editLessonBtn" data-course-id="{{$lessonInfo->course_id}}"
                         data-syllabus-id="{{$lessonInfo->syllabus_id}}"
-                        onmouseout="this.style.backgroundColor='#025c26'"
-                        class="w-1/2 py-5 mx-1 mt-4 text-xl text-white rounded-lg shadow-lg bg-seagreen hover:bg-green-800 hover:text-white">
+                        onmouseout="this.style.backgroundColor='#025c26'" class="w-1/2 btn btn-primary">
                         <h1>Edit</h1>
                     </button>
-                    <div id="editBtns" class="flex justify-end hidden w-full">
-                        <button id="cancelEditBtn"
-                            class="w-1/2 py-5 mx-1 mt-4 text-xl text-white rounded-lg shadow-lg bg-darthmouthgreen hover:bg-green-800 bg-seagreen hover:text-white">
+                    <div id="editBtns" class="flex justify-end hidden w-full space-x-2">
+                        <button id="cancelEditBtn" class="w-1/2 btn btn-error">
                             <h1>Cancel</h1>
                         </button>
-                        <button id="saveEditBtn"
-                            class="w-1/2 py-5 mx-1 mt-4 text-xl text-white rounded-lg shadow-lg bg-darthmouthgreen hover:bg-green-800 bg-seagreen hover:text-white"
+                        <button id="saveEditBtn" class="w-1/2 btn btn-primary"
                             data-lesson-id="{{$lessonInfo->lesson_id}}" data-course-id="{{$lessonInfo->course_id}}"
                             data-syllabus-id="{{$lessonInfo->syllabus_id}}">
                             <h1>Apply All Changes</h1>
@@ -280,13 +264,9 @@
                 </div>
             </div>
         </div>
-
-
-
-    </section>
+    </div>
 
 </section>
-
 
 <div class="hidden">
     <!-- start-generate-pdf -->
@@ -340,8 +320,6 @@
     <!-- end-generate-pdf -->
 </div>
 
-
-
 <div id="pictureModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
     <div class="z-50 w-11/12 mx-auto overflow-y-auto bg-white rounded shadow-lg modal-container md:max-w-md">
         <div class="px-6 py-4 text-left modal-content">
@@ -361,13 +339,12 @@
                 <form id="pictureUploadForm" data-lesson-id="{{$lessonInfo->lesson_id}}"
                     data-course-id="{{$lessonInfo->course_id}}" data-syllabus-id="{{$lessonInfo->syllabus_id}}"
                     enctype="multipart/form-data" method="POST">
-                    <input type="file" name="picture" id="lesson_title_picture" accept=".jpeg, .png, .jpg, .gif" />
+                    <input class="w-full file-input file-input-primary" type="file" name="picture"
+                        id="lesson_title_picture" accept=".jpeg, .png, .jpg, .gif" />
 
                     <div class="flex justify-between mt-4">
-                        <button type="submit"
-                            class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-900">Confirm</button>
-                        <button id="cancelUpload"
-                            class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                        <button id="cancelUpload" class="btn btn-error">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -392,16 +369,15 @@
             <!-- Modal body -->
             <div class="mb-4">
                 <!-- Your form for uploading pictures goes here -->
-                <form id="lesson_content_pictureUploadForm" data-lesson-id="{{$lessonInfo->lesson_id}}"
-                    data-course-id="{{$lessonInfo->course_id}}" data-syllabus-id="{{$lessonInfo->syllabus_id}}"
-                    enctype="multipart/form-data" method="POST">
-                    <input type="file" name="picture" id="lesson_title_picture" accept=".jpeg, .png, .jpg, .gif" />
+                <form class="space-y-2" id="lesson_content_pictureUploadForm"
+                    data-lesson-id="{{$lessonInfo->lesson_id}}" data-course-id="{{$lessonInfo->course_id}}"
+                    data-syllabus-id="{{$lessonInfo->syllabus_id}}" enctype="multipart/form-data" method="POST">
+                    <input class="w-full file-input file-input-primary" type="file" name="picture"
+                        id="lesson_title_picture" accept=".jpeg, .png, .jpg, .gif" />
 
-                    <div class="flex justify-between mt-4">
-                        <button type="submit"
-                            class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-900">Confirm</button>
-                        <button id="cancelUpload_lesson_content_picture"
-                            class="px-4 py-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                    <div class="flex items-center justify-center mt-4 space-x-2">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                        <button id="cancelUpload_lesson_content_picture" class="btn btn-error">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -416,9 +392,8 @@
         <div class="p-5 text-center bg-white rounded-lg">
             <p>Are you sure you want to delete this content?</p>
             <button type="button" id="confirmDelete" data-course-id="{{$course->course_id}}"
-                class="px-4 py-2 m-2 text-white bg-red-600 rounded-md">Confirm</button>
-            <button type="button" id="cancelDelete"
-                class="px-4 py-2 m-2 text-gray-700 bg-gray-400 rounded-md">Cancel</button>
+                class="btn btn-error">Confirm</button>
+            <button type="button" id="cancelDelete" class="btn">Cancel</button>
         </div>
         {{--
     </form> --}}
@@ -432,21 +407,17 @@
         <div class="p-5 text-center bg-white rounded-lg">
             <p>Are you sure you want to delete this content?</p>
             <button type="button" id="confirmDelete_lessonContentPicture" data-course-id="{{$course->course_id}}"
-                data-syllabus-id="{{$lessonInfo->syllabus_id}}"
-                class="px-4 py-2 m-2 text-white bg-red-600 rounded-md">Confirm</button>
-            <button type="button" id="cancelDelete_lessonContentPicture"
-                class="px-4 py-2 m-2 text-gray-700 bg-gray-400 rounded-md">Cancel</button>
+                data-syllabus-id="{{$lessonInfo->syllabus_id}}" class="btn btn-error">Confirm</button>
+            <button type="button" id="cancelDelete_lessonContentPicture" class="btn">Cancel</button>
         </div>
         {{--
     </form> --}}
 
 </div>
 
-
-
 <div id="addLessonContentModal"
-    class="fixed top-0 left-0 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
-    <div class="modal-content bg-white p-4 rounded-lg shadow-lg w-[750px]">
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
+    <div class="w-full p-4 overflow-auto bg-white rounded-lg shadow-lg modal-content h-3/4 lg:w-2/3">
         <div class="flex justify-end w-full">
             <button id="closeAddLessonContentModal">
                 <i class="text-xl fa-solid fa-xmark" style="color: #949494;"></i>
@@ -465,7 +436,7 @@
                 class="block w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:ring focus:ring-seagreen focus:ring-opacity-50">
             --}}
             <textarea name="insertLessonContent" id="insertLessonContent"
-                class="block w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:ring focus:ring-seagreen focus:ring-opacity-50"
+                class="w-auto px-4 py-2 mt-2 border border-gray-300 rounded-md focus:ring focus:ring-seagreen focus:ring-opacity-50"
                 cols="30" rows="10" style="white-space: pre;"></textarea>
 
         </div>
@@ -484,21 +455,17 @@
             </select>
         </div>
 
-        <div class="flex justify-center w-full mt-5">
+        <div class="flex justify-center w-full mt-5 space-x-2">
             <button id="confirmAddLessonContentBtn" data-lesson-id="{{$lessonInfo->lesson_id}}"
-                class="px-4 py-2 mx-2 mt-4 text-white rounded bg-seagreen hover:bg-darkenedColor">Confirm</button>
-            <button id="cancelAddLessonContentBtn"
-                class="px-4 py-2 mx-2 mt-4 text-white bg-red-500 rounded">Cancel</button>
+                class="btn btn-primary">Confirm</button>
+            <button id="cancelAddLessonContentBtn" class="btn btn-error">Cancel</button>
         </div>
     </div>
 </div>
 
-
-
-
 <div id="editLessonContentModal"
-    class="fixed top-0 left-0 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
-    <div class="modal-content bg-white p-4 rounded-lg shadow-lg w-[750px]">
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
+    <div class="w-full p-4 overflow-auto bg-white rounded-lg shadow-lg modal-content h-3/4 lg:w-2/3">
         <div class="flex justify-end w-full">
             <button class="closeEditLessonContentModal">
                 <i class="text-xl fa-solid fa-xmark" style="color: #949494;"></i>
@@ -522,19 +489,18 @@
 
         </div>
 
-        <div class="flex justify-center w-full mt-5">
+        <div class="flex justify-center w-full mt-5 space-x-2">
             <button id="confirmEditLessonContentBtn" data-content-order="" data-lesson-id="{{$lessonInfo->lesson_id}}"
-                class="px-4 py-2 mx-2 mt-4 text-white rounded bg-seagreen hover:bg-darkenedColor">Confirm</button>
-            <button id=""
-                class="px-4 py-2 mx-2 mt-4 text-white bg-red-500 rounded closeEditLessonContentModal">Cancel</button>
+                class="btn btn-primary">Confirm</button>
+            <button id="" class="btn btn-error closeEditLessonContentModal">Cancel</button>
         </div>
     </div>
 </div>
 
 
 <div id="addLessonContentUrlModal"
-    class="fixed top-0 left-0 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
-    <div class="modal-content bg-white p-4 rounded-lg shadow-lg w-[750px]">
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
+    <div class="w-full h-auto p-4 overflow-auto bg-white rounded-lg shadow-lg modal-content lg:w-2/3">
         <div class="flex justify-end w-full">
             <button class="closeAddLessonContentUrlModal">
                 <i class="text-xl fa-solid fa-xmark" style="color: #949494;"></i>
@@ -547,11 +513,11 @@
                 class="block w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:ring focus:ring-seagreen focus:ring-opacity-50">
         </div>
 
-        <div class="flex justify-center w-full mt-5">
+        <div class="flex justify-center w-full mt-5 space-x-2">
             <button id="confirmAddLessonContentUrlBtn" data-content-order="" data-lesson-id="{{$lessonInfo->lesson_id}}"
-                class="px-4 py-2 mx-2 mt-4 text-white rounded bg-seagreen hover:bg-darkenedColor">Confirm</button>
+                class="btn btn-primary">Confirm</button>
             <button id="cancelAddLessonContentUrlBtn"
-                class="px-4 py-2 mx-2 mt-4 text-white bg-red-500 rounded closeAddLessonContentUrlModal">Cancel</button>
+                class="btn btn-error closeAddLessonContentUrlModal">Cancel</button>
         </div>
     </div>
 </div>
@@ -561,14 +527,12 @@
     class="fixed top-0 left-0 flex items-center justify-center hidden w-screen h-screen bg-black bg-opacity-50">
     {{-- <form id="deleteCourse" action="" data-course-id="{{ $course->course_id }}"> --}}
         {{-- @csrf --}}
-        <div class="p-5 text-center bg-white rounded-lg">
+        <div class="p-5 space-y-2 text-center bg-white rounded-lg">
             <p>Are you sure you want to delete this content?</p>
             <button type="button" id="confirmDelete_lessonContentUrl" data-content-order="" data-lesson-content-id=""
                 data-lesson-id="" data-course-id="{{$course->course_id}}"
-                data-syllabus-id="{{$lessonInfo->syllabus_id}}"
-                class="px-4 py-2 m-2 text-white bg-red-600 rounded-md">Confirm</button>
-            <button type="button" id="cancelDelete_lessonContentUrl"
-                class="px-4 py-2 m-2 text-gray-700 bg-gray-400 rounded-md">Cancel</button>
+                data-syllabus-id="{{$lessonInfo->syllabus_id}}" class="mx-1 btn btn-primary">Confirm</button>
+            <button type="button" id="cancelDelete_lessonContentUrl" class="mx-1 btn btn-error">Cancel</button>
         </div>
         {{--
     </form> --}}
@@ -586,4 +550,4 @@
     </div>
 </div>
 
-@include('partials.footer')
+@endsection

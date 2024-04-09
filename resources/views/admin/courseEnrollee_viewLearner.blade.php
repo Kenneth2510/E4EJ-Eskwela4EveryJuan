@@ -1,7 +1,7 @@
 @extends('layouts.admin_layout')
 
 @section('content')
-<section class="w-full h-screen md:w-3/4 lg:w-10/12">
+<section class="w-full h-auto text-black md:w-3/4 md:h-screen lg:w-10/12">
     <div class="h-full px-2 py-4 pt-24 rounded-lg shadow-lg md:overflow-hidden md:overflow-y-scroll md:pt-6">
         <div class="flex justify-between px-10">
             <h1 class="text-4xl font-bold text-darthmouthgreen">Course Enrollment</h1>

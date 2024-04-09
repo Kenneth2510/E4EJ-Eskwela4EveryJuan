@@ -1,7 +1,7 @@
 @extends('layouts.admin_layout')
 
 @section('content')
-<section class="w-full h-auto text-black md:h-screen lg:w-10/12">
+<section class="w-full h-auto text-black md:w-3/4 md:h-screen lg:w-10/12">
     <div class="h-full px-2 py-4 pt-12 rounded-lg shadow-lg md:overflow-auto md:pt-6">
         <div class="flex items-center justify-between p-3 border-b-2 border-gray-300 md:py-8">
             <h1 class="text-2xl font-bold text-darthmouthgreen md:text-3xl lg:text-4xl">Learner Management</h1>

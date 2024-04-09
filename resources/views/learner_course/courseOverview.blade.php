@@ -68,14 +68,8 @@
                     </div>
                     <div class="flex flex-col space-y-2">
                         @if($isEnrolled)
-                        @if ($courseProgress->course_progress == 'NOT STARTED')
                         <a href="{{ url("/learner/course/manage/$course->course_id/overview") }}" id="" class="btn
                             btn-primary">Get Started</a>
-                        @else
-                        <a href="{{ url("/learner/course/manage/$course->course_id/overview") }}" id="" class="btn
-                            btn-primary">Continue Learning</a>
-                        @endif
-
 
                         {{-- !<button id="unenrollBtn" class="btn btn-danger">Unenroll</button> --}}
                         @else

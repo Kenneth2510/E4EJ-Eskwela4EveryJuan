@@ -49,8 +49,7 @@
                     <img class="object-cover w-40 h-40 my-4 mb-10 rounded-full lg:w-40 lg:h-40"
                         src="{{ asset('storage/' . $course->profile_picture) }}" alt="Profile Picture">
                     <div class="flex flex-col space-y-2">
-                        <a href="{{ url("/admin/courseManage/content/$course->course_id") }}" id="" class="btn
-                            btn-primary">Enter</a>
+                        <a href="{{ url("/admin/courseManage/content/$course->course_id") }}" id="" class="btn btn-primary">Enter</a>
                         <button id="viewDetailsBtn" class="btn btn-warning">View
                             Details</button>
                     </div>

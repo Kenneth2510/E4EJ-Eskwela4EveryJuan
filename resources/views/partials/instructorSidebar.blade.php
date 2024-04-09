@@ -3,21 +3,6 @@
         id="instructorSidebar">
 
         <div class="">
-            <!--            <div class="p-2 md:p-4 md:pb-8">
-                <div class="flex items-center justify-center hidden md:justify-start md:px-4 " id="logo_half">
-                    <a href="{{ url('/instructor/dashboard') }}">
-                        <i class="mx-2 text-4xl fa-solid fa-book-bookmark"></i>
-                    </a>
-                </div>
-                <div class="" id="logo_full">
-                    <a href="{{ url('/instructor/dashboard') }}">
-                        <span class="self-center text-lg font-semibold font-semibbold whitespace-nowrap md:text-2xl text-darthmouthgreen">
-                            Eskwela4EveryJuan
-                        </span>
-                    </a>
-                </div>
-            </div>-->
-
             <div class="p-2 md:p-4 md:pb-8">
                 <div class="flex items-center justify-center hidden md:justify-start md:px-4 " id="logo_half">
                     <a href="{{ url('/instructor/dashboard') }}">

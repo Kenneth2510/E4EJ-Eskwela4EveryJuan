@@ -4,7 +4,7 @@
 <section class="w-full h-auto text-black md:h-screen lg:w-10/12">
     <div class="h-full px-2 py-4 pt-12 rounded-lg shadow-lg md:overflow-auto md:pt-6">
         <div class="flex items-center justify-between p-3">
-            <h1 class="text-2xl font-bold text-darthmouthgreen md:text-3xl lg:text-4xl">Performance Overview</h1>
+            <h1 class="text-2xl font-bold text-darthmouthgreen md:text-3xl lg:text-4xl">Performance Overview1</h1>
             <div class="">
                 <p class="font-semibold text-darthmouthgreen md:text-lg">{{$admin->admin_codename}}</p>
             </div>
