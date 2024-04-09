@@ -31,6 +31,11 @@ $(document).ready(function () {
         if (learner_fname === "") {
             $("#firstNameError").text("Please enter a first name.");
             isValid = false;
+        } else if (!/^[a-zA-Z0-9\s-]+$/.test(learner_fname)) {
+            $("#firstNameError").text(
+                "Special characters are not allowed in the first name except for one dash.",
+            );
+            isValid = false;
         } else {
             $("#firstNameError").text("");
         }
@@ -39,11 +44,34 @@ $(document).ready(function () {
             $("#bdayError").text("Please enter a birthday.");
             isValid = false;
         } else {
-            $("#bdayError").text("");
+            var today = new Date();
+            var birthDate = new Date(learner_bday);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var monthDiff = today.getMonth() - birthDate.getMonth();
+            if (
+                monthDiff < 0 ||
+                (monthDiff === 0 && today.getDate() < birthDate.getDate())
+            ) {
+                age--;
+            }
+
+            if (age < 12) {
+                $("#bdayError").text(
+                    "The learner must be at least 12 years old.",
+                );
+                isValid = false;
+            } else {
+                $("#bdayError").text("");
+            }
         }
 
         if (learner_lname === "") {
             $("#lastNameError").text("Please enter a last name.");
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9\s-]+$/.test(learner_fname)) {
+            $("#lastNameError").text(
+                "Special characters are not allowed in the first name except for one dash.",
+            );
             isValid = false;
         } else {
             $("#lastNameError").text("");
@@ -154,7 +182,9 @@ $(document).ready(function () {
             bplo_account_number.length !== 7 ||
             !/^.*[a-zA-Z].*[-].*$/.test(bplo_account_number)
         ) {
-            $("#bploCategoryError").text("Please enter a valid Account Number.");
+            $("#bploCategoryError").text(
+                "Please enter a valid Account Number.",
+            );
             isValid = false;
         } else {
             $("#bploCategoryError").text("");

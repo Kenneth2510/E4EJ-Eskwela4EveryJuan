@@ -233,6 +233,11 @@ $(document).ready(function () {
             $("#first-form").removeClass("hidden");
             $("#resumeForm").addClass("hidden");
             $("#security_code").addClass("hidden");
+        } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_fname)) {
+            $("#firstNameError").text(
+                "Special characters are not allowed in the first name except for one dash.",
+            );
+            isValid = false;
         } else {
             $("#firstNameError").text("");
         }
@@ -244,7 +249,25 @@ $(document).ready(function () {
             $("#resumeForm").addClass("hidden");
             $("#security_code").addClass("hidden");
         } else {
-            $("#bdayError").text("");
+            var today = new Date();
+            var birthDate = new Date(instructor_bday);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var monthDiff = today.getMonth() - birthDate.getMonth();
+            if (
+                monthDiff < 0 ||
+                (monthDiff === 0 && today.getDate() < birthDate.getDate())
+            ) {
+                age--;
+            }
+
+            if (age < 22) {
+                $("#bdayError").text(
+                    "The instructor must be at least 22 years old.",
+                );
+                isValid = false;
+            } else {
+                $("#bdayError").text("");
+            }
         }
 
         if (instructor_lname === "") {
@@ -253,6 +276,11 @@ $(document).ready(function () {
             $("#first-form").removeClass("hidden");
             $("#resumeForm").addClass("hidden");
             $("#security_code").addClass("hidden");
+        } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_lname)) {
+            $("#lastNameError").text(
+                "Special characters are not allowed in the first name except for one dash.",
+            );
+            isValid = false;
         } else {
             $("#lastNameError").text("");
         }

@@ -406,6 +406,7 @@
 
 
         $('#apply_change_btn').on('click', function() {
+            console.log("hello");
             var instructor_fname = $('#instructor_fname').val();
             var instructor_bday = $('#instructor_bday').val();
             var instructor_lname = $('#instructor_lname').val();
@@ -426,8 +427,13 @@
             var isValid = true;
 
             if (instructor_fname === '') {
-            $('#firstNameError').text('Please enter a first name.');
-            isValid = false;
+                $('#firstNameError').text('Please enter a first name.');
+                isValid = false;
+            } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_fname)) {
+                $("#firstNameError").text(
+                "Special characters are not allowed in the first name except for one dash.",
+                );
+                isValid = false;
             } else {
                 $('#firstNameError').text('');
             }
@@ -436,11 +442,34 @@
                 $('#bdayError').text('Please enter a birthday.');
                 isValid = false;
             } else {
-                $('#bdayError').text('');
+                var today = new Date();
+                var birthDate = new Date(instructor_bday);
+                var age = today.getFullYear() - birthDate.getFullYear();
+                var monthDiff = today.getMonth() - birthDate.getMonth();
+                if (
+                    monthDiff < 0 ||
+                    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+                ) {
+                    age--;
+                }
+
+                if (age < 22) {
+                    $("#bdayError").text(
+                        "The instructor must be at least 22 years old.",
+                    );
+                    isValid = false;
+                } else {
+                    $("#bdayError").text("");
+                }
             }
         
             if (instructor_lname === '') {
                 $('#lastNameError').text('Please enter a last name.');
+                isValid = false;
+            } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_lname)) {
+                $("#lastNameError").text(
+                    "Special characters are not allowed in the first name except for one dash.",
+                );
                 isValid = false;
             } else {
                 $('#lastNameError').text('');
