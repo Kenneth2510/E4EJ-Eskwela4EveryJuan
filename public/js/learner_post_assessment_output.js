@@ -1,74 +1,77 @@
 $(document).ready(function () {
-
     var postAssessmentLearnerOutputData = [];
     var currentPage = 1;
     var questionsPerPage = 5;
     var baseUrl = window.location.href;
 
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-    
-    getLearnerData()
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+    getLearnerData();
     getLearnerPostAssessmentOutputData();
 
-
     function getLearnerPostAssessmentOutputData() {
-
         var url = baseUrl + "/json";
 
         $.ajax({
             type: "GET",
             url: url,
 
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
 
-                postAssessmentLearnerOutputData = response['postAssessmentOutputData'];
-                displayLearnerPostAssessmentOutputData(postAssessmentLearnerOutputData);
+                postAssessmentLearnerOutputData =
+                    response["postAssessmentOutputData"];
+                displayLearnerPostAssessmentOutputData(
+                    postAssessmentLearnerOutputData,
+                );
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
 
-
-    function displayLearnerPostAssessmentOutputData(postAssessmentLearnerOutputData) {
-
+    function displayLearnerPostAssessmentOutputData(
+        postAssessmentLearnerOutputData,
+    ) {
         // console.log(postAssessmentLearnerOutputData)
         var questionDataDisp = ``;
         var questionIndicatorDisp = ``;
 
-        $('#isAnsweredMeter').empty();
+        $("#isAnsweredMeter").empty();
 
         for (let i = 0; i < postAssessmentLearnerOutputData.length; i++) {
-            const learner_post_assessment_output_id = postAssessmentLearnerOutputData[i]['learner_post_assessment_output_id'];
-            const syllabus_id = postAssessmentLearnerOutputData[i]['syllabus_id'];
-            const course_id = postAssessmentLearnerOutputData[i]['course_id'];
-            const question_id = postAssessmentLearnerOutputData[i]['question_id'];
-            const category = postAssessmentLearnerOutputData[i]['category'];
-            const question = postAssessmentLearnerOutputData[i]['question'];
-            const choices = postAssessmentLearnerOutputData[i]['all_choices'];
-            const correct_answer = postAssessmentLearnerOutputData[i]['correct_answer'];
-            const answer = postAssessmentLearnerOutputData[i]['answer'];
-            const isCorrect = postAssessmentLearnerOutputData[i]['isCorrect'];
+            const learner_post_assessment_output_id =
+                postAssessmentLearnerOutputData[i][
+                    "learner_post_assessment_output_id"
+                ];
+            const syllabus_id =
+                postAssessmentLearnerOutputData[i]["syllabus_id"];
+            const course_id = postAssessmentLearnerOutputData[i]["course_id"];
+            const question_id =
+                postAssessmentLearnerOutputData[i]["question_id"];
+            const category = postAssessmentLearnerOutputData[i]["category"];
+            const question = postAssessmentLearnerOutputData[i]["question"];
+            const choices = postAssessmentLearnerOutputData[i]["all_choices"];
+            const correct_answer =
+                postAssessmentLearnerOutputData[i]["correct_answer"];
+            const answer = postAssessmentLearnerOutputData[i]["answer"];
+            const isCorrect = postAssessmentLearnerOutputData[i]["isCorrect"];
 
-    
             const correctAns = JSON.parse(correct_answer);
             const choicesArray = JSON.parse(choices);
 
             const questionCount = i + 1; // Start counting from 1
 
+            const check_answer =
+                isCorrect == 1
+                    ? '<span class="text-left text-xl text-darthmouthgreen"><i class="fa-solid fa-check" style="color: #00693e;"></i> Correct</span>'
+                    : '<span class="text-left text-xl text-red-600"><i class="fa-solid fa-xmark" style="color: #b30000;"></i> Incorrect</span>';
 
-            const check_answer = (isCorrect == 1)
-            ? '<span class="text-left text-xl text-darthmouthgreen"><i class="fa-solid fa-check" style="color: #00693e;"></i> Correct</span>'
-            : '<span class="text-left text-xl text-red-600"><i class="fa-solid fa-xmark" style="color: #b30000;"></i> Incorrect</span>';
+            const check_answer_style =
+                isCorrect == 1 ? "border-darthmouthgreen" : "border-red-600";
 
-            const check_answer_style = (isCorrect == 1)
-            ? 'border-darthmouthgreen'
-            : 'border-red-600';
-
-
-            if (category == 'MULTIPLECHOICE') {
+            if (category == "MULTIPLECHOICE") {
                 questionDataDisp += `
                     <div class="my-5 py-5 px-3 questionData ${check_answer_style} border-2 rounded-lg">
                         <div class="questionContent">
@@ -78,16 +81,16 @@ $(document).ready(function () {
                         </div>
                         <div class="questionChoices mt-2 text-lg">
                 `;
-    
+
                 for (let x = 0; x < choicesArray.length; x++) {
                     const choice = choicesArray[x];
-                    const isChecked = choice === answer ? 'checked' : '';
-    
+                    const isChecked = choice === answer ? "checked" : "";
+
                     questionDataDisp += `
                         <input type="radio" name="${questionCount}" class="w-5 h-5 questionChoice mx-3" value="${choice}" ${isChecked} disabled>
                         ${choice}<br>`;
                 }
-    
+
                 questionDataDisp += `
                         </div>
                         <div class="mt-5">
@@ -95,7 +98,7 @@ $(document).ready(function () {
                         </div>
                     </div>
                 `;
-            } else if (category == 'IDENTIFICATION') {
+            } else if (category == "IDENTIFICATION") {
                 questionDataDisp += `
                     <div class="my-5 py-5 px-3 questionData ${check_answer_style} border-2 rounded-lg">
                         <div class="questionContent">
@@ -113,14 +116,13 @@ $(document).ready(function () {
                 `;
             }
 
-            const check_answer_flag = (isCorrect == 1)
-            ? '<span><i class="fa-solid fa-check" style="color: #ffffff;"></i></span>'
-            : '<span><i class="fa-solid fa-xmark" style="color: #ffffff;"></i></span>';
+            const check_answer_flag =
+                isCorrect == 1
+                    ? '<span><i class="fa-solid fa-check" style="color: #ffffff;"></i></span>'
+                    : '<span><i class="fa-solid fa-xmark" style="color: #ffffff;"></i></span>';
 
-            const check_answer_flag_style = (isCorrect == 1)
-            ? 'bg-darthmouthgreen'
-            : 'bg-red-600';
-
+            const check_answer_flag_style =
+                isCorrect == 1 ? "bg-darthmouthgreen" : "bg-red-600";
 
             questionIndicatorDisp += `
                 <div class="flex items-center justify-center question_isAnswered w-[35px] h-[45px] hover:cursor-pointer 
@@ -130,208 +132,199 @@ $(document).ready(function () {
                 </div>
             `;
         }
-            $('#questionContainer').prepend(questionDataDisp);
-            $('#isAnsweredMeter').append(questionIndicatorDisp);
-
-
-
-
-
-
-
+        $("#questionContainer").prepend(questionDataDisp);
+        $("#isAnsweredMeter").append(questionIndicatorDisp);
 
         displayQuestionsByPage(currentPage);
 
         // Pagination event listeners
-        $('#prevPage').on('click', function () {
+        $("#prevPage").on("click", function () {
             if (currentPage > 1) {
                 currentPage--;
                 displayQuestionsByPage(currentPage);
+
+                $("#nextPage").removeClass("btn-disabled");
+            } else {
+                $("#prevPage").addClass("btn-disabled");
             }
         });
 
-        $('#nextPage').on('click', function () {
-            if (currentPage < Math.ceil(postAssessmentLearnerOutputData.length / questionsPerPage)) {
+        $("#nextPage").on("click", function () {
+            if (
+                currentPage <
+                Math.ceil(
+                    preAssessmentLearnerOutputData.length / questionsPerPage,
+                )
+            ) {
                 currentPage++;
                 displayQuestionsByPage(currentPage);
+
+                $("#prevPage").removeClass("btn-disabled");
+            } else {
+                $("#nextPage").addClass("btn-disabled");
             }
         });
     }
 
     function displayQuestionsByPage(page) {
         // Hide all questions
-        $('.questionData').hide();
+        $(".questionData").hide();
 
         // Calculate the starting index for the current page
         const startIndex = (page - 1) * questionsPerPage;
 
         // Display questions for the current page
-        $('.questionData').slice(startIndex, startIndex + questionsPerPage).show();
+        $(".questionData")
+            .slice(startIndex, startIndex + questionsPerPage)
+            .show();
 
         // Update current page indicator
-        $('#currentPage').text('Page ' + page);
+        $("#currentPage").text("Page " + page);
     }
-
-
-
-
-    
-
-
-
 
     function getLearnerData() {
         var url = `/learner/learnerData`;
-            $.ajax({
-                type: "GET",
-                url: url,
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                success: function(response) {
-                    console.log(response);
+        $.ajax({
+            type: "GET",
+            url: url,
+            headers: {
+                "X-CSRF-TOKEN": csrfToken,
+            },
+            success: function (response) {
+                console.log(response);
 
-                    var learner = response['learner']
-                    // init_chatbot(learner);
-                    
+                var learner = response["learner"];
+                // init_chatbot(learner);
 
-                    $.when(
-                        add_learner_data(learner)
-                    ).then(function() {
-                        getCourseData(learner)
-                    })
-
-
-
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+                $.when(add_learner_data(learner)).then(function () {
+                    getCourseData(learner);
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
     }
 
-    
     function add_learner_data(learner) {
-        
-        var course_id = $('#titleArea').data('course-id');
-        var learner_id = learner['learner_id'];
+        var course_id = $("#titleArea").data("course-id");
+        var learner_id = learner["learner_id"];
         var url = `/chatbot/learner/${learner_id}/course/${course_id}`;
         $.ajax({
             type: "GET",
             url: url,
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-                 },
-                 error: function(error) {
-                     console.log(error);
-                 }
-             });
-}
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
 
-function process_files(session_id) {
-    var url = `/chatbot/process/${session_id}`;
-    $.ajax({
-        type: "GET",
-        url: url,
-        success: function(response) {
-            console.log(response);
+    function process_files(session_id) {
+        var url = `/chatbot/process/${session_id}`;
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (response) {
+                console.log(response);
 
-            $('.loaderArea').addClass('hidden');
-            $('.mainchatbotarea').removeClass('hidden');
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
+                $(".loaderArea").addClass("hidden");
+                $(".mainchatbotarea").removeClass("hidden");
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
 
     function getCourseData(learner) {
-        
-        var course_id = $('#titleArea').data('course-id');
+        var course_id = $("#titleArea").data("course-id");
         var url = `/chatbot/courseData/${course_id}`;
         $.ajax({
             type: "GET",
             url: url,
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                "X-CSRF-TOKEN": csrfToken,
             },
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-    
-                
-                var learner_id = learner['learner_id'];
+
+                var learner_id = learner["learner_id"];
                 // process_files(learner_id)
 
+                var courseData = response["course"];
 
-                var courseData = response['course'];
-    
-                $('.submitQuestion').on('click', function(e) {
+                $(".submitQuestion").on("click", function (e) {
                     e.preventDefault();
                     submitQuestion();
                 });
-    
-                $('.question_input, .question_input_2').on('keydown', function(e) {
-                    if (e.keyCode === 13) {
-                        e.preventDefault();
-                        submitQuestion();
-                    }
-                });
-    
+
+                $(".question_input, .question_input_2").on(
+                    "keydown",
+                    function (e) {
+                        if (e.keyCode === 13) {
+                            e.preventDefault();
+                            submitQuestion();
+                        }
+                    },
+                );
+
                 function submitQuestion() {
-                    var learner_id = learner['learner_id'];
-                    var question = $('.question_input').val();
-                    if(!question) {
-                        var question = $('.question_input_2').val();
+                    var learner_id = learner["learner_id"];
+                    var question = $(".question_input").val();
+                    if (!question) {
+                        var question = $(".question_input_2").val();
                     }
-                    var course = courseData['course_name'];
-                    var lesson = 'POST ASSESSMENT';
-    
+                    var course = courseData["course_name"];
+                    var lesson = "POST ASSESSMENT";
+
                     displayUserMessage(question, learner);
-                    $('.botloader').removeClass('hidden');
+                    $(".botloader").removeClass("hidden");
                     var chatData = {
                         question: question,
                         course: course,
                         lesson: lesson,
                     };
-    
+
                     var url = `/chatbot/chat/${learner_id}`;
                     $.ajax({
                         type: "POST",
                         url: url,
                         data: chatData,
                         headers: {
-                            'X-CSRF-TOKEN': csrfToken
+                            "X-CSRF-TOKEN": csrfToken,
                         },
-                        success: function(response) {
+                        success: function (response) {
                             console.log(response);
                             displayBotMessage(response);
-                            $('.question_input').val('')
-                            $('.question_input_2').val('')
+                            $(".question_input").val("");
+                            $(".question_input_2").val("");
                         },
-                        error: function(error) {
+                        error: function (error) {
                             console.log(error);
-                        }
+                        },
                     });
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
-    
 
     function displayUserMessage(question, learner) {
         var userMessageDisp = ``;
-        var profile = learner['profile_picture']
+        var profile = learner["profile_picture"];
         var currentTime = new Date();
         var hours = currentTime.getHours();
         var minutes = currentTime.getMinutes();
 
-        minutes = minutes < 10 ? '0' + minutes : minutes;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
 
-        var timeString = hours + ':' + minutes;
-    
+        var timeString = hours + ":" + minutes;
+
         userMessageDisp += `
         
         <div class="mx-3 chat chat-end">
@@ -350,16 +343,14 @@ function process_files(session_id) {
         </div>
         `;
 
-        $('.chatContainer').append(userMessageDisp);
+        $(".chatContainer").append(userMessageDisp);
     }
 
-
     function displayBotMessage(response) {
+        var message = response["message"];
 
-        var message = response['message']
-
-        message = message.replace(/\n/g, '<br>');
-        var botMessageDisp = ``
+        message = message.replace(/\n/g, "<br>");
+        var botMessageDisp = ``;
         botMessageDisp += `
         
         <div class="chat chat-start">
@@ -372,9 +363,7 @@ function process_files(session_id) {
         </div>
         `;
 
-        $('.botloader').addClass('hidden')
-        $('.chatContainer').append(botMessageDisp);
+        $(".botloader").addClass("hidden");
+        $(".chatContainer").append(botMessageDisp);
     }
-
-
-})
+});
