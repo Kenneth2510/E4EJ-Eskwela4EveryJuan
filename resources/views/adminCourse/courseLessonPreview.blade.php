@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,27 +9,30 @@
     <style>
         /* width */
         ::-webkit-scrollbar {
-          width: 15px;
-        }
-      
-        /* Track */
-        ::-webkit-scrollbar-track {
-          box-shadow: inset 0 0 5px grey;
-          border-radius: 10px;
-        }
-      
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-          background: #00693e; /* Dartmouth Green */
-          border-radius: 10px;
-        }
-      
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-          background: #004026; /* Darker shade for hover */
+            width: 15px;
         }
 
-        html, body {
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #00693e;
+            /* Dartmouth Green */
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #004026;
+            /* Darker shade for hover */
+        }
+
+        html,
+        body {
             width: 100%;
             overflow-x: hidden;
         }
@@ -142,9 +146,11 @@
         }
     </style>
 </head>
+
 <body class="min-h-full bg-mainwhitebg font-poppins">
     <section id="start" class="page_content">
-        <div style="background-color: #00693e; padding: 0.5rem; padding:20px; color: #fff; border-radius: 0.5rem; z-index: 50;">
+        <div
+            style="background-color: #00693e; padding: 0.5rem; padding:20px; color: #fff; border-radius: 0.5rem; z-index: 50;">
             <h1>{{ $course->course_name }}</h1>
             <div class="">
                 <h2>{{ $lessonInfo->lesson_title }}</h2>
@@ -159,13 +165,19 @@
                 <a href="">{{ $lessonInfo->lesson_title }}</a>
             </div>
             <div id="lesson_title_area" style="margin-bottom: 1rem;">
-                <div class="flex-row" style="padding-bottom: 0.75rem; margin-top: 1rem; border-bottom: 0.125rem solid #2f855a;">
+                <div class="flex-row"
+                    style="padding-bottom: 0.75rem; margin-top: 1rem; border-bottom: 0.125rem solid #2f855a;">
                     <div style="position: relative; display: flex; align-items: center;">
-                        <svg style="position: absolute; left: 0; border: 0.125rem solid #000; border-radius: 50%; padding: 0.125rem;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 32 32">
-                            <path fill="currentColor" d="M19 10h7v2h-7zm0 5h7v2h-7zm0 5h7v2h-7zM6 10h7v2H6zm0 5h7v2H6zm0 5h7v2H6z"/>
-                            <path fill="currentColor" d="M28 5H4a2.002 2.002 0 0 0-2 2v18a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2V7a2.002 2.002 0 0 0-2-2ZM4 7h11v18H4Zm13 18V7h11v18Z"/>
+                        <svg style="position: absolute; left: 0; border: 0.125rem solid #000; border-radius: 50%; padding: 0.125rem;"
+                            xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 32 32">
+                            <path fill="currentColor"
+                                d="M19 10h7v2h-7zm0 5h7v2h-7zm0 5h7v2h-7zM6 10h7v2H6zm0 5h7v2H6zm0 5h7v2H6z" />
+                            <path fill="currentColor"
+                                d="M28 5H4a2.002 2.002 0 0 0-2 2v18a2.002 2.002 0 0 0 2 2h24a2.002 2.002 0 0 0 2-2V7a2.002 2.002 0 0 0-2-2ZM4 7h11v18H4Zm13 18V7h11v18Z" />
                         </svg>
-                        <div style="padding-left: 2.5rem; margin-left:25px; font-size: 1.875rem; font-weight: bold; border: none;">{{ $lessonInfo->lesson_title }}</div>
+                        <div
+                            style="padding-left: 2.5rem; margin-left:25px; font-size: 1.875rem; font-weight: bold; border: none;">
+                            {{ $lessonInfo->lesson_title }}</div>
                     </div>
                 </div>
                 <div class="flex-row">
@@ -181,7 +193,7 @@
             <div class="mt-5">
                 @if ($lessonInfo->picture !== null)
                 <div id="lesson_img">
-                    <img src="{{ asset("storage/$lessonInfo->picture") }}" alt="">
+                    <img src="{{ asset(" storage/$lessonInfo->picture") }}" alt="">
                 </div>
                 @endif
             </div>
@@ -189,9 +201,10 @@
             <div id="main_content_area">
                 @forelse ($lessonContent as $lesson)
                 <div data-content-order="{{$lesson->lesson_content_order}}" class="lesson-content">
-                    <input type="text" style="font-size: 2rem; font-weight: bold; border: none; padding: 0;" disabled name="lesson_content_title_input" id="" value="{{ $lesson->lesson_content_title }}">
+                    <input type="text" style="font-size: 2rem; font-weight: bold; border: none; padding: 0;" disabled
+                        name="lesson_content_title_input" id="" value="{{ $lesson->lesson_content_title }}">
                     @if ($lesson->picture !== null)
-                        <img src="{{ asset("storage/$lesson->picture") }}" alt="" style="margin-top: 1.25rem;">
+                    <img src="{{ asset(" storage/$lesson->picture") }}" alt="" style="margin-top: 1.25rem;">
                     @endif
                     <div class="lesson-content-body">
                         {!! $lesson->lesson_content !!}
@@ -201,17 +214,17 @@
                         <h4>Videos embedded:</h4>
                         {{-- Extract the video ID from the iframe src attribute --}}
                         @php
-                            $urlParts = parse_url($lesson->video_url);
-                            $query = $urlParts['query'] ?? '';
-                            parse_str($query, $queryParts);
-                            $videoId = $queryParts['v'] ?? '';
-                            $videoUrl = "https://www.youtube.com/watch?v=$videoId";
+                        $urlParts = parse_url($lesson->video_url);
+                        $query = $urlParts['query'] ?? '';
+                        parse_str($query, $queryParts);
+                        $videoId = $queryParts['v'] ?? '';
+                        $videoUrl = "https://www.youtube.com/watch?v=$videoId";
                         @endphp
-                    
+
                         <p>{{ $videoUrl }}</p>
                     </div>
-                    
-                    
+
+
                     @endif
                 </div>
                 @empty
@@ -221,8 +234,9 @@
                 @endforelse
             </div>
         </div>
-    </div>
-</section>
+        </div>
+    </section>
 
 </body>
+
 </html>

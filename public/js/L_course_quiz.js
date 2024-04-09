@@ -145,7 +145,8 @@ getLearnerQuizData();
 
         // Update the timer display initially
         updateTimerDisplay();
-        setTimeout(submitQuizContent, durationVal);
+        // setTimeout(submitQuizContent, durationVal);
+        setTimeout(durationVal);
 
         // Start the timer
         const timerInterval = setInterval(function () {

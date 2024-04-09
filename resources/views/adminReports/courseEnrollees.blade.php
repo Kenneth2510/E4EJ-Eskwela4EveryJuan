@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Data</title>
     <style>
         /* Reset default margin and padding */
-        body, h1, h2, h3, h4, h5, h6, p, table, th, td {
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        table,
+        th,
+        td {
             margin: 0;
             padding: 0;
         }
@@ -23,7 +34,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
@@ -34,7 +46,12 @@
         }
 
         /* Set styling for the headings */
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             margin-bottom: 10px;
         }
 
@@ -72,6 +89,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -84,7 +102,7 @@
                 <h1 class="title">{{ $course->course_name }}</h1>
                 <h2>Enrollees</h2>
             </div>
-    
+
             <table>
                 <thead>
                     <tr>
@@ -97,18 +115,19 @@
                 </thead>
                 <tbody>
                     @foreach ($learnerCourseData as $learnerCourse)
-                        <tr>
-                            <td>{{ $learnerCourse->name }}</td>
-                            <td>{{ $learnerCourse->status }}</td>
-                            <td>{{ $learnerCourse->course_progress }}</td>
-                            <td>{{ $learnerCourse->start_period }}</td>
-                            <td>{{ $learnerCourse->finish_period }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ $learnerCourse->name }}</td>
+                        <td>{{ $learnerCourse->status }}</td>
+                        <td>{{ $learnerCourse->course_progress }}</td>
+                        <td>{{ $learnerCourse->start_period }}</td>
+                        <td>{{ $learnerCourse->finish_period }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        
+
     </div>
 </body>
+
 </html>

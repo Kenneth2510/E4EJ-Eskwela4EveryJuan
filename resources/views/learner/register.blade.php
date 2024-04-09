@@ -3,7 +3,7 @@
 @section('content')
     {{-- MAIN --}}
     <div class="relative w-full h-screen pt-16 md:h-auto lg:h-screen lg:overflow-auto bg-mainwhitebg text-darthmouthgreen md:bg-mainwhitebg lg:w-1/2 lg:text-mainwhitebg lg:pt-24">
-        <div class="rounded-lg p-3 md:shadow-xl md:w-3/4 md:mx-auto md:bg-mainwhitebg lg:bg-opacity-0 lg:shadow-transparent text-black ">
+        <div class="p-3 text-black rounded-lg md:shadow-xl md:w-3/4 md:mx-auto md:bg-mainwhitebg lg:bg-opacity-0 lg:shadow-transparent ">
 
         
 
@@ -272,11 +272,11 @@
                         {{-- <input class="border IN-V-INP border-darthmouthgreen" type="text" maxlength="13" name="bplo_account_number" id="bplo_account_number" value="{{old('bplo_account_number')}}"> --}}
                         <input class="w-full input input-bordered"
                             type="text"
-                            maxlength="13"
+                            maxlength="7"
                             name="bplo_account_number"
                             id="bplo_account_number"
                             value="{{old('bplo_account_number')}}"
-                            placeholder="BPLO Account Number" 
+                            placeholder="A-00000" 
                             />
                         <span id="bploCategoryError" class="text-red-500"></span>
                     </div>
@@ -628,10 +628,4 @@
             </span>
         </button>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $
-        })
-    </script>
 @endsection

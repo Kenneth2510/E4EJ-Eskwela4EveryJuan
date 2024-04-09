@@ -24,12 +24,14 @@ export default {
             colors: {
                 transparent: "transparent",
                 current: "currentColor",
-                mainwhitebg: "#EDF0F5",
+                mainwhitebg: "#feffff",
                 darthmouthgreen: "#025C26",
                 seagreen: "#1F8247",
                 lemonchiffon: "#FFFBCE",
                 ashgray: "#9FAFA1",
                 mintgreen: "#79C586",
+                charcoal: "#2b2b2b",
+                txtclr: "#ceddd1",
             },
 
             backgroundImage: {

@@ -1,77 +1,93 @@
 @extends('layouts.learner_layout')
 
-@section('content')    
-    {{-- MAIN --}}
+@section('content')
+{{-- MAIN --}}
 <section class="w-full h-screen md:w-3/4 lg:w-10/12">
     <div class="h-full px-2 py-4 pt-24 overflow-hidden overflow-y-scroll rounded-lg shadow-lg md:pt-6">
         <div class="relative z-0 w-full p-4 text-black border rounded-lg shadow-lg">
             {{-- course name/title --}}
             <a href="{{ url('/learner/courses') }}" class="w-8 h-8 m-2">
-                <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" width="24"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" width="24">
+                    <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+                </svg>
             </a>
             <div class="flex justify-between w-full" id="courseInfo">
                 <div class="" id="courseInfo_left">
                     <h1 class="text-2xl font-semibold md:text-4xl">{{$course->course_name}}</h1>
-                    <h4 class="text-xl">Course ID: {{$course->course_id}}</h4>
-                    <h4 class="mt-10">Course Level: <span class="font-medium text-darhmouthgreen">{{$course->course_difficulty}}</span></h4>
-                    <h4 class=""><i class="fa-regular fa-clock text-darthmouthgreen"></i> Est. Time:  {{$totalCourseTime}}</h4>
-                    <h4 class="mt-3">Total  Units: {{$totalSyllabusCount}}</h4>
-                    <h4>&emsp;<i class="fa-regular fa-file text-darthmouthgreen"></i> Lessons: {{$totalLessonsCount}}</h4>
-                    <h4>&emsp;<i class="fa-regular fa-clipboard text-darthmouthgreen"></i> Activities: {{$totalActivitiesCount}}</h4>
-                    <h4>&emsp;<i class="fa-regular fa-pen-to-square text-darthmouthgreen"></i> Quizzes:  {{$totalQuizzesCount}}</h4>
+                    <h4 class="text-xl">Course ID:{{$course->course_id}}</h4>
+                    <h4 class="mt-10">Course Level: <span
+                            class="font-medium text-darhmouthgreen">{{$course->course_difficulty}}</span></h4>
+                    <h4 class=""><i class="fa-regular fa-clock text-darthmouthgreen"></i> Est. Time:
+                        {{$totalCourseTime}}</h4>
+                    <h4 class="mt-3">Total Units: {{$totalSyllabusCount}}</h4>
+                    <h4>&emsp;<i class="fa-regular fa-file text-darthmouthgreen"></i> Lessons: {{$totalLessonsCount}}
+                    </h4>
+                    <h4>&emsp;<i class="fa-regular fa-clipboard text-darthmouthgreen"></i> Activities:
+                        {{$totalActivitiesCount}}</h4>
+                    <h4>&emsp;<i class="fa-regular fa-pen-to-square text-darthmouthgreen"></i> Quizzes:
+                        {{$totalQuizzesCount}}</h4>
 
 
                     @if ($isEnrolled)
-                    <h4 class="flex items-center mt-10">Enrollment Status: 
+                    <h4 class="flex items-center mt-10">Enrollment Status:
                         @if ($isEnrolled->status === 'Approved')
-                            <div class="w-5 h-5 mx-2 rounded-full bg-darthmouthgreen"></div>
+                        <div class="w-5 h-5 mx-2 rounded-full bg-darthmouthgreen"></div>
                         @elseif ($isEnrolled->status ==='Pending')
-                            <div class="w-5 h-5 mx-2 bg-yellow-500 rounded-full"></div>
+                        <div class="w-5 h-5 mx-2 bg-yellow-500 rounded-full"></div>
                         @else
-                            <div class="w-5 h-5 mx-2 bg-red-500 rounded-full"></div>
+                        <div class="w-5 h-5 mx-2 bg-red-500 rounded-full"></div>
                         @endif
-                    {{$isEnrolled->status}}</h4>
+                        {{$isEnrolled->status}}
+                    </h4>
                     @if ($courseProgress)
-                    <h4 class="flex items-center my-10">Your Progress:&nbsp;<span class="font-bold text-primary">{{$courseProgress->course_progress}}</span></h4>
-                        @if($courseProgress->course_progress == 'COMPLETED')
-                        
-                        <button class="btn btn-primary">
-                            <a href="{{ url("/learner/course/$course->course_id/$courseProgress->learner_course_id/certificate") }}" target="_blank" class="space-x-2 text-white hover:text-darthmouthgreen"><span>Certificate of Recognition</span><i class="fa-solid fa-download"></i></a>    
-                        </button>    
-                        
-                        @endif
-                    @endif
-                    @endif
-                    
+                    <h4 class="flex items-center my-10">Your Progress:&nbsp;<span
+                            class="font-bold text-primary">{{$courseProgress->course_progress}}</span></h4>
+                    @if($courseProgress->course_progress == 'COMPLETED')
 
-            </div>
-            <div class="flex flex-col items-center justify-between" id="courseInfo_right">
-                <img class="w-40 h-40 my-4 mb-3 rounded-full lg:w-40 lg:h-40 object-cover" src="{{ asset('storage/' . $course->profile_picture) }}" alt="Profile Picture">
-                <div class="mb-10 text-center">
-                    <h1 class="text-xl font-semibold">{{$course->instructor_fname}} {{$course->instructor_lname}}</h1>
-                    <p class="text-lg">INSTRUCTOR</p>
-                    <a href="{{ url("/learner/profile/instructor/$course->instructor_email") }}" class="px-3 py-1 text-white rounded-xl bg-darthmouthgreen hover:bg-white hover:border-darthmouthgreen hover:border hover:text-darthmouthgreen">View Profile</a>
+                    <button class="btn btn-primary">
+                        <a href="{{ url("/learner/course/$course->course_id/$courseProgress->learner_course_id/certificate") }}"
+                            target="_blank" class="space-x-2 rounded-full btn btn-primary"><span>Certificate of
+                                Recognition</span><i class="fa-solid fa-download"></i></a>
+                    </button>
+
+                    @endif
+                    @endif
+                    @endif
+
+
                 </div>
-                <div class="flex flex-col space-y-2">
-                    @if($isEnrolled)
-                    <a href="{{ url("/learner/course/manage/$course->course_id/overview") }}" id="" class="btn btn-primary">Enter</a>
+                <div class="flex flex-col items-center justify-between" id="courseInfo_right">
+                    <img class="object-cover w-24 h-24 my-4 mb-3 rounded-full lg:w-40 lg:h-40"
+                        src="{{ asset('storage/' . $course->profile_picture) }}" alt="Profile Picture">
+                    <div class="mb-10 text-center">
+                        <h1 class="text-xl font-semibold">{{$course->instructor_fname}} {{$course->instructor_lname}}
+                        </h1>
+                        <p class="text-lg">INSTRUCTOR</p>
+                        <a href="{{ url("/learner/profile/instructor/$course->instructor_email") }}"
+                            class="rounded-full btn">View Profile</a>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        @if($isEnrolled)
+                        <a href="{{ url("/learner/course/manage/$course->course_id/overview") }}" id="" class="btn
+                            btn-primary">Get Started</a>
 
-                        <button id="unenrollBtn" class="btn btn-danger">Unenroll</button>
+                        {{-- !<button id="unenrollBtn" class="btn btn-danger">Unenroll</button> --}}
                         @else
-                        <button id="enrollBtn" data-course-id="{{$course->course_id}}" class="btn btn-primary">Enroll Now</button>
+                        <button id="enrollBtn" data-course-id="{{$course->course_id}}" class="btn btn-primary">Enroll
+                            Now</button>
                         @endif
-                        
-                        <button id="viewDetailsBtn" class="btn btn-warning">View Details</button>    
+
+                        <button id="viewDetailsBtn" class="btn btn-warning">View Details</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        
+
         <hr class="my-6 border-t-2 border-gray-300">
 
-        <div class="flex flex-col mt-5 lg:flex-row lg:justify-between" id="enrolledData">
-            <div class="lg:w-7/12 lg:h-[100px]" id="totalEnrollees">
+        <div class="flex flex-col mt-5 lg:flex-row lg:justify-evenly" id="enrolledData">
+            <div id="totalEnrollees">
                 <h1 class="mt-10 text-xl text-center">
                     <span class="text-6xl font-semibold text-darthmouthgreen">
                         {{$totalEnrolledCount}}
@@ -101,23 +117,27 @@
 
         <hr class="my-6 border-t-2 border-gray-300">
 
-        <div class="relative z-0 flex flex-col p-3 pb-4 mt-10 text-black border rounded-lg shadow-lg lg:flex-row lg:justify-between" id="courseDescAndTopics">
+        <div class="relative z-0 flex flex-col p-3 pb-4 mt-10 text-black border rounded-lg shadow-lg lg:flex-row lg:justify-between"
+            id="courseDescAndTopics">
             <div class="lg:w-7/12 overflow-y-auto h-[400px]" id="courseDesc">
                 <h1 class="text-2xl font-semibold md:text-3xl lg:text-4xl">Course Description</h1>
                 <div class="whitespace-pre-line">
                     {{$course->course_description}}
                 </div>
             </div>
-            <div class="lg:w-5/12 overflow-y-auto h-full" id="courseTopics">
+            <div class="h-full overflow-y-auto lg:w-5/12" id="courseTopics">
                 <h1 class="text-2xl font-semibold md:text-3xl lg:text-4xl">Course Topics</h1>
                 @foreach ($syllabus as $topic)
-                    @if ($topic->category === "LESSON")
-                        <h4 class="pt-5 text-lg "><i class="text-2xl fa-regular fa-file text-darthmouthgreen "></i> - {{$topic->topic_title}}</h4>
-                    @elseif ($topic->category === "ACTIVITY")
-                        <h4 class="pt-5 text-lg "><i class="text-2xl fa-regular fa-clipboard text-darthmouthgreen "></i> - {{$topic->topic_title}}</h4>
-                    @elseif ($topic->category === "QUIZ")
-                        <h4 class="pt-5 text-lg "><i class="text-2xl fa-regular fa-pen-to-square text-darthmouthgreen "></i> - {{$topic->topic_title}}</h4>
-                    @endif
+                @if ($topic->category === "LESSON")
+                <h4 class="pt-5 text-lg "><i class="text-2xl fa-regular fa-file text-darthmouthgreen "></i> -
+                    {{$topic->topic_title}}</h4>
+                @elseif ($topic->category === "ACTIVITY")
+                <h4 class="pt-5 text-lg "><i class="text-2xl fa-regular fa-clipboard text-darthmouthgreen "></i> -
+                    {{$topic->topic_title}}</h4>
+                @elseif ($topic->category === "QUIZ")
+                <h4 class="pt-5 text-lg "><i class="text-2xl fa-regular fa-pen-to-square text-darthmouthgreen "></i> -
+                    {{$topic->topic_title}}</h4>
+                @endif
                 @endforeach
             </div>
         </div>
@@ -128,10 +148,11 @@
             <div class="">
                 <h1 class="text-4xl font-semibold">Your Progress</h1>
                 <div class="mt-3 h-7 rounded-xl" style="background: #9DB0A3" id="skill_bar">
-                    <div class="relative py-1 text-center text-white h-7 bg-darthmouthgreen rounded-xl" id="skill_per" per="{{$progressPercent}}%" style="max-width: {{$progressPercent}}%">{{$progressPercent}}%</div>
-                </div>    
+                    <div class="relative py-1 text-center text-white h-7 bg-darthmouthgreen rounded-xl" id="skill_per"
+                        per="{{$progressPercent}}%" style="max-width: {{$progressPercent}}%">{{$progressPercent}}%</div>
+                </div>
             </div>
-            
+
             <div class="px-5 mx-5">
                 <table class="w-full mt-5">
                     <thead class="text-left">
@@ -145,7 +166,7 @@
                             <td>{{$topic->status}}</td>
                         </tr>
                         @endforeach
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -153,10 +174,11 @@
         @endif
     </div>
 </section>
-
+@include('partials.chatbot-btn')
 @include('partials.chatbot')
 
-<div id="enrollCourseModal" class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
+<div id="enrollCourseModal"
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
     <div class="modal-content bg-white p-4 rounded-lg shadow-lg w-[500px]">
         <div class="flex justify-end w-full">
             <button class="cancelEnroll">
@@ -168,15 +190,18 @@
 
         <p class="text-gray-600">Are you sure you want to enroll to the course?</p>
 
-        <div class="flex justify-center w-full mt-5">
-            <button id="enrollCourse" data-course-id="{{$course->course_id}}" class="px-5 py-3 mx-2 mt-4 text-white rounded-lg bg-seagreen hover:bg-white hover:text-darthmouthgreen hover:border-2 hover:border-darthmouthgreen">Enroll Now</button>
-            <button id="" class="px-5 py-3 mx-2 mt-4 text-white bg-red-500 rounded-lg cancelEnroll hover:bg-white hover:text-red-500 hover:border-2 hover:border-red-500">Cancel</button>
+        <div class="flex justify-center w-full mt-5 space-x-2">
+            <button id="" class="cancelEnroll btn btn-error text-mainwhitebg">Cancel</button>
+            <button id="enrollCourse" data-course-id="{{$course->course_id}}" class="btn btn-primary">Enroll
+                Now</button>
+
         </div>
     </div>
 </div>
 
-
-<div id="unenrollCourseModal" class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
+{{-- ***?di ko sure kung magagamit pa to? --}}
+<div id="unenrollCourseModal"
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75">
     <div class="modal-content bg-white p-4 rounded-lg shadow-lg w-[500px]">
         <div class="flex justify-end w-full">
             <button class="cancelUnenroll">
@@ -190,8 +215,11 @@
 
         <div class="flex justify-center w-full mt-5">
             @if ($isEnrolled)
-            <button id="unenrollCourse" data-learner-course-id="{{ $isEnrolled->learner_course_id }}" class="px-5 py-3 mx-2 mt-4 text-white bg-red-500 rounded-lg hover:bg-white hover:text-red-500 hover:border-2 hover:border-red-500">Unenroll Now</button>
-            <button id="" class="px-5 py-3 mx-2 mt-4 text-white bg-gray-500 rounded-lg cancelUnenroll hover:bg-white hover:text-gray-500 hover:border-2 hover:border-gray-500">Cancel</button>
+            <button id="unenrollCourse" data-learner-course-id="{{ $isEnrolled->learner_course_id }}"
+                class="px-5 py-3 mx-2 mt-4 text-white bg-red-500 rounded-lg hover:bg-white hover:text-red-500 hover:border-2 hover:border-red-500">Unenroll
+                Now</button>
+            <button id=""
+                class="px-5 py-3 mx-2 mt-4 text-white bg-gray-500 rounded-lg cancelUnenroll hover:bg-white hover:text-gray-500 hover:border-2 hover:border-gray-500">Cancel</button>
             @endif
         </div>
     </div>
@@ -199,7 +227,8 @@
 
 
 
-<div id="courseDetailsModal" class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full overflow-hidden bg-gray-200 bg-opacity-75 md:py-4">
+<div id="courseDetailsModal"
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full overflow-hidden bg-gray-200 bg-opacity-75 md:py-4">
     <div class="w-full h-full p-4 overflow-auto bg-white rounded-lg shadow-lg md:w-3/5 modal-content">
         <div class="flex justify-end w-full">
             <button class="closeCourseDetailsModal">
@@ -209,10 +238,14 @@
         <div class="flex flex-col" id="content">
             <div class=" bg-darthmouthgreen rounded-s-xl rounded-e-xl" id="courseDetailsDirectory">
                 <ul class="flex flex-row divide-x-2 divide-white">
-                    <li class="w-full p-3 font-semibold text-center text-white rounded-s-xl hover:bg-white hover:text-darthmouthgreen bg-darthmouthgreen" id="courseDetailsBtn">Course Details</li>
-                    <li class="w-full p-3 font-semibold text-center text-white hover:bg-white hover:text-darthmouthgreen bg-darthmouthgreen" id="learnersEnrolledBtn">Learners Enrolled</li>
-                    <li class="w-full p-3 font-semibold text-center text-white hover:bg-white hover:text-darthmouthgreen bg-darthmouthgreen" id="gradesheetBtn">Gradesheet</li>
-                    <li class="w-full p-3 font-semibold text-center text-white rounded-e-xl hover:bg-white hover:text-darthmouthgreen bg-darthmouthgreen" id="courseFilesBtn">Course Files</li>
+                    <li class="w-full p-3 font-semibold text-center text-white rounded-s-xl hover:bg-white hover:text-darthmouthgreen bg-darthmouthgreen"
+                        id="courseDetailsBtn">Course Details</li>
+                    <li class="w-full p-3 font-semibold text-center text-white hover:bg-white hover:text-darthmouthgreen bg-darthmouthgreen"
+                        id="learnersEnrolledBtn">Learners Enrolled</li>
+                    <li class="w-full p-3 font-semibold text-center text-white hover:bg-white hover:text-darthmouthgreen bg-darthmouthgreen"
+                        id="gradesheetBtn">Gradesheet</li>
+                    <li class="w-full p-3 font-semibold text-center text-white rounded-e-xl hover:bg-white hover:text-darthmouthgreen bg-darthmouthgreen"
+                        id="courseFilesBtn">Course Files</li>
                 </ul>
             </div>
 
@@ -221,20 +254,26 @@
 
                     <div class="w-full py-5 mx-5 md:w-1/2" id="courseInfo_left">
                         <h1 class="text-2xl font-semibold md:text-4xl">{{$course->course_name}}</h1>
-                        <h4 class="text-xl">Course ID: {{$course->course_id}}</h4>
-                        <h4 class="mt-10">Course Level: <span class="font-medium text-darhmouthgreen">{{$course->course_difficulty}}</span></h4>
-                        <h4 class=""><i class="fa-regular fa-clock text-darthmouthgreen"></i> Est. Time:  {{$totalCourseTime}}</h4>
-                        <h4 class="mt-3">Total  Units: {{$totalSyllabusCount}}</h4>
-                        <h4>&emsp;<i class="fa-regular fa-file text-darthmouthgreen"></i> Lessons: {{$totalLessonsCount}}</h4>
-                        <h4>&emsp;<i class="fa-regular fa-clipboard text-darthmouthgreen"></i> Activities: {{$totalActivitiesCount}}</h4>
-                        <h4>&emsp;<i class="fa-regular fa-pen-to-square text-darthmouthgreen"></i> Quizzes:  {{$totalQuizzesCount}}</h4>
+                        <h4 class="text-xl">Course ID:{{$course->course_id}}</h4>
+                        <h4 class="mt-10">Course Level: <span
+                                class="font-medium text-darhmouthgreen">{{$course->course_difficulty}}</span></h4>
+                        <h4 class=""><i class="fa-regular fa-clock text-darthmouthgreen"></i> Est. Time:
+                            {{$totalCourseTime}}</h4>
+                        <h4 class="mt-3">Total Units: {{$totalSyllabusCount}}</h4>
+                        <h4>&emsp;<i class="fa-regular fa-file text-darthmouthgreen"></i> Lessons:
+                            {{$totalLessonsCount}}</h4>
+                        <h4>&emsp;<i class="fa-regular fa-clipboard text-darthmouthgreen"></i> Activities:
+                            {{$totalActivitiesCount}}</h4>
+                        <h4>&emsp;<i class="fa-regular fa-pen-to-square text-darthmouthgreen"></i> Quizzes:
+                            {{$totalQuizzesCount}}</h4>
                         <h4 class="mt-10 text-xl">Course Description</h4>
                         <div class="w-full overflow-y-auto whitespace-pre-line">
                             {{$course->course_description}}
                         </div>
                     </div>
                     <div class="flex flex-col items-center justify-center w-full md:w-1/2 " id="courseInfo_right">
-                        <img class="w-40 h-40 my-4 rounded-full lg:w-40 lg:h-40 object-cover" src="{{ asset('storage/' . $course->profile_picture) }}" alt="Profile Picture">
+                        <img class="object-cover w-40 h-40 my-4 rounded-full lg:w-40 lg:h-40"
+                            src="{{ asset('storage/' . $course->profile_picture) }}" alt="Profile Picture">
                         <h4 class="text-xl">{{$course->instructor_fname}} {{$course->instructor_lname}}</h4>
                         <h4 class="text-xl">INSTRUCTOR</h4>
                     </div>
@@ -243,7 +282,7 @@
 
                 <div class="hidden w-full py-5" id="learnersEnrolledArea">
                     <h1 class="text-2xl font-semibold md:text-4xl">Learners Enrolled</h1>
-                    
+
                     <div class="overflow-auto">
                         <table class="table w-full table-auto">
                             <thead class="text-left">
@@ -264,7 +303,8 @@
                                     <td>{{ $enrollee->course_progress }}</td>
                                     <td>
                                         @if($enrollee->learner_id !== $learner->learner_id)
-                                        <a href="{{ url("/learner/profile/learner/$enrollee->learner_email") }}" class="py-1 text-white rounded-xl bg-darthmouthgreen hover:bg-white hover:border-darthmouthgreen hover:border hover:text-darthmouthgreen">View Profile</a>
+                                        <a href="{{ url("/learner/profile/learner/$enrollee->learner_email") }}"
+                                            class="btn btn-primary">View Profile</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -275,7 +315,7 @@
                                 </tr>
                                 @endempty
 
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -291,61 +331,62 @@
                                 <th class="w-[150px]">Status</th>
                                 <th class="w-[150px]">Date Started</th>
                                 <th class="w-[150px]">Pre Assessment</th>
-                                
+
                                 @foreach ($activitySyllabus as $activity)
-                                    <th class="w-[150px]">{{ $activity->activity_title }}</th>
+                                <th class="w-[150px]">{{ $activity->activity_title }}</th>
                                 @endforeach
-                                
+
                                 @foreach ($quizSyllabus as $quiz)
-                                    <th class="w-[150px]">{{ $quiz->quiz_title }}</th>
+                                <th class="w-[150px]">{{ $quiz->quiz_title }}</th>
                                 @endforeach
-                        
+
                                 <th class="w-[150px]">Post Assessment</th>
                                 <th class="w-[150px]">Grade</th>
                                 <th class="w-[150px]">Remarks</th>
                                 <th class="w-[150px]">Date Finished</th>
                             </thead>
-                        
+
                             <tbody class="text-center">
                                 {{--!! PAKIBALIK PO --}}
                                 @if ($isEnrolled)
                                 @forelse ($gradesheet as $grade)
-                                    <tr>
-                                        <td class="w-1/2">{{ $grade->learner_fname }} {{ $grade->learner_lname }}</td>
-                                        <td>{{ $grade->course_progress }}</td>
-                                        <td>{{ $grade->start_period }}</td>
-                                        <td>{{ $preAssessmentGrade->score }}</td>
-                                        
-                                        {{-- Display activity scores --}}
-                                        @foreach ($activitySyllabus as $activity)
-                                            @php
-                                                $activityScore = $grade->activities->firstWhere('activity_id', $activity->activity_id);
-                                            @endphp
-                                            <td>{{ $activityScore ? $activityScore->average_score : '#' }}</td>
-                                        @endforeach
-                                        
-                                        {{-- Display quiz scores --}}
-                                        @foreach ($quizSyllabus as $quiz)
-                                            @php
-                                                $quizScore = $grade->quizzes->firstWhere('quiz_id', $quiz->quiz_id);
-                                            @endphp
-                                            <td>{{ $quizScore ? $quizScore->average_score : '#' }}</td>
-                                        @endforeach
-                                        
-                                        <td>{{ $postAssessmentGrade }}</td>
-                                        <td>{{ $courseProgress->grade }}</td>
-                                        <td>{{ $courseProgress->remarks }}</td>
-                                        <td>{{ $courseProgress->finish_period }}</td>
-                                    </tr>
+                                <tr>
+                                    <td class="w-1/2">{{ $grade->learner_fname }} {{ $grade->learner_lname }}</td>
+                                    <td>{{ $grade->course_progress }}</td>
+                                    <td>{{ $grade->start_period }}</td>
+                                    <td>{{ $preAssessmentGrade->score }}</td>
+
+                                    {{-- Display activity scores --}}
+                                    @foreach ($activitySyllabus as $activity)
+                                    @php
+                                    $activityScore = $grade->activities->firstWhere('activity_id',
+                                    $activity->activity_id);
+                                    @endphp
+                                    <td>{{ $activityScore ? $activityScore->average_score : '#' }}</td>
+                                    @endforeach
+
+                                    {{-- Display quiz scores --}}
+                                    @foreach ($quizSyllabus as $quiz)
+                                    @php
+                                    $quizScore = $grade->quizzes->firstWhere('quiz_id', $quiz->quiz_id);
+                                    @endphp
+                                    <td>{{ $quizScore ? $quizScore->average_score : '#' }}</td>
+                                    @endforeach
+
+                                    <td>{{ $postAssessmentGrade }}</td>
+                                    <td>{{ $courseProgress->grade }}</td>
+                                    <td>{{ $courseProgress->remarks }}</td>
+                                    <td>{{ $courseProgress->finish_period }}</td>
+                                </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="4">No gradesheet available</td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="4">No gradesheet available</td>
+                                </tr>
                                 @endforelse
                                 @endif
                             </tbody>
                         </table>
-                        
+
                     </div>
                 </div>
 
@@ -362,17 +403,21 @@
                             <tbody>
                                 @if($isEnrolled)
                                 @foreach($courseFiles as $file)
-                                    <tr>
-                                        <td class="py-3">{{ basename($file) }}</td>
-                                        <td>
-                                            <a href="{{ Storage::url("$file") }}" target="_blank" class="px-5 py-3 text-white rounded-xl bg-darthmouthgreen hover:bg-white hover:border-2 hover:border-darthmouthgreen hover:text-darthmouthgreen">View File</a>
-                                        </td>  
-                                        <td>
-                                            <a href="{{ Storage::url($file) }}" class="px-5 py-3 text-white rounded-xl bg-darthmouthgreen hover:bg-white hover:border-2 hover:border-darthmouthgreen hover:text-darthmouthgreen" download>Download</a>
-                                        </td>                                  
-                                    </tr>
+                                <tr>
+                                    <td class="py-3">{{ basename($file) }}</td>
+                                    <td>
+                                        <a href="{{ Storage::url("$file") }}" target="_blank"
+                                            class="px-5 py-3 text-white rounded-xl bg-darthmouthgreen hover:bg-white hover:border-2 hover:border-darthmouthgreen hover:text-darthmouthgreen">View
+                                            File</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ Storage::url($file) }}"
+                                            class="px-5 py-3 text-white rounded-xl bg-darthmouthgreen hover:bg-white hover:border-2 hover:border-darthmouthgreen hover:text-darthmouthgreen"
+                                            download>Download</a>
+                                    </td>
+                                </tr>
                                 @endforeach
-                                @else 
+                                @else
                                 <tr>
                                     <td class="py-3">No available files</td>
                                 </tr>
@@ -386,13 +431,14 @@
     </div>
 </div>
 
-<div id="loaderModal" class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75 ">
-    <div class="flex flex-col items-center justify-center w-full h-screen p-4 bg-white rounded-lg shadow-lg modal-content md:h-1/3 lg:w-1/3">
-        <span class="loading loading-spinner text-primary loading-lg"></span> 
-            
-        <p class="mt-5 text-xl text-darthmouthgreen">loading</p>  
+<div id="loaderModal"
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75 ">
+    <div
+        class="flex flex-col items-center justify-center w-full h-screen p-4 bg-white rounded-lg shadow-lg modal-content md:h-1/3 lg:w-1/3">
+        <span class="loading loading-spinner text-primary loading-lg"></span>
+
+        <p class="mt-5 text-xl text-darthmouthgreen">loading</p>
     </div>
 </div>
-
 
 @endsection

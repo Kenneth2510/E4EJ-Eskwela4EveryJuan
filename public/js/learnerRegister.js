@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    var baseUrl = window.location.href
-    var csrfToken = $('meta[name="csrf-token"]').attr('content'); // Get the CSRF token from the meta tag
-    
+    var baseUrl = window.location.href;
+    var csrfToken = $('meta[name="csrf-token"]').attr("content"); // Get the CSRF token from the meta tag
+
     const nextBtn = $("#nxtBtn");
     const nextBtn2 = $("#nxtBtn2");
     const backBtn = $("#bckBtn");
@@ -15,178 +15,175 @@ $(document).ready(function () {
 
     nextBtn.on("click", function (event) {
         event.preventDefault();
-        
-        
-        var learner_fname = $('#learner_fname').val()
-        var learner_lname = $('#learner_lname').val()
-        var learner_bday = $('#learner_bday').val()
-        var learner_gender = $('#learner_gender').val()
-        var learner_email = $('#learner_email').val()
-        var learner_contactno = $('#learner_contactno').val()
-        var learner_username = $('#learner_username').val()
-        var password = $('#password').val()
-        var password_confirmation = $('#password_confirmation').val()
-        
 
+        var learner_fname = $("#learner_fname").val();
+        var learner_lname = $("#learner_lname").val();
+        var learner_bday = $("#learner_bday").val();
+        var learner_gender = $("#learner_gender").val();
+        var learner_email = $("#learner_email").val();
+        var learner_contactno = $("#learner_contactno").val();
+        var learner_username = $("#learner_username").val();
+        var password = $("#password").val();
+        var password_confirmation = $("#password_confirmation").val();
 
-         var isValid = true;
+        var isValid = true;
 
-        if (learner_fname === '') {
-            $('#firstNameError').text('Please enter a first name.');
+        if (learner_fname === "") {
+            $("#firstNameError").text("Please enter a first name.");
             isValid = false;
         } else {
-            $('#firstNameError').text('');
-        }
-    
-        if (learner_bday === '') {
-            $('#bdayError').text('Please enter a birthday.');
-            isValid = false;
-        } else {
-            $('#bdayError').text('');
-        }
-    
-        if (learner_lname === '') {
-            $('#lastNameError').text('Please enter a last name.');
-            isValid = false;
-        } else {
-            $('#lastNameError').text('');
-        }
-    
-        if (learner_gender === '') {
-            $('#genderError').text('Please select a gender.');
-            isValid = false;
-        } else {
-            $('#genderError').text('');
-        }
-    
-
-        if (learner_email === '') {
-            $('#emailError').text('Please enter your email.');
-            isValid = false;
-        } else {
-            $('#emailError').text('');
+            $("#firstNameError").text("");
         }
 
-        if (learner_contactno === '') {
-            $('#contactnoError').text('Please enter your contact number.');
+        if (learner_bday === "") {
+            $("#bdayError").text("Please enter a birthday.");
             isValid = false;
         } else {
-            $('#contactError').text('');
-        }
-        
-        
-
-        if (learner_username === '') {
-            $('#usernameError').text('Please enter a username.');
-            isValid = false;
-        } else {
-            $('#usernameError').text('');
+            $("#bdayError").text("");
         }
 
-        $('#password').trigger('keyup');
-    
-        if (password === '') {
-            $('#passwordError').text('Please enter a password.');
+        if (learner_lname === "") {
+            $("#lastNameError").text("Please enter a last name.");
             isValid = false;
         } else {
-            $('#passwordError').text('');
+            $("#lastNameError").text("");
         }
-    
-        if (password_confirmation === '') {
-            $('#passwordConfirmationError').text('Please enter a password confirmation.');
+
+        if (learner_gender === "") {
+            $("#genderError").text("Please select a gender.");
+            isValid = false;
+        } else {
+            $("#genderError").text("");
+        }
+
+        if (learner_email === "") {
+            $("#emailError").text("Please enter your email.");
+            isValid = false;
+        } else {
+            $("#emailError").text("");
+        }
+
+        if (learner_contactno === "" || learner_contactno.length < 11) {
+            $("#contactnoError").text("Please enter your contact number.");
+            isValid = false;
+        } else {
+            $("#contactError").text("");
+        }
+
+        if (learner_username === "") {
+            $("#usernameError").text("Please enter a username.");
+            isValid = false;
+        } else {
+            $("#usernameError").text("");
+        }
+
+        $("#password").trigger("keyup");
+
+        if (password === "") {
+            $("#passwordError").text("Please enter a password.");
+            isValid = false;
+        } else {
+            $("#passwordError").text("");
+        }
+
+        if (password_confirmation === "") {
+            $("#passwordConfirmationError").text(
+                "Please enter a password confirmation.",
+            );
             isValid = false;
         } else if (password !== password_confirmation) {
-            $('#passwordConfirmationError').text('Your password does not match');
+            $("#passwordConfirmationError").text(
+                "Your password does not match",
+            );
             isValid = false;
         } else {
-            $('#passwordConfirmationError').text('');
+            $("#passwordConfirmationError").text("");
         }
-        
-        
-        if(isValid) {
+
+        if (isValid) {
             firstForm.addClass("hidden");
             secondForm.removeClass("hidden");
             header.addClass("hidden");
             footer.addClass("hidden");
         }
-
     });
 
     nextBtn2.on("click", function (event) {
         event.preventDefault();
-        
-        
-        var business_name = $('#business_name').val()
-        var business_address = $('#business_address').val()
-        var business_owner_name = $('#business_owner_name').val()
-        var bplo_account_number = $('#bplo_account_number').val()
-        var business_category = $('#business_category').val()
-        var business_classification = $('#business_classification').val()
-        var business_description = $('#business_description').val()
-        
+
+        var business_name = $("#business_name").val();
+        var business_address = $("#business_address").val();
+        var business_owner_name = $("#business_owner_name").val();
+        var bplo_account_number = $("#bplo_account_number").val();
+        var business_category = $("#business_category").val();
+        var business_classification = $("#business_classification").val();
+        var business_description = $("#business_description").val();
+
         var isValid = true;
 
-        
-        if (business_name === '') {
-            $('#businessNameError').text('Please enter a business name.');
+        if (business_name === "") {
+            $("#businessNameError").text("Please enter a business name.");
             isValid = false;
         } else {
-            $('#businessNameError').text('');
-        }
-    
-        if (business_address === '') {
-            $('#businessAddressError').text('Please enter a business address.');
-            isValid = false;
-        } else {
-            $('#businessAddressError').text('');
-        }
-    
-        if (business_owner_name === '') {
-            $('#businessOwnerNameError').text('Please enter a owner name.');
-            isValid = false;
-        } else {
-            $('#businessOwnerNameError').text('');
-        }
-    
-        if (business_category === '') {
-            $('#businessCategoryError').text('Please select a category.');
-            isValid = false;
-        } else {
-            $('#businessCategoryError').text('');
+            $("#businessNameError").text("");
         }
 
-        if (bplo_account_number === '') {
-            $('#bploCategoryError').text('Please enter your id.');
+        if (business_address === "") {
+            $("#businessAddressError").text("Please enter a business address.");
             isValid = false;
         } else {
-            $('#bploCategoryError').text('');
+            $("#businessAddressError").text("");
         }
 
-        
-        if (business_classification === '') {
-            $('#businessClassificationError').text('Please select a classification.');
+        if (business_owner_name === "") {
+            $("#businessOwnerNameError").text("Please enter a owner name.");
             isValid = false;
         } else {
-            $('#businessClassificationError').text('');
+            $("#businessOwnerNameError").text("");
         }
-    
 
-        if (business_description === '') {
-            $('#businessDescriptionError').text('Please enter your business description.');
+        if (business_category === "") {
+            $("#businessCategoryError").text("Please select a category.");
             isValid = false;
         } else {
-            $('#businessDescriptionError').text('');
+            $("#businessCategoryError").text("");
         }
 
-
-        if(isValid) {
-           
-        secondForm.addClass("hidden");
-        thirdForm.removeClass("hidden");
-        header.addClass("hidden");
-        footer.addClass("hidden"); 
+        if (
+            bplo_account_number === "" ||
+            bplo_account_number.length !== 7 ||
+            !/^.*[a-zA-Z].*[-].*$/.test(bplo_account_number)
+        ) {
+            $("#bploCategoryError").text("Please enter a valid Account Number.");
+            isValid = false;
+        } else {
+            $("#bploCategoryError").text("");
         }
 
+        if (business_classification === "") {
+            $("#businessClassificationError").text(
+                "Please select a classification.",
+            );
+            isValid = false;
+        } else {
+            $("#businessClassificationError").text("");
+        }
+
+        if (business_description === "") {
+            $("#businessDescriptionError").text(
+                "Please enter your business description.",
+            );
+            isValid = false;
+        } else {
+            $("#businessDescriptionError").text("");
+        }
+
+        if (isValid) {
+            secondForm.addClass("hidden");
+            thirdForm.removeClass("hidden");
+            header.addClass("hidden");
+            footer.addClass("hidden");
+        }
     });
 
     prevBtn.on("click", function (event) {
@@ -280,233 +277,243 @@ $(document).ready(function () {
     // Initialize the carousel on page load
     initCarousel();
 
-
-    $('#learner_contactno').on('input', function() {
+    $("#learner_contactno").on("input", function () {
         var phoneNumber = $(this).val();
         // Replace any non-digit characters with empty string
-        phoneNumber = phoneNumber.replace(/\D/g, '');
+        phoneNumber = phoneNumber.replace(/\D/g, "");
         // Check if the input starts with '09'
-        if (phoneNumber.length >= 2 && phoneNumber.substring(0, 2) !== '09') {
-            phoneNumber = '09' + phoneNumber.substring(2);
+        if (phoneNumber.length >= 2 && phoneNumber.substring(0, 2) !== "09") {
+            phoneNumber = "09" + phoneNumber.substring(2);
         }
         // Update the input value
         $(this).val(phoneNumber);
     });
 
-
-    $('#password').keyup(function() {
+    $("#password").keyup(function () {
         var password = $(this).val();
 
         // Remove previous error message
-        $('#passwordError').empty();
+        $("#passwordError").empty();
 
         // Validate password complexity
         var hasUpperCase = /[A-Z]/.test(password);
         var hasLowerCase = /[a-z]/.test(password);
         var hasNumbers = /\d/.test(password);
-        var hasSpecialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+        var hasSpecialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
+            password,
+        );
 
         var isValid = true;
 
         if (!hasUpperCase) {
             isValid = false;
-            $('#passwordError').append('Password must contain at least one uppercase letter.<br>');
+            $("#passwordError").append(
+                "Password must contain at least one uppercase letter.<br>",
+            );
         }
         if (!hasLowerCase) {
             isValid = false;
-            $('#passwordError').append('Password must contain at least one lowercase letter.<br>');
+            $("#passwordError").append(
+                "Password must contain at least one lowercase letter.<br>",
+            );
         }
         if (!hasNumbers) {
             isValid = false;
-            $('#passwordError').append('Password must contain at least one number.<br>');
+            $("#passwordError").append(
+                "Password must contain at least one number.<br>",
+            );
         }
         if (!hasSpecialChars) {
             isValid = false;
-            $('#passwordError').append('Password must contain at least one special character.<br>');
+            $("#passwordError").append(
+                "Password must contain at least one special character.<br>",
+            );
         }
         if (password.length < 8) {
             isValid = false;
-            $('#newPasswordError').append('Password must be at least 8 characters long.<br>');
+            $("#newPasswordError").append(
+                "Password must be at least 8 characters long.<br>",
+            );
         }
     });
 
-    $('#showPassword').change(function() {
-        var isChecked = $(this).is(':checked');
+    $("#showPassword").change(function () {
+        var isChecked = $(this).is(":checked");
         if (isChecked) {
-            $('#password').attr('type', 'text');
+            $("#password").attr("type", "text");
         } else {
-            $('#password').attr('type', 'password');
+            $("#password").attr("type", "password");
         }
     });
 
-    $('#register_submit_btn').on('click', function() {
-        var learner_fname = $('#learner_fname').val()
-        var learner_lname = $('#learner_lname').val()
-        var learner_bday = $('#learner_bday').val()
-        var learner_gender = $('#learner_gender').val()
-        var learner_email = $('#learner_email').val()
-        var learner_contactno = $('#learner_contactno').val()
-        var learner_username = $('#learner_username').val()
-        var password = $('#password').val()
-        var password_confirmation = $('#password_confirmation').val()
+    $("#register_submit_btn").on("click", function () {
+        var learner_fname = $("#learner_fname").val();
+        var learner_lname = $("#learner_lname").val();
+        var learner_bday = $("#learner_bday").val();
+        var learner_gender = $("#learner_gender").val();
+        var learner_email = $("#learner_email").val();
+        var learner_contactno = $("#learner_contactno").val();
+        var learner_username = $("#learner_username").val();
+        var password = $("#password").val();
+        var password_confirmation = $("#password_confirmation").val();
 
-        
-        var business_name = $('#business_name').val()
-        var business_address = $('#business_address').val()
-        var business_owner_name = $('#business_owner_name').val()
-        var bplo_account_number = $('#bplo_account_number').val()
-        var business_category = $('#business_category').val()
-        var business_classification = $('#business_classification').val()
-        var business_description = $('#business_description').val()
+        var business_name = $("#business_name").val();
+        var business_address = $("#business_address").val();
+        var business_owner_name = $("#business_owner_name").val();
+        var bplo_account_number = $("#bplo_account_number").val();
+        var business_category = $("#business_category").val();
+        var business_classification = $("#business_classification").val();
+        var business_description = $("#business_description").val();
 
-        
-        var security_code_1 = $('#security_code_1').val()
-        var security_code_2 = $('#security_code_2').val()
-        var security_code_3 = $('#security_code_3').val()
-        var security_code_4 = $('#security_code_4').val()
-        var security_code_5 = $('#security_code_5').val()
-        var security_code_6 = $('#security_code_6').val()
-
+        var security_code_1 = $("#security_code_1").val();
+        var security_code_2 = $("#security_code_2").val();
+        var security_code_3 = $("#security_code_3").val();
+        var security_code_4 = $("#security_code_4").val();
+        var security_code_5 = $("#security_code_5").val();
+        var security_code_6 = $("#security_code_6").val();
 
         var isValid = true;
 
-        if (learner_fname === '') {
-            $('#firstNameError').text('Please enter a first name.');
+        if (learner_fname === "") {
+            $("#firstNameError").text("Please enter a first name.");
             isValid = false;
         } else {
-            $('#firstNameError').text('');
-        }
-    
-        if (learner_bday === '') {
-            $('#bdayError').text('Please enter a birthday.');
-            isValid = false;
-        } else {
-            $('#bdayError').text('');
-        }
-    
-        if (learner_lname === '') {
-            $('#lastNameError').text('Please enter a last name.');
-            isValid = false;
-        } else {
-            $('#lastNameError').text('');
-        }
-    
-        if (learner_gender === '') {
-            $('#genderError').text('Please select a gender.');
-            isValid = false;
-        } else {
-            $('#genderError').text('');
-        }
-    
-
-        if (learner_email === '') {
-            $('#emailError').text('Please enter your email.');
-            isValid = false;
-        } else {
-            $('#emailError').text('');
+            $("#firstNameError").text("");
         }
 
-        if (learner_contactno === '') {
-            $('#contactnoError').text('Please enter your contact number.');
+        if (learner_bday === "") {
+            $("#bdayError").text("Please enter a birthday.");
             isValid = false;
         } else {
-            $('#contactError').text('');
+            $("#bdayError").text("");
         }
 
-        if (business_name === '') {
-            $('#businessNameError').text('Please enter a business name.');
+        if (learner_lname === "") {
+            $("#lastNameError").text("Please enter a last name.");
             isValid = false;
         } else {
-            $('#businessNameError').text('');
-        }
-    
-        if (business_address === '') {
-            $('#businessAddressError').text('Please enter a business address.');
-            isValid = false;
-        } else {
-            $('#businessAddressError').text('');
-        }
-    
-        if (business_owner_name === '') {
-            $('#businessOwnerNameError').text('Please enter a owner name.');
-            isValid = false;
-        } else {
-            $('#businessOwnerNameError').text('');
-        }
-    
-        if (business_category === '') {
-            $('#businessCategoryError').text('Please select a category.');
-            isValid = false;
-        } else {
-            $('#businessCategoryError').text('');
+            $("#lastNameError").text("");
         }
 
-        if (bplo_account_number === '') {
-            $('#bploCategoryError').text('Please enter your id.');
+        if (learner_gender === "") {
+            $("#genderError").text("Please select a gender.");
             isValid = false;
         } else {
-            $('#bploCategoryError').text('');
+            $("#genderError").text("");
         }
 
-        
-        if (business_classification === '') {
-            $('#businessClassificationError').text('Please select a classification.');
+        if (learner_email === "") {
+            $("#emailError").text("Please enter your email.");
             isValid = false;
         } else {
-            $('#businessClassificationError').text('');
+            $("#emailError").text("");
         }
-    
 
-        if (business_description === '') {
-            $('#businessDescriptionError').text('Please enter your business description.');
+        if (learner_contactno === "") {
+            $("#contactnoError").text("Please enter your contact number.");
             isValid = false;
         } else {
-            $('#businessDescriptionError').text('');
+            $("#contactError").text("");
         }
 
-
-
-        if (learner_username === '') {
-            $('#usernameError').text('Please enter a username.');
+        if (business_name === "") {
+            $("#businessNameError").text("Please enter a business name.");
             isValid = false;
         } else {
-            $('#usernameError').text('');
+            $("#businessNameError").text("");
         }
 
-        $('#password').trigger('keyup');
-    
-        if (password === '') {
-            $('#passwordError').text('Please enter a password.');
+        if (business_address === "") {
+            $("#businessAddressError").text("Please enter a business address.");
             isValid = false;
         } else {
-            $('#passwordError').text('');
+            $("#businessAddressError").text("");
         }
-    
-        if (password_confirmation === '') {
-            $('#passwordConfirmationError').text('Please enter a password confirmation.');
+
+        if (business_owner_name === "") {
+            $("#businessOwnerNameError").text("Please enter a owner name.");
+            isValid = false;
+        } else {
+            $("#businessOwnerNameError").text("");
+        }
+
+        if (business_category === "") {
+            $("#businessCategoryError").text("Please select a category.");
+            isValid = false;
+        } else {
+            $("#businessCategoryError").text("");
+        }
+
+        if (bplo_account_number === "") {
+            $("#bploCategoryError").text("Please enter your id.");
+            isValid = false;
+        } else {
+            $("#bploCategoryError").text("");
+        }
+
+        if (business_classification === "") {
+            $("#businessClassificationError").text(
+                "Please select a classification.",
+            );
+            isValid = false;
+        } else {
+            $("#businessClassificationError").text("");
+        }
+
+        if (business_description === "") {
+            $("#businessDescriptionError").text(
+                "Please enter your business description.",
+            );
+            isValid = false;
+        } else {
+            $("#businessDescriptionError").text("");
+        }
+
+        if (learner_username === "") {
+            $("#usernameError").text("Please enter a username.");
+            isValid = false;
+        } else {
+            $("#usernameError").text("");
+        }
+
+        $("#password").trigger("keyup");
+
+        if (password === "") {
+            $("#passwordError").text("Please enter a password.");
+            isValid = false;
+        } else {
+            $("#passwordError").text("");
+        }
+
+        if (password_confirmation === "") {
+            $("#passwordConfirmationError").text(
+                "Please enter a password confirmation.",
+            );
             isValid = false;
         } else if (password !== password_confirmation) {
-            $('#passwordConfirmationError').text('Your password does not match');
+            $("#passwordConfirmationError").text(
+                "Your password does not match",
+            );
             isValid = false;
         } else {
-            $('#passwordConfirmationError').text('');
+            $("#passwordConfirmationError").text("");
         }
-    
-        if (security_code_1 === '' ||
-        security_code_2 === '' ||
-        security_code_3 === '' ||
-        security_code_4 === '' ||
-        security_code_5 === '' ||
-        security_code_6 === '') {
-            $('#securityCodeError').text('Please enter a security code.');
+
+        if (
+            security_code_1 === "" ||
+            security_code_2 === "" ||
+            security_code_3 === "" ||
+            security_code_4 === "" ||
+            security_code_5 === "" ||
+            security_code_6 === ""
+        ) {
+            $("#securityCodeError").text("Please enter a security code.");
             isValid = false;
         } else {
-            $('#securityCodeError').text('');
+            $("#securityCodeError").text("");
         }
 
-
-
-        if(isValid) {
+        if (isValid) {
             var userInfo = {
                 learner_fname: learner_fname,
                 learner_lname: learner_lname,
@@ -532,46 +539,52 @@ $(document).ready(function () {
                 security_code_4: security_code_4,
                 security_code_5: security_code_5,
                 security_code_6: security_code_6,
-            }
-    
+            };
+
             var url = "/learner/register";
-    
-            $.ajax ({
+
+            $.ajax({
                 type: "POST",
                 url: url,
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken
+                    "X-CSRF-TOKEN": csrfToken,
                 },
                 data: userInfo,
-                success: function (response){
-                    console.log(response)
+                success: function (response) {
+                    console.log(response);
                     window.location.href = "/learner";
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
-                    alert("Error Processing your registration")
+                    alert("Error Processing your registration");
                     if (error.responseJSON && error.responseJSON.errors) {
                         if (error.responseJSON.errors.learner_email) {
-                            $('#emailError').text(error.responseJSON.errors.learner_email[0]);
-                            $("#first-form").removeClass('hidden')
-                            $("#resumeForm").addClass('hidden')
-                            $("#security_code").addClass('hidden')
+                            $("#emailError").text(
+                                error.responseJSON.errors.learner_email[0],
+                            );
+                            $("#first-form").removeClass("hidden");
+                            $("#resumeForm").addClass("hidden");
+                            $("#security_code").addClass("hidden");
                         }
                         if (error.responseJSON.errors.learner_contactno) {
-                            $('#contactnoError').text(error.responseJSON.errors.learner_contactno[0]);
-                            $("#first-form").removeClass('hidden')
-                            $("#resumeForm").addClass('hidden')
-                            $("#security_code").addClass('hidden')
+                            $("#contactnoError").text(
+                                error.responseJSON.errors.learner_contactno[0],
+                            );
+                            $("#first-form").removeClass("hidden");
+                            $("#resumeForm").addClass("hidden");
+                            $("#security_code").addClass("hidden");
                         }
                         if (error.responseJSON.errors.learner_username) {
-                            $('#usernameError').text(error.responseJSON.errors.learner_username[0]);
-                             $("#first-form").removeClass('hidden')
-                            $("#resumeForm").addClass('hidden')
-                            $("#security_code").addClass('hidden')
+                            $("#usernameError").text(
+                                error.responseJSON.errors.learner_username[0],
+                            );
+                            $("#first-form").removeClass("hidden");
+                            $("#resumeForm").addClass("hidden");
+                            $("#security_code").addClass("hidden");
                         }
                     }
-                }
-            })
+                },
+            });
         }
-    })
+    });
 });
