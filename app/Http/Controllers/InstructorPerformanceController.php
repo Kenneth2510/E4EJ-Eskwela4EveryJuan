@@ -40,8 +40,21 @@ use Illuminate\Support\Facades\URL;
 use Dompdf\Dompdf;
 use App\Http\Controllers\DateTime;
 
+use App\Http\Controllers\ActivityLoggingController;
+
+
 class InstructorPerformanceController extends Controller
 {
+    
+    public function log($action) {
+        $instructor = session('instructor');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $instructor->instructor_id;
+        $user_type = "Instructor";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
     
 
     public function performances() {
@@ -68,6 +81,9 @@ class InstructorPerformanceController extends Controller
                     'scripts' => ['instructor_performance.js'],
                     'courses' => $courses,
                 ];
+
+                $action = "Opened Instructor Performance";
+                $this->log($action);
         
                 // dd($data);
                 return view('instructor_performance.instructorPerformance' , compact('instructor', 'courses'))
@@ -477,6 +493,9 @@ class InstructorPerformanceController extends Controller
             'syllabus' => $syllabus
         ];
 
+        $action = "Opened Instructor Course Performance ID: " . $course->course_id;
+        $this->log($action);
+
         // dd($data);
         return view('instructor_performance.instructorCoursePerformance' , compact('instructor', 'course'))
         ->with($data);
@@ -750,6 +769,8 @@ class InstructorPerformanceController extends Controller
             return redirect('/instructor');
         }
 
+        $action = "Opened Instructor Course Performance ID: " . $course->course_id. " Syllabus ID: " . $syllabus_id;
+        $this->log($action);
         
         if($syllabusData->category === 'LESSON') {
 
@@ -1368,6 +1389,7 @@ class InstructorPerformanceController extends Controller
                 ->where('course.course_id', $course->course_id)
                 ->first();
 
+
                 $syllabus = DB::table('syllabus')
                 ->select(
                     'syllabus_id',
@@ -1416,6 +1438,9 @@ class InstructorPerformanceController extends Controller
                     'learnerCourse' => $learner_course_data,
                     'learner' => $learner_data,
                 ];
+
+                $action = "Viewed Instructor Learner Course Performance ID: " . $course->course_id . " Learner ID: " . $learner_data->learner_id;
+                $this->log($action);
         
                 // dd($data);
                 return view('instructor_performance.instructorViewLearnerPerformance' , compact('instructor'))

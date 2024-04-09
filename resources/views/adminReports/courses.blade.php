@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Data</title>
     <style>
         /* Reset default margin and padding */
-        body, h1, h2, h3, h4, h5, h6, p, table, th, td {
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        table,
+        th,
+        td {
             margin: 0;
             padding: 0;
         }
@@ -23,7 +34,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
@@ -34,7 +46,12 @@
         }
 
         /* Set styling for the headings */
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             margin-bottom: 10px;
         }
 
@@ -72,6 +89,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -90,35 +108,36 @@
             </thead>
             <tbody>
                 @foreach ($courseData as $course)
-                    <tr>
-                        <td>{{ $course->course_name }}</td>
-                        <td>{{ $course->name }}</td>
-                        <td>{{ $course->created_at }}</td>
-                        <td>{{ $course->course_status }}</td>
-                    </tr>
+                <tr>
+                    <td>{{ $course->course_name }}</td>
+                    <td>{{ $course->name }}</td>
+                    <td>{{ $course->created_at }}</td>
+                    <td>{{ $course->course_status }}</td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
-        @else 
+        @else
         @foreach ($courseData as $course)
-            <div>
-                <h2>{{ $course->course_name }}</h2>
-                <p><strong>Instructor:</strong> {{ $course->name }}</p>
-                <p><strong>Created At:</strong> {{ $course->created_at }}</p>
-                <p><strong>Status:</strong> {{ $course->course_status }}</p>
-                <h3>Syllabus</h3>
-                <ul>
-                    @foreach ($course->syllabusData as $syllabus)
-                        <li>{{ $syllabus->category }} - {{ $syllabus->topic_title }}</li>
-                    @endforeach
-                </ul>
-                <h3>Learners in the Course</h3>
-                <ul>
-                        <li>Total: {{ $course->learnerCourseData }}</li>
-                </ul>
-            </div>
+        <div>
+            <h2>{{ $course->course_name }}</h2>
+            <p><strong>Instructor:</strong> {{ $course->name }}</p>
+            <p><strong>Created At:</strong> {{ $course->created_at }}</p>
+            <p><strong>Status:</strong> {{ $course->course_status }}</p>
+            <h3>Syllabus</h3>
+            <ul>
+                @foreach ($course->syllabusData as $syllabus)
+                <li>{{ $syllabus->category }} - {{ $syllabus->topic_title }}</li>
+                @endforeach
+            </ul>
+            <h3>Learners in the Course</h3>
+            <ul>
+                <li>Total: {{ $course->learnerCourseData }}</li>
+            </ul>
+        </div>
         @endforeach
         @endif
     </div>
 </body>
+
 </html>

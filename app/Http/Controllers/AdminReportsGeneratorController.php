@@ -53,8 +53,24 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use TCPDF;
 
+use App\Http\Controllers\ActivityLoggingController;
+
+
 class AdminReportsGeneratorController extends Controller
 {
+    
+
+    public function log($action) {
+        $admin = session('admin');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $admin->admin_id;
+        $user_type = "Instructor";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
+
+
     public function index() {
         if (auth('admin')->check()) {
             $adminSession = session('admin');
@@ -81,6 +97,10 @@ class AdminReportsGeneratorController extends Controller
                     )
                     ->where('course_status', 'Approved')
                     ->get();
+
+                    $action = "Opened Admin Reports Generator";
+                    $this->log($action);
+        
 
                     $data = [
                         'title' => 'Reports',
@@ -327,6 +347,9 @@ class AdminReportsGeneratorController extends Controller
                 'headers' => $headers,
             ])->render();
 
+            $action = "Generated List of Learners";
+            $this->log($action);
+
 
             $dompdf = new Dompdf();
 
@@ -414,6 +437,10 @@ class AdminReportsGeneratorController extends Controller
             ->join('learner_course_progress', 'learner_course.learner_course_id', 'learner_course_progress.learner_course_id')
             ->where('learner_course.learner_id', $learner_id)
             ->get();
+
+            $action = "Generated Selected Learner ID: " . $learner_id;
+            $this->log($action);
+
 
             $html = View::make('adminReportsGenerator.select_learner', [
                 'learnerData' => $learnerData,
@@ -608,6 +635,9 @@ class AdminReportsGeneratorController extends Controller
 
             }
 
+            $action = "Generated List of Instructors";
+            $this->log($action);
+
             $html = View::make('adminReportsGenerator.list_instructor', [
                 'instructors' => $instructors,
                 'headers' => $headers,
@@ -685,6 +715,9 @@ class AdminReportsGeneratorController extends Controller
              ->where('course.instructor_id', $instructor_id)
             ->get();
 
+            $action = "Generated Selected Instructor ID: " . $instructor_id;
+            $this->log($action);
+
             $html = View::make('adminReportsGenerator.select_instructor', [
                 'instructorData' => $instructorData,
                 'instructorCourseData' => $instructorCourseData,
@@ -758,6 +791,9 @@ class AdminReportsGeneratorController extends Controller
             }
     
             $sessionData = $sessionData->get();
+
+            $action = "Generated Session Data";
+            $this->log($action);
     
             $html = view('adminReports.session', [
                 'sessionData' => $sessionData,
@@ -803,16 +839,6 @@ class AdminReportsGeneratorController extends Controller
             $finishDate = $request->input('selectedSessionDateFinish');
 
 
-/*            $userSession = '';
-
-            if($selectedSession_userCategory === 'Learners') {
-                $userSession = $selectedSession_selectLearner;
-            } else {
-                $userSession = $selectedSession_selectInstructor;
-            }*/
-            
-
-
             $sessionData = DB::table('session_logs')
             ->select(
                 'session_logs.session_log_id',
@@ -850,6 +876,8 @@ class AdminReportsGeneratorController extends Controller
 
         $sessionData = $sessionData->get();
 
+        $action = "Generated Session Selected User Type: ". $selectedSession_userCategory ." ID: " . $userSession;
+        $this->log($action);
 
         $html = view('adminReports.session', [
             'sessionData' => $sessionData,
@@ -923,6 +951,8 @@ class AdminReportsGeneratorController extends Controller
 
             $courses = $course->get();
 
+            $action = "Generated List of Courses";
+            $this->log($action);
             
             $html = view('adminReportsGenerator.list_course', [
                 'courseData' => $courses,
@@ -988,6 +1018,9 @@ class AdminReportsGeneratorController extends Controller
             ->where('course_id', $course_id)
             ->orderBy('topic_id', 'asc')
             ->get();
+
+            $action = "Generated Selected Course ID: " .  $course_id;
+            $this->log($action);
 
             $html = View::make('adminReportsGenerator.select_course', [
                 'courseData' => $courseData,
@@ -1060,6 +1093,8 @@ class AdminReportsGeneratorController extends Controller
 
             $learner_courses = $learner_course->get();
 
+            $action = "Generated List of Enrollees Course ID: " . $course->course_id;
+            $this->log($action);
 
             $html = View::make('adminReportsGenerator.list_course_enrollees', [
                 'course' => $course,
@@ -1339,6 +1374,9 @@ class AdminReportsGeneratorController extends Controller
                 'learnerPostAssessmentData' => $learnerPostAssessmentData,
             ];
 
+            $action = "Generated Learner Gradesheet Course ID: " .  $course;
+            $this->log($action);
+
             $html = view('adminReports.courseGradesheet', $data)->render();
 
             $dompdf = new Dompdf();
@@ -1400,6 +1438,7 @@ class AdminReportsGeneratorController extends Controller
             $learnerNameData = DB::table('learner_course')
             ->select(
                 DB::raw('CONCAT(learner.learner_fname, " ", learner.learner_lname) as name'),
+                'learner_course.learner_id',
             )
             ->join('learner', 'learner_course.learner_id', 'learner.learner_id')
             ->where('learner_course.learner_course_id', $learnerCourse)
@@ -1560,7 +1599,8 @@ class AdminReportsGeneratorController extends Controller
             'learnerPostAssessmentData' => $learnerPostAssessmentData,
         ];
 
-        // dd($data);
+        $action = "Generated Selected Learner Gradesheet Course ID: " . $course . " Learner ID: " . $learnerNameData->learner_id;
+        $this->log($action);
 
         $html = view('adminReports.learnerGradesheet', $data)->render();
 

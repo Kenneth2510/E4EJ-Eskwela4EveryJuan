@@ -1,7 +1,9 @@
 @extends('layouts.admin_layout')
 
 @section('content')
-    <section id="view_learner_container" class="relative w-full h-screen px-4 overflow-auto pt-28 md:w-3/4 lg:w-10/12 md:pt-16">
+<section class="w-full h-auto text-black md:w-3/4 md:h-screen lg:w-10/12">
+    <div class="relative w-full h-screen px-4 overflow-auto pt-28 md:w-3/4 lg:w-10/12 md:pt-16"
+        id="view_learner_container">
 
         <div id="title" class="relative flex items-center justify-between px-3 mx-auto my-3 text-black">
             <h1 class="py-4 text-2xl font-semibold">View Learner Details</h1>
@@ -25,13 +27,14 @@
                         <a href="/admin/manage_course/course_overview/{{ $course->course_id }}">
                             <li id="courseOverviewBtn" class="w-full px-2 py-5 mt-2 rounded-xl hover:bg-green-900">
                                 <i class="pr-2 text-3xl fa-solid fa-book-open"></i>
-                                <p>Course Overview</p>    
+                                <p>Course Overview</p>
                             </li>
                         </a>
                         <a href="/admin/manage_course/enrollees/{{ $course->course_id }}">
-                            <li id="enrolledLearnersBtn" class="w-full px-2 py-5 mt-2 selected rounded-xl hover:bg-green-900">
+                            <li id="enrolledLearnersBtn"
+                                class="w-full px-2 py-5 mt-2 selected rounded-xl hover:bg-green-900">
                                 <i class="pr-2 text-3xl fa-solid fa-users"></i>
-                                <p>Enrolled Learners</p> 
+                                <p>Enrolled Learners</p>
                             </li>
                         </a>
                         <a href="/admin/manage_course/content/{{ $course->course_id }}">
@@ -40,65 +43,94 @@
                                 <p>Course Content</p>
                             </li>
                         </a>
-                        
+
                         {{-- <li class="w-full px-2 py-3 mt-2 rounded-xl">
-                        
+
                         </li>
                         <li class="w-full px-2 py-3 mt-2 rounded-xl">
-                        
+
                         </li> --}}
                     </ul>
                 </div>
 
                 <div id="contentArea" class="relative w-full px-2 text-black shadow-lg rounded-2xl">
 
-                    
+
                     <div id="enrolled_learners" class="">
                         <h1 class="text-2xl font-semibold border-b-2 border-black">Enrolled Learner</h1>
 
-                        <form id="enrolleeForm" data-course-id="{{$course->course_id}}" action="/admin/manage_course/enrollees/{{$course->course_id}}" method="GET">
+                        <form id="enrolleeForm" data-course-id="{{$course->course_id}}"
+                            action="/admin/manage_course/enrollees/{{$course->course_id}}" method="GET">
                             <div class="flex flex-col items-center w-full my-2 md:flex-row md:items-end lg:my-0">
-                                <div class="flex flex-col w-full my-2 md:px-1 lg:flex-row lg:justify-center lg:my-0 lg:items-end">
-                                    <div class="flex flex-row items-center justify-around w-full md:items-end lg:justify-center">
+                                <div
+                                    class="flex flex-col w-full my-2 md:px-1 lg:flex-row lg:justify-center lg:my-0 lg:items-end">
+                                    <div
+                                        class="flex flex-row items-center justify-around w-full md:items-end lg:justify-center">
                                         <div class="w-2/4 mx-1">
                                             <label for="filterDate" class="">Filter by Date</label><br>
-                                            <input type="date" name="filterDate" class="w-full p-2 text-sm border-2 border-black rounded" value="{{ request('filterDate') }}">
+                                            <input type="date" name="filterDate"
+                                                class="w-full p-2 text-sm border-2 border-black rounded"
+                                                value="{{ request('filterDate') }}">
                                         </div>
                                         <div class="w-2/4 mx-1">
                                             <label for="filterStatus" class="">Filter by Status</label><br>
-                                            <select name="filterStatus" id="filterStatus" class="w-full p-2 text-sm border-2 border-black rounded">
-                                                <option value="" {{ request('filterDate') == '' ? 'selected': ''}}>Select Status</option>
-                                                <option value="Pending" {{ request('filterStatus') == 'Pending' ? 'selected': ''}}>Pending</option>
-                                                <option value="Approved" {{ request('filterStatus') == 'Approved' ? 'selected': ''}}>Approved</option>
-                                                <option value="Rejected" {{ request('filterStatus') == 'Rejected' ? 'selected': ''}}>Rejected</option>
+                                            <select name="filterStatus" id="filterStatus"
+                                                class="w-full p-2 text-sm border-2 border-black rounded">
+                                                <option value="" {{ request('filterDate')=='' ? 'selected' : '' }}>
+                                                    Select
+                                                    Status</option>
+                                                <option value="Pending" {{ request('filterStatus')=='Pending'
+                                                    ? 'selected' : '' }}>Pending</option>
+                                                <option value="Approved" {{ request('filterStatus')=='Approved'
+                                                    ? 'selected' : '' }}>Approved</option>
+                                                <option value="Rejected" {{ request('filterStatus')=='Rejected'
+                                                    ? 'selected' : '' }}>Rejected</option>
                                             </select>
-                                        </div>    
+                                        </div>
                                     </div>
-                                    
-                                    <button class="py-4 my-2 text-sm font-medium text-white bg-green-600 rounded-xl hover:bg-green-900 lg:py-2 lg:w-32 lg:my-0" type="submit">Filter</button>
+
+                                    <button
+                                        class="py-4 my-2 text-sm font-medium text-white bg-green-600 rounded-xl hover:bg-green-900 lg:py-2 lg:w-32 lg:my-0"
+                                        type="submit">Filter</button>
                                 </div>
-                                <div class="flex flex-col w-full my-2 md:px-1 lg:flex-row lg:justify-center lg:my-0 lg:items-end">
-                                    <div class="flex flex-row items-center justify-around w-full md:items-end lg:items-center lg:justify-center">
+                                <div
+                                    class="flex flex-col w-full my-2 md:px-1 lg:flex-row lg:justify-center lg:my-0 lg:items-end">
+                                    <div
+                                        class="flex flex-row items-center justify-around w-full md:items-end lg:items-center lg:justify-center">
                                         <div class="w-2/4 mx-1">
-                                            <select name="searchBy" id="" class="w-full p-2 text-sm border-2 border-black rounded">
-                                                <option value="" {{request('searchBy') == '' ? 'selected' : ''}}class="">Search By</option>
-                                                <option value="learner_course_id" {{request('searchBy') == 'learner_course_id' ? 'selected' : ''}}>Enrollee ID</option>
-                                                <option value="learner_id" {{request('searchBy') == 'learner_id' ? 'selected' : ''}}>Learner ID</option>
-                                                <option value="name" {{request('searchBy') == 'name' ? 'selected' : ''}}>Name</option>
-                                                <option value="learner_email" {{request('searchBy') == 'learner_email' ? 'selected' : ''}}>Email</option>
-                                                <option value="learner_contactno" {{request('searchBy') == 'learner_contactno' ? 'selected' : ''}}>Contact No.</option>
+                                            <select name="searchBy" id=""
+                                                class="w-full p-2 text-sm border-2 border-black rounded">
+                                                <option value="" {{request('searchBy')=='' ? 'selected' : '' }}class="">
+                                                    Search By</option>
+                                                <option value="learner_course_id"
+                                                    {{request('searchBy')=='learner_course_id' ? 'selected' : '' }}>
+                                                    Enrollee ID</option>
+                                                <option value="learner_id" {{request('searchBy')=='learner_id'
+                                                    ? 'selected' : '' }}>Learner ID</option>
+                                                <option value="name" {{request('searchBy')=='name' ? 'selected' : '' }}>
+                                                    Name
+                                                </option>
+                                                <option value="learner_email" {{request('searchBy')=='learner_email'
+                                                    ? 'selected' : '' }}>Email</option>
+                                                <option value="learner_contactno"
+                                                    {{request('searchBy')=='learner_contactno' ? 'selected' : '' }}>
+                                                    Contact No.</option>
                                                 {{-- <option value="created_at">Date Registered</option> --}}
                                                 {{-- <option value="status">Status</option> --}}
                                             </select>
                                         </div>
                                         <div class="w-2/4 mx-1">
-                                            <input type="text" name="searchVal" class="w-full p-2 text-sm border-2 border-black rounded" value="{{ request('searchVal') }}" placeholder="Type to search">   
-                                        </div>                                    
+                                            <input type="text" name="searchVal"
+                                                class="w-full p-2 text-sm border-2 border-black rounded"
+                                                value="{{ request('searchVal') }}" placeholder="Type to search">
+                                        </div>
                                     </div>
 
-                                    
-                                    
-                                    <button class="py-4 my-2 text-sm font-medium text-white bg-green-600 rounded-xl hover:bg-green-900 lg:py-2 lg:w-32 lg:my-0" type="submit">Search</button>          
+
+
+                                    <button
+                                        class="py-4 my-2 text-sm font-medium text-white bg-green-600 rounded-xl hover:bg-green-900 lg:py-2 lg:w-32 lg:my-0"
+                                        type="submit">Search</button>
                                 </div>
                             </div>
                         </form>
@@ -129,39 +161,54 @@
                                                 view
                                             </button> --}}
                                             @if ($enrollee->status == 'Pending')
-                                            <form action="/admin/manage_course/enrollee/approve/{{$enrollee->learner_course_id}}" method="POST">
+                                            <form
+                                                action="/admin/manage_course/enrollee/approve/{{$enrollee->learner_course_id}}"
+                                                method="POST">
                                                 @method('PUT')
                                                 @csrf
-                                                <button class="px-3 py-1 mx-2 bg-green-500 rounded-xl hover:bg-green-700 hover:text-white">
+                                                <button
+                                                    class="px-3 py-1 mx-2 bg-green-500 rounded-xl hover:bg-green-700 hover:text-white">
                                                     Approve
                                                 </button>
                                             </form>
-                                            <form action="/admin/manage_course/enrollee/reject/{{$enrollee->learner_course_id}}" method="POST">
+                                            <form
+                                                action="/admin/manage_course/enrollee/reject/{{$enrollee->learner_course_id}}"
+                                                method="POST">
                                                 @method('PUT')
                                                 @csrf
-                                                <button class="px-3 py-1 mx-2 bg-red-500 rounded-xl hover:bg-red-700 hover:text-white">
+                                                <button
+                                                    class="px-3 py-1 mx-2 bg-red-500 rounded-xl hover:bg-red-700 hover:text-white">
                                                     Reject
                                                 </button>
                                             </form>
-                                            
+
                                             @elseif ($enrollee->status == 'Rejected')
-                                            <form action="/admin/manage_course/enrollee/pending/{{$enrollee->learner_course_id}}" method="POST">
+                                            <form
+                                                action="/admin/manage_course/enrollee/pending/{{$enrollee->learner_course_id}}"
+                                                method="POST">
                                                 @method('PUT')
                                                 @csrf
-                                                <button class="px-3 py-1 mx-2 bg-yellow-500 rounded-xl hover:bg-yellow-700 hover:text-white">
+                                                <button
+                                                    class="px-3 py-1 mx-2 bg-yellow-500 rounded-xl hover:bg-yellow-700 hover:text-white">
                                                     Pending
                                                 </button>
                                             </form>
                                             @else
-                                            <form action="/admin/manage_course/enrollee/pending/{{$enrollee->learner_course_id}}" method="POST">
+                                            <form
+                                                action="/admin/manage_course/enrollee/pending/{{$enrollee->learner_course_id}}"
+                                                method="POST">
                                                 @method('PUT')
                                                 @csrf
-                                                <button class="px-3 py-1 mx-2 bg-yellow-500 rounded-xl hover:bg-yellow-700 hover:text-white">
+                                                <button
+                                                    class="px-3 py-1 mx-2 bg-yellow-500 rounded-xl hover:bg-yellow-700 hover:text-white">
                                                     Pending
                                                 </button>
                                             </form>
-                                            <form action="/admin/manage_course/enrollee/reject/{{$enrollee->learner_course_id}}" method="POST">
-                                                <button class="px-3 py-1 mx-2 bg-red-500 rounded-xl hover:bg-red-700 hover:text-white">
+                                            <form
+                                                action="/admin/manage_course/enrollee/reject/{{$enrollee->learner_course_id}}"
+                                                method="POST">
+                                                <button
+                                                    class="px-3 py-1 mx-2 bg-red-500 rounded-xl hover:bg-red-700 hover:text-white">
                                                     Reject
                                                 </button>
                                             </form>
@@ -181,5 +228,6 @@
                 </div>
             </div>
         </div>
-    </section>    
+    </div>
+</section>
 @endsection

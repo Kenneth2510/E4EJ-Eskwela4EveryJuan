@@ -50,8 +50,22 @@ use Illuminate\Support\Facades\File;
 use Codedge\Fpdf\Fpdf\Fpdf;
 
 
+use App\Http\Controllers\ActivityLoggingController;
+
 class AdminPerformanceController extends Controller
 {
+    
+    public function log($action) {
+        $admin = session('admin');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $admin->admin_id;
+        $user_type = "Instructor";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
+
+
     public function index() {
         if (auth('admin')->check()) {
             $adminSession = session('admin');
@@ -63,6 +77,8 @@ class AdminPerformanceController extends Controller
                         'admin' => $adminSession,
                     ];
 
+                    $action = "Opened Admin Performance";
+                    $this->log($action);
 
                     return view('adminPerformance.performance')
                     ->with($data);
@@ -472,6 +488,9 @@ class AdminPerformanceController extends Controller
  
     
             $learners = $query->paginate(10);
+
+            $action = "Opened Admin Learner Performance";
+            $this->log($action);
     
             return view('adminPerformance.learners', compact('learners'))
             ->with(['title' => 'Performance', 
@@ -528,6 +547,8 @@ class AdminPerformanceController extends Controller
                             'learner' => $learnerData,
                         ];
                 
+                        $action = "Opened Admin Learner Performance ID: " . $learner->learner_id;
+                        $this->log($action);
                         // dd($data);
                         return view('adminPerformance.learnerPerformance')
                         ->with($data);
@@ -1343,7 +1364,8 @@ class AdminPerformanceController extends Controller
                     'learnerPostAssessmentData' => $learnerPostAssessmentData,
                 ];
         
-          
+                $action = "Opened Admin Learner Performance ID: " . $learner->learner_id . " on Course ID: " . $course->course_id;
+                $this->log($action);
                 // dd($data);
                 return view('adminPerformance.learnerCoursePerformance' , compact('learner'))
                 ->with($data);
@@ -1399,7 +1421,7 @@ class AdminPerformanceController extends Controller
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
         
@@ -1449,6 +1471,9 @@ class AdminPerformanceController extends Controller
                 ];
 
                 // dd($data);
+                $action = "Viewed Post Assessment Output on Course ID: " . $course->course_id;
+                $this->log($action);
+
 
                 return view('adminPerformance.learner_post_assessment_output')
                 ->with($data);
@@ -1499,7 +1524,7 @@ class AdminPerformanceController extends Controller
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
                     $correctAnswerSubquery = DB::table('question_answer')
@@ -1614,7 +1639,7 @@ class AdminPerformanceController extends Controller
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
 /*        
@@ -1694,6 +1719,9 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 ];
 
                 // dd($data);
+                $action = "Viewed Pre Assessment Output on Course ID: " . $course->course_id;
+                $this->log($action);
+
 
                 return view('adminPerformance.learner_pre_assessment_output')
                 ->with($data);
@@ -1742,7 +1770,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
                     $correctAnswerSubquery = DB::table('question_answer')
@@ -2005,7 +2033,10 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 $averageTimeDifference = ($totalNumberOfRows > 0) ? ($totalTimeDifference / $totalNumberOfRows) : 0;
 
                 // Format the average time difference
-                $averageTimeFormatted = gmdate("H:i:s", $averageTimeDifference);
+                // $averageTimeFormatted = gmdate("H:i:s", $averageTimeDifference);
+
+                
+                $averageTimeFormatted = gmdate("H:i:s", $totalTimeDifference);
 
                 $data = [
                 'title' => 'Performance',
@@ -2351,6 +2382,9 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
 
             $instructors = $query->paginate(10);
 
+            $action = "Opened Admin Instructor Performance";
+            $this->log($action);
+
             return view('adminPerformance.instructors', compact('instructors'))
                 ->with(['title' => 'Instructor Management', 'admin' => $admin]);
 
@@ -2395,6 +2429,8 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'admin' => $adminSession,
                 ];
         
+                $action = "Opened Admin Instructor Performance ID: ". $instructor->instructor_id;
+                $this->log($action);
                 // dd($data);
                 return view('adminPerformance.instructorPerformance')
                 ->with($data);
@@ -2818,6 +2854,9 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
     
     
                 $courses = $query->paginate(10);
+
+                $action = "Opened Admin Course Performance";
+                $this->log($action);
     
                 $data = ['title' => 'Course Management',
                      'admin' => $admin
@@ -3042,6 +3081,8 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'learnerPostAssessmentData' => $learnerPostAssessmentData,
                 ];
 
+                $action = "Opened Admin Course Performance ID: " .$course->course_id;
+                $this->log($action);
                 // dd($data);
                 return view('adminPerformance.coursePerformance')
                 ->with($data);
@@ -3131,18 +3172,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
             
 
             try {
-                // $learnerCourseData = DB::table('learner_course')
-                // ->select(
-                //     'learner_course.learner_course_id',
-                //     'learner_course.learner_id',
-                //     'learner_course.status',
-
-                //     'learner.learner_fname',
-                //     'learner.learner_lname',
-                // )
-                // ->join('learner', 'learner.learner_id', '=', 'learner_course.learner_id')
-                // ->where('learner_course.course_id', $course->course_id)
-                // ->get();
+    
 
                 $learnerCourseProgressData = DB::table('learner_course_progress')
                 ->select(
@@ -3322,7 +3352,9 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 ->where('syllabus_id', $syllabus->syllabus_id)
                 ->first();
 
-        
+                $action = "Opened Admin Syllabus Performance ID: " . $syllabus->syllabus_id . " on Course Performance ID: " . $course->course_id;
+                $this->log($action);
+
         if($syllabusData->category === 'LESSON') {
 
             $data = [

@@ -26,6 +26,10 @@ use Illuminate\Support\Facades\Cache;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Support\Facades\URL;
 
+
+use App\Http\Controllers\ActivityLoggingController;
+
+
 class InstructorController extends Controller
 {
     public function index() {
@@ -39,6 +43,16 @@ class InstructorController extends Controller
         ]);
     }
 
+
+    public function log($action) {
+        $instructor = session('instructor');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $instructor->instructor_id;
+        $user_type = "Instructor";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
     
     public function login_process(Request $request) {
         $request->validate([
@@ -64,6 +78,13 @@ class InstructorController extends Controller
             ->where('instructor_username', $username)
             ->first();
 
+
+
+
+    
+    
+        if ($instructorData && Hash::check($password, $instructorData->password)) {
+
             if($instructorData->status === "Blocked") {
                 session()->flash('message', 'Your Account is Blocked, Please contact the Administrator');
                 return back();
@@ -71,9 +92,8 @@ class InstructorController extends Controller
                 session()->flash('message', 'Your Account is Expired, Please contact the Administrator for re activation');
                 return back();
             }
-    
-    
-        if ($instructorData && Hash::check($password, $instructorData->password)) {
+
+            
             Cache::put('instructor_authenticated', $instructorData->instructor_id);
             return redirect('/instructor/authenticate')->with('message', "Welcome Back");
         }
@@ -107,6 +127,10 @@ class InstructorController extends Controller
             )
             ->where('instructor_email', '=', $email)
             ->first();
+
+            
+            $action = "Password Reset Request Instructor ID: " . $instructor->instructor_id;
+            $this->log($action);
     
         if (!$instructor) {
             return response()->json(['message' => 'Instructor not found'], 404);
@@ -200,7 +224,14 @@ class InstructorController extends Controller
             ->select('created_at', 'email', 'token')
             ->where('token', $token)
             ->first();
-    
+
+            $instructor = DB::table('instructor')
+            ->select(
+                'instructor_id',
+            )
+            ->where("instructor_email", $passwordResetToken->email)
+            ->first();
+            
         if (!$passwordResetToken) {
             // Token not found or expired
             return redirect()->route('login')->withErrors(['email' => 'Invalid or expired token.']);
@@ -236,6 +267,8 @@ class InstructorController extends Controller
             ->where('token', $token)
             ->delete();
     
+            $action = "Password Reset Request Instructor ID: " . $instructor->instructor_id;
+            $this->log($action);
         // Redirect to a success page or login page
         return redirect('/instructor')->with('status', 'Password successfully changed.');
     }
@@ -291,6 +324,10 @@ class InstructorController extends Controller
             Cache::forget('auth_attempts');
     
             if ($instructor->status === 'Approved') {
+
+                $action = "Logged in";
+                $this->log($action);
+
                 return redirect('/instructor/dashboard')->with('message', 'Authenticated Successfully');
             } else {
                 return redirect('/instructor/wait')->with('message', 'Authenticated Successfully');
@@ -332,7 +369,7 @@ class InstructorController extends Controller
         $instructor = session('instructor');
 
 
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Manila');
         $timestampString = $now->toDateTimeString();
 
   
@@ -362,6 +399,11 @@ class InstructorController extends Controller
                     "time_difference" => $timeDifference,
                 ]);
         }
+
+        
+        $action = "Logged out";
+        $this->log($action);
+
         Cache::forget('instructor_authenticated');
         Cache::forget('instructor');
 
@@ -449,7 +491,10 @@ class InstructorController extends Controller
 
             $instructorData['instructor_credentials'] = $filePath;
             // dd($instructorData);
-            Instructor::create($instructorData);
+            $instructor = Instructor::create($instructorData);
+
+            $action = "Registered new Instructor ID: " . $instructor;
+            $this->log($action);
 
             //add to storage
             // if(!Storage::exists($folderPath)) {
@@ -457,7 +502,8 @@ class InstructorController extends Controller
             // }
 
             // Storage::putFileAs($folderPath, $file, $fileName);
-
+            $action = "Registered new Instructor ID: " . $instructor;
+            $this->log($action);
 
            } catch (\Exception $e) {
             dd($e->getMessage());
@@ -707,6 +753,10 @@ class InstructorController extends Controller
         $instructor->instructor_gender = $updated_instructorData['instructor_gender'];
         $instructor->instructor_contactno = $updated_instructorData['instructor_contactno'];
             
+       
+        $action = "Updated Details Instructor ID: " . $instructor->instructor_id;
+        $this->log($action);
+
         session(['instructor' => $instructor]);
 
         return redirect('/instructor/settings')->with('message' , 'Profile updated successfully');
@@ -740,6 +790,10 @@ class InstructorController extends Controller
 
                 $instructor['profile_picture'] = $filePath;
                 session(['instructor' => $instructor]);
+
+                $action = "Updated Details Instructor ID: " . $instructor->instructor_id;
+                $this->log($action);
+    
     
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -757,17 +811,7 @@ class InstructorController extends Controller
             try {
             $instructorData = Instructor::where('instructor_id', $instructor->instructor_id)->first();
                 
-            // $courseData = DB::table('learner_course_progress')
-            // ->select(
-            //     DB::raw('COUNT(learner_course_progress.learner_course_id) as learner_count'),
-            //     'course.course_name'
-            // )
-            // ->join('course', 'learner_course_progress.course_id', 'course.course_id')
-            // ->where('course.instructor_id', $instructorData->instructor_id)
-            // ->groupBy(
-            //     'course.course_name'
-            // )
-            // ->get();
+
 
             $coursesManaged = DB::table('course')
             ->select(
@@ -862,6 +906,10 @@ class InstructorController extends Controller
                 if (Storage::exists($oldFolderPath)) {
                     Storage::move($oldFolderPath, $folderPath);
                 }
+
+                $action = "Updated Content Instructor ID: " . $instructor->instructor;
+                $this->log($action);
+    
     
                 session()->flash('message', 'User Info changed successfully');
     
@@ -901,6 +949,10 @@ class InstructorController extends Controller
                     $message = 'Error Occurred';
                  }
 
+                 $action = "Updated Details Instructor ID: " . $instructor->instructor_id;
+                 $this->log($action);
+     
+
                 
                 // return redirect('/learner/profile')->with('message' , 'Profile updated successfully');
                 return response()->json(['message' => $message]);
@@ -938,6 +990,10 @@ class InstructorController extends Controller
 
                 $instructor->profile_picture = $filePath;
                 session(['instructor' => $instructor]);
+
+                $action = "Updated Details Instructor ID: " . $instructor->instructor_id;
+                $this->log($action);
+    
 
                 return redirect('/instructor/profile')->with('message', 'Profile picture updated successfully');
     
@@ -979,6 +1035,10 @@ class InstructorController extends Controller
                 ->join('course', 'learner_course_progress.course_id', 'course.course_id')
                 ->where('learner_course_progress.learner_id', $learnerData->learner_id)
                 ->get();
+
+                
+                $action = "Viewed Details of Learner ID: " . $learnerData->learner_id;
+                $this->log($action);
    
             $data = [
                 'title' => 'Profile',
@@ -1023,6 +1083,8 @@ class InstructorController extends Controller
                 )
                 ->get();
             
+                $action = "Viewed Details of Instructor ID: " . $instructorData->instructor_id;
+                $this->log($action);
 
             $data = [
                 'title' => 'Profile',

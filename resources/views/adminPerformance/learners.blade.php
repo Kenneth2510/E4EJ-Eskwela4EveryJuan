@@ -1,108 +1,109 @@
-@include('partials.header')
+@extends('layouts.admin_layout')
 
-<section class="flex flex-row w-screen text-sm main-container bg-mainwhitebg md:text-base">
-@include('partials.sidebar')
-
-
-
-
-<section class="w-screen px-2 pt-[40px] mx-2 mt-2  overscroll-auto md:overflow-auto">
-    <div class="flex justify-between px-10">
-        <h1 class="text-6xl font-bold text-darthmouthgreen">Performance Overview</h1>
-        <div class="">
-            <p class="text-xl font-semibold text-darthmouthgreen">{{$admin->admin_codename}}</p>
+@section('content')
+<section class="w-full h-auto text-black md:h-screen lg:w-10/12">
+    <div class="h-full px-2 py-4 pt-12 rounded-lg shadow-lg md:overflow-auto md:pt-6">
+        <div class="flex items-center justify-between p-3">
+            <h1 class="text-2xl font-bold text-darthmouthgreen md:text-3xl lg:text-4xl">Performance Overview</h1>
+            <div class="">
+                <p class="font-semibold text-darthmouthgreen md:text-lg">{{$admin->admin_codename}}</p>
+            </div>
         </div>
-    </div>
 
-    <div class="mt-10">
-        <div class="mb-5">
-            <a href="/admin/performance" class="">
-                <i class="text-2xl md:text-3xl fa-solid fa-arrow-left" style="color: #000000;"></i>
-            </a>
+        <div class="pt-10">
+            <div class="mb-5">
+                <a href="/admin/performance" class="">
+                    <i class="text-2xl md:text-3xl fa-solid fa-arrow-left" style="color: #000000;"></i>
+                </a>
+            </div>
+            <h1 class="mx-5 text-2xl font-semibold">Learner Overview</h1>
+            <hr class="my-6 border-t-2 border-gray-300">
         </div>
-        <h1 class="mx-5 text-2xl font-semibold">Learner Overview</h1>
-        <hr class="my-6 border-t-2 border-gray-300">    
-    </div>
 
-    
-    <div class="w-full px-3 pb-4 mt-10 rounded-lg shadow-lg b">
-            
-        <div class="flex items-center justify-end space-x-3">
+        <div class="w-full py-4 rounded-lg shadow-lg">
+            <div class="flex flex-col items-center space-y-2 lg:space-y-0 lg:flex-row">
+                <form action="{{ url('/admin/performance/learners') }}" method="GET"
+                    class="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
+                    <div class="flex items-center space-x-2">
+                        <label for="filterDate" class="text-lg sr-only">Filter by Date</label>
+                        <input type="date" name="filterDate"
+                            class="w-1/3 input input-bordered input-primary">
 
-            <form action="{{ url('/admin/performance/learners') }}" method="GET" class="flex items-center space-x-3">
-                <label for="filterDate" class="text-lg">Filter by Date</label>
-                <input type="date" name="filterDate" class="w-40 px-2 py-1 text-base border border-black rounded-xl">
-                
-                <label for="filterStatus" class="text-lg">Filter by Status</label>
-                <select name="filterStatus" id="filterStatus" class="w-32 px-2 py-2 text-base border border-black rounded-xl">
-                    <option value="">Select Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-                
-                <button class="px-4 py-2 text-lg font-medium text-white bg-green-600 rounded-xl hover:bg-green-700" type="submit">Filter</button>
+                        <label for="filterStatus" class="text-lg sr-only">Filter by Status</label>
+                        <select name="filterStatus" id="filterStatus"
+                            class="w-1/3 input input-bordered input-primary">
+                            <option value="">Select Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
 
-                <div class="flex items-center space-x-3">
-                    <select name="searchBy" class="w-32 px-2 py-2 text-base border border-black rounded-xl">
-                        <option value="">Search By</option>
-                        <option value="learner_id">Learner ID</option>
-                        <option value="name">Name</option>
-                        <option value="learner_email">Email</option>
-                        <option value="learner_contactno">Contact No.</option>
-                        <option value="business_name">Business Name</option>
-                    </select>
-                    
-                    <input type="text" name="searchVal" class="w-32 px-2 py-2 text-base border border-black rounded-xl" placeholder="Type to search">
-                    
-                    <button class="px-4 py-2 text-lg font-medium text-white bg-green-600 rounded-xl hover:bg-green-700" type="submit">Search</button>
-                </div>
-            </form>
-            
-       
-        </div>
-    
+                        <button
+                            class="w-1/3 btn btn-primary"
+                            type="submit">Filter</button>
+                    </div>
 
-        <div id="contenttable" class="mt-7">
-            <table class="w-full text-left border-b border-black">
-                <thead>
-                    <th class="w-1/12 text-lg">Learner ID</th>
-                    <th class="w-2/12 text-lg">Name</th>
-                    <th class="w-3/12 text-lg">Contact Info</th>
-                    <th class="w-3/12 text-lg">Business Name</th>
-                    <th class="w-2/12 text-lg">Date Registered</th>
-                    <th class="w-1/12 text-lg">Status</th>
-                    <th class="w-1/12"></th>
-                </thead>
-                <tbody id="AD_learners" class="">
-                    @forelse ($learners as $learner)
+
+                    <div class="flex items-center space-x-3">
+                        <select name="searchBy" class="w-1/3 input input-bordered input-primary">
+                            <option value="">Search By</option>
+                            <option value="learner_id">Learner ID</option>
+                            <option value="name">Name</option>
+                            <option value="learner_email">Email</option>
+                            <option value="learner_contactno">Contact No.</option>
+                            <option value="business_name">Business Name</option>
+                        </select>
+
+                        <input type="text" name="searchVal"
+                            class="w-1/3 input input-bordered input-primary"
+                            placeholder="Type to search">
+
+                        <button
+                            class="w-1/3 btn btn-primary">Search</button>
+                    </div>
+                </form>
+
+
+            </div>
+
+
+            <div id="contenttable" class="overflow-auto mt-7">
+                <table class="table w-full text-left border-b border-black table-auto">
+                    <thead>
+                        <th class="w-[150px]">Learner ID</th>
+                        <th class="w-[150px]">Name</th>
+                        <th class="w-[150px]">Contact Info</th>
+                        <th class="w-[150px]">Business Name</th>
+                        <th class="w-[150px]">Date Registered</th>
+                        <th class="w-[150px]">Status</th>
+                        <th class="w-[150px]"></th>
+                    </thead>
+                    <tbody id="AD_learners" class="">
+                        @forelse ($learners as $learner)
                         <tr>
                             <td>{{ $learner->learner_id }}</td>
                             <td>{{ $learner->learner_fname }} {{ $learner->learner_lname }}</td>
-                            <td class="py-1 text-base">{{ $learner->learner_email }}<br>{{ $learner->learner_contactno }}</td>
+                            <td class="py-1 text-base">{{ $learner->learner_email }}<br>{{ $learner->learner_contactno
+                                }}</td>
                             <td class="py-1 text-base">{{ $learner->business_name }}</td>
                             <td class="py-1 text-base">{{ $learner->created_at }}</td>
                             <td class="py-1 text-base">{{ $learner->status }}</td>
                             <td>
-                                <a href="/admin/performance/learners/view/{{ $learner->learner_id }}" class="px-4 py-2 text-lg font-medium text-white bg-green-600 rounded-xl hover:bg-green-700">View</a>
-                    
+                                <a href="/admin/performance/learners/view/{{ $learner->learner_id }}"
+                                    class="btn btn-primary">View</a>
+
                             </td>
                         </tr>
-                    @empty
+                        @empty
                         <tr>
                             <td class="py-1 text-base" colspan="7">No learners found.</td>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
-            <div class="mt-4">{{ $learners->links() }}</div>
+                        @endforelse
+                    </tbody>
+                </table>
+                <div class="mt-4">{{ $learners->links() }}</div>
+            </div>
         </div>
-
-
-</div>
-
-
+    </div>
 </section>
-</section>
-
-@include('partials.footer')
+@endsection

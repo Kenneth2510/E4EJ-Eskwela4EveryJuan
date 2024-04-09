@@ -52,6 +52,8 @@ use Codedge\Fpdf\Fpdf\Fpdf;
 
 use App\Http\Controllers\PDFGenerationController;
 
+use App\Http\Controllers\ActivityLoggingController;
+
 class InstructorCourseController extends Controller
 {
     public function courses(){
@@ -88,6 +90,19 @@ class InstructorCourseController extends Controller
             'scripts' => ['instructor_courses.js'],
         ]);
     }
+
+
+    
+    public function log($action) {
+        $instructor = session('instructor');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $instructor->instructor_id;
+        $user_type = "Instructor";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
+    
 
     public function searchCourse(Request $request) {
         if (session()->has('instructor')) {
@@ -137,60 +152,6 @@ class InstructorCourseController extends Controller
         
     }
 
-    // public function courseCreate_process(Request $request) {
-    //     $instructor = session('instructor');
-
-    //     if($instructor->status !== 'Approved') {
-    //         session()->flash('message', 'Account is not yet Approved');
-    //         return response()->json(['message' => 'Account is not yet Approved', 'redirect_url' => '/instructor/courses']);
-    //     } else {
-    //         try {
-    //             $courseData = $request->validate([
-    //                 'course_name' => ['required'],
-    //                 'course_description' => ['required'],
-    //                 'course_difficulty' => ['required'],
-    //             ]);
-
-    //             $courseData['instructor_id'] = $instructor->instructor_id;
-    
-                
-    //             $course = Course::create($courseData);
-
-    //             CourseGrading::create([
-    //                 'course_id' => $course->course_id,
-    //             ]);
-                
-    //             $folderName = $course->course_id . ' ' . $courseData['course_name'];
-    //             $folderName = Str::slug($folderName, '_');
-    //             $folderPath = 'public/courses/' . $folderName;
-    
-    //             if(!Storage::exists($folderPath)) {
-    //                 Storage::makeDirectory($folderPath);
-    //             }
-
-       
-    //             // $latestCourse = DB::table('course')->orderBy('created_at', 'DESC')->first();
-    //             // $latestCourseID = $latestCourse->course_id;
-    
-    //             session()->flash('message', 'Course created Successfully');
-
-    //             $response = [
-    //                 'message' => 'Course created successfully',
-    //                 'redirect_url' => '/instructor/courses',
-    //                 'course_id' => $course->course_id,
-    //             ];
-        
-    //             return response()->json($response);
-
-
-    //             // return response()->json(['message' => 'Course created successfully', 'redirect_url' => '/instructor/courses']);
-    //         } catch (ValidationException $e) {
-    //             $errors = $e->validator->errors();
-        
-    //             return response()->json(['errors' => $errors], 422);
-    //         }
-    //     }
-    // }
 
     public function courseCreate_process(Request $request) {
         $instructor = session('instructor');
@@ -228,6 +189,9 @@ class InstructorCourseController extends Controller
                 if(!Storage::exists($folderPath)) {
                     Storage::makeDirectory($folderPath);
                 }
+
+                $action = "Created New Course ID: " .  $course->course_id; 
+                $this->log($action);
     
                 session()->flash('message', 'Course created Successfully');
     
@@ -274,6 +238,8 @@ class InstructorCourseController extends Controller
             return redirect()->back()->with('error', 'File could not be uploaded.');
         }
 
+        $action = "Uploaded Files in Course ID: ". $course->course_id;
+        $this->log($action);
     
         session()->flash('message', 'Course created Successfully');
 
@@ -529,6 +495,9 @@ class InstructorCourseController extends Controller
             // Get all files in the specified directory
             $courseFiles = Storage::files($directory);
 
+            $action = "Opened Course ID: ". $course->course_id;
+            $this->log($action);
+
                 $data = [
                     'title' => 'Course Overview',
                     'scripts' => ['instructor_courseOverview.js'],
@@ -628,6 +597,10 @@ class InstructorCourseController extends Controller
                 $reportController = new PDFGenerationController();
 
                 $reportController->courseDetails($course);
+                
+
+                $action = "Updated Details, Course ID: " . $course->course_id;
+                $this->log($action);
 
                 session()->flash('message', 'Course updated Successfully');
                 return response()->json(['message' => 'Course updated successfully', 'redirect_url' => "/instructor/course/$course->course_id"]);
@@ -669,6 +642,8 @@ class InstructorCourseController extends Controller
             return redirect()->back()->with('error', 'File could not be uploaded.');
         }
 
+        $action = "Updated Course Files, Course ID: " . $course->course_id;
+        $this->log($action);
     
         session()->flash('message', 'File Uploaded Successfully');
         return redirect()->back()->with('success', 'File uploaded successfully');
@@ -684,6 +659,8 @@ class InstructorCourseController extends Controller
         
     
         if (Storage::exists($filePath)) {
+            $action = "Updated Course Files, Course ID: " . $course->course_id;
+            $this->log($action);
             // Delete the file
             Storage::delete($filePath);
     
@@ -802,6 +779,9 @@ class InstructorCourseController extends Controller
 
                 $course->update($courseData);
 
+                $action = "Updated Course Details, Course ID: " . $course->course_id;
+                $this->log($action);
+
                 session()->flash('message', 'Course updated Successfully');
                 return response()->json(['message' => 'Course updated successfully', 'redirect_url' => "/instructor/course/$course->course_id"]);
                 
@@ -839,6 +819,9 @@ class InstructorCourseController extends Controller
                 File::deleteDirectory($folderPath);
             }
     
+            $action = "Deleted Course, Course ID: " . $course->course_id;
+            $this->log($action);
+
             // Delete the course record
             $course->delete();
     
@@ -894,6 +877,9 @@ class InstructorCourseController extends Controller
         $reportController->courseDetails($syllabus->course_id);
         // $latestSyllabus = DB::table('syllabus')->orderBy('created_at', 'DESC')->first();
 
+        $action = "Created Course Syllabus, Course ID: " . $syllabusData->course_id;
+        $this->log($action);
+        
         session()->flash('message', 'Syllabus created Successfully');
 
         $response = [
@@ -1111,6 +1097,9 @@ class InstructorCourseController extends Controller
             $reportController = new PDFGenerationController();
 
             $reportController->courseDetails($course);
+
+            $action = "Updated Course Syllabus, Course ID: " . $course->course_id;
+            $this->log($action);
     
             session()->flash('message', 'Syllabus updated Successfully');
             return response()->json(['message' => 'Course updated successfully', 'redirect_url' => "/instructor/course/content/$course->course_id"]);
@@ -1159,6 +1148,9 @@ class InstructorCourseController extends Controller
             $reportController = new PDFGenerationController();
 
             $reportController->courseDetails($course);
+
+            $action = "Updated Course Syllabus, Course ID: " . $course->course_id;
+            $this->log($action);
     
             session()->flash('message', 'Syllabus updated Successfully');
             return response()->json(['message' => 'Course updated successfully', 'redirect_url' => "/instructor/course/content/$course->course_id"]);
@@ -1205,6 +1197,9 @@ class InstructorCourseController extends Controller
                     ->where('course_id', $course->course_id)
                     ->delete();
     
+                    $action = "Updated Course Syllabus, Course ID: " . $course->course_id;
+                    $this->log($action);
+
                 session()->flash('message', 'Topic deleted Successfully');
                 return response()->json(['message' => 'Topic Deleted successfully', 'redirect_url' => "/instructor/course/content/$course->course_id"]);
             } else {
@@ -1250,16 +1245,7 @@ class InstructorCourseController extends Controller
                         ->where('syllabus_id', $syllabus->syllabus_id)
                         ->first();
 
-                            // if ($lessonInfo === null) {
-                            //     // Set $activityContent to null or an empty array if it's appropriate
-                            //     $lessonContent = null; // or $activityContent = [];
-                            
-                            //     // You can also provide a message to indicate that no data was found
-                            //     session()->flash('message', 'Please Save the Syllabus First');
-                            //     return redirect("/instructor/course/content/$course->course_id");
-
-                            // } else {
-                                // Fetch $activityContent as you normally would
+     
                                 $lessonContent = DB::table('lesson_content')
                                 ->select(
                                     'lesson_content_id',
@@ -1278,7 +1264,7 @@ class InstructorCourseController extends Controller
                             $hours = floor($durationInSeconds / 3600);
                             $minutes = floor(($durationInSeconds % 3600) / 60);
                             $formattedDuration = sprintf("%02d:%02d", $hours, $minutes);
-                            // }
+                            
 
 
                     
@@ -1294,6 +1280,9 @@ class InstructorCourseController extends Controller
                         'instructor' => $instructor,
                         'title' => 'Course Lesson',
                     ]]);
+
+                    $action = "View Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                    $this->log($action);
 
                     return view('instructor_course.courseLesson', compact('instructor'))->with([
                         'title' => 'Course Lesson',
@@ -1402,6 +1391,11 @@ class InstructorCourseController extends Controller
                 'duration' => $timeDuration
             ]);
 
+            
+            $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
+
+
             return response()->json(['message' => 'Estimated Time of Completion Added']);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -1429,6 +1423,11 @@ class InstructorCourseController extends Controller
             DB::table('syllabus')
                 ->where('syllabus_id', $syllabus->syllabus_id)
                 ->update($updated_values2);
+
+                
+                $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                $this->log($action);
+
 
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -1485,6 +1484,10 @@ class InstructorCourseController extends Controller
             Storage::makeDirectory($folderPath);
         }
 
+        
+        $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+        $this->log($action);
+
 
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -1500,10 +1503,16 @@ class InstructorCourseController extends Controller
                 'lesson_content' => ['nullable'],
             ]);
 
+
             DB::table('lesson_content')
                 ->where('lesson_id', $lesson->lesson_id)
                 ->where('lesson_content_id', $lesson_content->lesson_content_id)
                 ->update($updated_values);
+
+
+                $action = "Updated Content Lesson ID: ". $lesson->syllabus_id ." Course ID: " . $lesson->course_id;
+                $this->log($action);
+
 
             return response()->json();
 
@@ -1521,6 +1530,11 @@ class InstructorCourseController extends Controller
                 ->where('lesson_content_id', $lesson_content->lesson_content_id)
                 ->delete();
 
+                
+                $action = "Updated Content Lesson ID: ". $lesson->syllabus_id ." Course ID: " . $lesson->course_id;
+                $this->log($action);
+
+
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
         
@@ -1531,16 +1545,7 @@ class InstructorCourseController extends Controller
     public function save_lesson_content(Course $course, Syllabus $syllabus, Lessons $lesson, Request $request) {
         try {
 
-            // $lessonContentData = $request->validate([
-            //     'lesson_content_id' => ['required'],
-            //     'lesson_content_title' => ['required'],
-            //     'lesson_content' => ['required'],
-            //     'lesson_content_order' => ['required']
-            // ]);
 
-            // LessonContents::where('lesson_id', $lesson->lesson_id)
-            //             ->where('lesson_content_id', $lessonContentData['lesson_content_id'])
-            //             ->update($lessonContentData);
 
             $lessonContentID = $request->input('lesson_content_id');
 
@@ -1556,6 +1561,11 @@ class InstructorCourseController extends Controller
                         $reportController = new PDFGenerationController();
 
                         $reportController->courseLessons($course, $syllabus, $lesson);
+
+                        
+                    $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                    $this->log($action);
+
 
             session()->flash('message', 'Lesson Content updated Successfully');
             return response()->json(['message' => 'Lesson Content updated successfully', 'redirect_url' => "/instructor/course/content/$course->course_id/$syllabus->syllabus_id/lesson"]);
@@ -1590,6 +1600,11 @@ class InstructorCourseController extends Controller
         $reportController = new PDFGenerationController();
 
         $reportController->courseLessons($course, $syllabus, $lesson);
+
+        
+        $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+        $this->log($action);
+
 
 
         session()->flash('message', 'Lesson Content updated Successfully');
@@ -1652,6 +1667,11 @@ class InstructorCourseController extends Controller
         }
 
 
+        
+        $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+        $this->log($action);
+
+
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
         
@@ -1685,6 +1705,11 @@ class InstructorCourseController extends Controller
                 ->where('lesson_content_id', $lesson_content->lesson_content_id)
                 ->update($updatedRow);
 
+                
+                $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                $this->log($action);
+
+
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
         
@@ -1701,6 +1726,8 @@ class InstructorCourseController extends Controller
             LessonContents::where('lesson_content_id' , $lesson_content['lesson_content_id'])
             ->update(['video_url' => $embedUrlData]);
 
+            $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
 
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -1720,6 +1747,11 @@ class InstructorCourseController extends Controller
                 ->where('lesson_id', $lesson->lesson_id)
                 ->where('lesson_content_id', $lesson_content->lesson_content_id)
                 ->update($updatedRow);
+
+                
+                $action = "Updated Content Lesson ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                $this->log($action);
+
 
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -1753,18 +1785,7 @@ class InstructorCourseController extends Controller
                         ->where('course_id', $course->course_id)
                         ->where('syllabus_id', $syllabus->syllabus_id)
                         ->first();
-                            // dd($lessonInfo);
-
-                            // if ($lessonInfo === null) {
-                            //     // Set $activityContent to null or an empty array if it's appropriate
-                            //     $lessonContent = null; // or $activityContent = [];
-                            
-                            //     // You can also provide a message to indicate that no data was found
-                            //     session()->flash('message', 'Please Save the Syllabus First');
-                            //     return redirect("/instructor/course/content/$course->course_id");
-
-                            // } else {
-                                // Fetch $activityContent as you normally would
+    
                                 $lessonContent = DB::table('lesson_content')
                             ->select(
                                 'lesson_content_id',
@@ -1824,7 +1845,6 @@ class InstructorCourseController extends Controller
             return redirect('/instructor');
         }
 
-        // return view('instructor_course.courseLesson')->with('title', 'Course Lesson');
     }
     
     
@@ -1959,16 +1979,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
             ->where('syllabus_id', $syllabus->syllabus_id)
             ->first();
 
-        // if ($activityInfo === null) {
-        //     // Set $activityContent to null or an empty array if it's appropriate
-        //     $activityContent = null; // or $activityContent = [];
-        //     $activityContentCriteria = null;
-
-        //     // You can also provide a message to indicate that no data was found
-        //     session()->flash('message', 'Please Save the Syllabus First');
-        //     return redirect("/instructor/course/content/$course->course_id");
-        // } else {
-            // Fetch $activityContent as you normally would
             $activityContent = DB::table('activity_content')
                 ->select(
                     'activity_content_id',
@@ -2026,6 +2036,10 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 }
             // }
         // }
+
+        
+        $action = "View Activity ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+        $this->log($action);
 
 
                     $response = $this->course_content($course);
@@ -2216,6 +2230,9 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 ->where('activity_content_id', $activity_content->activity_content_id)
                 ->update($updated_values);
 
+                $action = "Updated Content Activity ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                $this->log($action);
+
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
         
@@ -2233,6 +2250,9 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 ->where('activity_id', $activity->activity_id)
                 ->where('activity_content_id', $activity_content->activity_content_id)
                 ->update($updated_values);
+
+                $action = "Updated Content Activity ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                $this->log($action);
 
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -2256,6 +2276,9 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
             $activityContentCriteria = ActivityContentCriterias::create($updated_criterias);
 
 
+            $action = "Updated Content Activity ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
+
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
         
@@ -2273,7 +2296,8 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
             ]);
 
             $activityContentCriteria = ActivityContentCriterias::create($updated_criterias);
-
+            $action = "Updated Content Activity ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
 
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -2394,6 +2418,9 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 // dd($learnerActivityScoreData);
                 $response = $this->course_content($course);
 
+                $action = "View Learner ID: ". $learner_course->learner_course_id ."on Activity ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                $this->log($action);
+
                $data = [
                 'title' => 'Activity Output',
                 'scripts' => ['instructorActivities_learnerResponse.js'],
@@ -2500,7 +2527,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 ->first();
 
 
-                $now = Carbon::now();
+                $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
             DB::table('learner_activity_progress')
@@ -2531,7 +2558,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                                 'status' => "COMPLETED",
                             ]);
 
-                            $now = Carbon::now();
+                            $now = Carbon::now('Asia/Manila');
                             $timestampString = $now->toDateTimeString();
 
                         DB::table('learner_activity_progress')
@@ -2589,6 +2616,10 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                     }
                 }
                 
+
+                $action = "Updated Score on Learner ID, ". $learnerActivityOutputData->learner_course_id ."  Activity ID: ". $learnerActivityOutputData->syllabus_id ." Course ID: " . $learnerActivityOutputData->course_id;
+                $this->log($action);
+
 
                 $response = [
                     'message' => 'Output Scored Successfully',
@@ -2711,7 +2742,16 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
             ->where('activity_content_id', $activity_content)
             ->get();
 
-            // dd($activityCriteria);
+
+            $activityData = DB::table('activities')
+            ->select(
+                'activity_id',
+                'course_id',
+                'syllabus_id',
+            )
+            ->where('activity_id', $activity)
+            ->first();
+
 
             if ($learnerActivityOutputData_2nd) {
                 // If a record with attempt 2 already exists, handle accordingly
@@ -2765,6 +2805,9 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                         
                             LearnerActivityCriteriaScore::create($rowData);
                         }
+
+                        $action = "Allow Reattempt on Learner ID, ". $learner_course ."  Activity ID: ". $activityData->syllabus_id ." Course ID: " . $activityData->course_id;
+                        $this->log($action);
 
                         session()->flash('message', 'Second Attempt was allowed to this learner');
                     }
@@ -2826,6 +2869,10 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                     ->get();
 
                 $response = $this->course_content($course);
+
+                
+                $action = "View Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+                $this->log($action);
 
                 session(['quiz_data' => [
                     'quizInfo' => $quizInfo,
@@ -3017,6 +3064,9 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
 
             $quizReference = QuizReferences::create($newReference);
 
+            $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
+
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
         
@@ -3038,6 +3088,9 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
 
             $quizReference = QuizReferences::create($newReference);
 
+            
+            $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
 
         }catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -3063,6 +3116,10 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
             $data = [
                 'message' => 'quiz duration successfully updated'
             ];
+
+
+            $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
 
             return response()->json($data);
 
@@ -3126,6 +3183,10 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
 
              
             $response = $this->course_content($course);
+
+            
+            $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
 
             session(['quiz_data' => [
                 'quizInfo' => $quizInfo,
@@ -3310,6 +3371,10 @@ $questionsData = DB::table('questions')
 
             DB::commit();
 
+            
+            $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
+
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             DB::rollback();
@@ -3354,6 +3419,11 @@ $questionsData = DB::table('questions')
             QuizContents::create($quizContentData);
 
             // DB::commit();
+
+            
+            $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
+
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
@@ -3408,6 +3478,9 @@ $questionsData = DB::table('questions')
             QuizContents::create($quizContentData);
 
             // DB::commit();
+            
+            $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
@@ -3518,6 +3591,9 @@ $questionsData = DB::table('questions')
                     ];
 
                     // dd($data);
+                    
+            $action = "Viewed Learner ID: ". $learnerQuizProgressData->learner_course_id .", Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
+            $this->log($action);
             
                 return view('instructor_course.courseQuiz_viewLearnerOutput', compact('instructor'))->with($data);
 
@@ -3596,45 +3672,7 @@ $questionsData = DB::table('questions')
                     ->select('question_id', DB::raw('JSON_ARRAYAGG(answer) as correct_answer'))
                     ->where('isCorrect', 1)
                     ->groupBy('question_id');
-/*
-                $learnerQuizData = DB::table('learner_quiz_output')
-                    ->select(
-                        'learner_quiz_output.learner_quiz_output_id',
-                        'learner_quiz_output.quiz_id',
-                        'learner_quiz_output.quiz_content_id',
-                        'learner_quiz_output.attempts',
-                        'learner_quiz_output.answer',
-                        'learner_quiz_output.isCorrect',
-                        'quiz_content.course_id',
-                        'quiz_content.question_id',
-                        'questions.syllabus_id',
-                        'questions.question',
-                        'questions.category',
-                        DB::raw('JSON_ARRAYAGG(question_answer.answer) as all_choices'),
-                        DB::raw('correct_answers.correct_answer')
-                    )
-                    ->join('quiz_content', 'learner_quiz_output.quiz_content_id', '=', 'quiz_content.quiz_content_id')
-                    ->join('questions', 'quiz_content.question_id', '=', 'questions.question_id')
-                    ->leftJoinSub($correctAnswerSubquery, 'correct_answers', function ($join) {
-                        $join->on('questions.question_id', '=', 'correct_answers.question_id');
-                    })
-                    ->leftJoin('question_answer', 'questions.question_id', '=', 'question_answer.question_id')
-                    ->where('learner_quiz_output.attempts', $learnerQuizProgressData->attempt)
-                    ->where('learner_quiz_output.learner_course_id', $learnerQuizProgressData->learner_course_id)
-                    ->where('quiz_content.quiz_id', $learnerQuizProgressData->quiz_id)
-                    ->where('quiz_content.course_id', $learnerQuizProgressData->course_id)
-                    ->where('quiz_content.syllabus_id', $learnerQuizProgressData->syllabus_id)
-                    ->groupBy(
-                        'learner_quiz_output.learner_quiz_output_id',
-                        'learner_quiz_output.quiz_content_id',
-                        'quiz_content.course_id',
-                        'quiz_content.question_id',
-                        'questions.syllabus_id',
-                        'questions.question',
-                        'questions.category',
-                        'correct_answers.correct_answer'
-                    )
-                    ->get();*/
+
                     
                     $learnerQuizData = DB::table('learner_quiz_output')
     ->select(
@@ -3751,7 +3789,7 @@ $questionsData = DB::table('questions')
                     if($certData) {
                         $referenceNumber = $certData->reference_id;
                     } else {
-                        $datePart = Carbon::now()->format('Ymd');
+                        $datePart = Carbon::now('Asia/Manila')->format('Ymd');
                         do {
                             $randomPart = str_pad(rand(0, 999), 3, '0', STR_PAD_LEFT);
                             $referenceNumber = $datePart . $randomPart;
@@ -3822,6 +3860,8 @@ $questionsData = DB::table('questions')
                     $this->fpdf->Cell(0, 10, $text4, 0, 0, 'L');
                     
     
+                    $action = "Generated Certificated on Course ID: " . $course->course_id;
+                    $this->log($action);
     
                     $this->fpdf->Output();
                     

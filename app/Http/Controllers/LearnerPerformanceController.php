@@ -40,8 +40,24 @@ use Illuminate\Support\Facades\URL;
 use Dompdf\Dompdf;
 use App\Http\Controllers\DateTime;
 
+use App\Http\Controllers\ActivityLoggingController;
+
+
 class LearnerPerformanceController extends Controller
 {
+
+    public function log($action) {
+        $learner = session('learner');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $learner->learner_id;
+        $user_type = "Learner";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
+
+
+
     public function performances() {
         if (session()->has('learner')) {
             $learner= session('learner');
@@ -76,6 +92,9 @@ class LearnerPerformanceController extends Controller
                     'scripts' => ['learner_performance.js'],
                     'courseData' => $learnerCourseData,
                 ];
+
+                $action = "Opened Learner Performance";
+                $this->log($action);
         
                 // dd($data);
                 return view('learner_performance.learnerPerformance' , compact('learner'))
@@ -464,6 +483,9 @@ class LearnerPerformanceController extends Controller
                     'learner' =>$learner,
                     'learnerSyllabusData' => $learnerSyllabusData,
                 ];
+
+                $action = "Opened Learner Course Performance ID: " . $course->course_id;
+                $this->log($action);
         
                 // dd($data);
                 return view('learner_performance.learnerCoursePerformance' , compact('learner'))
@@ -912,6 +934,8 @@ class LearnerPerformanceController extends Controller
                 'learnerQuizCompletedPerformanceData' => $learnerQuizCompletedPerformanceData,
                 'averageQuizTimeFormatted' => $averageQuizTimeFormatted,
                 ];
+
+                
 
             return response()->json($data);
             } catch (ValidationException $e) {

@@ -22,6 +22,7 @@ use App\Models\LearnerPreAssessmentProgress;
 use App\Models\LearnerPreAssessmentOutput;
 use App\Models\LearnerPostAssessmentProgress;
 use App\Models\LearnerPostAssessmentOutput;
+use App\Models\ActivityLogs;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -38,6 +39,8 @@ use App\Mail\MailNotify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\ActivityLoggingController;
+
 class AdminController extends Controller
 {
     public function index()
@@ -50,6 +53,16 @@ class AdminController extends Controller
     return view('admin.index')->with('title', 'Eskwela4EveryJuan Admin');
 }
 
+
+public function log($action) {
+    $admin = session('admin');
+    $logging = new ActivityLoggingController();
+
+    $user_id = $admin->admin_id;
+    $user_type = "Admin";
+
+    $logging->log_activity($user_type, $user_id, $action);
+}
 
 public function login_process(Request $request) {
     $adminData = $request->validate([
@@ -65,6 +78,8 @@ public function login_process(Request $request) {
 
         $request->session()->regenerate();
 
+        $action = "Logged In";
+        $this->log($action);
         return redirect('/admin/dashboard')->with('message', "Welcome Back");
     }
 
@@ -74,6 +89,9 @@ public function login_process(Request $request) {
     
     public function logout(Request $request) {
         auth('admin')->logout();
+        
+        $action = "Logged Out";
+        $this->log($action);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -224,4 +242,51 @@ public function login_process(Request $request) {
         }
     }
 
+
+    public function activityLogs() {
+        if (auth('admin')->check()) {
+            $admin = session('admin');
+            // dd($admin);
+
+            if($admin->role === 'IT_DEPT' || $admin->role === 'SUPER_ADMIN') {
+
+
+                $logsData = DB::table('activity_logs')
+                ->select(
+                    'activity_logs.activity_log_id',
+                    'activity_logs.user_type',
+                    'activity_logs.user_id',
+                    'activity_logs.action',
+                    'activity_logs.timestamp',
+                    DB::raw("CASE 
+                        WHEN activity_logs.user_type = 'learner' THEN CONCAT(learner.learner_fname, ' ', learner.learner_lname)
+                        WHEN activity_logs.user_type = 'instructor' THEN CONCAT(instructor.instructor_fname, ' ', instructor.instructor_lname)
+                        WHEN activity_logs.user_type = 'admin' THEN admin.admin_codename
+                        ELSE NULL END AS name")
+                )
+                ->leftJoin('learner', 'activity_logs.user_id', '=', 'learner.learner_id')
+                ->leftJoin('instructor', 'activity_logs.user_id', '=', 'instructor.instructor_id')
+                ->leftJoin('admin', 'activity_logs.user_id', '=', 'admin.admin_id')
+                ->orderBy('activity_logs.timestamp','desc');
+
+
+                $logs = $logsData->paginate(50);
+            
+
+                $data = [
+                    'title' => 'Activity Logs',
+                    'admin' => $admin,
+                    'logs' => $logs
+                ];
+
+
+                return view('admin.logs')->with($data);
+
+            } else {
+                return view('error.error');
+            }
+        }  else {
+            return redirect('/admin');
+        }
+    }
 }
