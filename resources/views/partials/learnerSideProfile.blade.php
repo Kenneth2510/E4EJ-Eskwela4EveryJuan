@@ -26,15 +26,25 @@
         {{-- contents --}}
         <div class="w-full py-4">
             <ul class="flex flex-col justify-center divide-y-2">
-                <li class="p-3 hover:bg-darthmouthgreen hover:bg-opacity-75 hover:text-white" id="learner_profile"><a href="">Profile Setting</a></li>
-                <li class="p-3 hover:bg-darthmouthgreen hover:bg-opacity-75 hover:text-white" id="learner_chatbot"><a href="">Chatbot Helper</a></li>
-                <li class="p-3 hover:bg-darthmouthgreen hover:bg-opacity-75 hover:text-white" id="learner_sidebar1"><a href="">Sidebar 1</a></li>
+                <li class="p-3 hover:bg-darthmouthgreen hover:bg-opacity-75 hover:text-white" id="learner_profile"><a
+                        href="">Profile Setting</a></li>
+                <li class="p-3 hover:bg-darthmouthgreen hover:bg-opacity-75 hover:text-white" id="learner_chatbot"><a
+                        href="">Chatbot Helper</a></li>
+                <li class="p-3 hover:bg-darthmouthgreen hover:bg-opacity-75 hover:text-white" id="learner_sidebar1"><a
+                        href="">Sidebar 1</a></li>
             </ul>
 
-            <form class="mx-4 mt-10 rounded-lg bg-darthmouthgreen md:block group hover:bg-white hover:border-2 hover:border-darthmouthgreen" action="{{ url('/instructor/logout') }}" method="POST"> 
+            <form
+                class="mx-4 mt-10 rounded-lg bg-darthmouthgreen md:block group hover:bg-white hover:border-2 hover:border-darthmouthgreen"
+                action="{{ url('/instructor/logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="flex flex-row items-center justify-center w-full h-12 group-hover:cursor-pointer" >
-                    <svg class="fill-white group-hover:fill-black" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg>
+                <button type="submit"
+                    class="flex flex-row items-center justify-center w-full h-12 group-hover:cursor-pointer">
+                    <svg class="fill-white group-hover:fill-black" xmlns="http://www.w3.org/2000/svg" height="24"
+                        viewBox="0 -960 960 960" width="24">
+                        <path
+                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                    </svg>
                     <h1 class="px-5 text-white group-hover:text-black">Logout</h1>
                 </button>
             </form>
