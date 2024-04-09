@@ -18,7 +18,7 @@
                     <h1 class="text-2xl font-semibold text-center">{{$instructor->instructor_fname}} {{$instructor->instructor_lname}}</h1>
                 </div>
 
-                <div class="text-center " id="account_status_area">
+                <div class="text-center mt-5" id="account_status_area">
                     <h1 class="text-xl">INSTRUCTOR</h1>
                     {{-- <h1 class="text-xl">ID: 1</h1> --}}
 
@@ -31,9 +31,9 @@
                     @endif
                 </div>
 
-                <div class="text-center " id="email_area">
+                <div class="text-center mt-5" id="email_area">
                     <h1 class="text-xl">Email</h1>
-                    <h2 class="text-md">{{$instructor->instructor_email}}</h2>
+                    <h2 class="text-md mt-3 mb-5">{{$instructor->instructor_email}}</h2>
 
                     <a href="{{ url('/learner/message') }}?email={{ $instructor->instructor_email }}&type=Instructor" class="px-5 py-3 mt-10 text-lg text-white bg-darthmouthgreen hover:border-2 hover:bg-white hover:border-darthmouthgreen hover:text-darthmouthgreen rounded-xl">Send Message</a>
                 </div>

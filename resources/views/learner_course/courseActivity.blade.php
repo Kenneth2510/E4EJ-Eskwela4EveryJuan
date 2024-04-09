@@ -204,7 +204,7 @@
             @else
             {{-- if attempt 2 is not yet started --}}
             <!-- if attempt 2 is not yet started -->
-            <a href="{{ url("/learner/course/manage/$syllabus->course_id/overview") }}" class="flex justify-center w-1/2 py-5 mx-3 text-xl font-semibold text-white bg-darthmouthgreen hover:bg-green-900 rounded-xl">
+            <a href="{{ url("/learner/course/manage/$syllabus->course_id/overview") }}" class="w-1/2">
                 <button class="w-full btn">Return</button>
             </a>
             <a href="{{ url("/learner/course/content/$syllabus->course_id/$syllabus->learner_course_id/activity/$syllabus->syllabus_id/answer/$output->attempt")
