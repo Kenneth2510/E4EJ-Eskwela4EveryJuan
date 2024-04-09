@@ -5,8 +5,7 @@
     <div class="h-full px-2 py-4 pt-24 overflow-auto rounded-lg shadow-lg md:pt-6">
 
         <div style="background-color:{{$mainBackgroundCol}};" class="z-50 p-2 text-white fill-white rounded-xl">
-            <a href="{{ url("/learner/course/manage/$learnerSyllabusProgressData->course_id/overview") }}" class="my-2
-                bg-gray-300 rounded-full ">
+            <a href="{{ url("/learner/course/manage/$learnerSyllabusProgressData->course_id/overview") }}" class="my-2 bg-gray-300 rounded-full ">
                 <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="24">
                     <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                 </svg>
@@ -72,9 +71,9 @@
                             5</div> --}}
                     </div>
 
-                    <div class="mt-5" id="timerArea">
+                    {{-- <div class="mt-5" id="timerArea">
                         <h1 class="">Time remaining: </h1>
-                    </div>
+                    </div> --}}
 
                 </div>
                 <div id="quiz_content_area" class="w-full overflow-y-auto px-auto">
@@ -111,13 +110,10 @@
                         <span id="currentPage" class="mx-4 text-lg font-semibold">Page 1</span>
                         <button id="nextPage" class="btn btn-primary">Next</button>
                     </div>
-
-
                 </div>
-
             </div>
 
-            <div class="w-full text-right" id="quizSubmitBtn">
+            <div class="w-full my-2 text-right" id="quizSubmitBtn">
                 <button class="btn btn-primary">Submit Quiz</button>
             </div>
 
@@ -126,7 +122,7 @@
 </section>
 
 <div id="confirmSubmitQuizModal"
-    class="fixed top-0 left-0 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75 ">
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75 ">
     <div class="modal-content bg-white p-4 rounded-lg shadow-lg w-[500px]">
         <div class="flex justify-end w-full">
             <button class="cancelConfirmSubmitQuiz">
@@ -140,10 +136,8 @@
             the questions.</p>
 
         <div class="flex justify-center w-full mt-5">
-            <button id=""
-                class="px-4 py-2 mx-2 mt-4 bg-red-500 rounded text-mainwhitebg cancelConfirmSubmitQuiz">Cancel</button>
-            <button id="confirmSubmitQuizBtn"
-                class="px-4 py-2 mx-2 mt-4 text-white rounded bg-seagreen hover:bg-darkenedColor">Submit Quiz</button>
+            <button id="" class="btn btn-error cancelConfirmSubmitQuiz">Cancel</button>
+            <button id="confirmSubmitQuizBtn" class="btn btn-primary">Submit Quiz</button>
         </div>
     </div>
 </div>

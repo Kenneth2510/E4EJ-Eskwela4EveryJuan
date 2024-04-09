@@ -4,8 +4,7 @@
 <section class="w-full h-screen md:w-3/4 lg:w-10/12">
     <div class="h-full px-2 py-4 pt-24 overflow-auto rounded-lg shadow-lg md:pt-6">
         <div style="background-color:{{$mainBackgroundCol}};" class="z-50 p-2 text-white rounded-xl">
-            <a href="{{ url("/learner/course/manage/$syllabus->course_id/overview") }}" class="my-2 bg-gray-300
-                rounded-full ">
+            <a href="{{ url("/learner/course/manage/$syllabus->course_id/overview") }}" class="my-2 bg-gray-300 rounded-full ">
                 <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="24">
                     <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                 </svg>
@@ -100,15 +99,14 @@
                 @endforelse
             </div>
 
-            <div class="px-10 mt-[50px] flex justify-between">
-                <a href="{{ url("/learner/course/manage/$syllabus->course_id/overview") }}" class="flex justify-center
-                    w-1/2 py-3 mx-3 text-xl font-semibold text-white bg-darthmouthgreen hover:bg-green-900 rounded-xl">
+            <div class="mt-[50px] flex space-x-2">
+                <a href="{{ url("/learner/course/manage/$syllabus->course_id/overview") }}" class="w-1/2 btn btn-outline">
                     Return
                 </a>
                 <button type="button" id="finishLessonBtn" data-course-id="{{$syllabus->course_id}}"
                     data-learner-course-id="{{$syllabus->learner_course_id}}"
                     data-syllabus-id="{{$syllabus->syllabus_id}}"
-                    class="flex justify-center w-1/2 py-3 mx-3 text-xl font-semibold text-white bg-darthmouthgreen hover:bg-green-900 rounded-xl">
+                    class="w-1/2 btn btn-primary">
                     Finish
                 </button>
             </div>
@@ -119,7 +117,7 @@
 @include('partials.chatbot')
 
 <div id="finishLessonModal"
-    class="fixed top-0 left-0 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75 ">
+    class="fixed top-0 left-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-200 bg-opacity-75 ">
     <div class="modal-content bg-white p-4 rounded-lg shadow-lg w-[500px]">
         <div class="flex justify-end w-full">
             <button class="cancelFinishLessonBtn">
@@ -129,12 +127,12 @@
 
         <h2 class="mb-2 text-xl font-semibold">Do you wish to proceed to the next topic?</h2>
 
-        <div class="flex justify-center w-full mt-5">
+        <div class="flex justify-center w-full mt-5 space-x-2">
             <button data-course-id="{{$syllabus->course_id}}" data-learner-course-id="{{$syllabus->learner_course_id}}"
                 data-syllabus-id="{{$syllabus->syllabus_id}}" id="confirmFinishLessonBtn"
-                class="px-4 py-2 mx-2 mt-4 text-white rounded-lg hover:bg-green-950 bg-seagreen hover:bg-darkenedColor">Confirm</button>
+                class="btn btn-primary">Confirm</button>
             <button id=""
-                class="px-4 py-2 mx-2 mt-4 text-white bg-red-500 rounded-lg hover:bg-red-900 cancelFinishLessonBtn">Cancel</button>
+                class="btn btn-error cancelFinishLessonBtn">Cancel</button>
         </div>
     </div>
 </div>

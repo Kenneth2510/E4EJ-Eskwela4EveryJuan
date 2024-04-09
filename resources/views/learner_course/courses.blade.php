@@ -42,7 +42,7 @@
                 <div class="flex overflow-x-auto scroll scroll-smooth" id="courseCardContainer">
                     @foreach ($learnerCourse as $course)
 
-                    <div class="relative px-3 py-2 m-4 rounded-lg shadow-lg w-52 bg-primary">
+                    <div class="relative px-3 pt-1 pb-3 m-4 rounded-lg shadow-lg w-52 bg-primary">
                         <div style="background-color: #9DB0A3" class="relative h-32 mx-auto my-3 rounded w-44">
                             <img class="absolute w-16 h-16 bg-yellow-500 rounded-full right-3 -bottom-4"
                                 src="{{ asset('storage/' . $course->profile_picture) }}" alt="">
@@ -58,7 +58,8 @@
                             </div>
                         </div>
 
-                        <a href="{{ url("/learner/course/$course->course_id") }}" class="absolute bottom-0 right-0 float-right mx-4 mb-3 rounded bg-warning">
+                        <a href="{{ url("/learner/course/$course->course_id") }}" class="absolute bottom-0 right-0
+                            float-right mx-4 mb-3 rounded bg-warning">
                             <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" height="24"
                                 viewBox="0 -960 960 960" width="24">
                                 <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
@@ -85,9 +86,8 @@
                 <div class="flex flex-row flex-wrap items-center justify-center" id="courses">
                     @foreach ($learnerCourse as $course)
 
-                    <div style="background-color: #00693e"
-                        class="relative px-3 py-2 m-4 rounded-lg shadow-lg h-72 w-52">
-                        <div style="background-color: #9DB0A3" class="relative h-32 mx-auto my-4 rounded w-44">
+                    <div class="relative px-3 pt-1 pb-3 m-4 rounded-lg shadow-lg w-52 bg-primary">
+                        <div style="background-color: #9DB0A3" class="relative h-32 mx-auto my-3 rounded w-44">
                             <img class="absolute w-16 h-16 bg-yellow-500 rounded-full right-3 -bottom-4"
                                 src="{{ asset('storage/' . $course->profile_picture) }}" alt="">
                         </div>
@@ -102,8 +102,8 @@
                             </div>
                         </div>
 
-                        <a href="{{ url("/learner/course/$course->course_id") }}" style="background-color: #00693e;
-                            right:0; bottom: 0;" class="absolute float-right mx-4 mb-3 rounded">
+                        <a href="{{ url("/learner/course/$course->course_id") }}" class="absolute bottom-0 right-0
+                            float-right mx-4 mb-3 rounded bg-warning">
                             <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" height="24"
                                 viewBox="0 -960 960 960" width="24">
                                 <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
@@ -138,7 +138,7 @@
                 <div class="flex overflow-x-auto scroll scroll-smooth" id="courseCardContainer">
                     @foreach ($allCourses as $coursedata)
 
-                    <div class="relative px-3 py-2 m-4 rounded-lg shadow-lg w-52 bg-primary">
+                    <div class="relative px-3 pt-1 pb-3 m-4 rounded-lg shadow-lg w-52 bg-primary">
                         <div style="background-color: #9DB0A3" class="relative h-32 mx-auto my-3 rounded w-44">
                             <img class="absolute w-16 h-16 bg-yellow-500 rounded-full right-3 -bottom-4"
                                 src="{{ asset('storage/' . $coursedata->profile_picture) }}" alt="">
@@ -154,7 +154,8 @@
                             </div>
                         </div>
 
-                        <a href="{{ url("/learner/course/$coursedata->course_id") }}" class="absolute bottom-0 right-0 float-right mx-4 mb-3 rounded bg-warning">
+                        <a href="{{ url("/learner/course/$coursedata->course_id") }}" class="absolute bottom-0 right-0
+                            float-right mx-4 mb-3 rounded bg-warning">
                             <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" height="24"
                                 viewBox="0 -960 960 960" width="24">
                                 <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />

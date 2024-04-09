@@ -5,8 +5,7 @@
     <div class="h-full px-2 py-4 pt-24 overflow-auto rounded-lg shadow-lg md:pt-6">
 
         <div style="background-color:{{$mainBackgroundCol}};" class="z-50 p-2 text-white fill-white rounded-xl">
-            <a href="{{ url("/learner/course/manage/$learnerSyllabusProgressData->course_id/overview") }}" class="my-2
-                bg-gray-300 rounded-full ">
+            <a href="{{ url("/learner/course/manage/$learnerSyllabusProgressData->course_id/overview") }}" class="my-2 bg-gray-300 rounded-full ">
                 <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="24">
                     <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                 </svg>
@@ -83,7 +82,7 @@
                 </table>
             </div>
 
-            <div class="mt-16" id="durationArea">
+            {{-- <div class="mt-16" id="durationArea">
                 <h3 class="my-2 text-xl font-medium">Quiz Attempt Duration:</h3>
                 <div class="flex flex-col justify-start w-1/2 md:flex-row">
                     <!-- <div class="w-1/3">
@@ -104,7 +103,7 @@
                         <h1 class="text-xl font-semibold text-darthmouthgreen">{{$formattedDuration}}</h1>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -248,8 +247,7 @@
                     <button class="w-full btn btn-disabled">View Output</button>
                 </a>
                 {{-- <a href="{{ url("/learner/course/content/$lastRowQuizAttemptData->course_id/$lastRowQuizAttemptData->learner_course_id/quiz/$learnerSyllabusProgressData->syllabus_id/reattempt")
-                    }}" class="flex justify-center w-1/2 py-5 mx-3 text-xl font-semibold text-white bg-darthmouthgreen
-                    hover:bg-green-900 rounded-xl">
+                    }}" class="flex justify-center w-1/2 py-5 mx-3 text-xl font-semibold text-white bg-darthmouthgreen hover:bg-green-900 rounded-xl">
                     Re attempt the Quiz
                 </a> --}}
 
