@@ -18,11 +18,11 @@
         // // Darken the mainBackgroundCol
         // $mainColorRGB = sscanf($mainBackgroundCol, "#%02x%02x%02x");
         // $mainBackgroundCol = sprintf("#%02x%02x%02x", $mainColorRGB[0] * 0.6, $mainColorRGB[1] * 0.6,
-        $mainColorRGB[2] * 0.6);
+        // $mainColorRGB[2] * 0.6);
 
         // // Darken the mainBackgroundCol further for darkenedColor
         // $darkenedColor = sprintf("#%02x%02x%02x", $mainColorRGB[0] * 0.4, $mainColorRGB[1] * 0.4, $mainColorRGB[2] *
-        0.4);
+        // 0.4);
 
         $mainBackgroundCol = '#00592e';
         $darkenedColor = '#00592e';
@@ -47,7 +47,7 @@
                         <path
                             d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80H240Zm0-80h480v-640h-80v280l-100-60-100 60v-280H240v640Zm0 0v-640 640Zm200-360 100-60 100 60-100-60-100 60Z" />
                     </svg>
-                    <p>{{ $course->course_code }}</p>
+                    <p>Course ID: <span class="text-accent">{{$course->course_id}}</span></p>
                 </div>
                 <div class="flex flex-row my-2">
                     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960"
@@ -147,8 +147,7 @@
                 <a href="{{url("/learner/course/content/$course->course_id/$learnerCourse->learner_course_id/grades")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
 
                         <i class="text-4xl fa-solid fa-graduation-cap" style="color: #ffffff;"></i>
@@ -163,8 +162,7 @@
                 <a href="{{url("/learner/course/content/$course->course_id/$learnerCourse->learner_course_id/pre_assessment")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 text-white rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 text-white rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
 
                         <i class="text-4xl fa-solid fa-bullseye" style="color: #ffffff;"></i>
@@ -208,8 +206,7 @@
                 <a href="{{url("/learner/course/content/$course->course_id/$learnerCourse->learner_course_id/lesson/$topic->syllabus_id")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 text-white rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 text-white rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_75_1498)">
@@ -254,8 +251,7 @@
                 <a href="{{url("/learner/course/content/$course->course_id/$learnerCourse->learner_course_id/activity/$topic->syllabus_id")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
                         <svg width="40" height="40" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -294,8 +290,7 @@
                 <a href="{{ url("/learner/course/content/$course->course_id/$learnerCourse->learner_course_id/quiz/$topic->syllabus_id")
                     }}" style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
                         <svg width="40" height="40" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -338,8 +333,7 @@
                 <a href="{{url("/learner/course/content/$course->course_id/$learnerCourse->learner_course_id/post_assessment")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
 
                         <i class="text-4xl fa-solid fa-bullseye" style="color: #ffffff;"></i>
@@ -357,8 +351,7 @@
                 <a href="{{url("/learner/course/content/$course->course_id/$learnerCourse->learner_course_id/grades")}}"
                     style="background-color:{{$mainBackgroundCol}}"
                     onmouseover="this.style.backgroundColor='{{$darkenedColor}}'"
-                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center
-                    justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
+                    onmouseout="this.style.backgroundColor='{{$mainBackgroundCol}}'" class="flex items-center justify-between px-2 py-4 my-2 rounded-lg shadow-lg bg-seagreen">
                     <div class="flex items-center">
 
                         <i class="text-4xl fa-solid fa-graduation-cap" style="color: #ffffff;"></i>

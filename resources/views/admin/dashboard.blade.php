@@ -1,8 +1,8 @@
 @extends('layouts.admin_layout')
 
 @section('content')
-<section class="w-full h-auto md:h-screen lg:w-10/12">
-    <div class="h-full px-2 py-4 pt-12 rounded-lg shadow-lg md:overflow-auto md:pt-0">
+<section class="w-full h-screen md:w-3/4 lg:w-10/12">
+    <div class="h-full px-2 py-4 pt-12 rounded-lg shadow-lg md:overflow-auto md:pt-6">
         <div class="flex items-center justify-between p-3 border-b-2 border-gray-300 md:py-8">
             <h1 class="text-2xl font-bold text-darthmouthgreen md:text-3xl lg:text-4xl">Overview</h1>
             <div class="">
@@ -13,14 +13,14 @@
         <div class="w-full p-3 rounded-lg shadow-lg">
 
             <div class="flex justify-between w-full space-x-2 text-center" id="countDataMainArea">
-                <div class="flex flex-col items-center justify-center relative w-1/3 py-3 border-2 shadow-lg border-darthmouthgreen rounded-xl md:h-[150px] lg:h-[200px]"
+                <div class=" bg-opacity-75 flex flex-col items-center justify-center relative w-1/3 py-3 border-2 shadow-lg border-darthmouthgreen rounded-xl md:h-[150px] lg:h-[200px] bg-white"
                     id="totalLearnerCountArea">
                     <i
                         class="absolute translate-x-1/2 -translate-y-1/2 top-1/2 right-1/2 fa-regular fa-user text-darthmouthgreen fa-5x opacity-30 lg:opacity-100 lg:-translate-y-0 lg:-translate-x-0 lg:top-auto lg:right-2"></i>
                     <p class="text-6xl font-bold text-darthmouthgreen">{{$totalLearner}}</p>
                     <h1 class="w-3/4 mx-auto font-semibold text-darthmouthgreen">Total Learners</h1>
                 </div>
-                <div class="flex flex-col items-center justify-center relative w-1/3 py-3 border-2 shadow-lg border-darthmouthgreen rounded-xl md:h-[150px] lg:h-[200px]"
+                <div class="bg-opacity-75 bg-white flex flex-col items-center justify-center relative w-1/3 py-3 border-2 shadow-lg border-darthmouthgreen rounded-xl md:h-[150px] lg:h-[200px]"
                     id="totalInstructorCountArea">
                     <svg class="absolute translate-x-1/2 -translate-y-1/2 top-1/2 right-1/2 fill-darthmouthgreen opacity-30 lg:opacity-100 lg:-translate-y-0 lg:-translate-x-0 lg:top-auto lg:right-2"
                         xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" viewBox="0 0 256 256">
@@ -30,7 +30,7 @@
                     <p class="text-6xl font-bold text-darthmouthgreen">{{$totalInstructor}}</p>
                     <h1 class="w-3/4 mx-auto font-semibold text-darthmouthgreen">Total Instructors</h1>
                 </div>
-                <div class="flex flex-col items-center justify-center relative w-1/3 py-3 border-2 shadow-lg border-darthmouthgreen rounded-xl md:h-[150px] lg:h-[200px]"
+                <div class="bg-opacity-75 bg-white flex flex-col items-center justify-center relative w-1/3 py-3 border-2 shadow-lg border-darthmouthgreen rounded-xl md:h-[150px] lg:h-[200px]"
                     id="totalCourseCountArea">
                     <svg class="absolute translate-x-1/2 -translate-y-1/2 top-1/2 right-1/2 fill-darthmouthgreen opacity-30 lg:opacity-100 lg:-translate-y-0 lg:-translate-x-0 lg:top-auto lg:right-2"
                         width="5em" height="5em" viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg">
@@ -47,28 +47,28 @@
 
             <div class="flex flex-col w-full space-y-8" id="mainChartDataArea">
                 <div class="flex flex-col space-y-2" id="mainChartDataLeft">
-                    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
-                        <div class="w-full p-3 flex flex-col justify-between rounded-xl border-2 h-[250px] border-darthmouthgreen"
+                    <div class="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2">
+                        <div class="bg-opacity-75 bg-white w-full p-3 flex flex-col justify-between rounded-xl border-2 h-[250px] border-darthmouthgreen"
                             id="learnerChartArea">
                             <p class="text-xl font-semibold text-darthmouthgreen">Learner Data</p>
-                            <canvas id="learnerData"></canvas>
+                            <canvas class="p-5" id="learnerData"></canvas>
                         </div>
-                        <div class="w-full p-3 flex flex-col justify-between rounded-xl border-2 h-[250px] border-darthmouthgreen"
+                        <div class="bg-opacity-75 bg-white w-full p-3 flex flex-col justify-between rounded-xl border-2 h-[250px] border-darthmouthgreen"
                             id="instructorChartArea">
                             <p class="text-xl font-semibold text-darthmouthgreen">Instructor Data</p>
-                            <canvas id="instructorData"></canvas>
+                            <canvas class="p-5" id="instructorData"></canvas>
                         </div>
                     </div>
-                    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
-                        <div class="w-full p-3 flex flex-col justify-between rounded-xl border-2 h-[250px] border-darthmouthgreen"
+                    <div class="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2">
+                        <div class="bg-opacity-75 bg-white w-full p-3 flex flex-col justify-between rounded-xl border-2 h-[250px] border-darthmouthgreen"
                             id="courseChartArea">
                             <p class="text-xl font-semibold text-darthmouthgreen">Course Data</p>
-                            <canvas id="courseData"></canvas>
+                            <canvas class="p-5" id="courseData"></canvas>
                         </div>
-                        <div class="w-full p-3 flex flex-col justify-between rounded-xl border-2 h-[250px] border-darthmouthgreen overflow-visible"
+                        <div class="bg-opacity-75 bg-white w-full p-3 flex flex-col justify-between rounded-xl border-2 h-[250px] border-darthmouthgreen overflow-visible"
                             id="adminRolesChartArea">
                             <p class="text-xl font-semibold text-darthmouthgreen">Admin Data</p>
-                            <canvas id="adminData" class="overflow-x-auto"></canvas>
+                            <canvas class="p-5" id="adminData" class="overflow-x-auto"></canvas>
                         </div>
                     </div>
                 </div>
@@ -77,14 +77,14 @@
                     <h1 class="text-2xl font-semibold text-darthmouthgreen">Learner Course Progress</h1>
                     <div class="space-y-2 ">
                         <select name="selectedCourse" id="selectedCourse"
-                            class="w-full px-3 py-3 border-2 text-md rounded-xl border-darthmouthgreen">
+                            class="w-full input input-bordered input-primary">
                             @foreach ($courses as $course)
                             <option value="{{$course->course_id}}">{{$course->course_name}}</option>
                             @endforeach
                         </select>
-                        <div class="w-full h-full border-2 rounded-xl border-darthmouthgreen"
+                        <div class="w-full h-full bg-white bg-opacity-75 border-2 rounded-xl border-darthmouthgreen"
                             id="courseProgressChartArea">
-                            <canvas id="courseProgressChart" class="overflow-x-auto"></canvas>
+                            <canvas id="courseProgressChart" class="p-5 overflow-x-auto"></canvas>
                         </div>
                     </div>
                 </div>

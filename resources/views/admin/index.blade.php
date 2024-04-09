@@ -25,18 +25,17 @@
                             <div class="w-full my-3">
                                 <label for="admin_username" class="font-semibold text-darthmouthgreen">Username:</label>
                                 <input type="text" name="admin_username"
-                                    class="w-full px-5 py-3 border rounded-md border-darthmouthgreen"
-                                    placeholder="Username" value="{{ old('admin_username') }}" required>
+                                    class="w-full input input-bordered focus:input-primary" placeholder="Username"
+                                    value="{{ old('admin_username') }}" required>
                             </div>
                             <div class="w-full my-3">
                                 <label for="password" class="font-semibold text-darthmouthgreen">Password:</label>
                                 <div class="relative items-center">
-                                    <input type="password"
-                                        class="w-full px-5 py-3 border rounded-md border-darthmouthgreen"
+                                    <input type="password" class="w-full input input-bordered focus:input-primary"
                                         name="password" id="password" placeholder="Password" required>
                                     <button type="button" id="showPasswordBtn"
                                         class="absolute top-0 translate-y-1/2 rounded-md right-4">
-                                        <i id="eyeIcon" class="fa-regular fa-eye" style="color: #025c26;"></i>
+                                        <i id="eyeIcon" class="fa-regular fa-eye-slash" style="color: #025c26;"></i>
                                     </button>
                                 </div>
                             </div>
@@ -47,8 +46,7 @@
                             @enderror
                             <div class="flex justify-between mt-10 ">
                                 <p></p>
-                                <button type="submit"
-                                    class="w-full py-3 text-xl font-semibold text-white rounded-lg bg-seagreen hover:bg-green-900">Login</button>
+                                <button type="submit" class="w-full btn btn-primary">Login</button>
                             </div>
                         </div>
                     </form>
@@ -64,10 +62,10 @@
                 var fieldType = passwordField.attr('type');
                 if (fieldType === 'password') {
                     passwordField.attr('type', 'text');
-                    $('#eyeIcon').removeClass('fa-eye').addClass('fa-eye-slash');
+                    $('#eyeIcon').removeClass('fa-eye-slash').addClass('fa-eye');
                 } else {
                     passwordField.attr('type', 'password');
-                    $('#eyeIcon').removeClass('fa-eye-slash').addClass('fa-eye');
+                    $('#eyeIcon').removeClass('fa-eye').addClass('fa-eye-slash');
                 }
             });
         });

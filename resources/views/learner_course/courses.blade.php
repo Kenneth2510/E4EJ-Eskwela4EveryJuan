@@ -53,13 +53,12 @@
                                 $course->course_name }}</h1>
 
                             <div class="text-sm text-gray-100 ">
-                                <p>{{ $course->course_code }}</p>
+                                <p>Course ID:{{$course->course_id}}</p>
                                 <h3>{{ $course->instructor_fname }} {{ $course->instructor_lname }}</h3>
                             </div>
                         </div>
 
-                        <a href="{{ url("/learner/course/$course->course_id") }}" class="absolute bottom-0 right-0
-                            float-right mx-4 mb-3 rounded bg-warning">
+                        <a href="{{ url("/learner/course/$course->course_id") }}" class="absolute bottom-0 right-0 float-right mx-4 mb-3 rounded bg-warning">
                             <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" height="24"
                                 viewBox="0 -960 960 960" width="24">
                                 <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
@@ -98,7 +97,7 @@
                                 $course->course_name }}</h1>
 
                             <div class="text-sm text-gray-100 ">
-                                <p>{{ $course->course_code }}</p>
+                                <p>Course ID:{{$course->course_id}}</p>
                                 <h3>{{ $course->instructor_fname }} {{ $course->instructor_lname }}</h3>
                             </div>
                         </div>
@@ -150,13 +149,12 @@
                                 $coursedata->course_name }}</h1>
 
                             <div class="text-sm text-gray-100 ">
-                                <p>{{ $coursedata->course_code }}</p>
+                                <p>Course ID:{{$coursedata->course_id}}</p>
                                 <h3>{{ $coursedata->instructor_fname }} {{ $coursedata->instructor_lname }}</h3>
                             </div>
                         </div>
 
-                        <a href="{{ url("/learner/course/$coursedata->course_id") }}" class="absolute bottom-0 right-0
-                            float-right mx-4 mb-3 rounded bg-warning">
+                        <a href="{{ url("/learner/course/$coursedata->course_id") }}" class="absolute bottom-0 right-0 float-right mx-4 mb-3 rounded bg-warning">
                             <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" height="24"
                                 viewBox="0 -960 960 960" width="24">
                                 <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />

@@ -2,10 +2,6 @@
 
 <section class="flex flex-row w-screen text-sm main-container bg-mainwhitebg md:text-base">
     @include('partials.sidebar')
-
-
-
-
     <section class="w-screen px-2 pt-[40px] mx-2 mt-2  overscroll-auto md:overflow-auto">
         <div class="flex justify-between px-10">
             <h1 class="text-6xl font-bold text-darthmouthgreen">Message</h1>
