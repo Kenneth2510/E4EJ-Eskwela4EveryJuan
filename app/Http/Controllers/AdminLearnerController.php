@@ -41,11 +41,23 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Http\Controllers\PDFGenerationController;
 
+use App\Http\Controllers\ActivityLoggingController;
 class AdminLearnerController extends Controller
 {
      // -------------------admin learner area------------------------
      public function learners() {
         return $this->search_learner();
+    }
+
+
+    public function log($action) {
+        $admin = session('admin');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $admin->admin_id;
+        $user_type = "Admin";
+    
+        $logging->log_activity($user_type, $user_id, $action);
     }
     
     public function search_learner() {
@@ -277,6 +289,10 @@ class AdminLearnerController extends Controller
 
                 $reportController->learnerData($newCreatedLearner->learner_id);
 
+                $action = "Created New Learner ID: " . $latestStudentId;
+                $this->log($action);
+
+
                 // return redirect('/admin/learners')->with('title', 'Learner Management')->with('message' , 'Data was successfully stored');
                 session()->flash('message', 'Learner Added successfully');
                 $data = [
@@ -321,6 +337,9 @@ class AdminLearnerController extends Controller
                 ];
 
                 // dd($data);
+
+                $action = "Viewed Learner ID: " . $id;
+                $this->log($action);
 
                 return view('admin.view_learner')->with($data);
 
@@ -370,6 +389,8 @@ class AdminLearnerController extends Controller
 
             $reportController->learnerData($learner->learner_id);
 
+            $action = "Updated Status into Approved, Learner ID: " . $learner->learner_id;
+            $this->log($action);
 
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -382,6 +403,10 @@ class AdminLearnerController extends Controller
     {
         try {
             $learner->update(['status' => 'Blocked']);  
+
+            $action = "Updated Status into Blocked, Learner ID: " . $learner->learner_id;
+            $this->log($action);
+
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -393,6 +418,10 @@ class AdminLearnerController extends Controller
     {
         try {
             $learner->update(['status' => 'Pending']);  
+
+            $action = "Updated Status into Pending, Learner ID: " . $learner->learner_id;
+            $this->log($action);
+
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -450,33 +479,36 @@ class AdminLearnerController extends Controller
             $learner->update($LearnerPersonalData);
 
             $learner = Learner::find($learner->learner_id);
-    
-            // Generate new folder name
-            $folderName = "{$learner->learner_lname} {$learner->learner_fname}";
-            $folderName = Str::slug($folderName, '_');
-            $folderPath = 'learners/' . $folderName;
-
-            // Rename the folder
-            $oldFolderName = "{$learner->original['learner_lname']} {$learner->original['learner_fname']}";
-            $oldFolderName = Str::slug($oldFolderName, '_');
-            $oldFolderPath = 'learners/' . $oldFolderName;
-
-            if (Storage::exists($oldFolderPath)) {
-                Storage::move($oldFolderPath, $folderPath);
-            }
-
-            if ($learner && !empty($businessData)) {
-
-                $learnerBusiness = Business::where('learner_id', $l_id)->first();
-                if ($learnerBusiness) {
-                    try {
-                        $learnerBusiness->update($businessData);
-                    } catch (\Exception $e) {
-                        dd($e->getMessage());
+            
+            if ($learner) {
+                // Generate new folder name
+                $folderName = "{$learner->learner_lname} {$learner->learner_fname}";
+                $folderName = Str::slug($folderName, '_');
+                $folderPath = 'learners/' . $folderName;
+            
+                // Rename the folder
+                if (isset($learner->original['learner_lname']) && isset($learner->original['learner_fname'])) {
+                    $oldFolderName = "{$learner->original['learner_lname']} {$learner->original['learner_fname']}";
+                    $oldFolderName = Str::slug($oldFolderName, '_');
+                    $oldFolderPath = 'learners/' . $oldFolderName;
+            
+                    if (Storage::exists($oldFolderPath)) {
+                        Storage::move($oldFolderPath, $folderPath);
                     }
                 }
-
+            
+                if (!empty($businessData)) {
+                    $learnerBusiness = Business::where('learner_id', $l_id)->first();
+                    if ($learnerBusiness) {
+                        try {
+                            $learnerBusiness->update($businessData);
+                        } catch (\Exception $e) {
+                            dd($e->getMessage());
+                        }
+                    }
+                }
             }
+            
 
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -486,6 +518,9 @@ class AdminLearnerController extends Controller
         $reportController = new PDFGenerationController();
 
         $reportController->learnerData($learner->learner_id);
+
+        $action = "Updated Details Learner ID: " . $learner->learner_id;
+        $this->log($action);
 
         session()->flash('message', 'Learner Updated successfully');
         // return back()->with('message' , 'Data was successfully updated'); //add ->with('message') later
@@ -511,34 +546,34 @@ class AdminLearnerController extends Controller
 
     }
 
-    public function destroy_learner(Learner $learner) {
-        // dd($learner);
-        try {
+    // public function destroy_learner(Learner $learner) {
+    //     // dd($learner);
+    //     try {
 
-            $relativeFilePath = str_replace('public/', '', $learner->profile_picture);
-            if (Storage::disk('public')->exists($relativeFilePath)) {
-                // Storage::disk('public')->delete($relativeFilePath);
-                $specifiedDir = explode('/', $relativeFilePath);
-                array_pop($specifiedDir);
+    //         $relativeFilePath = str_replace('public/', '', $learner->profile_picture);
+    //         if (Storage::disk('public')->exists($relativeFilePath)) {
+    //             // Storage::disk('public')->delete($relativeFilePath);
+    //             $specifiedDir = explode('/', $relativeFilePath);
+    //             array_pop($specifiedDir);
 
-                $dirPath = implode('/', $specifiedDir);
+    //             $dirPath = implode('/', $specifiedDir);
 
-                // dd($dirPath);
-                Storage::disk('public')->deleteDirectory($dirPath);
+    //             // dd($dirPath);
+    //             Storage::disk('public')->deleteDirectory($dirPath);
             
-                $learner->delete();
-            }
+    //             $learner->delete();
+    //         }
     
     
-            session()->flash('message', 'Learner deleted Successfully');
-            return response()->json(['message' => 'Learner deleted successfully', 'redirect_url' => "/admin/learners"]);
+    //         session()->flash('message', 'Learner deleted Successfully');
+    //         return response()->json(['message' => 'Learner deleted successfully', 'redirect_url' => "/admin/learners"]);
             
         
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
+    //     } catch (\Exception $e) {
+    //         dd($e->getMessage());
+    //     }
 
-    }
+    // }
 
 
 

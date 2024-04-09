@@ -48,6 +48,7 @@ use Dompdf\Options;
 
 
 use App\Http\Controllers\PDFGenerationController;
+use App\Http\Controllers\ActivityLoggingController;
 
 class LearnerCourseController extends Controller
 {
@@ -106,6 +107,17 @@ class LearnerCourseController extends Controller
             'title' => 'My Courses',
             'scripts' => ['learner_courses.js'],
         ]);
+    }
+
+
+    public function log($action) {
+        $learner = session('learner');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $learner->learner_id;
+        $user_type = "Instructor";
+    
+        $logging->log_activity($user_type, $user_id, $action);
     }
 
 
@@ -538,6 +550,8 @@ class LearnerCourseController extends Controller
                     ];
                 }
 
+                $action = "Viewed Course ID: " . $course->course_id;
+                $this->log($action);
                 // dd($data);
                 return view('learner_course.courseOverview', compact('course', 'learner', 'isEnrolled'))
                 ->with($data);
@@ -575,6 +589,9 @@ class LearnerCourseController extends Controller
                     $reportController->courseEnrollees($course->course_id);
                     $reportController->learnerCourseData($learner->learner_id);
 
+                    $action = "Enrolled on Course ID: " . $course->course_id;
+                    $this->log($action);
+
                     session()->flash('message', 'Course enrolled Successfully');
                     return response()->json(['message' => 'Course enrolled successfully', 'redirect_url' => '/learner/courses']);
                 
@@ -596,6 +613,13 @@ class LearnerCourseController extends Controller
             $learner= session('learner');
 
             try {
+
+                $course = DB::table('learner_course')
+                ->select(
+                    'course_id'
+                )
+                ->where('learner_course_id', $learnerCourse->learner_course_id)
+                ->first();
 
                 $learnerActivityOutput = DB::table('learner_activity_output')
                 ->select(
@@ -638,6 +662,9 @@ class LearnerCourseController extends Controller
                 DB::table('learner_course_progress')
                 ->where('learner_course_id', $learnerCourse->learner_course_id)
                 ->delete();
+
+                $action = "Unenrolled on Course ID: " . $course->course_id;
+                $this->log($action);
 
                 $learnerCourse->delete();
 
@@ -1255,6 +1282,9 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             ->orderBy('topic_id', 'ASC')
             ->get();
 
+            $action = "Viewed Syllabus on Course ID: " . $course->course_id;
+            $this->log($action);
+
         } catch (ValidationException $e) {
                     $errors = $e->validator->errors();
         
@@ -1312,6 +1342,10 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->where('learner_course_id', $courseData->learner_course_id)
                 ->where('course_id', $course->course_id)
                 ->count();
+
+                
+            $action = "Viewed Pre Assessment on Course ID: " . $course->course_id;
+            $this->log($action);
 
                 $data = [
                     'title' => 'Course Lesson',
@@ -1377,7 +1411,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         session()->flash('message', 'You have already finished your Pre Assessment');
                         return redirect('/learner/course/content/'.$course->id.'/'.$learner_course->id.'/pre_assessment')->with('error', 'You have already finished your Pre Assessment');
                 } else {
-                        $now = Carbon::now();
+                        $now = Carbon::now('Asia/Manila');
                         $timestampString = $now->toDateTimeString();
 
                         DB::table('learner_pre_assessment_progress')
@@ -1539,6 +1573,8 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
 
                 // }
     
+                $action = "Answered Pre Assessment on Course ID: " . $course->course_id;
+                $this->log($action);
 
                 $data = [
                     'title' => 'Course Lesson',
@@ -1685,7 +1721,9 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             
             
 
-
+            
+            $action = "Submitted Pre Assessment on Course ID: " . $course->course_id;
+            $this->log($action);
 
             // Return the counts in the response
             $data = [
@@ -1755,7 +1793,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             
             $scorePercentage = ($scoreCount / $totalCount) * 100;
 
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Manila');
             $timestampString = $now->toDateTimeString();
             // update the score and status
             DB::table('learner_pre_assessment_progress')
@@ -1777,6 +1815,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             
             
      //     $this->overallGrade($course, $learner_course);
+            
             
             session()->flash('message', 'Learner Pre Assessment Scored successfully');
 
@@ -1834,7 +1873,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
         
@@ -1870,6 +1909,8 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             ->get();
 
                     
+            $action = "Viewed Pre Assessment Output on Course ID: " . $course->course_id;
+            $this->log($action);
 
                 $data = [
                     'title' => 'Course Pre Assessment',
@@ -1931,7 +1972,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
                     $correctAnswerSubquery = DB::table('question_answer')
@@ -2074,8 +2115,12 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     // ->first();
                     // dd($a);
                     
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
+
+                    
+            $action = "Viewed Lesson ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+            $this->log($action);
 
                     DB::table('learner_lesson_progress')
                     ->where('lesson_id', $learnerSyllabusProgressData->lesson_id)
@@ -2129,7 +2174,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         ->where('syllabus_id' , $syllabus->syllabus_id)
                         ->update(['status' => 'COMPLETED']);
     
-                        $now = Carbon::now();
+                        $now = Carbon::now('Asia/Manila');
                         $timestampString = $now->toDateTimeString();
                     
                     // Update the status of the current lesson to 'COMPLETED'
@@ -2184,6 +2229,9 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         session()->flash('message', "You have finished all of the topics! \n Be ready for the Post Assessment to finish this course!");
                     }
                 }
+
+                $action = "Finished Lesson ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+                $this->log($action);
     
                 session()->flash('message', 'Lesson Completed Successfully');
     
@@ -2350,6 +2398,9 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     }
                     
 
+                                        
+            $action = "Viewed Activity ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+            $this->log($action);
 
                     foreach ($activityContentCriteriaData as $score) {
                         $totalScores += $score->score;
@@ -2450,7 +2501,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->where('learner_activity_progress.learner_course_id' , $learnerSyllabusProgressData->learner_course_id)
                 ->first();
 
-                $now = Carbon::now();
+                $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
                 DB::table('learner_activity_progress')
@@ -2470,8 +2521,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 )
                 ->where('activity_content_id', $learnerActivityProgressData->activity_content_id)
                 ->get();
-
-    
 
         
 
@@ -2512,7 +2561,8 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         ->orderBy('learner_activity_criteria_score_id', 'ASC')
                         ->get();
 
-                     
+                        $action = "Answered Activity ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+                        $this->log($action);
         
                 
                     $data = [
@@ -2672,7 +2722,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
 
                 // updating the status of the learner progress
 
-                $now = Carbon::now();
+                $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
                 DB::table('learner_activity_progress')
@@ -2745,7 +2795,8 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 //     LearnerActivityCriteriaScore::create($newRowData);
                 // };
 
-
+                $action = "Submitted Activity Output on Activity ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+                $this->log($action);
 
                 
 
@@ -2853,6 +2904,9 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->where('attempts', 1)
                 ->count();
 
+                $action = "Viewed Quiz ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+                $this->log($action);
+
 
             } catch (\Exception $e) {
                 dd($e->getMessage());
@@ -2940,7 +2994,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     ->orderBy('learner_quiz_progress.learner_quiz_progress_id', 'DESC')
                     ->first();
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
                     DB::table('learner_quiz_progress')
@@ -3076,6 +3130,8 @@ $learnerQuizData = DB::table('learner_quiz_output')
                     }
                 }
     
+                $action = "Answered Quiz ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+                $this->log($action);
                 
 
                     $data = [
@@ -3161,36 +3217,6 @@ $learnerQuizData = DB::table('learner_quiz_output')
                     ->orderBy('learner_quiz_progress.learner_quiz_progress_id', 'DESC')
                     ->first();
 
-// $learnerQuizData = DB::table('learner_quiz_output')
-//    ->select(
-//        'learner_quiz_output.learner_quiz_output_id',
-//        'learner_quiz_output.quiz_id',
-//        'learner_quiz_output.quiz_content_id',
-//        'quiz_content.course_id',
-//        'quiz_content.question_id',
-//        'questions.syllabus_id',
-//        'questions.question',
-//        'questions.category',
-//        DB::raw('JSON_ARRAYAGG(question_answer.answer) as answers'),
-//    )
-//    ->join('quiz_content', 'learner_quiz_output.quiz_content_id', '=', 'quiz_content.quiz_content_id')
-//    ->join('questions', 'quiz_content.question_id', '=', 'questions.question_id')
-//    ->leftJoin('question_answer', 'questions.question_id', '=', 'question_answer.question_id')
-//    ->where('learner_quiz_output.attempts', $learnerQuizProgressData->attempt)
-//    ->where('quiz_content.quiz_id', $learnerSyllabusProgressData->quiz_id)
-//    ->where('quiz_content.course_id', $learnerSyllabusProgressData->course_id)
-//    ->where('quiz_content.syllabus_id', $learnerSyllabusProgressData->syllabus_id)
-//    ->groupBy(
-//        'learner_quiz_output.learner_quiz_output_id',
-//        'learner_quiz_output.quiz_id',
-//        'learner_quiz_output.quiz_content_id',
-//        'quiz_content.course_id',
-//        'quiz_content.question_id',
-//        'questions.syllabus_id',
-//        'questions.question',
-//        'questions.category'
-//    )
-//    ->get();
     
     $learnerQuizData = DB::table('learner_quiz_output')
     ->select(
@@ -3270,7 +3296,8 @@ $learnerQuizData = DB::table('learner_quiz_output')
 
             $this->check_answer($learner_quiz_output_id, $quiz_id, $quiz_content_id, $question_id, $answer, $attempt);
 
-
+            $action = "Submitted Output Quiz ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+            $this->log($action);
 
             // Return the counts in the response
             $data = [
@@ -3373,7 +3400,7 @@ $learnerQuizData = DB::table('learner_quiz_output')
             ->where('attempts', $learnerQuizOutputData->attempts)
             ->count();
             
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Manila');
             $timestampString = $now->toDateTimeString();
             // update the score and status
             DB::table('learner_quiz_progress')
@@ -3511,6 +3538,9 @@ $learnerQuizData = DB::table('learner_quiz_output')
             $reportController->learnerQuizOutput($learner_course->learner_id, $course->course_id, $learner_course->learner_course_id, $syllabus->syllabus_id, $attempt);
 
 
+            $action = "Scored Quiz ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+            $this->log($action);
+
             $data = [
                 'message' => 'Learner Quiz Scored successfully',
                 ];
@@ -3598,6 +3628,9 @@ $learnerQuizData = DB::table('learner_quiz_output')
                     ];
 
                     // dd($data);
+                    $action = "Viewed Output on Quiz ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+                    $this->log($action);
+
 
             return view('learner_course.courseQuizOutput', compact('learner'))
             ->with($data);
@@ -3804,7 +3837,8 @@ $learnerQuizData = DB::table('learner_quiz_output')
                 LearnerQuizProgress::create($newRowData);
 
 
-                
+                $action = "Applied Re attempt on Quiz ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
+                $this->log($action);
 
 
                 session()->flash('message', 'You may now reattempt the quiz');
@@ -3905,26 +3939,6 @@ foreach ($postAssessmentData as $postAssessment) {
     $postAssessmentDataWithQuestions[] = $postAssessment;
 }
 
-
-                // $questionsData = DB::table('learner_post_assessment_output')
-                // ->select(
-                //     'learner_post_assessment_output.syllabus_id',
-                //     'learner_post_assessment_output.attempt',
-                //     DB::raw('COUNT(learner_post_assessment_output.question_id) AS total_lesson_question'),
-                //     DB::raw('SUM(CASE WHEN learner_post_assessment_output.isCorrect = 1 THEN 1 ELSE 0 END) AS correct_answers_per_lesson'),
-                //     'syllabus.topic_title',
-                // )
-                // ->join('syllabus', 'learner_post_assessment_output.syllabus_id', 'syllabus.syllabus_id')
-                // ->where('learner_post_assessment_output.learner_course_id', $learner_course->learner_course_id)
-                // ->where('learner_post_assessment_output.course_id', $course->course_id)
-                // ->groupBy('learner_post_assessment_output.syllabus_id', 'learner_post_assessment_output.attempt')
-                // ->get();
-            
-                // $groupedQuestionsData = $questionsData->groupBy('attempt');
-
-            // dd($groupedQuestionsData);
-            
-
             
                 $totalNumofQuestions = DB::table('learner_post_assessment_output')
                 ->where('learner_course_id', $learner_course->learner_course_id)
@@ -3946,6 +3960,10 @@ foreach ($postAssessmentData as $postAssessment) {
                     'formattedDuration' => $formattedDuration
                 ];
                 // dd($data);
+
+                $action = "Viewed Post Assessment on Course ID: " . $course->course_id;
+                $this->log($action);
+
                 return view('learner_course.coursePostAssessment', compact('learner'))
                 ->with($data);
 
@@ -3997,8 +4015,10 @@ foreach ($postAssessmentData as $postAssessment) {
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
+
+                    
 
                 DB::table('learner_post_assessment_progress')
                 ->where('learner_post_assessment_progress_id', $postAssessmentData->learner_post_assessment_progress_id)
@@ -4155,6 +4175,8 @@ foreach ($postAssessmentData as $postAssessment) {
                     }
                 // }
     
+                $action = "Answered Post Assessment on Course ID: " . $course->course_id;
+                $this->log($action);
 
                 $data = [
                     'title' => 'Course Lesson',
@@ -4297,7 +4319,8 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
 
             $this->check_post_assessment_answer($learner_post_assessment_output_id, $question_id, $answer, $attempt);
 
-
+            $action = "Submitted Post Assessment on Course ID: " . $course->course_id;
+            $this->log($action);
 
             // Return the counts in the response
             $data = [
@@ -4370,7 +4393,7 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
             
             $scorePercentage = ($scoreCount / $totalCount) * 100;
 
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Manila');
             $timestampString = $now->toDateTimeString();
             // update the score and status
             DB::table('learner_post_assessment_progress')
@@ -4394,6 +4417,9 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
           $reportController->learnerPostAssessmentOutput($learner_course->learner_id, $course->course_id, $learner_course->learner_course_id, $attempt);
           
             
+          $action = "Scored Post Assessment on Course ID: " . $course->course_id;
+          $this->log($action);
+
             session()->flash('message', 'Learner Post Assessment Scored successfully');
 
             $data = [
@@ -4452,7 +4478,7 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
                             $correctAnswerSubquery = DB::table('question_answer')
@@ -4499,7 +4525,8 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                     )
                     ->get();
 
-                    
+                    $action = "Viewed Post Assessment Output on Course ID: " . $course->course_id;
+                    $this->log($action);
 
                 $data = [
                     'title' => 'Course Post Assessment',
@@ -4563,7 +4590,7 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                 ->first();
 
 
-                    $now = Carbon::now();
+                    $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
                    $correctAnswerSubquery = DB::table('question_answer')
@@ -4660,6 +4687,9 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                 ];
 
                 LearnerPostAssessmentProgress::create($newLearnerPostAssessmentData);
+
+                $action = "Applied Re attempt on Post Assessment on Course ID: " . $course->course_id;
+                $this->log($action);
                 
                 session()->flash('message', 'You may now reattempt the Post Assessment');
                 return back();
@@ -4829,7 +4859,7 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                 $remarks = 'Needs Improvement';
             }
 
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Manila');
             $timestampString = $now->toDateTimeString();
 
             DB::table('learner_course_progress')
@@ -5120,6 +5150,8 @@ $learnerPostAssessmentGrade = DB::table('learner_post_assessment_progress')
 
                 // dd($data);
     
+                $action = "Viewed Gradesheet on Course ID: " . $course->course_id;
+                $this->log($action);
 
 
                 return view('learner_course.courseGrades', compact('learner'))
@@ -5178,7 +5210,7 @@ $learnerPostAssessmentGrade = DB::table('learner_post_assessment_progress')
                 if($certData) {
                     $referenceNumber = $certData->reference_id;
                 } else {
-                    $datePart = Carbon::now()->format('Ymd');
+                    $datePart = Carbon::now('Asia/Manila')->format('Ymd');
                     do {
                         $randomPart = str_pad(rand(0, 999), 3, '0', STR_PAD_LEFT);
                         $referenceNumber = $datePart . $randomPart;
@@ -5250,7 +5282,8 @@ $learnerPostAssessmentGrade = DB::table('learner_post_assessment_progress')
                 $this->fpdf->SetXY(10, $this->fpdf->GetPageHeight() - 39);
                 $this->fpdf->Cell(0, 10, $text4, 0, 0, 'L');
                 
-
+                $action = "Generated Certificate on Course ID: " . $course->course_id;
+                $this->log($action);
 
                 $this->fpdf->Output();
                 

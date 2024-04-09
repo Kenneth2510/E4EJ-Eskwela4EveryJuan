@@ -38,11 +38,27 @@ use App\Mail\MailNotify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\ActivityLoggingController;
+
+
 class AdminManagementController extends Controller
 {
     public function index() {
         return $this->search_admin();
     }
+
+
+    public function log($action) {
+        $admin = session('admin');
+        $logging = new ActivityLoggingController();
+    
+        $user_id = $admin->admin_id;
+        $user_type = "Admin";
+    
+        $logging->log_activity($user_type, $user_id, $action);
+    }
+    
+
     
     public function search_admin() {
         
@@ -134,7 +150,11 @@ class AdminManagementController extends Controller
                 
                 $adminData['password'] = bcrypt($adminData['password']);
 
-                Admin::create($adminData);
+                $admin = Admin::create($adminData);
+
+
+                $action = "Created New Learner ID: " . $admin->admin_id;
+                $this->log($action);
 
 
                 session()->flash('message', 'Admin Added successfully');
@@ -193,6 +213,9 @@ class AdminManagementController extends Controller
                     'admin' => $adminSession,
                 ];
 
+                $action = "Viewed Admin ID: " . $admin->admin_id;
+                $this->log($action);
+
                 if(!$adminData) {
                     return view('error.error');
                 }
@@ -237,7 +260,8 @@ class AdminManagementController extends Controller
                 ->where('role', '!=', 'SUPER_ADMIN')
                 ->update($adminData);
 
-
+                $action = "Updated Details Admin ID: " . $admin->admin_id;
+                $this->log($action);
 
                 session()->flash('message', 'Admin Updated successfully');
                 $data = [
@@ -280,6 +304,10 @@ class AdminManagementController extends Controller
                 ->where('admin_id', $admin->admin_id)
                 ->where('role', '!=', 'SUPER_ADMIN')
                 ->delete();
+
+
+                $action = "Deleted Admin ID: " . $admin->admin_id;
+                $this->log($action);
 
                 session()->flash('message', 'Admin Deleted successfully');
                 $data = [
@@ -366,6 +394,10 @@ class AdminManagementController extends Controller
                 DB::table('admin')
                 ->where('admin_id', $admin->admin_id)
                 ->update($adminData);
+
+
+                $action = "Updated Details Admin ID: " . $admin->admin_id;
+                $this->log($action);
 
 
             session()->flash('message', 'You have successfully updated your account');
