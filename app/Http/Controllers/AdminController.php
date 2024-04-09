@@ -241,7 +241,7 @@ public function login_process(Request $request) {
     }
 
 
-    public function logs() {
+    public function activityLogs() {
         if (auth('admin')->check()) {
             $admin = session('admin');
             // dd($admin);
