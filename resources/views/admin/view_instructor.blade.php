@@ -145,22 +145,22 @@
                         <div class="w-1/2 mx-2" id="userInfo_left">
                             <div class="mt-3" id="firstNameArea">
                                 <label for="instructor_fname">First Name</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
-                                    type="text" name="instructor_fname" id="instructor_fname"
+                                <input class="w-full input input-bordered focus:input-primary" type="text"
+                                    name="instructor_fname" id="instructor_fname"
                                     value="{{$instructor->instructor_fname}}" disabled>
                                 <span id="firstNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="bdayArea">
                                 <label for="instructor_bday ">Birthday</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
-                                    type="date" name="instructor_bday" id="instructor_bday"
-                                    value="{{$instructor->instructor_bday}}" disabled>
+                                <input class="w-full input input-bordered focus:input-primary" type="date"
+                                    name="instructor_bday" id="instructor_bday" value="{{$instructor->instructor_bday}}"
+                                    disabled>
                                 <span id="bdayError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="contactArea">
                                 <label for="instructor_contactno">Contact Number</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
-                                    type="text" maxlength="11" name="instructor_contactno" id="instructor_contactno"
+                                <input class="w-full input input-bordered focus:input-primary" type="text"
+                                    maxlength="11" name="instructor_contactno" id="instructor_contactno"
                                     value="{{$instructor->instructor_contactno}}" disabled placeholder="09">
                                 <span id="contactError" class="text-red-500"></span>
                             </div>
@@ -168,14 +168,14 @@
                         <div class="w-1/2 mx-2" id="userInfo_right">
                             <div class="mt-3" id="lastNameArea">
                                 <label for="instructor_lname">Last Name</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
-                                    type="text" name="instructor_lname" id="instructor_lname"
+                                <input class="w-full input input-bordered focus:input-primary" type="text"
+                                    name="instructor_lname" id="instructor_lname"
                                     value="{{$instructor->instructor_lname}}" disabled>
                                 <span id="lastNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="genderArea">
                                 <label for="instructor_gender">Gender</label><br>
-                                <select class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <select class="w-full select select-bordered focus:select-primary"
                                     name="instructor_gender" id="instructor_gender" disabled>
                                     <option value="" {{$instructor->instructor_gender == '' ? 'selected' : ''}}
                                         disabled>-- select an option --</option>
@@ -190,8 +190,8 @@
                             </div>
                             <div class="mt-3" id="emailArea">
                                 <label for="instructor_email">Email Address</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
-                                    type="email" name="instructor_email" id="instructor_email"
+                                <input class="w-full input input-bordered focus:input-primary" type="email"
+                                    name="instructor_email" id="instructor_email"
                                     value="{{$instructor->instructor_email}}" disabled>
                                 <span id="emailError" class="text-red-500"></span>
                             </div>
@@ -205,7 +205,7 @@
 
                     <hr class="my-6 border-t-2 border-gray-300">
 
-                    <input class="w-full h-12 px-5 py-1 rounded-lg" type="file" name="instructor_credentials"
+                    <input class="file-input file-input-primary" type="file" name="instructor_credentials"
                         id="instructor_credentials" value="{{$instructor->instructor_credentials}}" disabled>
 
                     @if($instructor->instructor_credentials)
@@ -230,7 +230,7 @@
 
                     <div class="mt-3" id="instructor_usernameArea">
                         <label for="instructor_username">Username</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="instructor_username" id="instructor_username"
                             value="{{$instructor->instructor_username}}" disabled>
                         <span id="usernameError" class="text-red-500"></span>
@@ -238,8 +238,8 @@
 
                     <div class="mt-3" id="passwordArea">
                         <label for="password">Password</label><br>
-                        <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
-                            type="password" name="password" id="password" disabled>
+                        <input disabled class="w-full input input-bordered focus:input-primary" type="password"
+                            name="password" id="password" disabled>
                         <span id="passwordError" class="text-red-500"></span>
                     </div>
 
@@ -252,7 +252,7 @@
 
                     <div class="hidden mt-3" id="newPasswordArea">
                         <label for="newPassword">New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="newPassword" id="newPassword">
                         <span id="newPasswordError" class="text-red-500"></span>
                     </div>
@@ -264,7 +264,7 @@
 
                     <div class="hidden mt-3" id="passwordConfirmationArea">
                         <label for="passwordConfirm">Confirm New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="passwordConfirm" id="passwordConfirm">
                         <span id="passwordConfirmError" class="text-red-500"></span>
                     </div>
@@ -272,8 +272,8 @@
 
                     <div class="mt-3" id="securityCodeArea">
                         <label for="instructor_security_code">Enter your Security Code</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
-                            maxlength="6" name="instructor_security_code" id="instructor_security_code"
+                        <input class="w-full input input-bordered focus:input-primary" type="password" maxlength="6"
+                            name="instructor_security_code" id="instructor_security_code"
                             value="{{$instructor->instructor_security_code}}" disabled>
                         <span id="securityCodeGuide" class="text-gray-500">Enter 6 characters of security
                             code</span>
