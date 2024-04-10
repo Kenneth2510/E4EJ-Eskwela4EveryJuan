@@ -581,7 +581,7 @@
                 $('#genderError').text('');
             }
 
-            if (learner_contactno === "" || learner_contactno.length < 11) {
+            if (learner_contactno === "" || learner_contactno.length != 11) {
                 $("#contactnoError").text("Please enter your contact number.");
                 isValid = false;
             } else {

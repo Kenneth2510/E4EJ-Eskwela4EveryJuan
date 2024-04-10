@@ -504,7 +504,7 @@
                 $('#genderError').text('');
             }
 
-            if (instructor_contactno === '') {
+            if (instructor_contactno === '' || instructor_contactno.length != 11) {
                 $('#contactError').text('Please enter your contact number.');
                 isValid = false;
             } else {

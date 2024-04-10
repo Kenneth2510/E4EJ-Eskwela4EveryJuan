@@ -305,7 +305,7 @@ $(document).ready(function () {
             $("#emailError").text("");
         }
 
-        if (instructor_contactno === "" || instructor_contactno.length > 11) {
+        if (instructor_contactno === "" || instructor_contactno.length != 11) {
             $("#contactnoError").text("Please enter valid contact number.");
             isValid = false;
             $("#first-form").removeClass("hidden");
