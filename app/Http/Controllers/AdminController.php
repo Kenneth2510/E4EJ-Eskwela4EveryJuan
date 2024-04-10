@@ -105,9 +105,6 @@ public function login_process(Request $request) {
     public function dashboard() {
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
-
-
 
             try {
                 $learnerCount = Learner::count();
@@ -131,7 +128,6 @@ public function login_process(Request $request) {
                     'courses' => $courses,
                 ];
 
-                // dd($data);
                 return view('admin.dashboard')->with($data);
 
             } catch(\Exception $e) {
@@ -190,7 +186,6 @@ public function login_process(Request $request) {
                     'admins' => $adminData,
                 ];
 
-                // dd($data);
         
                 return response()->json($data);
             } catch (ValidationException $e) {
@@ -227,7 +222,6 @@ public function login_process(Request $request) {
                     'learnerCourseData' => $learnerCourseProgressData,
                 ];
 
-                // dd($data);
         
                 return response()->json($data);
             } catch (ValidationException $e) {
@@ -246,7 +240,6 @@ public function login_process(Request $request) {
     public function activityLogs() {
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
 
             if($admin->role === 'IT_DEPT' || $admin->role === 'SUPER_ADMIN') {
 

@@ -146,7 +146,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var learners = response["learners"];
                 displaySearchLearners(learners);
             },
@@ -260,7 +259,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var instructors = response["instructors"];
                 displaySearchInstructors(instructors);
             },
@@ -351,7 +349,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var learners = response["learners"];
                 displaySessionSearchLearners(learners);
             },
@@ -396,7 +393,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var instructors = response["instructors"];
                 displaySessionSearchInstructors(instructors);
             },
@@ -457,7 +453,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var courses = response["courses"];
                 displaySearchCourse(courses);
             },
@@ -503,7 +498,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var courses = response["courses"];
                 displaySearchApproveCourse(courses);
             },
@@ -561,7 +555,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var courses = response["courses"];
                 displaySearchApproveGradeCourse(courses);
             },
@@ -610,7 +603,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var courses = response["courses"];
                 displaySearchlearnerCourseGradeCourse(courses);
 
@@ -664,7 +656,6 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 var learners = response["learners"];
                 displaySearchLearnerCourse(learners);
             },
@@ -686,7 +677,6 @@ $(document).ready(function () {
         for (let i = 0; i < learners.length; i++) {
             const name = learners[i]["name"];
             const learner_course_id = learners[i]["learner_course_id"];
-            /*          console.log(id);*/
 
             disp_learners += `
                 <option value="${learner_course_id}">${name}</option>

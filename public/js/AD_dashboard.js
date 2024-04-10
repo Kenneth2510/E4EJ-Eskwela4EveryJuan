@@ -12,7 +12,7 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function(response) {
-                console.log(response);
+          
                 
                 var learners = response['learners']
                 var instructors = response['instructors']
@@ -247,7 +247,6 @@ $(document).ready(function() {
                 'selectedCourse': selectedCourse
             },
             success: function(response) {
-                console.log(response)
 
                 var learnerCourseData = response['learnerCourseData']
                 dispLearnerCourseProgressChart(learnerCourseData)
@@ -265,7 +264,7 @@ $(document).ready(function() {
 
 
     function dispLearnerCourseProgressChart(learnerCourseData) {
-        console.log(learnerCourseData);
+      
         const statuses = ['COMPLETED', 'IN PROGRESS', 'NOT YET STARTED']; // Assuming these are the possible statuses
     
         // Count the number of learners for each status

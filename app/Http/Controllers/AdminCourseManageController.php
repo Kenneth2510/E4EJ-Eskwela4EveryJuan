@@ -78,8 +78,7 @@ public function log($action) {
     
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
-    
+   
     
             $search_by = request('searchBy');
             $search_val = request('searchVal');
@@ -477,13 +476,6 @@ public function log($action) {
 
                 return $data;
 
-                // return view('instructor_course.courseContent', compact('instructor', 'course', 'syllabus'))->with([
-                //     'title' => 'Course Content',
-                //     'scripts' => ['instructor_course_content_syllabus.js'],
-                //     'lessonCount' => $lessonCount,
-                //     'activityCount' => $activityCount,
-                //     'quizCount' => $quizCount,
-                // ]);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
         
@@ -677,7 +669,6 @@ public function log($action) {
 
                 try {
 
-                    // dd($request);
 
                     $gradeData = [
                         'activity_percent' => $request->input('activity_percent'),
@@ -685,9 +676,6 @@ public function log($action) {
                         'pre_assessment_percent' => $request->input('pre_assessment_percent'),
                         'post_assessment_percent' => $request->input('post_assessment_percent'),    
                     ];
-
-
-                    // dd($gradeData);
 
                     DB::table('course_grading')
                     ->where('course_id' , $course->course_id)
@@ -815,8 +803,6 @@ public function log($action) {
             $quiz = Quizzes::create($quizData);
         }
 
-       
-        // $latestSyllabus = DB::table('syllabus')->orderBy('created_at', 'DESC')->first();
 
         $action = "Created Syllabus Course ID: ". $syllabus->course_id;
         $this->log($action);
@@ -869,7 +855,7 @@ public function log($action) {
                         'mainBackgroundCol' => '#00693e',
                         'darkenedColor' => '#00693e',
                         'admin' => $adminSession,
-                        // 'instructor' => $response['instructor'],
+                    
                     ]);
 
                 } catch (ValidationException $e) {
@@ -1090,7 +1076,6 @@ public function log($action) {
                             'category'
                         )
                         ->where('syllabus_id', $syllabusId)
-                        // ->where('course_id', $course->course_id)
                         ->first();
             
                     if ($syllabus) {
@@ -1211,7 +1196,6 @@ public function log($action) {
                         'lessonContent' => $lessonContent,
                         'formattedDuration' => $formattedDuration,
                         'admin' => $adminSession,
-                        // 'instructor' => $response['instructor'],
                     ]);
 
                 } catch (ValidationException $e) {
@@ -1409,13 +1393,11 @@ public function log($action) {
                 $relativeFilePath = str_replace('public/', '', $lesson->picture);
                 
                 if (Storage::disk('public')->exists($relativeFilePath)) {
-                    // Storage::disk('public')->delete($relativeFilePath);
                     $specifiedDir = explode('/', $relativeFilePath);
                     array_pop($specifiedDir);
 
                     $dirPath = implode('/', $specifiedDir);
 
-                    // dd($dirPath);
                     if (Storage::disk('public')->exists($relativeFilePath)) {
                         Storage::disk('public')->delete($relativeFilePath);
                     }
@@ -1461,12 +1443,14 @@ public function log($action) {
                 'lesson_content' => ['nullable'],
             ]);
 
+
+
             DB::table('lesson_content')
                 ->where('lesson_id', $lesson->lesson_id)
                 ->where('lesson_content_id', $lesson_content->lesson_content_id)
                 ->update($updated_values);
 
-                $action = "Updated Content Lesson ID: " . $syllabus->syllabus_id . " Course ID: ". $course->course_id;
+                $action = "Updated Content Lesson ID: " . $lesson->syllabus_id . " Course ID: ". $lesson->course_id;
                 $this->log($action);
 
             return response()->json();
@@ -1486,7 +1470,7 @@ public function log($action) {
                 ->where('lesson_content_id', $lesson_content->lesson_content_id)
                 ->delete();
 
-                $action = "Updated Content Lesson ID: " . $syllabus->syllabus_id . " Course ID: ". $course->course_id;
+                $action = "Updated Content Lesson ID: " . $lesson->syllabus_id . " Course ID: ". $lesson->course_id;
                 $this->log($action);
 
         }catch (ValidationException $e) {
@@ -1522,7 +1506,6 @@ public function log($action) {
                         
                     
             } catch (ValidationException $e) {
-                // dd($e->getMessage());
                 $errors = $e->validator->errors();        
                 return response()->json(['errors' => $errors], 422);
             }
@@ -1556,7 +1539,6 @@ public function log($action) {
                     
                 
         } catch (ValidationException $e) {
-            // dd($e->getMessage());
             $errors = $e->validator->errors();        
             return response()->json(['errors' => $errors], 422);
         }
@@ -1577,13 +1559,11 @@ public function log($action) {
                 $relativeFilePath = str_replace('public/', '', $lesson_content->picture);
                 
                 if (Storage::disk('public')->exists($relativeFilePath)) {
-                    // Storage::disk('public')->delete($relativeFilePath);
                     $specifiedDir = explode('/', $relativeFilePath);
                     array_pop($specifiedDir);
 
                     $dirPath = implode('/', $specifiedDir);
 
-                    // dd($dirPath);
                     if (Storage::disk('public')->exists($relativeFilePath)) {
                         Storage::disk('public')->delete($relativeFilePath);
                     }
@@ -1631,7 +1611,6 @@ public function log($action) {
 
                 $dirPath = implode('/', $specifiedDir);
 
-                // dd($dirPath);
                 if (Storage::disk('public')->exists($relativeFilePath)) {
                     Storage::disk('public')->delete($relativeFilePath);
                 }
@@ -1731,9 +1710,7 @@ public function log($action) {
                             $hours = floor($durationInSeconds / 3600);
                             $minutes = floor(($durationInSeconds % 3600) / 60);
                             $formattedDuration = sprintf("%02d:%02d", $hours, $minutes);
-                            // }
-
-                                // dd($lessonContent);
+                           
 
                     $response = $this->course_content($course);
 
@@ -1767,7 +1744,6 @@ public function log($action) {
                 }
             
 
-        // return view('instructor_course.courseLesson')->with('title', 'Course Lesson');
     }
 
 
@@ -1813,11 +1789,6 @@ public function log($action) {
                             $minutes = floor(($durationInSeconds % 3600) / 60);
                             $formattedDuration = sprintf("%02d:%02d", $hours, $minutes);
 
-
-            // if (!$lessonData) {
-            //     // Handle the case where the session data is not found
-            //     return response('Session data not found', 500);
-            // }
         
             $response = $this->course_content($course);
             // Extract the data you need from the session
@@ -1925,8 +1896,7 @@ public function log($action) {
                     ->first();
             }
 
-            // Check if $activityContentCriteria is empty, and if so, create a new row
-            // if ($activityContent->isNotEmpty()) {
+
                 $activityContentCriteria = DB::table('activity_content_criteria')
                     ->select(
                         'activity_content_criteria_id',
@@ -1934,7 +1904,6 @@ public function log($action) {
                         'criteria_title',
                         'score'
                     )
-                    // ->whereIn('activity_content_id', $activityContent->pluck('activity_content_id')->toArray())
                     ->where('activity_content_id', $activityContent->activity_content_id)
                     ->get();
 
@@ -1944,7 +1913,6 @@ public function log($action) {
                         'criteria_title' => 'Content', // You can set default values here
                         'score' => 10, // You can set default values here
                     ];
-                    // DB::table('activity_content_criteria')->insert($newActivityContentCriteria);
                     ActivityContentCriterias::create($newActivityContentCriteria);
 
                     // Fetch the newly inserted row
@@ -1952,7 +1920,7 @@ public function log($action) {
                         ->where('activity_content_id', $activityContent->activity_content_id)
                         ->get();
                 }
-        // }
+
 
         $action = "View Activity ID: " . $syllabus->syllabus_id . " Course ID: ". $course->course_id;
         $this->log($action);
@@ -2636,7 +2604,6 @@ public function log($action) {
             ->where('activity_content_id', $activity_content)
             ->get();
 
-            // dd($activityCriteria);
 
             if ($learnerActivityOutputData_2nd) {
                 // If a record with attempt 2 already exists, handle accordingly
@@ -2702,9 +2669,6 @@ public function log($action) {
             
             
             
-
-            // dd($newAttemptRow);
-            // Redirect back to the previous page
         return back();
 
         } catch(\Exception $e) {
@@ -2752,8 +2716,6 @@ public function log($action) {
                 session(['quiz_data' => [
                     'quizInfo' => $quizInfo,
                     'quizReference' => $quizReference,
-                    // 'activityContent' => $activityContent,
-                    // 'activityContentCriteria' => $activityContentCriteria,
                     'courseData' => $response,
                     'title' => 'Course Quiz',
                 ]]);
@@ -2774,10 +2736,8 @@ public function log($action) {
                         'quizInfo' => $quizInfo,
                         'quizReference' => $quizReference,
                         'admin' => $adminSession,
-                        // 'instructor' => $response['instructor'],
                     ];
 
-                    // dd($data);
             
                 return view('adminCourse.courseQuizOverview')->with($data);
 
@@ -2894,8 +2854,6 @@ public function log($action) {
                         'quizInfo' => $quizInfo,
                         'quizReference' => $quizReference,
                         'syllabusData' => $syllabusData,
-                        // 'activityContent' => $activityContent,
-                        // 'activityContentCriteria' => $activityContentCriteria,
                         'courseData' => $response,
                         'title' => 'Course Quiz',
                     ]]);
@@ -2916,9 +2874,6 @@ public function log($action) {
                             'learnerQuizOutputData' => $learnerQuizOutputs,
                         ];
     
-                        // dd($data);
-                        
-
                         
             return response()->json($data);
     
@@ -3092,7 +3047,6 @@ public function log($action) {
                         'quizInfo' => $quizInfo,
                         'quizReference' => $quizReference,
                         'questionsData' => $questionsData,
-                        // 'instructor' => $response['instructor'],
                         'admin' => $adminSession,
                     ];
     
@@ -3219,16 +3173,11 @@ public function log($action) {
                         'quizReference' => $quizReference,
                         'questionsData' => $questionsData,
                         'quizContent' => $quizContentData,
-                        // 'instructor' => $response['instructor'],
                     ];
     
-    
-                        // dd($data);
-                        
-    
+
                     return response()->json($data);
                 
-                    // return view('instructor_course.courseQuizContent', compact('instructor'))->with($data);
     
                 } catch (ValidationException $e) {
                     $errors = $e->validator->errors();
@@ -3280,7 +3229,6 @@ public function log($action) {
     public function add_quiz_question(Course $course, Syllabus $syllabus, $quiz_id, Request $request)
     {
         try {
-            // DB::beginTransaction();
 
             $questionData = [
                 'syllabus_id' => $request->input('syllabus_id'),
@@ -3313,7 +3261,6 @@ public function log($action) {
 
             QuizContents::create($quizContentData);
 
-            // DB::commit();
             $action = "Updated Quiz Content Quiz ID: " . $syllabus->syllabus_id . " Course ID: ". $course->course_id;
             $this->log($action);
 
@@ -3331,8 +3278,6 @@ public function log($action) {
     public function update_quiz_question(Course $course, Syllabus $syllabus, $quiz_id, Request $request)
     {
         try {
-            // DB::beginTransaction();
-
             $question_id = $request->input('question_id');
 
             DB::table('questions')
@@ -3371,7 +3316,6 @@ public function log($action) {
 
             QuizContents::create($quizContentData);
 
-            // DB::commit();
             $action = "Updated Quiz Content Quiz ID: " . $syllabus->syllabus_id . " Course ID: ". $course->course_id;
             $this->log($action);
 
@@ -3476,7 +3420,6 @@ public function log($action) {
                         'admin' => $adminSession,
                     ];
 
-                    // dd($data);
                     $action = "Viewed Learner ID: ". $learnerQuizProgressData->learner_course_id ." Quiz ID: " . $syllabus->syllabus_id . " Course ID: ". $course->course_id;
                     $this->log($action);
 
@@ -3612,7 +3555,6 @@ public function log($action) {
 
                     ];
 
-                    // dd($data);
 
                     return response()->json($data);
 

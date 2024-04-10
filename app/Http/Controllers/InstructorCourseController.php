@@ -75,7 +75,7 @@ class InstructorCourseController extends Controller
                 ->orderBy("course.created_at", "DESC");
 
                 $courses = $query->paginate(50);
-                    // $courses = $query;
+               
             } catch (\Exception $e) {
                 dd($e->getMessage());
             }
@@ -138,10 +138,7 @@ class InstructorCourseController extends Controller
     public function courseCreate(){
         if (session()->has('instructor')) {
             $instructor = session('instructor');
-            // dd($instructor);
-
-            // $color = '#' . Str::random(6);
-            // dd($color);
+    
 
         } else {
             return redirect('/instructor');
@@ -259,7 +256,6 @@ class InstructorCourseController extends Controller
     public function overview(Course $course){
         if (session()->has('instructor')) {
             $instructor = session('instructor');
-            // dd($instructor);
 
             
             try {
@@ -280,7 +276,7 @@ class InstructorCourseController extends Controller
                 ->first();
 
                 if($course->instructor_id !== $instructor->instructor_id) {
-                    // abort(404);
+  
                     return view('error.error');
                 }
 
@@ -448,9 +444,6 @@ class InstructorCourseController extends Controller
                 $gradeWithActivityData[$key] = $activityData;
             }
 
-            // dd($gradeWithActivityData);
-            // Now, $gradeWithActivityData contains the desired structure
-
                 $activitySyllabusData = DB::table('activities')
                 ->select(
                     'activities.activity_id',
@@ -479,15 +472,9 @@ class InstructorCourseController extends Controller
                 ->orderBy('syllabus.topic_id', 'asc')
                 ->get();
 
-                            // $folderName = "{$course->course_id} {$course->course_name}";
             $folderName = Str::slug("{$course->course_id} {$course->course_name}", '_');
 
-            // $directoryPath = "/public/courses/{$folderName}/lesson_1.pdf";
 
-            // // $courseFiles = Storage::disk('public')->files($folderName);
-
-            // $courseFiles = Storage::files($directoryPath);
-            // $courseFiles = Storage::allFiles($directoryPath);
 
             $directory = "public/courses/$folderName/documents";
             
@@ -519,7 +506,6 @@ class InstructorCourseController extends Controller
                     'courseFiles' => $courseFiles,
                 ];
 
-                // dd($data);
 
                 return view('instructor_course.courseOverview', compact('course'))
                 ->with($data);
@@ -542,7 +528,7 @@ class InstructorCourseController extends Controller
             try{
 
                 if($course->instructor_id !== $instructor->instructor_id) {
-                    // abort(404);
+                  
                     return view('error.error');
                 }
 
@@ -583,7 +569,7 @@ class InstructorCourseController extends Controller
             try{
 
                 if($course->instructor_id !== $instructor->instructor_id) {
-                    // abort(404);
+       
                     return view('error.error');
                 }
 
@@ -674,7 +660,6 @@ class InstructorCourseController extends Controller
     public function manage_course(Request $request, Course $course) {
         if (session()->has('instructor')) {
             $instructor = session('instructor');
-            // dd($instructor);
 
             try {
 
@@ -787,7 +772,7 @@ class InstructorCourseController extends Controller
                 
             
             } catch (ValidationException $e) {
-                // dd($e->getMessage());
+           
                 $errors = $e->validator->errors();        
                 return response()->json(['errors' => $errors], 422);
             }
@@ -875,9 +860,8 @@ class InstructorCourseController extends Controller
         $reportController = new PDFGenerationController();
 
         $reportController->courseDetails($syllabus->course_id);
-        // $latestSyllabus = DB::table('syllabus')->orderBy('created_at', 'DESC')->first();
 
-        $action = "Created Course Syllabus, Course ID: " . $syllabusData->course_id;
+        $action = "Created Course Syllabus, Course ID: " . $syllabus->course_id;
         $this->log($action);
         
         session()->flash('message', 'Syllabus created Successfully');
@@ -904,7 +888,7 @@ class InstructorCourseController extends Controller
                 try {
 
                     if($course->instructor_id !== $instructor->instructor_id) {
-                        // abort(404);
+                    
                         return view('error.error');
                     }
 
@@ -920,7 +904,6 @@ class InstructorCourseController extends Controller
                         'syllabus' => $response['syllabus'],
                         'mainBackgroundCol' => '#00693e',
                         'darkenedColor' => '#00693e',
-                        // 'instructor' => $response['instructor'],
                     ]);
 
                 } catch (ValidationException $e) {
@@ -1027,13 +1010,7 @@ class InstructorCourseController extends Controller
 
                 return $data;
 
-                // return view('instructor_course.courseContent', compact('instructor', 'course', 'syllabus'))->with([
-                //     'title' => 'Course Content',
-                //     'scripts' => ['instructor_course_content_syllabus.js'],
-                //     'lessonCount' => $lessonCount,
-                //     'activityCount' => $activityCount,
-                //     'quizCount' => $quizCount,
-                // ]);
+
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
         
@@ -1228,7 +1205,7 @@ class InstructorCourseController extends Controller
                 try {
 
                     if($course->instructor_id !== $instructor->instructor_id) {
-                        // abort(404);
+              
                         return view('error.error');
                     }
 
@@ -1267,10 +1244,6 @@ class InstructorCourseController extends Controller
                             
 
 
-                    
-
-                                // dd($lessonContent);
-
                     $response = $this->course_content($course);
 
                     session(['lesson_data' => [
@@ -1295,7 +1268,6 @@ class InstructorCourseController extends Controller
                         'lessonInfo' => $lessonInfo,
                         'lessonContent' => $lessonContent,
                         'formattedDuration' => $formattedDuration,
-                        // 'instructor' => $response['instructor'],
                     ]);
 
                 } catch (ValidationException $e) {
@@ -1451,13 +1423,11 @@ class InstructorCourseController extends Controller
                 $relativeFilePath = str_replace('public/', '', $lesson->picture);
                 
                 if (Storage::disk('public')->exists($relativeFilePath)) {
-                    // Storage::disk('public')->delete($relativeFilePath);
                     $specifiedDir = explode('/', $relativeFilePath);
                     array_pop($specifiedDir);
 
                     $dirPath = implode('/', $specifiedDir);
 
-                    // dd($dirPath);
                     if (Storage::disk('public')->exists($relativeFilePath)) {
                         Storage::disk('public')->delete($relativeFilePath);
                     }
@@ -1572,7 +1542,7 @@ class InstructorCourseController extends Controller
                         
                     
             } catch (ValidationException $e) {
-                // dd($e->getMessage());
+        
                 $errors = $e->validator->errors();        
                 return response()->json(['errors' => $errors], 422);
             }
@@ -1612,7 +1582,7 @@ class InstructorCourseController extends Controller
                     
                 
         } catch (ValidationException $e) {
-            // dd($e->getMessage());
+       
             $errors = $e->validator->errors();        
             return response()->json(['errors' => $errors], 422);
         }
@@ -1620,7 +1590,6 @@ class InstructorCourseController extends Controller
 
     public function lesson_content_store_file(Course $course, Syllabus $syllabus, Lessons $lesson, LessonContents $lesson_content, Request $request) {
         try {
-
 
             $lessonContentData = DB::table('lesson_content')
             ->select(
@@ -1633,13 +1602,11 @@ class InstructorCourseController extends Controller
                 $relativeFilePath = str_replace('public/', '', $lesson_content->picture);
                 
                 if (Storage::disk('public')->exists($relativeFilePath)) {
-                    // Storage::disk('public')->delete($relativeFilePath);
                     $specifiedDir = explode('/', $relativeFilePath);
                     array_pop($specifiedDir);
 
                     $dirPath = implode('/', $specifiedDir);
 
-                    // dd($dirPath);
                     if (Storage::disk('public')->exists($relativeFilePath)) {
                         Storage::disk('public')->delete($relativeFilePath);
                     }
@@ -1684,13 +1651,11 @@ class InstructorCourseController extends Controller
 
             $relativeFilePath = str_replace('public/', '', $lesson_content->picture);
             if (Storage::disk('public')->exists($relativeFilePath)) {
-                // Storage::disk('public')->delete($relativeFilePath);
                 $specifiedDir = explode('/', $relativeFilePath);
                 array_pop($specifiedDir);
 
                 $dirPath = implode('/', $specifiedDir);
 
-                // dd($dirPath);
                 if (Storage::disk('public')->exists($relativeFilePath)) {
                     Storage::disk('public')->delete($relativeFilePath);
                 }
@@ -1804,12 +1769,7 @@ class InstructorCourseController extends Controller
                             $hours = floor($durationInSeconds / 3600);
                             $minutes = floor(($durationInSeconds % 3600) / 60);
                             $formattedDuration = sprintf("%02d:%02d", $hours, $minutes);
-                            // }
-
-
-                    
-
-                                // dd($lessonContent);
+ 
 
                     $response = $this->course_content($course);
 
@@ -1832,7 +1792,6 @@ class InstructorCourseController extends Controller
                         'lessonInfo' => $lessonInfo,
                         'lessonContent' => $lessonContent,
                         'formattedDuration' => $formattedDuration,
-                        // 'instructor' => $response['instructor'],
                     ]);
 
                 } catch (ValidationException $e) {
@@ -1965,7 +1924,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
             } else {
                 try {
                     if($course->instructor_id !== $instructor->instructor_id) {
-                        // abort(404);
+                 
                         return view('error.error');
                     }
             $activityInfo = DB::table('activities')
@@ -1997,7 +1956,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                     'activity_instructions' => 'Default Instructions', // You can set default values here
                     'total_score' => 0, // You can set default values here
                 ];
-                // DB::table('activity_content')->insert($newActivityContent);
 
                 ActivityContents::create($newActivityContent);
 
@@ -2007,8 +1965,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                     ->first();
             }
 
-            // Check if $activityContentCriteria is empty, and if so, create a new row
-            // if ($activityContent->isNotEmpty()) {
                 $activityContentCriteria = DB::table('activity_content_criteria')
                     ->select(
                         'activity_content_criteria_id',
@@ -2016,7 +1972,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                         'criteria_title',
                         'score'
                     )
-                    // ->whereIn('activity_content_id', $activityContent->pluck('activity_content_id')->toArray())
                     ->where('activity_content_id', $activityContent->activity_content_id)
                     ->get();
 
@@ -2026,7 +1981,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                         'criteria_title' => 'Content', // You can set default values here
                         'score' => 10, // You can set default values here
                     ];
-                    // DB::table('activity_content_criteria')->insert($newActivityContentCriteria);
                     ActivityContentCriterias::create($newActivityContentCriteria);
 
                     // Fetch the newly inserted row
@@ -2034,9 +1988,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                         ->where('activity_content_id', $activityContent->activity_content_id)
                         ->get();
                 }
-            // }
-        // }
-
+    
         
         $action = "View Activity ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
         $this->log($action);
@@ -2066,10 +2018,9 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                         'activityInfo' => $activityInfo,
                         'activityContent' => $activityContent,
                         'activityContentCriteria' => $activityContentCriteria,
-                        // 'instructor' => $response['instructor'],
+                    
                     ];
 
-                    // dd($data);
 
                     return view('instructor_course.courseActivity', compact('instructor'))->with($data);
 
@@ -2107,17 +2058,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                         ->where('syllabus_id', $syllabus->syllabus_id)
                         ->first();
 
-                            // if ($activityInfo === null) {
-                            //     // Set $activityContent to null or an empty array if it's appropriate
-                            //     $activityContent = null; // or $activityContent = [];
-                            //     $activityContentCriteria = null;
-                            
-                            //     // You can also provide a message to indicate that no data was found
-                            //     session()->flash('message', 'Please Save the Syllabus First');
-                            //     return redirect("/instructor/course/content/$course->course_id");
-
-                            // } else {
-                                // Fetch $activityContent as you normally would
+             
                                 $activityContent = DB::table('activity_content')
                                     ->select(
                                         'activity_content_id',
@@ -2142,10 +2083,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                                         ->get();
                                     }
                                
-                            // }
-
-                                // dd($lessonContent);
-
+         
                     $response = $this->course_content($course);
 
                     session(['activity_data' => [
@@ -2312,7 +2250,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
 
             try {
                 if($course->instructor_id !== $instructor->instructor_id) {
-                    // abort(404);
+             
                     return view('error.error');
                 }
 
@@ -2415,7 +2353,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 ->orderBy('learner_activity_criteria_score.activity_content_criteria_id', 'ASC')
                 ->get();
                 
-                // dd($learnerActivityScoreData);
                 $response = $this->course_content($course);
 
                 $action = "View Learner ID: ". $learner_course->learner_course_id ."on Activity ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
@@ -2432,7 +2369,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 'learnerActivityScore' => $learnerActivityScoreData,
                 'course' => $response['course'],
                ];
-                // dd($data);
 
                 return view('instructor_course.courseActivity_viewLearnerResponse', compact('instructor'))->with($data);
 
@@ -2540,7 +2476,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                     'finish_period' => $timestampString,
                 ]);
 
-                // dd($learnerActivityOutputData);
             
                 if($attempt <= 2) {
                     $currentSyllabusStatus = DB::table('learner_syllabus_progress')
@@ -2816,10 +2751,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 }
             }
             
-            
-            
-
-            // dd($newAttemptRow);
             // Redirect back to the previous page
         return back();
 
@@ -2839,7 +2770,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
             } else {
                 try {       
                     if($course->instructor_id !== $instructor->instructor_id) {
-                        // abort(404);
+     
                         return view('error.error');
                     }
   
@@ -2877,8 +2808,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                 session(['quiz_data' => [
                     'quizInfo' => $quizInfo,
                     'quizReference' => $quizReference,
-                    // 'activityContent' => $activityContent,
-                    // 'activityContentCriteria' => $activityContentCriteria,
                     'courseData' => $response,
                     'instructor' => $instructor,
                     'title' => 'Course Quiz',
@@ -2896,10 +2825,8 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                         'syllabus' => $response['syllabus'],
                         'quizInfo' => $quizInfo,
                         'quizReference' => $quizReference,
-                        // 'instructor' => $response['instructor'],
                     ];
 
-                    // dd($data);
             
                 return view('instructor_course.courseQuizOverview', compact('instructor'))->with($data);
 
@@ -3014,8 +2941,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                     'quizInfo' => $quizInfo,
                     'quizReference' => $quizReference,
                     'syllabusData' => $syllabusData,
-                    // 'activityContent' => $activityContent,
-                    // 'activityContentCriteria' => $activityContentCriteria,
                     'courseData' => $response,
                     'instructor' => $instructor,
                     'title' => 'Course Quiz',
@@ -3037,7 +2962,6 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                         'learnerQuizOutputData' => $learnerQuizOutputs,
                     ];
 
-                    // dd($data);
         return response()->json($data);
 
         } catch (ValidationException $e) {
@@ -3137,7 +3061,7 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
     
             try {
                 if($course->instructor_id !== $instructor->instructor_id) {
-                    // abort(404);
+    
                     return view('error.error');
                 }
 
@@ -3209,11 +3133,8 @@ public function lesson_generate_pdf(Course $course, Syllabus $syllabus, Lessons 
                     'quizInfo' => $quizInfo,
                     'quizReference' => $quizReference,
                     'questionsData' => $questionsData,
-                    // 'instructor' => $response['instructor'],
                 ];
 
-
-                    // dd($data);
             
                 return view('instructor_course.courseQuizContent', compact('instructor'))->with($data);
 
@@ -3338,16 +3259,11 @@ $questionsData = DB::table('questions')
                     'quizReference' => $quizReference,
                     'questionsData' => $questionsData,
                     'quizContent' => $quizContentData,
-                    // 'instructor' => $response['instructor'],
                 ];
 
 
-                    // dd($data);
-                    
-
                 return response()->json($data);
             
-                // return view('instructor_course.courseQuizContent', compact('instructor'))->with($data);
 
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -3385,7 +3301,6 @@ $questionsData = DB::table('questions')
     public function add_quiz_question(Course $course, Syllabus $syllabus, $quiz_id, Request $request)
     {
         try {
-            // DB::beginTransaction();
 
             $questionData = [
                 'syllabus_id' => $request->input('syllabus_id'),
@@ -3418,8 +3333,6 @@ $questionsData = DB::table('questions')
 
             QuizContents::create($quizContentData);
 
-            // DB::commit();
-
             
             $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
             $this->log($action);
@@ -3437,7 +3350,6 @@ $questionsData = DB::table('questions')
     public function update_quiz_question(Course $course, Syllabus $syllabus, $quiz_id, Request $request)
     {
         try {
-            // DB::beginTransaction();
 
             $question_id = $request->input('question_id');
 
@@ -3477,7 +3389,6 @@ $questionsData = DB::table('questions')
 
             QuizContents::create($quizContentData);
 
-            // DB::commit();
             
             $action = "Updated Content Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
             $this->log($action);
@@ -3504,7 +3415,7 @@ $questionsData = DB::table('questions')
             } else {
                 try {  
                     if($course->instructor_id !== $instructor->instructor_id) {
-                        // abort(404);
+                       
                         return view('error.error');
                     }
    
@@ -3590,7 +3501,6 @@ $questionsData = DB::table('questions')
                         'quizQuestionTotalCount' => $quizQuestionTotalCount,
                     ];
 
-                    // dd($data);
                     
             $action = "Viewed Learner ID: ". $learnerQuizProgressData->learner_course_id .", Quiz ID: ". $syllabus->syllabus_id ." Course ID: " . $course->course_id;
             $this->log($action);
@@ -3728,7 +3638,6 @@ $questionsData = DB::table('questions')
 
                     ];
 
-                    // dd($data);
 
                     return response()->json($data);
 

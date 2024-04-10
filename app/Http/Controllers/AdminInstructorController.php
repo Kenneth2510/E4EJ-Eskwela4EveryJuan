@@ -76,13 +76,6 @@ class AdminInstructorController extends Controller
         });
     }
     
-    
-    
-    
-    
-     
-    
-    
     public function instructors() {
         return $this->search_instructor();
     }
@@ -161,7 +154,7 @@ class AdminInstructorController extends Controller
     public function add_instructor() {
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
+   
             if($admin->role === 'IT_DEPT' || $admin->role === 'SUPER_ADMIN' || $admin->role === 'USER_MANAGER') {
             $data = [
                 'title' => 'Add New Instructor',
@@ -181,7 +174,7 @@ class AdminInstructorController extends Controller
 public function store_new_instructor(Request $request) {
     if (auth('admin')->check()) {
         $admin = session('admin');
-        // dd($admin);
+  
         if($admin->role === 'IT_DEPT' || $admin->role === 'SUPER_ADMIN' || $admin->role === 'USER_MANAGER') {
 
 
@@ -284,13 +277,10 @@ public function store_new_instructor(Request $request) {
         }
     }
 
-
-
-
     public function view_instructor ($id) {
         if (auth('admin')->check()) {
             $adminSession = session('admin');
-            // dd($admin);
+      
 
             if($adminSession->role === 'IT_DEPT' || $adminSession->role === 'SUPER_ADMIN' || $adminSession->role === 'USER_MANAGER') {
 
@@ -300,11 +290,9 @@ public function store_new_instructor(Request $request) {
                 $data = [
                     'title' => 'View Instructor', 
                     'admin' => $adminSession ,
-                    // 'scripts' => ['AD_learner_manage.js'] ,
                     'instructor' => $instructorData
                 ];
 
-                // dd($data);
                 
                 $action = "Viewed Instructor ID: " . $instructorData->instructor_id;
                 $this->log($action);
@@ -388,81 +376,6 @@ public function store_new_instructor(Request $request) {
         
         return redirect()->back()->with('message' , 'Instructor Status successfully changed');
     }
-
-    // public function update_instructor(Instructor $instructor, Request $request) {
-    //     if (auth('admin')->check()) {
-    //         $adminSession = session('admin');
-    
-    //         if (in_array($adminSession->role, ['IT_DEPT', 'SUPER_ADMIN', 'USER_MANAGER'])) {
-
-
-    //             $withPass = $request->input('withPass');
-    //             $instructorData = [
-    //                 "instructor_fname" => $request->input('instructor_fname'),
-    //                 "instructor_lname" => $request->input('instructor_lname'),
-    //                 "instructor_bday" => $request->input('instructor_bday'),
-    //                 "instructor_gender" => $request->input('instructor_gender'),
-    //                 "instructor_contactno" => $request->input('instructor_contactno'),
-    //                 "instructor_email" => $request->input('instructor_email'),
-    //                 "instructor_username" => $request->input('instructor_username'),
-    //             ];
-    //             // dd($instructorData);
-    
-    //             if ($withPass == 1) {
-    //                 $instructorData['password'] = bcrypt($request->input('password'));
-    //                 $instructorData['learner_security_code'] = $request->input('instructor_security_code');
-    //             }
-    
-    //             $folderName = Str::slug("{$instructorData['instructor_lname']} {$instructorData['instructor_fname']}", '_');
-    
-    //             if ($request->hasFile('instructor_credentials')) {
-    //                 $file = $request->file('instructor_credentials');
-    //                 $fileName = time() . '-' . $file->getClientOriginalName();
-    //                 $folderPath = 'instructors/' . $folderName;
-    //                 $filePath = $file->storeAs($folderPath, $fileName, 'public');
-    
-    //                 $instructorData['instructor_credentials'] = $filePath;
-    //             }
-    
-    //             $instructor->update($instructorData);
-
-    //             // Generate new folder name
-    //         $folderName = Str::slug("{$instructorData['instructor_lname']} {$instructorData['instructor_fname']}", '_');
-    //         $folderPath = 'instructors/' . $folderName;
-
-    //         // Rename the folder if the name has changed
-    //         $oldFolderName = Str::slug("{$instructor->original['instructor_lname']} {$instructor->original['instructor_fname']}", '_');
-    //         $oldFolderPath = 'instructors/' . $oldFolderName;
-
-    //         if (Storage::exists($oldFolderPath)) {
-    //             Storage::move($oldFolderPath, $folderPath);
-    //         }
-    
-            
-    //         $action = "Updated Details Instructor ID: " . $instructor->instructor_id;
-    //         $this->log($action);
-
-    //             session()->flash('message', 'Instructor Updated successfully');
-    //             $data = [
-    //                 'message' => 'Learner updated successfully',
-    //                 'redirect_url' => '/admin/view_instructor/' . $instructor->instructor_id,
-    //             ];
-    
-    //             return response()->json($data);
-    //         } else {
-    //             session()->flash('message', 'You cannot create new instructor account');
-    //             $data = [
-    //                 'message' => 'You cannot create new instructor account',
-    //                 'redirect_url' => '/admin/view_instructor/' . $instructor->instructor_id,
-    //             ];
-    
-    //             return response()->json($data);
-    //         }
-    //     } else {
-    //         return redirect('/admin');
-    //     }
-    // }
-    
 
     public function update_instructor(Instructor $instructor, Request $request) {
         if (auth('admin')->check()) {

@@ -18,13 +18,11 @@ $(document).ready(function() {
             url: url,
             dataType: 'json',
             success: function (response){
-                console.log(response)
 
                 quizInfoData = response['quizInfo']
                 quizReferenceData = response['quizReference']
                 syllabusData = response['syllabusData']
                 learnerQuizOutputData = response['learnerQuizOutputData']
-                // console.log(quizReferenceData)
 
                 displayReference(quizReferenceData, syllabusData);
                 setDuration(quizInfoData)
@@ -56,7 +54,6 @@ $(document).ready(function() {
 
         
         var referenceDisp = ``;
-        console.log(quizReferenceData)
         if(quizReferenceData !== null ) {
         for (let i = 0; i < quizReferenceData.length; i++) {
             var reference_title = quizReferenceData[i]['topic_title'];
@@ -140,7 +137,6 @@ $(document).ready(function() {
         rowData.find('.editReference_clickedBtns').addClass('hidden');
         rowData.find('.referenceRow').prop('disabled', true);
         rowData.find('.editReferenceBtn').removeClass('hidden');
-        console.log(quizReferenceData)
     });
     
 
@@ -155,7 +151,6 @@ $(document).ready(function() {
     
         // Remove the entire row from the table after deletion
         rowData.remove();
-        console.log(quizReferenceData);
     });
     
     
@@ -192,7 +187,6 @@ $(document).ready(function() {
 
 
     function displayLearnerOutputData(learnerQuizOutputData) {
-        // console.log(learnerQuizOutputData);
         var responsesRowDataDisp = ``;
 
         for (let i = 0; i < learnerQuizOutputData.length; i++) {
@@ -277,7 +271,6 @@ $(document).ready(function() {
 
         $('#loaderModal').removeClass('hidden');
 
-        console.log(quizReferenceData);
     let loopCounter = 0; // Initialize loop counter outside the loop
 
     for (let i = 0; i < quizReferenceData.length; i++) {
@@ -362,7 +355,6 @@ $(document).ready(function() {
      })
 
     function addQuizDuration(quiz_id) {
-        // console.log(duration_ms);
 
         var baseUrl = window.location.href;
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -378,7 +370,6 @@ $(document).ready(function() {
             success: function(response) {
                 // Handle success if needed
                  
-                console.log(response);
                 
         $('#loaderModal').addClass('hidden');
                     window.location.reload();
@@ -451,7 +442,6 @@ $(document).ready(function() {
                 topic_title: referenceTitle,
             }
 
-            console.log(reference)
 
             quizReferenceData.push(reference);
             displayReference(quizReferenceData, syllabusData)
@@ -502,8 +492,6 @@ $(document).ready(function() {
         // Convert the duration to milliseconds
         duration_ms = (hours * 60 * 60 + minutes * 60 + seconds) * 1000;
 
-        // For testing purposes, you can log the duration
-        console.log('Quiz Duration in milliseconds:', duration_ms);
 
         // You can continue with the rest of your logic or send the duration to the server
     });

@@ -223,7 +223,6 @@ class InstructorDiscussionController extends Controller
             $action = "Opened Instructor Discussion Forums";
             $this->log($action);
 
-            // dd($data);
             return view('instructor_discussions.instructorDiscussion' , compact('instructor'))
             ->with($data);
 
@@ -285,7 +284,7 @@ class InstructorDiscussionController extends Controller
                     'title' => 'Discussions',
                     'threads' => $threadsData,
                 ];
-                // dd($data);
+
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -318,7 +317,6 @@ class InstructorDiscussionController extends Controller
                 'courses' => $courseData,
             ];
 
-            // dd($data);
             return view('instructor_discussions.instructorCreateThread' , compact('instructor'))
             ->with($data);
 
@@ -540,7 +538,6 @@ class InstructorDiscussionController extends Controller
                     'thread' => $threadData,
                 ];
 
-            // dd($data);
             return view('instructor_discussions.instructorViewThread' , compact('instructor'))
             ->with($data);
 
@@ -559,7 +556,7 @@ class InstructorDiscussionController extends Controller
     
             try {
                 $sortVal = $request->input('sortVal');
-                // dd($sortVal);
+            
                 $threadData = DB::table('thread_comments')
                 ->select(
                     'thread_comments.thread_comment_id',

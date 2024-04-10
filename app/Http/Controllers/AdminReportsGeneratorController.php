@@ -127,7 +127,6 @@ class AdminReportsGeneratorController extends Controller
 
     // print list of learners
     public function listLearners(Request $request) {
-        // dd($request->all());
 
         try {
 
@@ -267,7 +266,6 @@ class AdminReportsGeneratorController extends Controller
 
 
             $learners = $learner->get();
-            // dd($learners);
 
 
             if($displayType === 'Default') {
@@ -276,7 +274,6 @@ class AdminReportsGeneratorController extends Controller
                     'name' => 'Name',
                     'learner_email' => 'Email',
                     'learner_contactno' => 'Contact No',
-                    // 'learner_contact' => 'Contact',
                     'created_at' => 'Date Registered',
                     'business_name' => 'Business Name',
                 ];
@@ -398,7 +395,6 @@ class AdminReportsGeneratorController extends Controller
             $learnerData = DB::table('learner')
             ->select(
                 'learner.status',
-                // DB::raw('CONCAT(learner.learner_fname, " ", learner.learner_lname) as name'),
                 'learner.learner_fname',
                 'learner.learner_lname',
                 'learner.learner_contactno',
@@ -478,7 +474,6 @@ class AdminReportsGeneratorController extends Controller
 
 // print list of instructors
     public function listInstructors(Request $request) {
-        // dd($request->all());
 
         try {
 
@@ -587,7 +582,6 @@ class AdminReportsGeneratorController extends Controller
 
 
             $instructors = $instructor->get();
-            // dd($learners);
 
 
             if($instructor_displayType === 'Default') {
@@ -828,11 +822,9 @@ class AdminReportsGeneratorController extends Controller
     public function selectSession(Request $request) {
         try {
             
-            /*dd($request->all());*/
+      
 
             $selectedSession_userCategory = $request->input('selectedSession_userCategory');
-/*            $selectedSession_selectLearner = $request->input('selectedSession_selectLearner');
-            $selectedSession_selectInstructor = $request->input('selectedSession_selectInstructor');*/
             $userSession = $request->input('userSession');
             $customTime = $request->has('selectedSessionUserSelectedDayCheck');
             $startDate = $request->input('selectedSessionDateStart');
@@ -1127,68 +1119,6 @@ class AdminReportsGeneratorController extends Controller
     }
 
 
-    // print the course gradesheet
-    // public function listCourseGradesheet(Request $request) {
-    //     try {
-
-    //         $grades_selectApprovedCourse = $request->input('grades_selectApprovedCourse');
-
-    //         $course = DB::table('course')
-    //         ->select(
-    //             'course_name'
-    //         )
-    //         ->where('course_id', $grades_selectApprovedCourse)
-    //         ->first();
-
-    //         $learner_course_progress = DB::table('learner_course_progress')
-    //         ->select(
-    //             DB::raw('CONCAT(learner.learner_fname, " ", learner.learner_lname) as name'),
-    //             'learner_course_progress.course_progress',
-    //             'learner_course_progress.grade',
-    //             'learner_course_progress.remark',
-    //             'learner_course_progress.start_period',
-    //             'learner_course_progress.finish_period',
-    //         )
-    //         ->join('learner', 'learner.learner_id', 'learner_course_progress.learner_id')
-    //         ->where('learner_course_progress.course_id', $grades_selectApprovedCourse)
-    //         ->orderBy('learner_course_progress.learner_id', 'asc')
-    //         ->get();
-
-    //         $learner_pre_assessment_progress = DB::table('learner_pre_assessment_progress')
-    //         ->select(
-    //             DB::raw('CONCAT(learner.learner_fname, " ", learner.learner_lname) as name'),
-    //             'learner_pre_assessment_progress.status',
-    //             'learner_pre_assessment_progress.score',
-    //             'learner_pre_assessment_progress.remarks',
-    //             'learner_pre_assessment_progress.start_period',
-    //             'learner_pre_assessment_progress.finish_period',
-    //         )
-    //         ->join('learner', 'learner.learner_id', 'learner_pre_assessment_progress.learner_id')
-    //         ->where('learner_pre_assessment_progress.course_id', $grades_selectApprovedCourse)
-    //         ->orderBy('learner_pre_assessment_progress.learner_id', 'asc')
-    //         ->get();
-
-    //         $learner_activity_progress = DB::table('learner_activity_progress')
-    //         ->select(
-    //             DB::raw('CONCAT(learner.learner_fname, " ", learner.learner_lname) as name'),
-    //         )
-    //         ->join('learner', 'learner.learner_id', 'learner_activity_progress.learner_id')
-    //         ->where('learner_activity_progress.course_id', $grades_selectApprovedCourse)
-    //         ->orderBy('learner_activity_progress.learner_id', 'asc')
-    //         ->get();
-
-    //         foreach($learner_activity_progress as $learner_activity) {
-    //             $learner_activity->activities = DB::table('learner_activity_output')
-    //             ->select(
-
-    //             )
-    //         }
-
-    //     } catch (\Exception $e) {
-    //         dd($e->getMessage());
-    //     }
-    // }
-
 
     public function listCourseGradesheet(Request $request) {
         try { 
@@ -1408,7 +1338,6 @@ class AdminReportsGeneratorController extends Controller
     public function listLearnerCourseGradesheet(Request $request) {
 
         try {
-            /*dd($request->all());*/
             $course = $request->input('learnerCoursegrades_selectApprovedCourse');
             $learnerCourse = $request->input('learnerCourseGrades_selectLearner');
             
@@ -1463,7 +1392,6 @@ class AdminReportsGeneratorController extends Controller
         ->where('learner_course.learner_course_id', $learnerCourse);
 
         $gradeWithActivityData = $gradeData->first();
-        // foreach ($gradeWithActivityData as $key => $activityData) {
             $gradeWithActivityData->activities = DB::table('learner_activity_output')
                 ->select(
                     'learner_activity_output.activity_id',
@@ -1513,9 +1441,6 @@ class AdminReportsGeneratorController extends Controller
                 ->where('learner_course_id', $gradeWithActivityData->learner_course_id)
                 ->first();
 
-            // Add the updated $activityData back to the main array
-            // $gradeWithActivityData[$key] = $activityData;
-        // }
 
         $activitySyllabusData = DB::table('activities')
         ->select(
@@ -1774,7 +1699,6 @@ class AdminReportsGeneratorController extends Controller
 
     public function searchLearnerCourse(Request $request) {
         try {
-            /*dd($request->all());*/
             $filterVal = $request->input('filterVal');
             $courseVal = $request->input('courseVal');
 

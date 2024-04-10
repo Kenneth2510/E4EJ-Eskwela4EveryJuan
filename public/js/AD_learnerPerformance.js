@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // alert('test')
+ 
     var baseUrl = window.location.href;
 
     getTotalEnrolledCourse()
@@ -12,12 +12,9 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function(response) {
-                console.log(response)
 
                 var learnerCourseData = response['learnerCourseData']
                 var totalLearnerCourseCount = response['totalLearnerCourseCount']
-                // var totalLearnerCompletedCourseCount = response['totalLearnerCompletedCourseCount']
-                // var totalLearnerInProgressCourseCount = response['totalLearnerInProgressCourseCount']
                 var totalLearnerApprovedCourseCount = response['totalLearnerApprovedCourseCount']
                 var totalLearnerPendingCourseCount = response['totalLearnerPendingCourseCount']
                 var totalLearnerRejectedCourseCount = response['totalLearnerRejectedCourseCount']
@@ -62,7 +59,6 @@ $(document).ready(function() {
                 'selectedCourse': selectedCourse
             },
             success: function(response) {
-                // console.log(response)
 
                 var courseData = response['courseData']
             
@@ -322,7 +318,6 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function(response) {
-                console.log(response)
 
                 var totalsPerDay = response['totalsPerDay']
 
