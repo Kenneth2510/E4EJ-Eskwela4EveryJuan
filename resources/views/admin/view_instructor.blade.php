@@ -71,7 +71,7 @@
                         </form>
                     </div>
                     @elseif ($instructor->status == 'Expired')
-                    <div id="status" class="btn bg-gray-500 text-white btn-error">Expired
+                    <div id="status" class="text-white bg-gray-500 btn btn-error">Expired
                     </div>
                     <div id="button" class="flex flex-col hidden space-y-2">
                         <form action="/admin/pending_instructor/{{$instructor->instructor_id}}" method="POST">
@@ -490,7 +490,7 @@
                 isValid = false;
             } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_lname)) {
                 $("#lastNameError").text(
-                    "Special characters are not allowed in the first name except for one dash.",
+                    "Special characters are not allowed in the last name except for one dash.",
                 );
                 isValid = false;
             } else {

@@ -69,7 +69,7 @@
                         </form>
                     </div>
                     @elseif ($learner->status == 'Expired')
-                    <div id="status" class="btn btn-error text-white bg-gray-500">Expired
+                    <div id="status" class="text-white bg-gray-500 btn btn-error">Expired
                     </div>
                     <div id="button" class="flex flex-col hidden space-y-2">
                         <form action="/admin/pending_learner/{{$learner->learner_id}}" method="POST">
@@ -226,9 +226,9 @@
 
                     <div class="mt-3" id="bplo_account_numberArea">
                         <label for="bplo_account_number">BPLO Account Number</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" maxlength="13"
+                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" maxlength="7"
                             type="text" name="bplo_account_number" id="bplo_account_number"
-                            value="{{$business->bplo_account_number}}" disabled>
+                            value="{{$business->bplo_account_number}}" placeholder="A-00000" disabled>
                         <span id="bploError" class="text-red-500"></span>
                     </div>
 
@@ -565,9 +565,9 @@
             if (learner_lname === '') {
                 $('#lastNameError').text('Please enter a last name.');
                 isValid = false;
-            } else if (!/^[a-zA-Z0-9\s-]+$/.test(learner_fname)) {
+            } else if (!/^[a-zA-Z0-9\s-]+$/.test(learner_lname)) {
                 $("#lastNameError").text(
-                    "Special characters are not allowed in the first name except for one dash.",
+                    "Special characters are not allowed in the last name except for one dash.",
                 );
                 isValid = false;
             } else {
@@ -590,6 +590,9 @@
 
             if (learner_email === '') {
                 $('#emailError').text('Please enter your email address.');
+                isValid = false;
+            } else if (!learner_email.includes('@')) {
+                $('#emailError').text('Input must be valid email address (eg. name@example.com)');
                 isValid = false;
             } else {
                 $('#emailError').text('');
@@ -623,7 +626,7 @@
                 !/^.*[a-zA-Z].*[-].*$/.test(bplo_account_number)
             ) {
                 $("#bploError").text(
-                    "Please enter a valid Account Number.",
+                    "Please enter a valid BPLO Account Number.",
                 );
                 isValid = false;
             } else {

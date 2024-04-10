@@ -278,7 +278,7 @@ $(document).ready(function () {
             $("#security_code").addClass("hidden");
         } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_lname)) {
             $("#lastNameError").text(
-                "Special characters are not allowed in the first name except for one dash.",
+                "Special characters are not allowed in the last name except for one dash.",
             );
             isValid = false;
         } else {
