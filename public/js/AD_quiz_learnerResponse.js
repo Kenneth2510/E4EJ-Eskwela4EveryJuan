@@ -19,7 +19,6 @@ $(document).ready(function() {
             url: url,
 
             success: function(response) {
-                console.log(response);
 
                 quizLearnerOutputData = response['learnerQuizOutputData'];
                 displayLearnerQuizOutputData(quizLearnerOutputData);
@@ -32,7 +31,6 @@ $(document).ready(function() {
 
     function displayLearnerQuizOutputData(quizLearnerOutputData) {
 
-        // console.log(quizLearnerOutputData)
         var questionDataDisp = ``;
         var questionIndicatorDisp = ``;
 

@@ -22,12 +22,10 @@ function getQuizData() {
         url: url,
         dataType: 'json',
         success: function (response) {
-            console.log(response);
             quizInfoData = response['quizInfo'];
             quizReferenceData = response['quizReference'];
             questionsData = response['quizContent'];
             questionsExistingData = response['questionsData'];
-            // displayQuestions(questionsData, quizReferenceData);
             resetQuestionNumber(questionsData, quizReferenceData);
         },
         error: function (error) {
@@ -41,7 +39,6 @@ function getQuizData() {
 function resetQuestionNumber(questionsData, quizReferenceData) {
     if (Object.keys(questionsData).length > 0) {
         for (let i = 0; i < questionsData.length; i++) {
-            // console.log(questionsData[i])
             const question_id = questionsData[i]['question_id'];
             const syllabus_id = questionsData[i]['syllabus_id'];
             const course_id = questionsData[i]['course_id'];
@@ -67,7 +64,6 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
             temp_questionsData.push(row_temp_questions);
         }
 
-        // console.log(temp_questionsData);
         displayQuestions(temp_questionsData, quizReferenceData);
     } else {
         console.log('no values');
@@ -78,7 +74,7 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
 
 
     function displayQuestions(temp_questionsData, quizReferenceData) {
-        console.log(temp_questionsData)
+   
         var temp_question_id = 0;
         var questionData = '';
         var totalQuestions = 0;
@@ -102,7 +98,6 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
             const answersArray = JSON.parse(answers);
             const isCorrectArray = JSON.parse(isCorrect);
 
-            console.log(question_syllabus_id)
             totalQuestions += 1;    
 
             if(category === 'MULTIPLECHOICE'){
@@ -143,7 +138,6 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
                                     <label for="questionReference">Reference</label>
                                     <select name="questionReference" id="" class="questionReference text-md my-1 py-2">
                                     `;
-                                    console.log(question_syllabus_id)
                                     for (let x = 0; x < quizReferenceData.length; x++) {
                                         const reference_syllabus_id = parseInt(quizReferenceData[x]['syllabus_id']);
                                         const reference_topic_title = quizReferenceData[x]['topic_title'];
@@ -210,7 +204,6 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
                             const answer = answersArray[y];
                             const correctAnswer = isCorrectArray[y]
                             
-                            // console.log(answer + " : " + correctAnswer)
                             if(correctAnswer === 1) {
                                 questionData += `
                             <option value="${answer}" selected>${answer}</option>
@@ -320,18 +313,12 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
             
             const questionData = temp_questionsData.find(q => q.questionCount === question_count);
 
-            // // Accessing individual keys
-            // console.log(questionData.question); // Output: "What is a business?"
-            // console.log(questionData.topic_title); // Output: "Lesson 1: Fundamentals of Business 1"
-            // console.log(questionData.answer); // Output: "[\"Option B\", \"Option A\"]"
-            // console.log(questionData.isCorrect); // Output: "[1, 0]"
+
 
             // If you want to convert the answer and isCorrect strings to arrays
             const answersArray = JSON.parse(questionData.answer);
             const isCorrectArray = JSON.parse(questionData.isCorrect);
 
-            // console.log(answersArray); // Output: ["Option B", "Option A"]
-            // console.log(isCorrectArray); // Output: [1, 0]
 
             if (category === 'MULTIPLECHOICE') {
                 questionData.category = 'MULTIPLECHOICE'
@@ -350,63 +337,17 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
                 }
                     answersArray.length = 0;
                     isCorrectArray.length = 0;
-                // console.log(tempAnswer_correct);
                     answersArray.push(tempAnswer_correct.answer)
                     isCorrectArray.push(tempAnswer_correct.isCorrect)
 
                     questionData.answer = JSON.stringify(answersArray)
                     questionData.isCorrect = JSON.stringify(isCorrectArray)
-                // console.log(questionData);
-                // Process the multiple-choice answers
-                // update_questionTemplate += `
-                //     <div class="question_choices">
-                //         <table class="w-full mt-5">
-                //             <tbody class="choicesArea">${getChoicesHTML(answersArray, isCorrectArray)}</tbody>
-                //         </table>
-                //         <button class="py-5 text-lg addNewOptionBtn">
-                //             <i class="fa-solid fa-circle-plus" style="color: #00693e;"></i>
-                //             <span class="mx-3">add option</span>
-                //         </button>
-                //     </div>
-            
-                //     <div class="question_correct_answer">
-                //         <span>Correct Answer</span>
-                //         <select name="selectCorrectAnswer" class="selectCorrectAnswer">
-                //         `;
-            
-                // for (let y = 0; y < answersArray.length; y++) {
-                //     const answer = answersArray[y];
-            
-                //     update_questionTemplate += `
-                //         <option value="${answer}">${answer}</option>
-                //         `;
-                // }
-
-                // for (let y = 0; y < answersArray.length; y++) {
-                //     const answer = answersArray[y];
-                //     const correctAnswer = isCorrectArray[y]
-                    
-                //     console.log(answer + " : " + correctAnswer)
-                //     if(correctAnswer === 1) {
-                //         update_questionTemplate += `
-                //     <option value="${answer}" selected>${answer}</option>
-                //     `
-                //     }
-                //     update_questionTemplate += `
-                //     <option value="${answer}">${answer}</option>
-                //     `
-                // }
-            
-                // update_questionTemplate += `
-                //         </select>
-                //     </div>
-                // </div>`;
+             
             
             
             } else if (category === 'IDENTIFICATION') {
                 questionData.category = 'IDENTIFICATION'
-                // console.log(questionData);
-                // Process the identification answers
+         
                 for (let i = 0; i < answersArray.length; i++) {
                     const answer = answersArray[i];
                     const isCorrect = isCorrectArray[i];
@@ -420,7 +361,6 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
                 }
                     answersArray.length = 0;
                     isCorrectArray.length = 0;
-                // console.log(tempAnswer_correct);
                     answersArray.push(tempAnswer_correct.answer)
                     isCorrectArray.push(tempAnswer_correct.isCorrect)
 
@@ -428,26 +368,13 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
                     questionData.isCorrect = JSON.stringify(isCorrectArray)
 
 
-                //     // console.log(tempAnswer_x);
-                
-                // update_questionTemplate += `
-                //     <div class="question_answer mt-5 flex">
-                //         <textarea type="text" class="identificationAns w-4/5" placeholder="Answer here...">${tempAnswer_correct.answer}</textarea>
-                //         <div class="isCorrectCheck ${tempAnswer_correct.isCorrect == 1 ? '' : 'hidden'}">
-                //             <i class="fa-solid fa-check text-xl" style="color: #00693e;"></i>
-                //             <span>correct</span>
-                //         </div>
-                //     </div>
-                // </div>`;
+            
             } else {
-                // Process other types of questions
                 update_questionTemplate += `
                     `;
             }
         
-            // questionContent.find('.question_category_reference').siblings().remove();
-            // questionContent.append(update_questionTemplate);
-
+      
             
             displayQuestions(temp_questionsData, quizReferenceData)
         });
@@ -464,20 +391,16 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
             const questionData = temp_questionsData.find(q => q.questionCount === question_count);
 
             const index = temp_questionsData.indexOf(questionData);
-            // console.log(questionData)
-            // console.log(index);
+      
 
             if (index !== -1) {
-                // Log the questionData and its index
-                // console.log(questionData);
-                // console.log(index);
+           
         
                 // Now you can remove the item from the array using splice
                 temp_questionsData.splice(index, 1);
         
                 displayQuestions(temp_questionsData, quizReferenceData);
-                // Log the updated temp_questionsData
-                // console.log(temp_questionsData);
+           
             } else {
                 console.log('Question not found in the array.');
             }
@@ -509,8 +432,7 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
         
             const index = temp_questionsData.indexOf(questionData);
             
-            console.log(questionData);
-            console.log(index);
+
             
         displayQuestions(temp_questionsData, quizReferenceData)
         });
@@ -590,10 +512,7 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
             const indexInTempQuestionsData = temp_questionsData.indexOf(originalQuestionData);
             temp_questionsData[indexInTempQuestionsData] = questionDataCopy;
         
-            // Now you have both the original answers and the modified answers
-            // console.log("Original Answers Array:", originalAnswersArray);
-            // console.log("Modified Question Data:", questionDataCopy);
-            // console.log("Index in Array:", index);
+  
         
             displayQuestions(temp_questionsData, quizReferenceData)
             // If needed, you can save the updated data to your backend or perform other actions
@@ -629,10 +548,7 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
             temp_questionsData[indexInTempQuestionsData] = questionData;
         
             // Now you have both the modified answers and isCorrect arrays
-            // console.log("Modified Answers Array:", answersArray);
-            // console.log("Modified isCorrect Array:", isCorrectArray);
-            // console.log("Modified Question Data:", questionData);
-            // console.log("Index in Array:", index);
+   
         
     
             displayQuestions(temp_questionsData, quizReferenceData)
@@ -685,11 +601,10 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
                 // Find the questionData before making any changes
                 const questionData = temp_questionsData.find(q => q.questionCount === question_count);
                     
-                // console.log(questionData.question)
-
+         
 
                 questionData.question = question;
-                // console.log(question);
+     
                 
             }
 
@@ -795,9 +710,9 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
 
         
         var currentCount = questionCounter;
-        // console.log(currentCount);
+      
         var updatedCount = currentCount + 1;
-        // console.log(updatedCount);
+ 
         const newRow_temp_questionData = {
             questionCount: updatedCount,
             question_id: "temp " + temp_question_count++,
@@ -839,7 +754,6 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
             const answers = questionsExistingData[i]['answers'];
             const isCorrect = questionsExistingData[i]['isCorrect'];
             
-            // console.log(questionsExistingData[i]);
             questionSelectionDisp += `
             <option value="${question_id}">${question}</option>
             `;
@@ -859,11 +773,8 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
 
         const questionData = questionsExistingData.find(q => q.question_id === parseInt(questionID));
         
-        // console.log(questionData);
         var currentCount = questionCounter;
-        // console.log(currentCount);
         var updatedCount = currentCount + 1;
-        // console.log(updatedCount);
         const newRow_temp_questionData = {
             questionCount: updatedCount,
             question_id: questionData['question_id'],
@@ -982,7 +893,7 @@ function resetQuestionNumber(questionsData, quizReferenceData) {
                         },
                         success: function (response) {
                             // Handle success if needed
-                            console.log(response);
+            
                             completedRequests++;
     
                             if (completedRequests === temp_questionsData.length) {

@@ -12,7 +12,7 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function (response) {
-                // console.log(response);
+           
 
                 var attemptCount = response['attemptCount']
                 var learnerQuizProgressData = response['learnerQuizProgressData']
@@ -193,7 +193,7 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function (response) {
-                // console.log(response);
+            
 
                 var learnerQuizOutputOverallScoreData = response['learnerQuizOutputOverallScoreData']
                 displayLearnerSyllabusOverallScoreChart(learnerQuizOutputOverallScoreData)
@@ -374,7 +374,7 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function (response) {
-                // console.log(response);
+             
     
                 learnerQuizOutputData = response['learnerQuizOutputData'];
                 learnerQuizOutputOverallScoreData = response['learnerQuizOutputOverallScoreData'];

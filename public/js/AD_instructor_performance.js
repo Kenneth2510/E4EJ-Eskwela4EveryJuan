@@ -28,7 +28,7 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function(response) {
-                // console.log(response)
+           
 
                 totalCourseNum = response['totalCourseNum']
                 totalPendingCourseNum = response['totalPendingCourseNum']
@@ -82,7 +82,7 @@ $(document).ready(function() {
                 'selectedCourse': selectedCourse
             },
             success: function(response) {
-                console.log(response)
+           
 
                 courseData = response['courseData']
                 displayCourseData(response, courseData, selectedCourse)
@@ -297,7 +297,6 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function(response) {
-                console.log(response)
 
                 var totalsPerDay = response['totalsPerDay']
 

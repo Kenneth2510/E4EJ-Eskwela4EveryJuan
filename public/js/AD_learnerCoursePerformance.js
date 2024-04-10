@@ -13,7 +13,6 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function (response) {
-                console.log(response);
 
                 var averageTimeFormatted = response['averageTimeFormatted']
                 var learnerCourseData = response['learnerCourseData']
@@ -22,8 +21,7 @@ $(document).ready(function() {
                 var learnerInProgressSyllabusCount = response['learnerInProgressSyllabusCount']
                 var learnerLockedSyllabusCount = response['learnerLockedSyllabusCount']
                 var percentageCompleted = response['percentageCompleted']
-/*
-                $('#learnerPerformancePercent').text(percentageCompleted)*/
+
                 $('#learnerPerformancePercent').text(parseFloat(percentageCompleted).toFixed(2));
                 $('#totalCompletedSyllabus').text(learnerCompletedSyllabusCount)
                 $('#totalInProgressSyllabus').text(learnerInProgressSyllabusCount)
@@ -45,7 +43,7 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function (response) {
-                console.log(response);
+
 
                 var averageLessonTimeFormatted = response['averageLessonTimeFormatted']
                 var averageActivityTimeFormatted = response['averageActivityTimeFormatted']

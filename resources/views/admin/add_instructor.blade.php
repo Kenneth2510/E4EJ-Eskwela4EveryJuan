@@ -263,6 +263,31 @@
                 isValid = false;
             } else {
                 $('#contactError').text('');
+
+                var url = "/instructor/checkContact";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'number' : instructor_contactno,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#contactError').text('This contact number is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#contactError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
 
             if (instructor_email === '') {
@@ -270,6 +295,31 @@
                 isValid = false;
             } else {
                 $('#emailError').text('');
+
+                var url = "/instructor/checkEmail";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'email' : instructor_email,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#emailError').text('This email is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#emailError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
 
             if (!instructor_credentials) {
@@ -285,6 +335,31 @@
                 isValid = false;
             } else {
                 $('#usernameError').text('');
+
+                var url = "/instructor/checkUsername";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'username' : instructor_username,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#usernameError').text('This username is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#usernameError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
         
 

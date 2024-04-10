@@ -11,7 +11,7 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function(response) {
-                console.log(response)
+         
                 var enrolleeProgress = response['enrolleeProgress']
 
                 courseProgressGraph(enrolleeProgress);
@@ -228,7 +228,6 @@ $(document).ready(function() {
                     if (response && response.redirect_url) {
                         window.location.href = response.redirect_url;
                     } else {
-                        // Handle success scenario
                     }
                 },
                 error: function (xhr, status, error) {
@@ -393,9 +392,6 @@ $(document).ready(function() {
         
         let total_percent = (activity_percent + quiz_percent + post_assessment_percent).toFixed(2);
         
-        
-        // alert(total_percent)
-        // $('#totalPercent').text(total_percent)
         var isValid = true
 
         if (activity_percent === '') {
@@ -435,12 +431,7 @@ $(document).ready(function() {
         
 
         if(isValid) {
-            // var gradeData = {
-            //     activity_percent: activity_percent,
-            //     quiz_percent: quiz_percent,
-            //     pre_assessment_percent: pre_assessment_percent,
-            //     post_assessment_percent: post_assessment_percent
-            // }
+
 
 
             var url = baseUrl + "/gradingSystem";
@@ -458,7 +449,7 @@ $(document).ready(function() {
                     post_assessment_percent: post_assessment_percent,
                 },
                 success: function(response) {
-                    console.log(response);
+                
                     if (response.redirect_url) {
                         window.location.href = response.redirect_url;
                     }

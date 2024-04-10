@@ -65,7 +65,6 @@ $(document).ready(function() {
 
         $('.criteriaScore').prop('disabled', false).focus();
         $('#remarks').prop('disabled', false);
-        // $('#remarks_area').removeClass('hidden');
 
         $('#returnBtn').addClass('hidden');
         $('#addScoreBtn').addClass('hidden');
@@ -79,7 +78,6 @@ $(document).ready(function() {
 
         $('.criteriaScore').prop('disabled', true);
         $('#remarks').prop('disabled', false);
-        // $('#remarks_area').addClass('hidden');
 
         $('#returnBtn').removeClass('hidden');
         $('#addScoreBtn').removeClass('hidden');
@@ -107,7 +105,6 @@ function updateOverallTotalScore() {
 $('.criteriaScore').on('input', function (e) {
     handleCriteriaInput.call(this); // Ensure 'this' refers to the input element
     updateOverallTotalScore();
-    console.log(criteriaData);
 });
     
 
@@ -163,8 +160,6 @@ $('#confirmSubmit').on('click', function (e) {
 
     var url = `/admin/courseManage/content/activity/${learnerActivityOutputID}/${learnerCourseID}/${activityID}/${activityContentID}/${attempt}`;
 
-    // console.log(url);
-    // console.log(remarks);
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
         
     $.ajax({
@@ -175,10 +170,8 @@ $('#confirmSubmit').on('click', function (e) {
             'X-CSRF-TOKEN': csrfToken
         },
         success: function(response) {
-            // window.location.reload();
-            console.log(response)
             addLearnerOutputCriteriaScore(learnerActivityOutputID, learnerCourseID, activityID, activityContentID, attempt);
-            // alert('done');
+  
         },
         error: function(error) {
             console.log(error);
@@ -187,12 +180,7 @@ $('#confirmSubmit').on('click', function (e) {
 });
 
 function addLearnerOutputCriteriaScore(learnerActivityOutputID, learnerCourseID, activityID, activityContentID, attempt) {
-    console.log(criteriaData);
-    // console.log('learner_activity_output: ' + learnerActivityOutputID);
-    // console.log('learner_course: ' + learnerCourseID);
-    // console.log('activity: ' + activityID);
-    // console.log('activity_content: ' + activityContentID);
-    // Capture the current URL
+    
     var currentUrl = window.location.href;
     console.log("Current URL:", currentUrl);
 
@@ -216,7 +204,6 @@ function addLearnerOutputCriteriaScore(learnerActivityOutputID, learnerCourseID,
             currentUrl: urlSuffix,
         };
 
-        console.log(rowCriteriaData);
 
         var promise = new Promise(function (resolve, reject) {
             $.ajax({
@@ -227,7 +214,7 @@ function addLearnerOutputCriteriaScore(learnerActivityOutputID, learnerCourseID,
                     'X-CSRF-TOKEN': csrfToken,
                 },
                 success: function (response) {
-                    console.log(response);
+               
                     resolve(response);
                 },
                 error: function (error) {

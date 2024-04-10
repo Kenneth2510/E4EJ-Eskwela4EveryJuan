@@ -89,13 +89,63 @@ $(document).ready(function () {
             isValid = false;
         } else {
             $("#emailError").text("");
+
+            var url = "/learner/checkEmail";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'email' : learner_email,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#emailError').text('This email is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#emailError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
         }
 
         if (learner_contactno === "" || learner_contactno.length != 11) {
             $("#contactnoError").text("Please enter your contact number.");
             isValid = false;
         } else {
-            $("#contactError").text("");
+            $("#contactnoError").text("");
+
+            var url = "/learner/checkContact";
+            $.ajax ({
+                type: "GET",
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    'number' : learner_contactno,
+                },
+                success: function(response) {
+                    // console.log(response);
+                    if(response.exists) {
+                        $('#contactnoError').text('This contact number is already taken.');
+                        isValid = false;
+                    } else {
+                        $('#contactnoError').text('');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+
+                })
         }
 
         if (learner_username === "") {
@@ -103,6 +153,31 @@ $(document).ready(function () {
             isValid = false;
         } else {
             $("#usernameError").text("");
+
+            var url = "/learner/checkUsername";
+            $.ajax ({
+                type: "GET",
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    'username' : learner_username,
+                },
+                success: function(response) {
+                    // console.log(response);
+                    if(response.exists) {
+                        $('#usernameError').text('This username is already taken.');
+                        isValid = false;
+                    } else {
+                        $('#usernameError').text('');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+
+                })
         }
 
         $("#password").trigger("keyup");
@@ -188,6 +263,31 @@ $(document).ready(function () {
             isValid = false;
         } else {
             $("#bploCategoryError").text("");
+
+            var url = "/learner/checkBPLO";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'bplo_account_number' : bplo_account_number,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#bploCategoryError').text('This account number is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#bploCategoryError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
         }
 
         if (business_classification === "") {

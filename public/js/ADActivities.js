@@ -2,7 +2,6 @@ $(document).ready(() => {
     $("#viewResponseActivity").on("click", (e) => {
         e.preventDefault();
         
-        // $("#selectTypeParent").removeClass("hidden");
         $('#responsesModal').removeClass('hidden');
         activityOutputData();
     });
@@ -16,10 +15,6 @@ $(document).ready(() => {
     function activityOutputData() {
         var courseID = $('#studentsList').data('course-id')
         var syllabusID = $('#studentsList').data('syllabus-id')
-        
-
-        // console.log(courseID)
-        // console.log(syllabusID);
 
         var url = "/admin/courseManage/content/"+ courseID +"/"+ syllabusID +"/activity/json";
 
@@ -28,11 +23,7 @@ $(document).ready(() => {
             url: url,
             dataType: 'json',
             success: function (response){
-                console.log(response)
                 activityData = response['activityContent']
-                // activityCriteriaData = response['activityContentCriteria']
-                // console.log(activityCriteriaData)
-                // reDisplayActivity(activityData, activityCriteriaData);
                 learnerActivityContent = response['learnerActivityContent'];
                 appendStudentsList(learnerActivityContent, activityData);
             },
@@ -45,44 +36,6 @@ $(document).ready(() => {
     function appendStudentsList(learnerActivityContent, activityData) {
         var courseID = $('#studentsList').data('course-id')
         var syllabusID = $('#studentsList').data('syllabus-id')
-        // console.log(isAppended);
-        // if (!isAppended) {
-        //     const studentsList = $(
-        //         `<button class="flex flex-row items-center" id="backToDefault">
-        //                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>
-        //                 <p>Go back</p>
-        //             </button>
-        //             <h1 class="mt-4 mb-2 text-xl font-medium">Learner Responses</h1>
-        //                     <table class="w-full text-center table-fixed">
-        //                        <thead>
-        //                            <tr>
-        //                                <th class="w-1/12">Enrollee ID</th>
-        //                                <th class="w-1/12">Learner ID</th>
-        //                                <th class="w-2/12">Name</th>
-        //                                <th class="w-1/12">Attempt</th>
-        //                                <th class="w-2/12">Attempt Taken</th>
-        //                                <th class="w-1/12">Score</th>
-        //                                <th class="w-2/12">Status</th>
-        //                                <th class="w-1/12">Mark</th>
-        //                                <th class="w-1/12"></th>
-        //                            </tr>
-        //                        </thead>
-        //                        <tbody id="learnerActivityData">
-                                   
-        //                        </tbody>
-        //                    </table>`,
-        //     );
-        //     // studentsList
-        //     //     .find('td[class="float-right"]')
-        //     //     .html(
-        //     //         '<button class="flex flex-row items-center justify-center p-4 m-2 rounded-lg shadow-lg bg-amber-400 hover:bg-amber-500 md:h-12 py-2" type="button" id=""><h1>visit</h1></button>',
-        //     //     );
-
-        //     $("#studentsList").append(studentsList);
-
-        //     let criteria_total_score = activityData[0]['total_score']
-
-        //     isAppended = true;
 
             learnerRowData = ``;
 
@@ -142,15 +95,6 @@ $(document).ready(() => {
             $('#responsesRowDataArea').empty();
             $('#responsesRowDataArea').append(learnerRowData);
 
-
-                              
-
-        //     $(document).on("click", "#backToDefault", () => {
-        //         $("#defaultView").removeClass("hidden");
-        //         studentsList.remove();
-        //         isAppended = false;
-        //     });
-        // }
     }
 
     $("#viewStudents").on("click", () => {
@@ -196,10 +140,9 @@ $(document).ready(() => {
             url: url,
             dataType: 'json',
             success: function (response){
-                console.log(response)
                 activityData = response['activityContent']
                 activityCriteriaData = response['activityContentCriteria']
-                // console.log(activityCriteriaData)
+               
                 
         $('#loaderModal').addClass('hidden');
                 reDisplayActivity(activityData, activityCriteriaData);
@@ -212,7 +155,7 @@ $(document).ready(() => {
 
 
     function reDisplayActivity(activityData, activityCriteriaData) {
-        console.log(activityCriteriaData)
+    
         var activityContent_disp =``;
         
         for (let i = 0; i < activityData.length; i++) {
@@ -318,9 +261,7 @@ $(document).ready(() => {
                     </div>
                 `           
             } else {
-                // activityContent_disp += `
-                // <p>No instructions given</p>
-                // `
+          
 
                 activityContent_disp += `
                 <div class="flex flex-row items-center">
@@ -492,11 +433,8 @@ $(document).ready(() => {
 
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         
-        // console.log(activityContentID, activity_instructions)
         var baseUrl = window.location.href;
-        // console.log(baseUrl);
         var url = baseUrl + "/title/"+ activityID +"/" + activityContentID +"/instructions";
-        // console.log(url)
 
         $.ajax({
             type: "POST",
@@ -561,7 +499,7 @@ $(document).ready(() => {
 
         $('.deleteRowCriteriaBtn').on('click', function(e) {
             e.preventDefault();
-            // alert('test')
+         
 
             var tr = $(this).closest('tr');
             const criteriaTitle = tr.find('.criteriaTitle_input').val().trim();
@@ -570,20 +508,17 @@ $(document).ready(() => {
             console.log('criteriaTitle:', criteriaTitle);
             console.log('criteriaScore:', criteriaScore);
 
-            // Find the index of the object in activityCriteriaData
-            // const indexToRemove = activityCriteriaData.findIndex(item => item.criteria_title === criteriaTitle && item.score == criteriaScore);
-
-            // console.log('indexToRemove:', indexToRemove);
+          
 
             const criteria_id = $(this).data('array-criteria-index')
 
-            console.log(criteria_id)
+       
 
           
             if (criteria_id !== -1) {
                 // Remove the object from the array
                 activityCriteriaData.splice(criteria_id, 1);
-                console.log(activityCriteriaData);
+             
         
                 // Update the display or perform any other necessary actions
                 reDisplayActivity(activityData, activityCriteriaData);
@@ -604,12 +539,9 @@ $(document).ready(() => {
             console.log('criteriaTitle:', criteriaTitle);
             console.log('criteriaScore:', criteriaScore);
 
-            // // Find the index of the object in activityCriteriaData
-            // const indexToSave = activityCriteriaData.findIndex(item => item.criteria_title === criteriaTitle && item.score == criteriaScore);
         
             const criteria_id = $(this).data('array-criteria-index')
-            console.log(criteria_id);
-            console.log(activityCriteriaData[criteria_id])
+       
 
 
             if (criteria_id !== -1) {
@@ -665,14 +597,13 @@ $(document).ready(() => {
                 'criteria_title' : criteria_title,
                 'score' : parseInt(score, 10)
             }
-            console.log(rowCriteria);
             
             $('#loaderModal').removeClass('hidden');
 
             if (criteriaCounter === 0) {
                 
             var url = baseUrl + "/title/"+ activityID +"/" + activityContentID+"/criteria";
-                // alert('1')
+    
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -695,7 +626,7 @@ $(document).ready(() => {
                 criteriaCounter++;
             }else {
                 var url = baseUrl + "/title/"+ activityID +"/" + activityContentID+"/criteria_add";
-                // alert('2')
+        
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -715,10 +646,8 @@ $(document).ready(() => {
                 criteriaCounter++;
         } 
         }
-        // console.log(totalCriteriaScore);
 
         var url2 = baseUrl + "/title/"+ activityID +"/" + activityContentID+"/score";
-        // console.log(url)
 
         const udpatedActivityTotalScore = {
             'total_score': totalCriteriaScore,
@@ -753,7 +682,6 @@ $(document).ready(() => {
         const activityID = $(this).data('activity-id');
         const activityContentID = $(this).data('activity-content-id');
 
-        // console.log(activityCriteriaData)
         var newRow = $('<tr>');
 
         // Create the first cell (td) with an input field for criteria_title
@@ -793,7 +721,6 @@ $(document).ready(() => {
                 score: criteriaScore,
             }
 
-            console.log(newCriteria)
 
             activityCriteriaData.push(newCriteria);
             reDisplayActivity(activityData, activityCriteriaData);
@@ -807,13 +734,6 @@ $(document).ready(() => {
             
             $('.editCriteria_clickedBtn').removeClass('hidden');
         });
-
-        // $('.deleteNewCriteriaBtn').on('click', function() {
-        //     // Handle deleting the new row if needed
-        //     newRow.remove();
-            
-        //     $('.editCriteria_clickedBtn').removeClass('hidden');
-        // });
 
         $('table tbody').on('click', '.deleteNewCriteriaBtn', function() {
             // Handle deleting the new row if needed
@@ -853,11 +773,9 @@ $(document).ready(() => {
 
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         
-        // console.log(activityContentID, activity_instructions)
         var baseUrl = window.location.href;
-        // console.log(baseUrl);
         var url = baseUrl + "/title/"+ activityID +"/" + activityContentID+"/score";
-        // console.log(url)
+
 
         $('#loaderModal').removeClass('hidden');
         $.ajax({
