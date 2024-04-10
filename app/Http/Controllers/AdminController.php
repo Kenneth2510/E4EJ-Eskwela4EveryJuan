@@ -89,11 +89,13 @@ public function login_process(Request $request) {
     
     public function logout(Request $request) {
         auth('admin')->logout();
+        
+        $action = "Logged Out";
+        $this->log($action);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        $action = "Logged Out";
-        $this->log($action);
+
         return redirect('/admin')->with('message', 'Logout Successful');
     
     }
@@ -268,7 +270,7 @@ public function login_process(Request $request) {
                 ->orderBy('activity_logs.timestamp','desc');
 
 
-                $logs = $logsData->paginate(15);
+                $logs = $logsData->paginate(50);
             
 
                 $data = [

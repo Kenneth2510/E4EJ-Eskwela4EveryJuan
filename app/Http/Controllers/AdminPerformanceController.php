@@ -2033,7 +2033,10 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 $averageTimeDifference = ($totalNumberOfRows > 0) ? ($totalTimeDifference / $totalNumberOfRows) : 0;
 
                 // Format the average time difference
-                $averageTimeFormatted = gmdate("H:i:s", $averageTimeDifference);
+                // $averageTimeFormatted = gmdate("H:i:s", $averageTimeDifference);
+
+                
+                $averageTimeFormatted = gmdate("H:i:s", $totalTimeDifference);
 
                 $data = [
                 'title' => 'Performance',
@@ -3169,18 +3172,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
             
 
             try {
-                // $learnerCourseData = DB::table('learner_course')
-                // ->select(
-                //     'learner_course.learner_course_id',
-                //     'learner_course.learner_id',
-                //     'learner_course.status',
-
-                //     'learner.learner_fname',
-                //     'learner.learner_lname',
-                // )
-                // ->join('learner', 'learner.learner_id', '=', 'learner_course.learner_id')
-                // ->where('learner_course.course_id', $course->course_id)
-                // ->get();
+    
 
                 $learnerCourseProgressData = DB::table('learner_course_progress')
                 ->select(

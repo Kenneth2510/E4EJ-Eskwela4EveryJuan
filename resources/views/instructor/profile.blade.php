@@ -215,10 +215,14 @@
                 <!-- Add the hidden input field for the method -->
                 <input type="hidden" name="_method" value="PUT">
                 <div class="mb-4">
-                    <input type="file" name="profile_picture" id="profile_picture" class=""><br>
+                    {{-- <input type="file" name="profile_picture" id="profile_picture" class=""><br> --}}
+                    <input type="file" name="profile_picture" id="profile_picture" accept="image/*" onchange="checkFileSize(this)">
+                    <br>
                     <label for="profile_picture" class="px-4 py-2 text-white rounded-lg cursor-pointer bg-darthmouthgreen hover:border hover:border-darthmouthgreen hover:bg-white hover:text-darthmouthgreen">
                         Select Image
                     </label>
+                    
+                    <span id="fileSizeMessage"></span>
                     @error('profile_picture')
                         <p class="p-1 mt-2 text-xs text-red-500">
                             {{$message}}
@@ -230,7 +234,19 @@
                     <button type="button" class="px-5 py-3 mx-1 text-white bg-red-500 rounded-lg cancelUpdate hover:bg-white hover:text-red-500 hover:border-2 hover:border-red-500">Cancel</button>
                 </div>
             </form>
-            
+            <script>
+                function checkFileSize(input) {
+                    if (input.files && input.files[0]) {
+                        var fileSize = input.files[0].size / 1024 / 1024; // in MB
+                        if (fileSize > 5) {
+                            document.getElementById('fileSizeMessage').innerText = 'File size exceeds 5 MB';
+                            input.value = ''; // Clear the file input
+                        } else {
+                            document.getElementById('fileSizeMessage').innerText = '';
+                        }
+                    }
+                }
+                </script>
             
         </div>
     </div>

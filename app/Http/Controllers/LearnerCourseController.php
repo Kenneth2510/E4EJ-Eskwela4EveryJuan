@@ -115,7 +115,7 @@ class LearnerCourseController extends Controller
         $logging = new ActivityLoggingController();
     
         $user_id = $learner->learner_id;
-        $user_type = "Instructor";
+        $user_type = "Learner";
     
         $logging->log_activity($user_type, $user_id, $action);
     }
@@ -256,39 +256,40 @@ class LearnerCourseController extends Controller
                 ->where('learner_id', $learner->learner_id)
                 ->where('course_id', $course->course_id)
                 ->first();
-
-                $learnerTotalActivityProgressDuration = DB::table('learner_activity_progress')
+            
+            $learnerTotalActivityProgressDuration = DB::table('learner_activity_progress')
                 ->select(
                     DB::raw('SUM(TIMEDIFF(finish_period, start_period)) as total_time')
                 )
                 ->where('learner_id', $learner->learner_id)
                 ->where('course_id', $course->course_id)
                 ->first();
-
-                $learnerTotalQuizProgressDuration = DB::table('learner_quiz_progress')
+            
+            $learnerTotalQuizProgressDuration = DB::table('learner_quiz_progress')
                 ->select(
                     DB::raw('SUM(TIMEDIFF(finish_period, start_period)) as total_time')
                 )
                 ->where('learner_id', $learner->learner_id)
                 ->where('course_id', $course->course_id)
                 ->first();
-
+            
                 
-                $learnerTotalLessonProgressDuration = $learnerTotalLessonProgressDuration->total_time ?? 0;
-                $learnerTotalActivityProgressDuration = $learnerTotalActivityProgressDuration->total_time ?? 0;
-                $learnerTotalQuizProgressDuration = $learnerTotalQuizProgressDuration->total_time ?? 0;
 
-                $learnerTotalTime = $learnerTotalLessonProgressDuration + $learnerTotalLessonProgressDuration + $learnerTotalLessonProgressDuration;
+            $learnerTotalLessonProgressDuration = $learnerTotalLessonProgressDuration->total_time ?? 0;
+            $learnerTotalActivityProgressDuration = $learnerTotalActivityProgressDuration->total_time ?? 0;
+            $learnerTotalQuizProgressDuration = $learnerTotalQuizProgressDuration->total_time ?? 0;
+            
+            $learnerTotalTime = $learnerTotalLessonProgressDuration + $learnerTotalActivityProgressDuration + $learnerTotalQuizProgressDuration;
 
-                $learnerTotalTimeinSeconds = $learnerTotalTime / 1000;
+            $learnerTotalTimeInSeconds = $learnerTotalTime / 1000;
 
-                $learnerhours = floor($learnerTotalTimeinSeconds / 3600);
-                $learnerminutes = floor(($learnerTotalTimeinSeconds % 3600) / 60);
-                $learnerseconds = $learnerTotalTimeinSeconds % 60;
-
-
-                $formattedTotalLearnerCourseTime = sprintf('%02d:%02d:%02d', $learnerhours, $learnerminutes, $learnerseconds);
-
+            $learnerHours = floor($learnerTotalTimeInSeconds / 3600);
+            $learnerMinutes = floor(($learnerTotalTimeInSeconds % 3600) / 60);
+            $learnerSeconds = $learnerTotalTimeInSeconds % 60;
+            
+            $formattedTotalLearnerCourseTime = sprintf('%02d:%02d:%02d', $learnerHours, $learnerMinutes, $learnerSeconds);
+            
+            
 
                 $isEnrolled = DB::table('learner_course')
                 ->select(  
@@ -855,6 +856,22 @@ class LearnerCourseController extends Controller
                 ->where('learner_course_id', $learner_course)
                 ->orderBy('attempt', 'DESC')
                 ->first();
+
+                $courseGrading = DB::table('course_grading')
+                ->select(
+                    'activity_percent',
+                    'quiz_percent',
+                    'pre_assessment_percent',
+                    'post_assessment_percent',
+                )
+                ->where('course_id', $course->course_id)
+                ->first();
+                $activityGrade = 0;
+                $quizGrade = 0;
+                $postAssessmentGrade = 0;
+                $preAssessmentGrade = 0;
+                $totalGrade = 0;
+                $remarks = '';
     
                     if($courseData->course_progress === 'COMPLETED') {
                         // compute now the grades
@@ -864,11 +881,11 @@ class LearnerCourseController extends Controller
                         $preAssessmentGrade = 0;
                         $totalGrade = 0;
     
-                        // activity
-                        $activityGrade = (($activityLearnerSumScore / $activityTotalSum) * 100) * 0.35;
-                        $quizGrade = (($quizLearnerSumScore / $quizTotalSum) * 100) * 0.35;
-                        $postAssessmentGrade = (($postAssessmentLearnerSumScore / $totalScoreCount_post_assessment) * 100) * 0.30;
-                        $preAssessmentGrade = (($preAssessmentLearnerSumScore / $totalScoreCount_pre_assessment) * 100) * 0.30;
+                        $activityGrade = (($activityLearnerSumScore / $activityTotalSum) * 100) * $courseGrading->activity_percent;
+                        $quizGrade = (($quizLearnerSumScore / $quizTotalSum) * 100) * $courseGrading->quiz_percent;
+                        $postAssessmentGrade = (($postAssessmentLearnerSumScore / $totalScoreCount_post_assessment) * 100) * $courseGrading->pre_assessment_percent;
+                        $preAssessmentGrade = (($preAssessmentLearnerSumScore / $totalScoreCount_pre_assessment) * 100) * $courseGrading->post_assessment_percent;
+            
     
     
                         $totalGrade = $activityGrade + $quizGrade + $postAssessmentGrade;
@@ -2418,24 +2435,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         'activityScore' => $activityScoreData,
                         'totalScores' => $totalScores,
                     ];
-//
-                    //  dd($data);
-                // } else {
-                //     $data = [
-                //         'title' => 'Course Lesson',
-                //         'scripts' => ['/L_course_activity.js'],
-                //         'syllabus' => $learnerSyllabusProgressData,
-                //         'activity' => $learnerActivityProgressData,
-                //         'activityCriteria' => $activityContentCriteriaData,
-                //         'mainBackgroundCol' => '#00693e',
-                //         'darkenedColor' => '#00693e',
-                //         'activityOutput' => null,
-                //         'activityScore' => null,
-                //         'totalScores' => $totalScores,
-                //     ];
-                // }
 
-                // dd($data);
 
 
             } catch (\Exception $e) {
@@ -2504,13 +2504,17 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 $now = Carbon::now('Asia/Manila');
                 $timestampString = $now->toDateTimeString();
 
-                DB::table('learner_activity_progress')
-                ->where('learner_activity_progress.course_id', $course->course_id)
-                ->where('learner_activity_progress.syllabus_id', $syllabus->syllabus_id)
-                ->where('learner_activity_progress.learner_course_id' , $learnerSyllabusProgressData->learner_course_id)
-                ->update([
-                    'start_period' => $timestampString,
-                ]);
+                if($learnerActivityProgressData->status === 'LOCKED') {
+                    DB::table('learner_activity_progress')
+                    ->where('learner_activity_progress.course_id', $course->course_id)
+                    ->where('learner_activity_progress.syllabus_id', $syllabus->syllabus_id)
+                    ->where('learner_activity_progress.learner_course_id' , $learnerSyllabusProgressData->learner_course_id)
+                    ->update([
+                        'start_period' => $timestampString,
+                    ]);
+                }
+
+
 
                 $activityContentCriteriaData = DB::table('activity_content_criteria')
                 ->select(
@@ -2566,7 +2570,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
         
                 
                     $data = [
-                        'title' => 'Course Lesson',
+                        'title' => 'Course Activity',
                         'scripts' => ['/L_course_activity.js'],
                         'syllabus' => $learnerSyllabusProgressData,
                         'activity' => $learnerActivityProgressData,
@@ -2646,7 +2650,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         ->get();
 
                     $data = [
-                        'title' => 'Course Lesson',
+                        'title' => 'Course Activity',
                         'scripts' => ['/L_course_activity.js'],
                         'syllabus' => $learnerSyllabusProgressData,
                         'activity' => $learnerActivityProgressData,
@@ -2783,17 +2787,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 }
             }
 
-
-
-                // foreach($activityCriteria as $criteria) {
-                //     $newRowData = ([
-                //         'learner_activity_output_id' => $learnerActivityData->learner_activity_output_id,
-                //         'activity_content_criteria_id' => $criteria->activity_content_criteria_id,
-                //         'activity_content_id' =>$criteria->activity_content_id,
-                //     ]);
-
-                //     LearnerActivityCriteriaScore::create($newRowData);
-                // };
 
                 $action = "Submitted Activity Output on Activity ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
                 $this->log($action);
