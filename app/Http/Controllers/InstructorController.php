@@ -43,6 +43,16 @@ class InstructorController extends Controller
         ]);
     }
 
+    public function getID() {
+        $instructor= session('instructor');
+
+        $data = [
+            'instructor' => $instructor,
+        ];
+
+        return response()->json($data);
+    }
+
 
     public function log($action) {
         $instructor = session('instructor');
@@ -364,7 +374,6 @@ class InstructorController extends Controller
 
     public function logout(Request $request) {
 
-        // $instructor = auth('instructor')->user();
 
         $instructor = session('instructor');
 
@@ -416,9 +425,6 @@ class InstructorController extends Controller
 
     }
 
-    // public function register(){
-    //     return view('instructor.register')->with('title', 'Instructor Register');
-    // }
 
     public function register1(){
         return view('instructor.register1')
@@ -429,7 +435,7 @@ class InstructorController extends Controller
     }
 
     public function register_process(Request $request) {
-        // dd($request);
+        
         $instructorData = $request->validate([
             "instructor_fname" => ['required'],
             "instructor_lname" => ['required'],
@@ -439,7 +445,6 @@ class InstructorController extends Controller
             "instructor_email" => ['required', 'email', Rule::unique('instructor', 'instructor_email')],
             "instructor_username" => ['required', Rule::unique('instructor' , 'instructor_username')],
             "password" => 'required|confirmed',
-            // "instructor_security_code" => ['required'],
             "instructor_credentials" => ['required', 'file'],
         ]);
 
@@ -454,7 +459,7 @@ class InstructorController extends Controller
 
 
         $securityCodeNumber = implode('', $codeNumber);
-        // dd($securityCodeNumber);
+   
         $instructorData['instructor_security_code'] = $securityCodeNumber;
 
 
@@ -476,32 +481,23 @@ class InstructorController extends Controller
 
                 // Copy the default photo to the same directory
                 $defaultPhoto = 'public/images/default_profile.png';
-                // $isExists = Storage::exists($defaultPhoto);
-
+    
                 $defaultPhoto_path = $folderPath . '/default_profile.png';
-                // dd($defaultPhoto_path);
-
+   
                 Storage::copy($defaultPhoto, 'public/' . $defaultPhoto_path);
-                // $isExists = Storage::exists($defaultPhoto_path);
-                // dd($isExists);
               
                 
                 // add to database
                 $instructorData['profile_picture'] = $defaultPhoto_path;
 
             $instructorData['instructor_credentials'] = $filePath;
-            // dd($instructorData);
+        
             $instructor = Instructor::create($instructorData);
 
             $action = "Registered new Instructor ID: " . $instructor;
             $this->log($action);
 
-            //add to storage
-            // if(!Storage::exists($folderPath)) {
-            //     Storage::makeDirectory($folderPath);
-            // }
-
-            // Storage::putFileAs($folderPath, $file, $fileName);
+       
             $action = "Registered new Instructor ID: " . $instructor;
             $this->log($action);
 
@@ -534,8 +530,6 @@ class InstructorController extends Controller
             ->where('instructor_id', $instructor->instructor_id)
             ->count();
 
-            // $courses = Course::where('instructor_id', $instructor->instructor_id)->limit(3)->get();
-
             $courses = DB::table('course')
             ->select(
                 'course.course_id',
@@ -551,7 +545,6 @@ class InstructorController extends Controller
             ->where('course.instructor_id', $instructor->instructor_id)
             ->get();
 
-            // dd($courses);
 
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -617,9 +610,6 @@ class InstructorController extends Controller
                     'course.updated_at'
                 )
                 ->get();
-
-
-
 
                 $totalLearnersCount = 0;
                 $totalPendingLearnersCount = 0;
@@ -707,7 +697,6 @@ class InstructorController extends Controller
         
         if (session()->has('instructor')) {
             $instructor = session('instructor');
-            // dd($instructor);
 
         } else {
             return redirect('/instructor');
@@ -722,8 +711,6 @@ class InstructorController extends Controller
     public function update_info(Request $request) {
         if (session()->has('instructor')) {
             $instructor = session('instructor');
-            // dd($instructor);
-
 
             
         $updated_instructorData = $request->validate([
@@ -822,9 +809,6 @@ class InstructorController extends Controller
             ->where('instructor_id', $instructorData->instructor_id)
             ->get();
 
-            // $this->generate_profile_pdf();
-
-            // dd($instructorData);
             $data = [
                 'title' => 'Profile',
                 'scripts' => ['instructorProfile.js'], 
@@ -843,36 +827,6 @@ class InstructorController extends Controller
         }  
     }
 
-
-    // public function update_user_info(Request $request) {
-    //     if (session()->has('instructor')) {
-    //         $instructor= session('instructor');
-
-    //         try {
-    //             // dd($request);
-    //             $updated_instructorData = $request->validate([
-    //                 "instructor_fname" => ['required'],
-    //                 "instructor_bday" => ['required'],
-    //                 "instructor_lname" => ['required'],
-    //                 "instructor_gender" => ['required'],
-    //             ]);
-
-    //             Instructor::where('instructor_id', $instructor->instructor_id)
-    //             ->update($updated_instructorData);
-
-                
-    //             session()->flash('message', 'User Info changed successfully');
-                
-    //             // return redirect('/learner/profile')->with('message' , 'Profile updated successfully');
-        
-    
-    //             } catch (\Exception $e) {
-    //                 $e->getMessage();
-    //             }
-    //         } else {
-    //             return redirect('/instructor');
-    //         }  
-    // }
 
     public function update_user_info(Request $request) {
         if (session()->has('instructor')) {
@@ -954,7 +908,6 @@ class InstructorController extends Controller
      
 
                 
-                // return redirect('/learner/profile')->with('message' , 'Profile updated successfully');
                 return response()->json(['message' => $message]);
 
                 

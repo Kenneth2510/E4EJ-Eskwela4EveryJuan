@@ -26,6 +26,9 @@ use App\Http\Controllers\AdminPerformanceController;
 use App\Http\Controllers\AdminMessageController;
 use App\Http\Controllers\AdminManagementController;
 
+use App\Http\Controllers\ActivityLoggingController;
+use App\Http\Controllers\AccountDetailVerifierController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -58,8 +61,25 @@ Route::controller(UserController::class)->group(function() {
     Route::get('/data-privacy', 'data_privacy');
 });
 
+Route::controller(AccountDetailVerifierController::class)->group(function() {
+    Route::get('/learner/checkContact', 'checkLearnerContact');
+    Route::get('/learner/checkEmail', 'checkLearnerEmail');
+    Route::get('/learner/checkBPLO', 'checkLearnerBPLO');
+    Route::get('/learner/checkUsername', 'checkLearnerUsername');
+    Route::get('/learner/{learner}/checkContact', 'checkExistingLearnerContact');
+    Route::get('/learner/{learner}/checkEmail', 'checkExistingLearnerEmail');
+    Route::get('/learner/{learner}/checkBPLO', 'checkExistingLearnerBPLO');
+    
+    Route::get('/instructor/checkContact', 'checkInstructorContact');
+    Route::get('/instructor/checkEmail', 'checkInstructorEmail');
+    Route::get('/instructor/checkUsername', 'checkInstructorUsername');
+    Route::get('/instructor/{instructor}/checkContact', 'checkExistingInstructorContact');
+    Route::get('/instructor/{instructor}/checkEmail', 'checkExistingInstructorEmail');
+});
+
 Route::controller(LearnerController::class)->group(function() {
     Route::get('/learner', 'index');
+    Route::get('/learner/getID', 'getID');
     Route::post('/learner/login', 'login_process');
     Route::get('/learner/forgot', 'forgot_password');
     Route::post('/learner/reset', 'reset');
@@ -98,6 +118,7 @@ Route::controller(LearnerController::class)->group(function() {
 
 Route::controller(InstructorController::class)->group(function() {
     Route::get('/instructor', 'index');
+    Route::get('/instructor/getID', 'getID');
     Route::post('/instructor/login', 'login_process');
     Route::get('/instructor/forgot', 'forgot_password');
     Route::post('/instructor/reset', 'reset');
@@ -151,7 +172,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::put('/admin/block_learner/{learner}', 'AdminLearnerController@blockLearner');
     Route::put('/admin/pending_learner/{learner}', 'AdminLearnerController@pendingLearner');
     Route::put('/admin/view_learner/{learner}' , 'AdminLearnerController@update_learner');
-    // Route::post('/admin/view_learner/{learner}/delete_learner', 'AdminLearnerController@destroy_learner');
+    
+    Route::post('/admin/view_learner/{learner}/' , 'AdminLearnerController@update_learner');
 });
 
 Route::namespace('App\Http\Controllers')->group(function () {

@@ -84,7 +84,6 @@ class InstructorMessageController extends Controller
             $action = "Opened Instructor Message";
             $this->log($action);
 
-            // dd($data);
             return view('instructor_message.message' , compact('instructor'))
             ->with($data);
 
@@ -169,7 +168,7 @@ class InstructorMessageController extends Controller
             $instructor= session('instructor');
             
         try{
-            // dd($request);
+
             $subject = $request->input('subject');
             $content = $request->input('content');
             $emailToReceive = json_decode($request->input('emailToReceive'));
@@ -214,7 +213,6 @@ class InstructorMessageController extends Controller
                 foreach ($filesToSend as $file) {
                     $filename = time() . '-' . $file->getClientOriginalName();
 
-                    // $file->storeAs('uploads', $filename);
                     $filePath = $file->storeAs($folderPath, $filename, 'public');
 
                     $rowMessageContentFileData = [
@@ -558,7 +556,6 @@ class InstructorMessageController extends Controller
                 foreach ($filesToSend as $file) {
                     $filename = time() . '-' . $file->getClientOriginalName();
 
-                    // $file->storeAs('uploads', $filename);
                     $filePath = $file->storeAs($folderPath, $filename, 'public');
 
                     $rowMessageContentFileData = [

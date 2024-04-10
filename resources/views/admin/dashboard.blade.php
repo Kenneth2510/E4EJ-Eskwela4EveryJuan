@@ -77,7 +77,7 @@
                     <h1 class="text-2xl font-semibold text-darthmouthgreen">Learner Course Progress</h1>
                     <div class="space-y-2 ">
                         <select name="selectedCourse" id="selectedCourse"
-                            class="w-full input input-bordered input-primary">
+                            class="w-full select select-bordered focus:select-primary">
                             @foreach ($courses as $course)
                             <option value="{{$course->course_id}}">{{$course->course_name}}</option>
                             @endforeach

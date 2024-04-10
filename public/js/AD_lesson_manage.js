@@ -12,28 +12,18 @@ $(document).ready(function() {
         width: 730
     }); 
     
-    // tinymce.init({  
-    //     selector: 'textarea#lesson_content_id',  
-    //     width: 500  
-    //    }); 
+  
     
     var lessonData = {};
-    // console.log(lessonData)
-    // Select all <p> elements with the class .lesson_content_input_disp
-    // var pElements = $('.lesson_content_input_disp');
+
     var iElements = $('.lesson_content_input');
         
-    // Use the filter function to select only those with newline characters
-    // var pElementsWithNewlines = pElements.filter(function() {
-    //     return $(this).text().includes('\n');
-    // });
+
 
     var iElementsWithNewlines = iElements.filter(function() {
         return $(this).text().includes('\n');
     });
     
-    // Apply white-space: pre to the selected elements
-    // pElementsWithNewlines.css('white-space', 'pre');
     iElementsWithNewlines.css('white-space', 'pre');
 
 
@@ -55,8 +45,6 @@ $(document).ready(function() {
         // Scroll to the target element after all the changes have been made
         const targetOffset = $("#lesson_title_area").offset().top;
 
-        // Debugging: Output the target offset to the console
-        console.log("Target Offset:", targetOffset);
     
         $('html, body').animate({
             scrollTop: targetOffset
@@ -69,7 +57,7 @@ $(document).ready(function() {
 
         var url = "/admin/courseManage/content/"+ courseID +"/"+ syllabusID +"/lesson/json";
 
-        console.log(url)
+
 
         $.ajax ({
             type: "GET",
@@ -77,9 +65,8 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (response){
 
-                // console.log(response)
                 lessonData = response['lessonContent']
-                console.log(lessonData)
+
                 reDisplayLesson(lessonData);
             },
             error: function(error) {
@@ -209,11 +196,6 @@ $(document).ready(function() {
             $('#lessonAddContent').removeClass('hidden');
 
 
-            // $('#edit_lesson_content_picture_btns').removeClass('hidden');
-
-        console.log(lessonData)
-
-
 
         $('.add_lesson_content_picture_btn').on('click', function(e) {
             e.preventDefault()
@@ -250,7 +232,6 @@ $(document).ready(function() {
             const courseID = $(this).data('course-id');
             const syllabusID = $(this).data('syllabus-id');
 
-            console.log(lesson_contentID, lessonID)
 
 
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -268,7 +249,6 @@ $(document).ready(function() {
             contentType: false,
             processData: false,
             success: function(response) {
-                // alert('Upload successful!');
                 location.reload();
             },
             error: function(xhr, status, error) {
@@ -308,7 +288,7 @@ $(document).ready(function() {
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
             const url = "/admin/courseManage/content/"+ courseID +"/"+ syllabusID +"/lesson/title/"+ lessonID +"/delete_file/"+ lesson_contentID;
-            // console.log(url)
+     
             $.ajax({
                 type: "POST",
                 url: url,
@@ -316,10 +296,7 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': csrfToken
                 },
                 success: function(response) {
-                    // Handle success if needed
-                    // console.log(response);
-                    // $('#deleteLessonContentModal').addClass('hidden');
-                    // reDisplayLesson(lessonData)
+           
                     location.reload();
                 },
                 error: function(error) {
@@ -530,7 +507,6 @@ $(document).ready(function() {
             const baseUrl = window.location.href;
             const url = baseUrl +"/title/"+ lessonId +"/delete_url/"+ lessonContentId;
     
-            // console.log(url)
             $.ajax({
                 type: "POST",
                 url: url,
@@ -538,10 +514,7 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': csrfToken
                 },
                 success: function(response) {
-                    // Handle success if needed
-                    // console.log(response);
-                    // $('#deleteLessonContentModal').addClass('hidden');
-                    // reDisplayLesson(lessonData)
+              
                     location.reload();
                 },
                 error: function(error) {
@@ -582,7 +555,6 @@ $(document).ready(function() {
             'lesson_content': html_lesson_content,
         }
 
-        // console.log(updatedValues);
         const lessonContentIndex = lessonData.findIndex(content => content.lesson_content_id === lessonContentID);
 
         if (lessonContentIndex !== -1) {
@@ -590,7 +562,6 @@ $(document).ready(function() {
             lessonData[lessonContentIndex].lesson_content = updatedValues.lesson_content;
         }
 
-        console.log(lessonData);
         if(!/^none\d+$/.test(lessonContentID)) {
             const url = "/admin/courseManage/content/lesson/"+ lessonID +"/title/"+lessonContentID;
 
@@ -605,7 +576,7 @@ $(document).ready(function() {
                 },
                 success: function(response) {
                     // Handle success if needed
-                    console.log(response);
+                   
                 },
                 error: function(error) {
                     console.log(error);
@@ -657,10 +628,7 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': csrfToken
                 },
                 success: function(response) {
-                    // Handle success if needed
-                    // console.log(response);
-                    // $('#deleteLessonContentModal').addClass('hidden');
-                    // reDisplayLesson(lessonData)
+    
                 },
                 error: function(error) {
                     console.log(error);
@@ -712,7 +680,6 @@ $(document).ready(function() {
     // Cancel editing the lesson title
     $('#cancel_lesson_btn').on('click', function(e) {
         e.preventDefault();
-        // console.log(originalLessonTitle);
         // Find the contenteditable div
         var lessonTitleDiv = $('#lesson_title_area').find('[contenteditable="true"]');
     
@@ -737,7 +704,7 @@ $('#save_lesson_btn').on('click', function(e) {
 
     // Save changes in lesson title
     const updatedLessonTitle = lessonTitleDiv.text();
-    console.log(updatedLessonTitle);
+   
 
     // Rest of your code remains the same
     var syllabusID = $(this).data('syllabus-id');
@@ -765,7 +732,6 @@ $('#save_lesson_btn').on('click', function(e) {
             // Handle success if needed
             console.log("success");
             location.reload();
-            console.log(response);
         },
         error: function(error) {
             console.log(error);
@@ -876,121 +842,7 @@ $('#save_lesson_btn').on('click', function(e) {
         $('#lessonAddContent').addClass('hidden');
     });
 
-    // // save all
-    // $('#saveEditBtn').on('click', function(e){
-    //     e.preventDefault();
-
-        
-    //     $('#loaderModal').removeClass('hidden');
-    //         // Check if the request is already in progress
-    //         if ($(this).data('request-in-progress')) {
-    //             return;
-    //         }
-
-    //         // Set the flag to indicate that the request is in progress
-    //         $(this).data('request-in-progress', true);
-
-    //     // save all data
-    //     const lessonID = $(this).data('lesson-id')
-    //     const courseID = $(this).data('course-id')
-    //     const syllabusID = $(this).data('syllabus-id')
-
-
-    //     var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        
-    //     var loopCounter = 0
-    //     for (let i = 0; i < lessonData.length; i++) {
-    //         // console.log(lessonData[i])
-    //         loopCounter++;
-    //         const row_lesson_content_data = {
-    //             'lesson_content_id': lessonData[i]['lesson_content_id'],
-    //             'lesson_id': lessonData[i]['lesson_id'],
-    //             'lesson_content_title': lessonData[i]['lesson_content_title'],
-    //             'lesson_content': lessonData[i]['lesson_content'],
-    //             'lesson_content_order': lessonData[i]['lesson_content_order'],
-    //             'picture': lessonData[i]['picture'],
-    //         }
-
-    //         if (!/^none\d+$/.test(row_lesson_content_data['lesson_content_id'])) {
-    //             // AJAX for updating the values
-
-    //             const url = "/admin/courseManage/content/"+courseID+"/"+syllabusID+"/lesson/title/"+ lessonID +"/save"
-    //             // console.log(url)
-
-    //             $.ajax({
-    //                 type: "POST",
-    //                 url: url,
-    //                 data: row_lesson_content_data,
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': csrfToken
-    //                 },
-    //                 async: false,
-    //                 success: function(response) {
-    //                     // Handle success if needed
-    //                     if(i + 1 == lessonData.length){
-    //                         if (response && response.redirect_url ) {
-    //                             // window.location.href = response.redirect_url;
-    //                         }
-    //                     }
-    //                 },
-    //                 error: function(error) {
-    //                     console.log(error);
-    //                 }
-    //             });
-    //         } else {
-    //             // AJAX for creating new syllabus
-    //             const url = "/admin/courseManage/content/"+courseID+"/"+syllabusID+"/lesson/title/"+ lessonID +"/save_add";
-    //             row_lesson_content_data['lesson_content_id'] = '';
-    //             $.ajax({
-    //                 type: "POST",
-    //                 url: url,
-    //                 data: row_lesson_content_data,
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': csrfToken
-    //                 },
-    //                 async: false,
-    //                 success: function(response) {
-    //                     // Handle success if needed
-    //                     if(i + 1 == lessonData.length){
-    //                         if (response && response.redirect_url ) {
-    //                             // window.location.href = response.redirect_url;
-    //                         }
-    //                     }
-    //                 },
-    //                 error: function(error) {
-    //                     console.log(error);
-    //                 }
-    //             });
-    //         }
-
-    //     }
-
-    //     console.log(loopCounter);
-    //     if(loopCounter == lessonData.length) {
-    //         const url = "/admin/courseManage/content/"+courseID+"/"+syllabusID+"/lesson/title/"+ lessonID +"/generate_pdf";
-
-    //             $.ajax({
-    //                 type: "GET",
-    //                 url: url,
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': csrfToken
-    //                 },
-    //                 async: false,
-    //                 success: function(response) {
-                        
-    //     $('#loaderModal').addClass('hidden');
-    //                     // Handle success if needed
-    //                     location.reload();
-    //                     console.log(response);
-    //                 },
-    //                 error: function(error) {
-    //                     console.log(error);
-    //                 }
-    //             });
-    //     }
-
-
-    // })
+  
 
 
 
@@ -1100,7 +952,6 @@ $('#saveEditBtn').on('click', async function(e){
             contentType: false,
             processData: false,
             success: function(response) {
-                // alert('Upload successful!');
                 location.reload();
             },
             error: function(xhr, status, error) {
@@ -1134,9 +985,8 @@ $('#saveEditBtn').on('click', async function(e){
                 'X-CSRF-TOKEN': csrfToken
             },
             success: function(response) {
-                console.log("success");
+          
                 location.reload();
-                // console.log(response);
             },
             error: function(error) {
                 console.log(error);

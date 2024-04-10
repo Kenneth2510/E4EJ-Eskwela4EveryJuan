@@ -12,7 +12,6 @@ $(document).ready(function(e) {
             type: "GET",
             url: url,
             success: function (response) {
-                console.log(response);
 
                 var totalLearnerActivityProgressCount = response['totalLearnerActivityProgressCount']
                 var totalLearnerActivityCompleteCount = response['totalLearnerActivityCompleteCount']
@@ -192,7 +191,6 @@ $(document).ready(function(e) {
             type: "GET",
             url: url,
             success: function (response) {
-                console.log(response);
 
                 var learnerActivityOutputOverallScoreData = response['learnerActivityOutputOverallScoreData']
                 var learnerActivityOutputCriteriaScoreData = response['learnerActivityOutputCriteriaScoreData']

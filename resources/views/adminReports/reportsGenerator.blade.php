@@ -16,7 +16,7 @@
             </div>
             <div class="flex flex-col w-full">
                 <div class="mt-10 lg:w-3/12" id="reportCategoryArea">
-                    <select class="w-4/5 input input-primary" name="reportCategory" id="reportCategory">
+                    <select class="w-4/5 select select-bordered focus:select-primary" name="reportCategory" id="reportCategory">
                         <option value="" selected disabled>--choose category--</option>
                         <option value="LearnerList">List of Learners</option>
                         <option value="SelectedLearner">View Selected Learner</option>
@@ -39,7 +39,8 @@
                         <form class="" action="{{ url('admin/reports/list/learners') }}" method="GET">
                             <div class="mt-5 lg:w-1/2" id="learnerStatusArea">
                                 <h1 class="text-xl font-semibold">Choose Status</h1>
-                                <select class="lg:w-4/5 input input-primary" name="learnerStatus" id="learnerStatus">
+                                <select class="lg:w-4/5 select select-bordered focus:select-primary "
+                                    name="learnerStatus" id="learnerStatus">
                                     <option value="" selected>ALL</option>
                                     <option value="Pending">Pending</option>
                                     <option value="Approved">Approved</option>
@@ -98,7 +99,7 @@
                                             Gender</label><br>
                                         <div class="hidden" id="enabled_customGender">
                                             <h1 class="text-xl font-semibold sr-only">Choose Gender</h1>
-                                            <select class="w-full lg:w-4/5 input input-primary" name="learnerGender"
+                                            <select class="w-full lg:w-4/5 select select-bordered focus:select-primary" name="learnerGender"
                                                 id="learnerGender">
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
@@ -124,13 +125,13 @@
 
                             <div class="w-full mt-5" id="selectToDisplayArea">
                                 <h1 class="text-xl font-semibold">Display Type</h1>
-                                <select class="w-full lg:w-4/5 input input-primary" name="displayType" id="displayType">
+                                <select class="w-full lg:w-4/5 select select-bordered focus:select-primary" name="displayType" id="displayType">
                                     <option value="Default">Default</option>
                                     <option value="Custom">Custom</option>
                                 </select>
                             </div>
 
-                            <div class="hidden w-full mx-5" id="customDisplay_enabled">
+                            <div class="hidden mx-5" id="customDisplay_enabled">
                                 <h1 class="text-xl font-semibold">Choose what to display:</h1>
                                 <div class="mt-3">
                                     <input type="checkbox" name="disp_name" id="disp_name">
@@ -184,8 +185,7 @@
 
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -205,14 +205,13 @@
 
                             <div class="mt-5" id="selectLearnerArea">
                                 <h1 class="text-xl font-semibold">Choose Learner</h1><br>
-                                <select class="w-4/5 input input-primary selectLearner" name="selectLearner" id="">
+                                <select class="w-4/5 select select-bordered focus:select-primary selectLearner" name="selectLearner" id="">
                                     <option value="" selected disabled>--choose user--</option>
                                 </select>
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -227,8 +226,8 @@
 
                             <div class="mt-5" id="instructorStatusArea">
                                 <h1 class="text-xl font-semibold">Choose Status</h1>
-                                <select class="lg:w-4/5 input input-primary" name="instructorStatus"
-                                    id="instructorStatus">
+                                <select class="lg:w-4/5 select select-bordered focus:select-primary "
+                                    name="instructorStatus" id="instructorStatus">
                                     <option value="" selected>ALL</option>
                                     <option value="Pending">Pending</option>
                                     <option value="Approved">Approved</option>
@@ -284,7 +283,7 @@
                                     <label for="instructorCustomGenderCheck" class="text-lg">Filter Gender</label><br>
                                     <div class="hidden" id="instructor_enabled_customGender">
                                         <h1 class="text-xl font-semibold">Choose Gender</h1>
-                                        <select class="w-4/5 px-5 py-3 text-xl border border-darthmouthgreen rounded-xl"
+                                        <select class="w-4/5 select select-bordered focus:select-primary"
                                             name="instructorGender" id="instructorGender">
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -301,7 +300,7 @@
                                     <div class="hidden" id="instructor_enabled_customBirthday">
                                         <label for="instructorBday">Select Date</label>
                                         <input type="date"
-                                            class="w-1/5 px-3 py-2 mx-5 border border-darthmouthgreen rounded-xl "
+                                            class="w-1/5 input input-bordered focus:input-primary "
                                             name="instructorBday" id="instructorBday">
 
                                     </div>
@@ -311,7 +310,7 @@
 
                             <div class="mt-5" id="selectToDisplayArea">
                                 <h1 class="text-xl font-semibold">Display Type</h1>
-                                <select class="w-4/5 px-5 py-3 text-xl border border-darthmouthgreen rounded-xl"
+                                <select class="w-4/5 select select-bordered focus:select-primary"
                                     name="instructor_displayType" id="instructor_displayType">
                                     <option value="Default">Default</option>
                                     <option value="Custom">Custom</option>
@@ -347,8 +346,7 @@
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -370,15 +368,14 @@
 
                             <div class="mt-5" id="selectInstructorArea">
                                 <h1 class="text-xl font-semibold">Choose Instructor</h1><br>
-                                <select class="w-4/5 input input-primary selectInstructor" name="selectInstructor"
+                                <select class="w-4/5 select select-bordered focus:select-primary selectInstructor" name="selectInstructor"
                                     id="">
                                     <option value="" selected disabled>--choose user--</option>
                                 </select>
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -392,7 +389,8 @@
 
                             <div class="mt-5" id="userCategoryArea">
                                 <h1 class="text-xl font-semibold">Choose Category</h1>
-                                <select class="lg:w-4/5 input input-primary" name="userCategory" id="userCategory">
+                                <select class="lg:w-4/5 select select-bordered focus:select-primary "
+                                    name="userCategory" id="userCategory">
                                     <option value="ALL" selected>ALL Users</option>
                                     <option value="Learners">Learners</option>
                                     <option value="Instructors">Instructors</option>
@@ -417,8 +415,7 @@
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -433,8 +430,8 @@
 
                             <div class="mt-5" id="userCategoryArea">
                                 <h1 class="text-xl font-semibold">Choose Category</h1>
-                                <select class="lg:w-4/5 input input-primary" name="selectedSession_userCategory"
-                                    id="selectedSession_userCategory">
+                                <select class="lg:w-4/5 select select-bordered focus:select-primary "
+                                    name="selectedSession_userCategory" id="selectedSession_userCategory">
                                     <option value="ALL" selected>ALL Users</option>
                                     <option value="Learners">Learners</option>
                                     <option value="Instructors">Instructors</option>
@@ -453,7 +450,8 @@
 
                                 <div class="mt-5" id="selectLearnerArea">
                                     <h1 class="text-xl font-semibold">Choose Learner</h1><br>
-                                    <select class="lg:w-4/5 input input-primary selectedSession_selectLearner"
+                                    <select
+                                        class="lg:w-4/5 select select-bordered focus:select-primary selectedSession_selectLearner"
                                         name="userSession" id="">
                                         <option value="" selected disabled>--choose user--</option>
                                     </select>
@@ -472,7 +470,8 @@
 
                                 <div class="mt-5" id="selectInstructorArea">
                                     <h1 class="text-xl font-semibold">Choose Instructor</h1><br>
-                                    <select class="lg:w-4/5 input input-primary selectedSession_selectInstructor"
+                                    <select
+                                        class="lg:w-4/5 select select-bordered focus:select-primary selectedSession_selectInstructor"
                                         name="userSession" id="">
                                         <option value="" selected disabled>--choose user--</option>
                                     </select>
@@ -487,12 +486,12 @@
                                 <div class="hidden" id="selectedSession_enable_customDate">
                                     <label for="selectedSessionDateStart">Start Date</label>
                                     <input type="date"
-                                        class="w-1/5 px-3 py-2 mx-5 border border-darthmouthgreen rounded-xl "
+                                        class="w-1/5 input input-bordered focus:input-primary "
                                         name="selectedSessionDateStart" id="selectedSessionDateStart">
 
                                     <label for="selectedSessionDateFinish">Until</label>
                                     <input type="date"
-                                        class="w-1/5 px-3 py-2 mx-5 border border-darthmouthgreen rounded-xl "
+                                        class="w-1/5 input input-bordered focus:input-primary "
                                         name="selectedSessionDateFinish" id="selectedSessionDateFinish">
                                 </div>
 
@@ -500,8 +499,7 @@
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -514,7 +512,8 @@
 
                             <div class="mt-5" id="courseStatusArea">
                                 <h1 class="text-xl font-semibold">Choose Status</h1>
-                                <select class="lg:w-4/5 input input-primary" name="courseStatus" id="courseStatus">
+                                <select class="lg:w-4/5 select select-bordered focus:select-primary "
+                                    name="courseStatus" id="courseStatus">
                                     <option value="" selected>ALL</option>
                                     <option value="Pending">Pending</option>
                                     <option value="Approved">Approved</option>
@@ -540,8 +539,7 @@
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -562,14 +560,14 @@
 
                             <div class="mt-5" id="selectCourseArea">
                                 <h1 class="text-xl font-semibold">Choose Course</h1><br>
-                                <select class="lg:w-4/5 input input-primary selectCourse" name="selectCourse" id="">
+                                <select class="lg:w-4/5 select select-bordered focus:select-primary selectCourse"
+                                    name="selectCourse" id="">
                                     <option value="" selected disabled>--choose user--</option>
                                 </select>
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -590,7 +588,7 @@
 
                             <div class="mt-5" id="selectCourseArea">
                                 <h1 class="text-xl font-semibold">Choose Course</h1><br>
-                                <select class="input input-primary lg:w-4/5 selectApprovedCourse"
+                                <select class="select select-bordered focus:select-primary lg:w-4/5 selectApprovedCourse"
                                     name="selectApprovedCourse" id="">
                                     <option value="" selected disabled>--choose course--</option>
                                 </select>
@@ -615,8 +613,7 @@
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -636,15 +633,15 @@
 
                             <div class="mt-5" id="selectCourseArea">
                                 <h1 class="text-xl font-semibold">Choose Course</h1><br>
-                                <select class="lg:w-4/5 input input-primary grades_selectApprovedCourse"
+                                <select
+                                    class="lg:w-4/5 select select-bordered focus:select-primary grades_selectApprovedCourse"
                                     name="grades_selectApprovedCourse" id="">
                                     <option value="" selected disabled>--choose course--</option>
                                 </select>
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>
@@ -662,14 +659,14 @@
                                 <label for="grades_searchApprovedCourse" class="text-xl font-semibold">Filter Course by
                                     Name</label>
                                 <input type="text"
-                                    class="w-4/5 px-5 py-3 text-xl border border-darthmouthgreen rounded-xl learnerCoursegrades_searchApprovedCourse"
+                                    class="w-4/5 input input-bordered focus:input-primary learnerCoursegrades_searchApprovedCourse"
                                     name="learnerCoursegrades_searchApprovedCourse" id="">
                             </div>
 
                             <div class="" id="selectCourseArea">
                                 <h1 class="text-xl font-semibold">Choose Course</h1><br>
                                 <select
-                                    class="w-4/5 px-5 py-3 text-xl border border-darthmouthgreen rounded-xl learnerCoursegrades_selectApprovedCourse"
+                                    class="w-4/5 select select-bordered focus:select-primary learnerCoursegrades_selectApprovedCourse"
                                     name="learnerCoursegrades_selectApprovedCourse" id="">
                                     <option value="" selected disabled>--choose course--</option>
                                 </select>
@@ -678,22 +675,21 @@
                             <div class="flex flex-col w-full" id="searchLearnerArea">
                                 <label for="searchLearner" class="text-xl font-semibold">Filter Learner by Name</label>
                                 <input type="text"
-                                    class="w-4/5 px-5 py-3 text-xl border border-darthmouthgreen rounded-xl learnnerCourseGrades_searchLearner"
+                                    class="w-4/5 input input-bordered focus:input-primary learnnerCourseGrades_searchLearner"
                                     name="learnerCourseGrades_searchLearner" id="">
                             </div>
 
                             <div class="" id="selectLearnerArea">
                                 <h1 class="text-xl font-semibold">Choose Learner</h1><br>
                                 <select
-                                    class="w-4/5 px-5 py-3 text-xl border border-darthmouthgreen rounded-xl learnerCourseGrades_selectLearner"
+                                    class="w-4/5 select select-bordered focus:select-primary learnerCourseGrades_selectLearner"
                                     name="learnerCourseGrades_selectLearner" id="">
                                     <option value="" selected disabled>--choose user--</option>
                                 </select>
                             </div>
 
                             <div class="w-3/12 mt-10" id="generateArea">
-                                <button type="submit" id="generateBtn"
-                                    class="btn btn-primary">Generate
+                                <button type="submit" id="generateBtn" class="btn btn-primary">Generate
                                     Report</button>
                             </div>
                         </form>

@@ -85,7 +85,6 @@ class LearnerMessageController extends Controller
             $action = "Opened Learner Message";
             $this->log($action);
 
-            // dd($data);
             return view('learner_message.message' , compact('learner'))
             ->with($data);
 
@@ -170,7 +169,6 @@ class LearnerMessageController extends Controller
             $learner= session('learner');
             
         try{
-            // dd($request);
             $subject = $request->input('subject');
             $content = $request->input('content');
             $emailToReceive = json_decode($request->input('emailToReceive'));
@@ -215,7 +213,6 @@ class LearnerMessageController extends Controller
                 foreach ($filesToSend as $file) {
                     $filename = time() . '-' . $file->getClientOriginalName();
 
-                    // $file->storeAs('uploads', $filename);
                     $filePath = $file->storeAs($folderPath, $filename, 'public');
 
                     $rowMessageContentFileData = [
@@ -434,32 +431,6 @@ class LearnerMessageController extends Controller
                         ->orderBy('date_sent', 'DESC')
                         ->get();
 
-
-                    //     foreach ($messageDetails->replies as $reply) {
-                    //         $reply->replyContent = DB::table('message_reply_content')
-                    //             ->select(
-                    //                 'message_reply_content_id',
-                    //                 'message_reply_id',
-                    //                 'message_id',
-                    //                 'message_reply_content',
-                    //                 'message_has_file'
-                    //             )
-                    //             ->where('message_reply_id', $reply->message_reply_id)
-                    //             ->get();
-                        
-                    //         $replyData = $reply->replyContent;
-                        
-                    //         foreach ($replyData as $replyItem) {
-                    //             if ($replyItem->message_has_file === 1) {
-                    //                 $replyItem->fileContents = DB::table('message_reply_content_file')
-                    //                     ->select(
-                    //                         'message_reply_content_file'
-                    //                     )
-                    //                     ->where('message_reply_content_id', $replyItem->message_reply_content_id)
-                    //                     ->get();
-                    //             }
-                    //         }
-                    //     }
                         
                     }
             
@@ -584,7 +555,6 @@ class LearnerMessageController extends Controller
                 foreach ($filesToSend as $file) {
                     $filename = time() . '-' . $file->getClientOriginalName();
 
-                    // $file->storeAs('uploads', $filename);
                     $filePath = $file->storeAs($folderPath, $filename, 'public');
 
                     $rowMessageContentFileData = [

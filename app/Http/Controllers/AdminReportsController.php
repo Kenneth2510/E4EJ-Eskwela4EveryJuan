@@ -143,11 +143,7 @@ class AdminReportsController extends Controller
 
                         $learner = $learner->get();
 
-                        // $data = [
-                        //     'learnerData' => $learner,
-                        //     'category' => $userCategory,
-                        // ];
-
+         
                         
                         $html = view('adminReports.list_user', [
                             'learnerData' => $learner,
@@ -178,28 +174,12 @@ class AdminReportsController extends Controller
 
 
                         $instructorData = $instructor->get();
-                        // $data = [
-                        //     'instructorData' => $instructorData,
-                        //     'category' => $userCategory,
-                        // ];
-
+      
                         $html = view('adminReports.list_user', [
                             'instructorData' => $instructorData,
                             'category' => $userCategory,
                             ])->render();
                     }
-
-                    // dd($data);
-
-                // $pdf = PDF::loadView('adminReports.list_user');
-
-                // return $pdf->download();
-
-                
-                // Generate HTML content from the view
-                // $html = view('adminReports.list_user', [
-                //     'data' => $data
-                //     ])->render();
 
 
                 // Generate PDF from HTML
@@ -640,7 +620,7 @@ class AdminReportsController extends Controller
                 'learnerPostAssessmentData' => $learnerPostAssessmentData,
             ];
 
-            // dd($data);
+        
 
             $html = view('adminReports.courseGradesheet', $data)->render();
     
@@ -699,7 +679,6 @@ class AdminReportsController extends Controller
                 ->where('learner_course.learner_course_id', $learnerCourse);
 
             $gradeWithActivityData = $gradeData->first();
-            // foreach ($gradeWithActivityData as $key => $activityData) {
                 $gradeWithActivityData->activities = DB::table('learner_activity_output')
                     ->select(
                         'learner_activity_output.activity_id',
@@ -749,9 +728,7 @@ class AdminReportsController extends Controller
                     ->where('learner_course_id', $gradeWithActivityData->learner_course_id)
                     ->first();
 
-                // Add the updated $activityData back to the main array
-                // $gradeWithActivityData[$key] = $activityData;
-            // }
+      
 
             $activitySyllabusData = DB::table('activities')
             ->select(
@@ -831,7 +808,7 @@ class AdminReportsController extends Controller
                 'learnerPostAssessmentData' => $learnerPostAssessmentData,
             ];
 
-            // dd($data);
+     
 
             $html = view('adminReports.learnerGradesheet', $data)->render();
 

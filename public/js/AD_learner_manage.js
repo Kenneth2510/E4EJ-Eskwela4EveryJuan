@@ -26,11 +26,8 @@ $(document).ready(function() {
         $('#business_category').prop("disabled", false);
     
         $('#learner_username').prop("disabled", false);
-                // $('#learner_username').prop("readonly", true);
         $('#learner_password').prop("disabled", false);
-                // $('#learner_password').prop("readonly", true);
         $('#learner_password_confirm').prop("disabled", false);
-                // $('#learner_password_confirm').prop("readonly", true);
         $('#learner_security_code').prop("disabled", false);
         $('#learner_security_code').prop("readonly", true);
             
@@ -63,11 +60,8 @@ $(document).ready(function() {
         $('#business_category').prop("disabled", true);
     
         $('#learner_username').prop("disabled", true);
-                // $('#learner_username').prop("readonly", true);
         $('#learner_password').prop("disabled", true);
-                // $('#learner_password').prop("readonly", true);
         $('#learner_password_confirm').prop("disabled", true);
-                // $('#learner_password_confirm').prop("readonly", true);
         $('#learner_security_code').prop("disabled", true);
         $('#learner_security_code').prop("readonly", true);
     })
@@ -114,71 +108,5 @@ $("#learner_delete_data").click(function () {
         $("#updateLearnerModal").addClass("hidden");
     });
 
-    // $('#instructor_updateData_form').submit(function(e) {
-    //     e.preventDefault();
-    //     $("#updateInstructorModal").addClass("hidden");
-
-
-    //     const instructorFname = $('#instructor_fname').val();
-    //     const instructorLname = $('#instructor_lname').val();
-    //     const instructorBday = $('#instructor_bday').val();
-    //     const instructorGender = $('#instructor_gender').val();
-    //     const instructorContactNo = $('#instructor_contactno').val();
-
-    //     if(instructorFname == ''|| instructorLname == '' || instructorBday == '' || instructorGender == '' || instructorContactNo == '') {
-    //         $('.error-msg').remove();
-    //         alert("Please fill all fields");
-
-    //             if(instructorFname === '') {
-    //                 var errorMsg = `
-    //                 <span class="text-red-600 error-msg">*Please enter a Course Name*</span>
-    //                 `;
-
-    //                 $('#instructor_fname').before(errorMsg);
-    //             }
-    //             if (instructorLname === '') {
-    //                 var errorMsg = `
-    //                 <span class="text-red-600 error-msg">*Please enter a Course Description*</span>
-    //                 `;
-
-    //                 $('#instructor_lname').before(errorMsg);
-    //             }
-    //             if (instructorGender === null || instructorGender === '') {
-    //                 var errorMsg = `
-    //                 <span class="text-red-600 error-msg">*Please select a Course Difficulty*</span>
-    //                 `;
-
-    //                 $('#instructor_gender').before(errorMsg);
-    //             }
-
-    //             if (instructorBday === null || instructorBday === '') {
-    //                 var errorMsg = `
-    //                 <span class="text-red-600 error-msg">*Please select an Instructor*</span>
-    //                 `;
-
-    //                 $('#instructor_bday').before(errorMsg);
-    //             }
-    //     } else {
-    //         // console.log('test');
-    //         // var formData = new FormData(this);
-
-    //         // var courseID = $(this).data("course-id");
-
-    //         // $.ajax({
-    //         //     type: 'POST',
-    //         //     url: '/admin/view_course/' + courseID,
-    //         //     data: formData,
-    //         //     contentType: false,
-    //         //     processData: false,
-    //         //     success: function(response) {
-    //         //         if(response && response.redirect_url) {
-    //         //             window.location.href= response.redirect_url
-    //         //         } else {
-                        
-    //         //         }
-    //         //     }
-    //         // });
-    //     }
-    // })
 
 })

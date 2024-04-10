@@ -17,24 +17,7 @@ use App\Models\Syllabus;
 class ChatBotController extends Controller
 {
 
-//public function get_pdf_files($directory){
-//
-  //  $files = Storage::files($directory);
-//
-//    $pdfFiles = collect($files)->filter(function ($file) {
-//        return pathinfo($file, PATHINFO_EXTENSION) === 'pdf' && 
-//               strpos($file, '_gradesheet') === false || 
-//               strpos($file, 'enrollees') === false;
-//    })->values()->all();
-//
-//    $subDirectories = Storage::directories($directory);
-//
-//    foreach ($subDirectories as $subDirectory) {
-//        $pdfFiles = array_merge($pdfFiles, $this->get_pdf_files($subDirectory));
-//    }
-//
-//    return $pdfFiles;
-//}
+
 
 public function get_pdf_files($directory){
 
@@ -72,17 +55,6 @@ public function get_pdf_files($directory){
         foreach ($files as $file) {
             $filePath = Storage::path($file);
             $fileName = pathinfo($file, PATHINFO_BASENAME);
-    
-            // Send the PDF file to the Flask application
-            // $response = $client->request('POST', "http://127.0.0.1:5000/add_file/$session_id", [
-            //     'multipart' => [
-            //         [
-            //             'name'     => 'files',
-            //             'contents' => fopen($filePath, 'r'),
-            //             'filename' => $fileName,
-            //         ],
-            //     ],
-            // ]);
 
             
             //     Send the PDF file to the Flask application
@@ -101,21 +73,6 @@ public function get_pdf_files($directory){
     }
 
 
-//    public function get_learner_pdf_files($directory){
-//
-//        $files = Storage::files($directory);
-//    
-//        $pdfFiles = collect($files)->filter(function ($file) {
-//            return pathinfo($file, PATHINFO_EXTENSION) === 'pdf';
-//        })->values()->all();
-//    
-//        $subDirectories = Storage::directories($directory);
-//    
-//        foreach ($subDirectories as $subDirectory) {
-//            $pdfFiles = array_merge($pdfFiles, $this->get_pdf_files($subDirectory));
-//        }
-//        return $pdfFiles;
-//    }
 
 public function get_learner_pdf_files($directory){
 
@@ -158,8 +115,7 @@ public function get_learner_pdf_files($directory){
         }
         $directory = "public/learners/$folderName";
         $files = $this->get_learner_pdf_files($directory);
-        // dd($files);
-        // dd($files);
+
         // Create a Guzzle HTTP client instance
         $client = new Client();
     
@@ -185,21 +141,7 @@ public function get_learner_pdf_files($directory){
     }
 
 
-//    public function get_learner_course_pdf_files($directory){
-//
-//        $files = Storage::files($directory);
-//    
-//        $pdfFiles = collect($files)->filter(function ($file) {
-//            return pathinfo($file, PATHINFO_EXTENSION) === 'pdf';
-//        })->values()->all();
-//    
-//        $subDirectories = Storage::directories($directory);
- //   
-//        foreach ($subDirectories as $subDirectory) {
-//            $pdfFiles = array_merge($pdfFiles, $this->get_pdf_files($subDirectory));
-//        }
-//        return $pdfFiles;
-//    }
+
 
 public function get_learner_course_pdf_files($directory){
 

@@ -48,7 +48,16 @@ class LearnerController extends Controller
         ]);
         }
 
-        // return view('learner.login')->with('title', 'Learner Login');
+    }
+
+    public function getID() {
+        $learner= session('learner');
+
+        $data = [
+            'learner' => $learner,
+        ];
+
+        return response()->json($data);
     }
 
 
@@ -183,7 +192,6 @@ class LearnerController extends Controller
             // Call the to() method on the instance, not statically on the class
             Mail::to($learner->learner_email)->send($mailNotify);
     
-            // return response()->json(['message' => 'Password reset email sent successfully']);
             return view('learner.login')
             ->with([
                 'title'=> 'Learner Login',
@@ -292,7 +300,6 @@ class LearnerController extends Controller
             return redirect('/learner')->withErrors(['learner_username' => 'Authentication Required']);
         }
         
-        // dd($request->session()->get('instructor_authenticated'));
         return view('learner.authenticate')->with('title', 'Learner Login');
 
     }
@@ -308,7 +315,7 @@ class LearnerController extends Controller
         $learner = DB::table('learner')
         ->where('learner_id', $learnerId)
         ->first();
-            // dd($request);
+
         $codeNumber = $request->validate([
             "security_code_1" => ['required', 'numeric'],
             "security_code_2" => ['required', 'numeric'],
@@ -411,8 +418,6 @@ class LearnerController extends Controller
                     "time_difference" => $timeDifference,
                 ]);
         }
-    //    $chatBotController = new ChatBotController();
-    //    $chatBotController->reset($learner->learner_id);
 
         $action = "Logged out";
         $this->log($action);
@@ -451,7 +456,6 @@ class LearnerController extends Controller
     public function register_process(Request $request) {
         
         try {
-        /*dd($request);*/
         $LearnerLoginData = $request->validate([
             "learner_username" => ['required', Rule::unique('learner' , 'learner_username')],
             "password" => 'required|confirmed',
@@ -503,15 +507,14 @@ class LearnerController extends Controller
 
         // Copy the default photo to the same directory
         $defaultPhoto = 'public/images/default_profile.png';
-        // $isExists = Storage::exists($defaultPhoto);
+
 
         $defaultPhoto_path = $folderPath . '/default_profile.png';
-        // dd($defaultPhoto_path);
+ 
 
         $LearnerData['profile_picture'] = $defaultPhoto_path;
         Storage::copy($defaultPhoto, 'public/' . $defaultPhoto_path);
-        // $isExists = Storage::exists($defaultPhoto_path);
-        // dd($isExists);
+
 
         $newCreatedLearner = Learner::firstOrCreate($LearnerData);
 
@@ -526,9 +529,7 @@ class LearnerController extends Controller
         $folderName = "{$LearnerData['learner_lname']} {$LearnerData['learner_fname']}";
         $folderName = Str::slug($folderName, '_');
         
-        // $fileName = time() . '-' . $file->getClientOriginalName();
         $folderPath = '/public/learners/' . $folderName;
-        // $filePath = $file->storeAs($folderPath, $fileName, 'public');
 
         if(!Storage::exists($folderPath)) { 
             Storage::makeDirectory($folderPath);
@@ -596,7 +597,6 @@ class LearnerController extends Controller
                     ->where('learner_course.status', '=', 'Approved')
                     ->get();
 
-                // dd($enrolledCourses);
 
                 $reportController = new PDFGenerationController();
 
@@ -803,10 +803,10 @@ class LearnerController extends Controller
 
         if (session()->has('learner')) {
             $learner= session('learner');
-            // dd($learner);
+    
 
             $business = Business::where('learner_id', $learner->learner_id)->first();
-            // dd($business);
+      
         } else {
             return redirect('/learner');
         }
@@ -820,9 +820,7 @@ class LearnerController extends Controller
     public function update_info(Request $request) {
         if (session()->has('learner')) {
             $learner= session('learner');
-            // dd($learner);
-
-            // dd($request);
+  
             
         $updated_learnerData = $request->validate([
             "learner_fname" => ['required'],
@@ -1011,7 +1009,6 @@ class LearnerController extends Controller
 
                 session()->flash('message', 'User Info changed successfully');
                 
-                // return redirect('/learner/profile')->with('message' , 'Profile updated successfully');
                 return response()->json(['message' => 'User Info changed successfully']);
 
                 
@@ -1053,7 +1050,6 @@ class LearnerController extends Controller
                  $action = "Updated Details Learner ID: " . $learner->learner_id;
                  $this->log($action);
                 
-                // return redirect('/learner/profile')->with('message' , 'Profile updated successfully');
                 return response()->json(['message' => $message]);
 
                 

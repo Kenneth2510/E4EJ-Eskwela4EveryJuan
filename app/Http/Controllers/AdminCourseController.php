@@ -67,7 +67,6 @@ public function search_course() {
 
     if (auth('admin')->check()) {
         $admin = session('admin');
-        // dd($admin);
 
 
         $search_by = request('searchBy');
@@ -318,7 +317,7 @@ public function update_course(Course $course, Request $request) {
             
         
         } catch (ValidationException $e) {
-            // dd($e->getMessage());
+
             $errors = $e->validator->errors();        
             return response()->json(['errors' => $errors], 422);
         }
@@ -409,20 +408,6 @@ public function pendingCourse(Course $course)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public function manage_course (Course $course) {
 
     if (auth('admin')->check()) {
@@ -459,52 +444,6 @@ public function manage_course (Course $course) {
     ->with(['title' => 'Course Management', 'adminCodeName' => $admin_codename]);
 
 }
-
-
-// public function manage_course () {
-
-//     if (auth('admin')->check()) {
-//         $adminSession = session('admin');
-
-//         if (in_array($adminSession->role, ['IT_DEPT', 'SUPER_ADMIN', 'COURSE_SUPERVISOR' , 'COURSE_ASST_SUPERVISOR'])) {
-//             try {
-
-//                 $courses = DB::table('course')
-//                 ->select(
-//                     'course.course_id',
-//                     'course.course_name',
-//                     'course.course_status',
-//                     'course.course_difficulty',
-//                     'course.instructor_id',
-//                     'instructor.instructor_fname',
-//                     'instructor.instructor_lname',
-//                     'instructor.profile_picture',
-//                 )
-//                 ->join('instructor', 'course.instructor_id', 'instructor.instructor_id')
-//                 ->get();
-
-//                 $data = [
-//                     'title' => 'Course Management',
-//                     'admin' => $adminSession,
-//                     'scripts' => ['AD_course_enroll.js'],
-//                 ];
-//                 // dd($courseData);
-//                 return view('admin.manage_course')
-//                 ->with($data);
-            
-
-//             } catch (\Exception $e) {
-//                 dd($e->getMessage());
-//             }
-//         }  else {
-//             return view('error.error');
-//         }
-//     } else {
-//     return redirect('/admin');
-//     }
-
-
-// }
 
 
 
@@ -743,7 +682,6 @@ public function getData(Request $request) {
                 'course' => $course
             ];
 
-            // return view('admin.courseManage_addLearnerCourse')->with($data);
             return response()->json($data);
         } else {
             session()->flash('message', 'You cannot update the data');
@@ -897,7 +835,7 @@ public function view_learner_course(LearnerCourse $learnerCourse, Request $reque
                 'courses' => $courses,
                 'instructors' => $instructors
             ];
-            // dd($data);
+      
             return view('admin.courseEnrollee_viewLearner')->with($data);
 
 
@@ -909,17 +847,6 @@ public function view_learner_course(LearnerCourse $learnerCourse, Request $reque
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 public function course_enrollees (Request $request, Course $course) {
@@ -1011,10 +938,10 @@ public function course_enrollees (Request $request, Course $course) {
 // add learner course progress, learner syllabus progress, lesson, activity,quiz progress
 public function approve_learner_course(LearnerCourse $learnerCourse) {
     try {
-        // dd($learnerCourse);
+
         $now = Carbon::now('Asia/Manila');
         $timestampString = $now->toDateTimeString();
-        // dd($learnerCourse);
+
         $learnerCourse->update([
             'status' => 'Approved',
         ]);  
@@ -1034,7 +961,7 @@ public function approve_learner_course(LearnerCourse $learnerCourse) {
         ->where('course_id', $learnerCourse->course_id)
         ->first();
 
-        // LearnerCourseProgress::create($courseProgressData);
+ 
         LearnerCourseProgress::firstOrCreate($courseProgressData);
 
         $learnerAssessmentData = [

@@ -96,7 +96,6 @@ class LearnerPerformanceController extends Controller
                 $action = "Opened Learner Performance";
                 $this->log($action);
         
-                // dd($data);
                 return view('learner_performance.learnerPerformance' , compact('learner'))
                 ->with($data);
             } catch (\Exception $e) {
@@ -214,8 +213,6 @@ class LearnerPerformanceController extends Controller
                     'title' => 'Performance',
                     'learnerCourseData' => $learnerCourseData,
                     'totalLearnerCourseCount' => $totalLearnerCourseCount,
-                    // 'totalLearnerCompletedCourseCount' => $totalLearnerCompletedCourseCount,
-                    // 'totalLearnerInProgressCourseCount' => $totalLearnerInProgressCourseCount,
                     'totalLearnerApprovedCourseCount' => $totalLearnerApprovedCourseCount,
                     'totalLearnerPendingCourseCount' => $totalLearnerPendingCourseCount,
                     'totalLearnerRejectedCourseCount' => $totalLearnerRejectedCourseCount,
@@ -487,7 +484,6 @@ class LearnerPerformanceController extends Controller
                 $action = "Opened Learner Course Performance ID: " . $course->course_id;
                 $this->log($action);
         
-                // dd($data);
                 return view('learner_performance.learnerCoursePerformance' , compact('learner'))
                 ->with($data);
             } catch (\Exception $e) {

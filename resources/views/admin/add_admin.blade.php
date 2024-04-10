@@ -46,14 +46,14 @@
 
                         <div class="w-full mt-3" id="codenameArea">
                             <label for="admin_codename">Code Name</label><br>
-                            <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                            <input class="w-full input input-bordered focus:input-primary" type="text"
                                 name="admin_codename" id="admin_codename" value="">
                             <span id="codenameError" class="text-red-500"></span>
                         </div>
 
                         <div class="w-full mt-3" id="roleArea">
                             <label for="role">Admin Role</label><br>
-                            <select class="w-full h-12 px-10 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select class="w-full select select-bordered focus:select-primary"
                                 name="role" id="role">
                                 <option value="" selected disabled>-- select an option --</option>
                                 <option value="IT_DEPT">IT_DEPT</option>
@@ -76,14 +76,14 @@
 
                     <div class="mt-3" id="usernameArea">
                         <label for="admin_username">Username</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="admin_username" id="admin_username" value="">
                         <span id="usernameError" class="text-red-500"></span>
                     </div>
 
                     <div class="mt-3" id="passwordArea">
                         <label for="password">Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="password" id="password">
                         <span id="passwordError" class="text-red-500"></span>
                     </div>
@@ -95,7 +95,7 @@
 
                     <div class="mt-3 " id="passwordConfirmationArea">
                         <label for="passwordConfirm">Confirm New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="passwordConfirm" id="passwordConfirm">
                         <span id="passwordConfirmError" class="text-red-500"></span>
                     </div>

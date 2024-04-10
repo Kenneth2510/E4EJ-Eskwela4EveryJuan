@@ -20,7 +20,7 @@
                         <input type="date" name="filterDate" class="w-1/3 input input-bordered input-primary">
 
                         <label for="filterStatus" class="sr-only text-lgr">Filter by Status</label>
-                        <select name="filterStatus" id="filterStatus" class="w-1/3 input input-bordered input-primary">
+                        <select name="filterStatus" id="filterStatus" class="w-1/3 select select-bordered focus:select-primary">
                             <option value="">Select Status</option>
                             <option value="Pending">Pending</option>
                             <option value="Approved">Approved</option>
@@ -32,7 +32,7 @@
 
 
                     <div class="flex items-center space-x-2">
-                        <select name="searchBy" class="w-1/3 input input-bordered input-primary">
+                        <select name="searchBy" class="w-1/3 select select-bordered focus:select-primary">
                             <option value="">Search By</option>
                             <option value="course_id">Course ID</option>
                             <option value="course_name">Course Name</option>

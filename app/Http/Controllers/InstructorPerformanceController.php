@@ -85,7 +85,6 @@ class InstructorPerformanceController extends Controller
                 $action = "Opened Instructor Performance";
                 $this->log($action);
         
-                // dd($data);
                 return view('instructor_performance.instructorPerformance' , compact('instructor', 'courses'))
                 ->with($data);
 
@@ -182,7 +181,6 @@ class InstructorPerformanceController extends Controller
                 )
                 ->get();
             
-            // dd($allInstructorCourses);
 
                 $totalLearnersCount = 0;
                 $totalPendingLearnersCount = 0;
@@ -253,7 +251,6 @@ class InstructorPerformanceController extends Controller
                     'totalRejectedCourseNum' => $totalRejectedCourseNum,
                 ];
 
-                // dd($data);
         
                 return response()->json($data);
             } catch (ValidationException $e) {
@@ -496,7 +493,6 @@ class InstructorPerformanceController extends Controller
         $action = "Opened Instructor Course Performance ID: " . $course->course_id;
         $this->log($action);
 
-        // dd($data);
         return view('instructor_performance.instructorCoursePerformance' , compact('instructor', 'course'))
         ->with($data);
     }
@@ -577,18 +573,7 @@ class InstructorPerformanceController extends Controller
             
 
             try {
-                // $learnerCourseData = DB::table('learner_course')
-                // ->select(
-                //     'learner_course.learner_course_id',
-                //     'learner_course.learner_id',
-                //     'learner_course.status',
-
-                //     'learner.learner_fname',
-                //     'learner.learner_lname',
-                // )
-                // ->join('learner', 'learner.learner_id', '=', 'learner_course.learner_id')
-                // ->where('learner_course.course_id', $course->course_id)
-                // ->get();
+            
 
                 $learnerCourseProgressData = DB::table('learner_course_progress')
                 ->select(
@@ -607,7 +592,6 @@ class InstructorPerformanceController extends Controller
 
                 $data = [
                     'title' => 'Performance',
-                    // 'learnerCourseData' => $learnerCourseData,
                     'learnerCourseProgressData' => $learnerCourseProgressData,
                     ];
 
@@ -769,7 +753,7 @@ class InstructorPerformanceController extends Controller
             return redirect('/instructor');
         }
 
-        $action = "Opened Instructor Course Performance ID: " . $course->course_id. " Syllabus ID: " . $syllabus_id;
+        $action = "Opened Instructor Course Performance ID: " . $course->course_id. " Syllabus ID: " . $syllabus->syllabus_id;
         $this->log($action);
         
         if($syllabusData->category === 'LESSON') {
@@ -781,7 +765,6 @@ class InstructorPerformanceController extends Controller
                 'syllabusData' => $syllabusData,
             ];
     
-            // dd($data);
 
             return view('instructor_performance.instructorSyllabusLessonPerformance' , compact('instructor'))
         ->with($data);
@@ -793,7 +776,6 @@ class InstructorPerformanceController extends Controller
                 'syllabusData' => $syllabusData,
             ];
     
-            // dd($data);
 
             return view('instructor_performance.instructorSyllabusActivityPerformance' , compact('instructor'))
         ->with($data);
@@ -805,7 +787,6 @@ class InstructorPerformanceController extends Controller
                 'syllabusData' => $syllabusData,
             ];
     
-            // dd($data);
 
             return view('instructor_performance.instructorSyllabusQuizPerformance' , compact('instructor'))
         ->with($data);
@@ -889,7 +870,6 @@ class InstructorPerformanceController extends Controller
                     'averageTimeDifference' => $averageTimeFormatted,
                     ];
 
-                // dd($data);
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -1033,7 +1013,6 @@ class InstructorPerformanceController extends Controller
                     'attemptCount' => $attemptCount
                     ];
 
-                // dd($data);
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -1231,7 +1210,6 @@ class InstructorPerformanceController extends Controller
                     'attemptCount' => $attemptCount
                     ];
 
-                // dd($data);
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -1442,7 +1420,6 @@ class InstructorPerformanceController extends Controller
                 $action = "Viewed Instructor Learner Course Performance ID: " . $course->course_id . " Learner ID: " . $learner_data->learner_id;
                 $this->log($action);
         
-                // dd($data);
                 return view('instructor_performance.instructorViewLearnerPerformance' , compact('instructor'))
                 ->with($data);
 

@@ -55,7 +55,7 @@ class LearnerCourseController extends Controller
     public function courses (){
         if (session()->has('learner')) {
             $learner= session('learner');
-            // dd($instructor);
+         
 
             try {
                 $query = DB::table('learner_course')
@@ -91,7 +91,6 @@ class LearnerCourseController extends Controller
                 ->where('course.course_status', '=', "APPROVED")
                 ->get();
 
-                // dd($allCourses);
 
             } catch (\Exception $e) {
                 dd($e->getMessage());
@@ -101,7 +100,6 @@ class LearnerCourseController extends Controller
             return redirect('/learner');
         }
 
-        // return view('instructor_course.courses' , compact('instructor'))->with('title', 'Instructor Courses');
         return view('learner_course.courses', compact('learner', 'learnerCourse','allCourses'))
         ->with([
             'title' => 'My Courses',
@@ -160,7 +158,7 @@ class LearnerCourseController extends Controller
  
         if (session()->has('learner')) {
             $learner= session('learner');
-            // dd($instructor);
+            
 
             try {
                 $course = DB::table('course')
@@ -297,9 +295,7 @@ class LearnerCourseController extends Controller
                 'learner_course.course_id',
                 'learner_course.status',
                 'learner_course.created_at',
-                // 'learner_course_progress.course_progress',
                 )
-                // ->join('learner_course_progress' , 'learner_course_progress.learner_course_id' , '=' , 'learner_course.learner_course_id')
                 ->join('course', 'learner_course.course_id', '=', 'course.course_id')
                 ->where('learner_course.learner_id', '=', $learner->learner_id)
                 ->where('learner_course.course_id', '=', $course->course_id)
@@ -307,7 +303,7 @@ class LearnerCourseController extends Controller
                 $totalLessonsDuration = $totalLessonsDuration->total_duration ?? 0;
                 $totalActivitiesDuration = $totalActivitiesDuration->total_duration ?? 0;
                 $totalQuizzesDuration = $totalQuizzesDuration->total_duration ?? 0;
-                    // dd($isEnrolled);
+                  
                 if($isEnrolled) {
                     $courseProgress = DB::table('learner_course_progress')
                     ->select(
@@ -321,7 +317,6 @@ class LearnerCourseController extends Controller
                     )
                     ->where('learner_course_id', $isEnrolled->learner_course_id)
                     ->first();
-                    // dd($courseProgress);
 
                     $learnerPreAssessmentGrade = DB::table('learner_pre_assessment_progress')
                     ->select(
@@ -405,10 +400,6 @@ class LearnerCourseController extends Controller
                 $seconds = $totalCourseTimeInSeconds % 60;
                 
                 $formattedTotalCourseTime = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
-                
-                
-                // dd($formattedTotalCourseTime);
-                
 
 
                 $syllabusProgress = DB::table('learner_syllabus_progress')
@@ -422,7 +413,6 @@ class LearnerCourseController extends Controller
                 ->where('learner_syllabus_progress.learner_id' , $learner->learner_id)
                 ->where('learner_syllabus_progress.course_id', $course->course_id)
                 ->get();
-                    // dd($syllabusProgress);
                 $syllabusProgressCompleted = DB::table('learner_syllabus_progress')
                 ->where('learner_id' , $learner->learner_id)
                 ->where('course_id', $course->course_id)
@@ -464,37 +454,19 @@ class LearnerCourseController extends Controller
             ->orderBy('syllabus.topic_id',  'asc')
             ->get();
 
-            // dd($gradeWithQuizData);
-
-                            // // $folderName = "{$course->course_id} {$course->course_name}";
-                            // $folderName = Str::slug("{$course->course_id} {$course->course_name}", '_');
-
-                            // // $directoryPath = "/public/courses/{$folderName}/lesson_1.pdf";
-                
-                            // // // $courseFiles = Storage::disk('public')->files($folderName);
-                
-                            // // $courseFiles = Storage::files($directoryPath);
-                            // // $courseFiles = Storage::allFiles($directoryPath);
-                
-                            // $directory = "public/courses/$folderName/documents";
-                            
-                
-                            // // Get all files in the specified directory
-                            // $courseFiles = Storage::files($directory);
-
+         
 
                             $folderName = Str::slug("{$course->course_id} {$course->course_name}", '_');
                             $directory = "public/courses/$folderName/documents";
 
                             // Get all files in the specified directory
-                          //  $allFiles = glob(storage_path("app/$directory/*.pdf"), GLOB_BRACE);
                             $allFiles = glob(storage_path("app/{$directory}*/*.pdf"), GLOB_BRACE);
 
                             // Filter out files containing the keywords
                             $filteredFiles = array_filter($allFiles, function($file) {
                                 return strpos($file, 'gradesheet') === false && strpos($file, 'enrollees') === false;
                             });
-                           /* dd($filteredFiles);*/
+                     
 
 
 
@@ -553,7 +525,7 @@ class LearnerCourseController extends Controller
 
                 $action = "Viewed Course ID: " . $course->course_id;
                 $this->log($action);
-                // dd($data);
+ 
                 return view('learner_course.courseOverview', compact('course', 'learner', 'isEnrolled'))
                 ->with($data);
     
@@ -609,7 +581,7 @@ class LearnerCourseController extends Controller
     }
 
     public function unEnroll_course(LearnerCourse $learnerCourse) {
-        // dd($learnerCourse);
+
         if (session()->has('learner')) {
             $learner= session('learner');
 
@@ -864,7 +836,7 @@ class LearnerCourseController extends Controller
                     'pre_assessment_percent',
                     'post_assessment_percent',
                 )
-                ->where('course_id', $course->course_id)
+                ->where('course_id', $course)
                 ->first();
                 $activityGrade = 0;
                 $quizGrade = 0;
@@ -1037,7 +1009,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
     public function manage_course(Request $request, Course $course) {
         if (session()->has('learner')) {
             $learner= session('learner');
-            // dd($instructor);
+     
 
             try {
 
@@ -1140,7 +1112,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
     public function course_overview(Course $course) {
         if (session()->has('learner')) {
             $learner= session('learner');
-            // dd($learner);
+ 
 
 
             try {
@@ -1190,7 +1162,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     DB::table('learner_course_progress')
                     ->where('learner_course_id', $learnerCourseData->learner_course_id)
                     ->update(['course_progress' => 'IN PROGRESS']);
-                    // dd($learnerCourseProgressData);
+              
                 }
 
                 $learnerCourseProgressData2 = DB::table('learner_course_progress')
@@ -1222,7 +1194,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->orderBy('syllabus.topic_id', 'ASC')
                 ->get();
 
-                // dd($learnerSyllabusProgressData);
 
 
                 $lessonCount = 0;
@@ -1374,7 +1345,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'questionsCount' => $totalNumofQuestions,
                     'formattedDuration' => $formattedDuration,
                 ];
-                // dd($data);
 
                 return view('learner_course.coursePreAssessment', compact('learner'))
                 ->with($data);
@@ -1504,7 +1474,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                                 }
                             }
 
-                               // dd($assessmentQuestions);
                                foreach($assessmentQuestions as $content) {
                     
                                 $outputData = [
@@ -1577,18 +1546,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     }
 
                 }
-
-
-
-
-                    // if($preAssessmentData->status === 'COMPLETED') {
-                    //     session()->flash('message', 'You have already finished your Pre Assessment');
-                    //     return redirect('/learner/course/content/'.$course->id.'/'.$learner_course->id.'/pre_assessment')->with('error', 'You have already finished your Pre Assessment');
-
-                    // } else {
-
-
-                // }
     
                 $action = "Answered Pre Assessment on Course ID: " . $course->course_id;
                 $this->log($action);
@@ -1602,8 +1559,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'preAssessmentData' => $preAssessmentData,
                     'preAssessmentOutputData' => $preAssessmentOutputData,
                 ];
-
-                // dd($data);
 
                 return view('learner_course.coursePreAssessmentAnswer', compact('learner'))
                 ->with($data);
@@ -1690,11 +1645,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'preAssessmentOutputData' => $preAssessmentOutputData,
                 ];
 
-                // dd($data);
-
-                // return view('learner_course.coursePreAssessmentAnswer', compact('learner'))
-                // ->with($data);
-
                 return response()->json($data);
 
             } catch (\Exception $e) {
@@ -1706,7 +1656,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
         if (session()->has('learner')) {
             $learner= session('learner'); 
             try {
-                // dd($request);
+
             $learner_pre_assessment_output_id = $request->input('learner_pre_assessment_output_id');
             $question_id = $request->input('question_id');
 
@@ -1729,7 +1679,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             ->where('learner_course_id', $learner_course->learner_course_id)
             ->orderBy('learner_syllabus_progress_id', 'ASC')
             ->first();
-            // dd($firstTopic);
+
             DB::table('learner_syllabus_progress')
             ->where('learner_syllabus_progress_id', $firstTopic->learner_syllabus_progress_id)
             ->update([
@@ -1829,10 +1779,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             $reportController->courseGradeSheet($course->course_id);
             $reportController->learnerCourseGradeSheet($learner_course->learner_id, $course->course_id, $learner_course->learner_course_id);
             $reportController->learnerPreAssessmentOutput($learner_course->learner_id, $course->course_id, $learner_course->learner_course_id);
-            
-            
-     //     $this->overallGrade($course, $learner_course);
-            
             
             session()->flash('message', 'Learner Pre Assessment Scored successfully');
 
@@ -1939,8 +1885,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'preAssessmentOutputData' => $preAssessmentOutputData,
                 ];
 
-                // dd($data);
-
                 return view('learner_course.coursePreAssessmentOutput', compact('learner'))
                 ->with($data);
 
@@ -2042,10 +1986,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'preAssessmentOutputData' => $preAssessmentOutputData,
                 ];
 
-                // // dd($data);
-
-                // return view('learner_course.coursePreAssessmentOutput', compact('learner'))
-                // ->with($data);
                 return response()->json($data);
     
 
@@ -2101,7 +2041,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->where('learner_syllabus_progress.learner_course_id', $learner_course->learner_course_id)
                 ->first();
 
-                //dd($learnerSyllabusProgressData);
 
                 $learnerLessonProgressData = DB::table('learner_lesson_progress')
                 ->select(
@@ -2129,8 +2068,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     ->where('learner_course_id', $learner_course->learner_course_id)
                     ->where('syllabus_id' , $syllabus->syllabus_id)
                     ->update(['status' => 'IN PROGRESS']);
-                    // ->first();
-                    // dd($a);
+       
                     
                     $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
@@ -2146,10 +2084,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         'status' => 'IN PROGRESS',
                         'start_period' => $timestampString,
                     ]);
-                    // ->first();
-                    // dd($b);
-    
-                    // dd($learnerLessonProgressData);
+            
                 }
                 
                 
@@ -2330,13 +2265,11 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'activity_content.total_score',
                 )
                 ->join('activity_content', 'learner_activity_progress.activity_id', '=', 'activity_content.activity_id')
-                // ->join('activity_content_criteria', 'activity_content.activity_content_id', '=', 'activity_content_criteria.activity_content_id')
                 ->where('learner_activity_progress.course_id', $course->course_id)
                 ->where('learner_activity_progress.syllabus_id', $syllabus->syllabus_id)
                 ->where('learner_activity_progress.learner_course_id' , $learnerSyllabusProgressData->learner_course_id)
                 ->first();
 
-                // dd($learnerActivity  rogressData);
 
                 $activityContentCriteriaData = DB::table('activity_content_criteria')
                 ->select(
@@ -2348,12 +2281,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 ->where('activity_content_id', $learnerActivityProgressData->activity_content_id)
                 ->get();
                 $totalScores = 0;
-                // foreach ($activityContentCriteriaData as $criteria) {
-                //     $totalScore += $criteria->score;
-                // }
-
-
-                // if ($learnerActivityProgressData->status === "COMPLETED" || $learnerActivityProgressData->status === "IN PROGRESS") {
+               
                     $activityOutputData1st = DB::table('learner_activity_output')
                         ->select(
                             'learner_activity_output_id',
@@ -2394,7 +2322,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         ->where('learner_course_id', $learnerSyllabusProgressData->learner_course_id)
                         ->get();
 
-                    //    dd($activityOutputData);
                         $activityScoreData = [];
                     if(!empty($activityOutputData1st)) {
                         $activityScoreData = DB::table('learner_activity_criteria_score')
@@ -2411,7 +2338,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         ->orderBy('learner_activity_criteria_score_id', 'ASC')
                         ->get();
 
-                       
                     }
                     
 
@@ -2495,7 +2421,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                     'activity_content.total_score',
                 )
                 ->join('activity_content', 'learner_activity_progress.activity_id', '=', 'activity_content.activity_id')
-                // ->join('activity_content_criteria', 'activity_content.activity_content_id', '=', 'activity_content_criteria.activity_content_id')
                 ->where('learner_activity_progress.course_id', $course->course_id)
                 ->where('learner_activity_progress.syllabus_id', $syllabus->syllabus_id)
                 ->where('learner_activity_progress.learner_course_id' , $learnerSyllabusProgressData->learner_course_id)
@@ -2581,7 +2506,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         'activityScore' => $activityScoreData,
                     ];
 
-                    //  dd($data);
                 } else {
 
                     $activityData =([
@@ -2615,7 +2539,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                         ->where('attempt', $attempt)
                         ->first();
 
-                        // dd($activityOutputData);
                         $activityCriteria = DB::table('activity_content_criteria')
                         ->select(
                             'activity_content_criteria_id',
@@ -2663,9 +2586,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
                 }
 
 
-                
-                // dd($data);
-
 
             } catch (\Exception $e) {
                 dd($e->getMessage());
@@ -2684,11 +2604,7 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             $learner= session('learner'); 
             try {
                 $activityData =([
-                    // 'learner_course_id' => $learner_course->learner_course_id,
-                    // 'syllabus_id' => $syllabus->syllabus_id,
-                    // 'activity_id' => $activity->activity_id,
-                    // 'activity_content_id' => $activity_content->activity_content_id,
-                    // 'course_id' => $course->course_id,
+       
                     'answer' => $request->answer,
                 ]);
 
@@ -2920,7 +2836,6 @@ $pdfUrl = URL::to('storage/' . $folderPath . '/' . $filename);
             'formattedDuration' => $formattedDuration,
         ];
 
-        // dd($data);
 
         return view('learner_course.courseQuiz', compact('learner'))
         ->with($data);
@@ -3137,8 +3052,6 @@ $learnerQuizData = DB::table('learner_quiz_output')
                         'quizProgressData' => $learnerQuizProgressData,
                         'quizLearnerData' => $learnerQuizData,
                     ];
-
-                    // dd($data);
             } catch (\Exception $e) {
                 dd($e->getMessage());
             }
@@ -3453,27 +3366,6 @@ $learnerQuizData = DB::table('learner_quiz_output')
                     ]);
 
 
-                    // // Find the next lesson that is still 'LOCKED' and update its status to 'NOT YET STARTED'
-                    // $nextLesson = DB::table('learner_syllabus_progress')
-                    // ->where('learner_quiz_progress_id', '>', $learnerQuizProgress->learner_quiz_progress_id)
-                    // ->where('learner_course_id' , $learnerQuizOutputData->learner_course_id)
-                    // ->where('course_id', $learnerQuizOutputData->course_id)
-                    // ->orderBy('learner_syllabus_progress_id', 'ASC')
-                    // ->limit(1)
-                    // ->first();
-
-                    // if ($nextLesson) {
-                    //     DB::table('learner_syllabus_progress')
-                    //         ->where('learner_syllabus_progress_id', $nextLesson->learner_syllabus_progress_id)
-                    //         ->update(['status' => 'NOT YET STARTED']);
-                    // } else {
-                    //     DB::table('learner_post_assessment_progress')
-                    //     ->where('learner_course_id', $learner_course->learner_course_id)
-                    //     ->where('course_id', $course->course_id)
-                    //     ->update(['status' => 'NOT YET STARTED']);
-                    //     session()->flash('message', "Great! You have finished all the Topics. \n Be ready for the Post Assessment for final grading!");
-                    // }
-
                     $learnerSyllabusProgress = DB::table('learner_syllabus_progress') 
                     ->select(
                         'learner_syllabus_progress_id',
@@ -3519,8 +3411,6 @@ $learnerQuizData = DB::table('learner_quiz_output')
 
             }
             
-            
-      //    $this->overallGrade($course, $learner_course);
 
             $reportController = new PDFGenerationController();
 
@@ -3617,10 +3507,10 @@ $learnerQuizData = DB::table('learner_quiz_output')
                         'learnerSyllabusProgressData' => $learnerSyllabusProgressData,
                         'quizReferences' => $quizReferenceData,
                         'quizProgressData' => $learnerQuizProgressData,
-                        // 'quizLearnerData' => $learnerQuizData,
+                   
                     ];
 
-                    // dd($data);
+                  
                     $action = "Viewed Output on Quiz ID: ". $syllabus->syllabus_id ." on Course ID: " . $course->course_id;
                     $this->log($action);
 
@@ -3949,10 +3839,8 @@ foreach ($postAssessmentData as $postAssessment) {
                     'postAssessmentData' => $postAssessmentDataWithQuestions,
                     'questionsCount' => $totalNumofQuestions,
                     'attemptCount' => $attemptCount,
-                    // 'questionsData' => $groupedQuestionsData,
                     'formattedDuration' => $formattedDuration
                 ];
-                // dd($data);
 
                 $action = "Viewed Post Assessment on Course ID: " . $course->course_id;
                 $this->log($action);
@@ -4022,12 +3910,6 @@ foreach ($postAssessmentData as $postAssessment) {
                 ]);
 
 
-                    // if($preAssessmentData->status === 'COMPLETED') {
-                    //     session()->flash('message', 'You have already finished your Pre Assessment');
-                    //     return redirect('/learner/course/content/'.$course->id.'/'.$learner_course->id.'/pre_assessment')->with('error', 'You have already finished your Pre Assessment');
-
-                    // } else {
-
                         $learnerPostAssessmentOutputData = DB::table('learner_post_assessment_output')
                         ->select(
                             'learner_post_assessment_output_id',
@@ -4092,7 +3974,6 @@ foreach ($postAssessmentData as $postAssessment) {
                                 }
                             }
 
-                            // dd($assessmentQuestions);
                         foreach($assessmentQuestions as $content) {
                             
                             $outputData = [
@@ -4166,7 +4047,7 @@ foreach ($postAssessmentData as $postAssessment) {
                         ->get();
 
                     }
-                // }
+                
     
                 $action = "Answered Post Assessment on Course ID: " . $course->course_id;
                 $this->log($action);
@@ -4181,7 +4062,6 @@ foreach ($postAssessmentData as $postAssessment) {
                     'postAssessmentOutputData' => $postAssessmentOutputData,
                 ];
 
-                // dd($data);
 
                 return view('learner_course.coursePostAssessmentAnswer', compact('learner'))
                 ->with($data);
@@ -4275,10 +4155,7 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                     'postAssessmentOutputData' => $postAssessmentOutputData,
                 ];
 
-                // dd($data);
-
-                // return view('learner_course.coursePreAssessmentAnswer', compact('learner'))
-                // ->with($data);
+       
 
                 return response()->json($data);
 
@@ -4531,7 +4408,6 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                     'postAssessmentOutputData' => $postAssessmentOutputData,
                 ];
 
-                // dd($data);
 
                 return view('learner_course.coursePostAssessmentOutput', compact('learner'))
                 ->with($data);
@@ -4637,10 +4513,7 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                     'postAssessmentOutputData' => $postAssessmentOutputData,
                 ];
 
-                // // dd($data);
-
-                // return view('learner_course.coursePreAssessmentOutput', compact('learner'))
-                // ->with($data);
+             
                 return response()->json($data);
     
 
@@ -4687,7 +4560,6 @@ $postAssessmentOutputData = DB::table('learner_post_assessment_output')
                 session()->flash('message', 'You may now reattempt the Post Assessment');
                 return back();
 
-                // return response()->json($data);
     
 
             } catch (ValidationException $e) {
@@ -5134,14 +5006,12 @@ $learnerPostAssessmentGrade = DB::table('learner_post_assessment_progress')
                     'postAssessmentScoreGrade' => $postAssessmentGrade,
 
                     'preAssessmentGradeData' => $preAssessmentGrade,
-                   // 'preAssessmentLearnerSumScore' => $learnerPreAssessmentGrade,
                     'totalScoreCount_pre_assessment' => $totalScoreCount_pre_assessment,
 
                     'totalGrade' => $totalGrade,
                     'remarks' => $remarks,
                 ];
 
-                // dd($data);
     
                 $action = "Viewed Gradesheet on Course ID: " . $course->course_id;
                 $this->log($action);

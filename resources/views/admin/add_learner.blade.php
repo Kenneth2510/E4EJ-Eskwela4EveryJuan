@@ -49,19 +49,19 @@
                         <div class="w-1/2 mx-2" id="userInfo_left">
                             <div class="mt-3" id="firstNameArea">
                                 <label for="learner_fname">First Name</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" name="learner_fname" id="learner_fname" value="">
                                 <span id="firstNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="bdayArea">
                                 <label for="learner_bday ">Birthday</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="date" name="learner_bday" id="learner_bday" value="">
                                 <span id="bdayError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="contactArea">
                                 <label for="learner_contactno">Contact Number</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" maxlength="11" name="learner_contactno" id="learner_contactno" value=""
                                     placeholder="09">
                                 <span id="contactError" class="text-red-500"></span>
@@ -70,13 +70,13 @@
                         <div class="w-1/2 mx-2" id="userInfo_right">
                             <div class="mt-3" id="lastNameArea">
                                 <label for="learner_lname">Last Name</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" name="learner_lname" id="learner_lname" value="">
                                 <span id="lastNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="genderArea">
                                 <label for="learner_gender">Gender</label><br>
-                                <select class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <select class="w-full select select-bordered focus:select-primary"
                                     name="learner_gender" id="learner_gender">
                                     <option value="">-- select an option --</option>
                                     <option value="Male">Male</option>
@@ -87,7 +87,7 @@
                             </div>
                             <div class="mt-3" id="emailArea">
                                 <label for="learner_email">Email Address</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="email" name="learner_email" id="learner_email" value="">
                                 <span id="emailError" class="text-red-500"></span>
                             </div>
@@ -103,28 +103,28 @@
 
                     <div class="mt-3" id="businessNameArea">
                         <label for="business_name">Business Name</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="business_name" id="business_name" value="">
                         <span id="businessNameError" class="text-red-500"></span>
                     </div>
 
                     <div class="mt-3" id="businessAddressArea">
                         <label for="business_address">Business Address</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="business_address" id="business_address" value="">
                         <span id="businessAddressError" class="text-red-500"></span>
                     </div>
 
                     <div class="mt-3" id="businessOwnerArea">
                         <label for="business_owner_name">Business Owner Name</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="business_owner_name" id="business_owner_name" value="">
                         <span id="businessOwnerNameError" class="text-red-500"></span>
                     </div>
 
                     <div class="mt-3" id="bplo_account_numberArea">
                         <label for="bplo_account_number">BPLO Account Number</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" maxlength="13"
+                        <input class="w-full input input-bordered focus:input-primary" maxlength="13"
                             type="text" name="bplo_account_number" id="bplo_account_number" value="">
                         <span id="bploError" class="text-red-500"></span>
                     </div>
@@ -133,7 +133,7 @@
 
                         <div class="w-full mt-3 mr-2" id="business_categoryArea">
                             <label for="business_category">Business Category</label><br>
-                            <select class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select class="w-full select select-bordered focus:select-primary"
                                 name="business_category" id="business_category">
                                 <option value="" disabled>-- select an option --</option>
                                 <option value="Micro">Micro</option>
@@ -145,7 +145,7 @@
 
                         <div class="w-full mt-3 ml-2" id="business_classificationArea">
                             <label for="business_classification">Business Classification</label><br>
-                            <select class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select class="w-full select select-bordered focus:select-primary"
                                 name="business_classification" id="business_classification">
                                 <option value="" disabled>-- select an option --</option>
                                 <option value="Retail">Retail</option>
@@ -183,14 +183,14 @@
 
                     <div class="mt-3" id="learner_usernameArea">
                         <label for="learner_username">Username</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="learner_username" id="learner_username" value="">
                         <span id="usernameError" class="text-red-500"></span>
                     </div>
 
                     <div class="mt-3" id="learnerPasswordArea">
                         <label for="password">Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="password" id="password">
                         <span id="passwordError" class="text-red-500"></span>
                     </div>
@@ -202,7 +202,7 @@
 
                     <div class="mt-3" id="learnerPasswordConfirmArea">
                         <label for="learnerNewPasswordConfirm">Confirm New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="learnerNewPasswordConfirm" id="learnerNewPasswordConfirm">
 
                         <span id="newPasswordConfirmError" class="text-red-500"></span>
@@ -211,7 +211,7 @@
 
                     <div class="mt-3" id="securityCodeArea">
                         <label for="learner_security_code">Enter your Security Code</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             maxlength="6" name="learner_security_code" id="learner_security_code">
                         <span id="securityCodeGuide" class="text-gray-500">Enter 6 characters of security
                             code</span>
@@ -336,6 +336,32 @@
                 isValid = false;
             } else {
                 $('#contactError').text('');
+
+                // var url = baseUrl + "/checkNumber"; 
+                var url = "/learner/checkContact";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'number' : learner_contactno,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#contactError').text('This contact number is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#contactError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
 
             if (learner_email === '') {
@@ -343,6 +369,31 @@
                 isValid = false;
             } else {
                 $('#emailError').text('');
+
+                var url = "/learner/checkEmail";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'email' : learner_email,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#emailError').text('This email is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#emailError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
 
 
@@ -372,6 +423,31 @@
                 isValid = false;
             } else {
                 $('#bploError').text('');
+
+                var url = "/learner/checkBPLO";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'bplo_account_number' : bplo_account_number,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#bploError').text('This account number is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#bploError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
         
             if (business_category === '') {
@@ -402,6 +478,31 @@
                 isValid = false;
             } else {
                 $('#usernameError').text('');
+
+                var url = "/learner/checkUsername";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'username' : learner_username,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#usernameError').text('This username is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#usernameError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
         
 

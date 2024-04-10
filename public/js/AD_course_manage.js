@@ -117,7 +117,6 @@ $("#delete_data").click(function () {
                     $('#instructor_id').before(errorMsg);
                 }
         } else {
-            console.log('test');
             var formData = new FormData(this);
 
             var courseID = $(this).data("course-id");

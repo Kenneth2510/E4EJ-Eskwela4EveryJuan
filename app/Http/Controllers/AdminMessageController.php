@@ -73,10 +73,8 @@ class AdminMessageController extends Controller
     
             if (in_array($adminSession->role, ['IT_DEPT', 'SUPER_ADMIN', 'COURSE_SUPERVISOR', 'COURSE_ASST_SUPERVISOR' , 'USER_MANAGER '])) {
            
-
             try {
                 
-
             $data = [
                 'title' => 'Message',
                 'scripts' => ['AD_message.js'],
@@ -106,9 +104,6 @@ class AdminMessageController extends Controller
                 return redirect('/admin');
             }
     }
-
-
-
 
     public function search_recipient(Request $request) {
 
@@ -160,7 +155,6 @@ class AdminMessageController extends Controller
             array_push($resultData, $instructorTemp);
         }
 
-
         $data = [
             'title' => 'Search Results',
             'results' => $resultData,
@@ -182,7 +176,6 @@ class AdminMessageController extends Controller
     
             if (in_array($adminSession->role, ['IT_DEPT', 'SUPER_ADMIN', 'COURSE_SUPERVISOR', 'COURSE_ASST_SUPERVISOR' , 'USER_MANAGER '])) {
         try{
-            // dd($request);
             $subject = $request->input('subject');
             $content = $request->input('content');
             $emailToReceive = json_decode($request->input('emailToReceive'));
@@ -227,7 +220,6 @@ class AdminMessageController extends Controller
                 foreach ($filesToSend as $file) {
                     $filename = time() . '-' . $file->getClientOriginalName();
 
-                    // $file->storeAs('uploads', $filename);
                     $filePath = $file->storeAs($folderPath, $filename, 'public');
 
                     $rowMessageContentFileData = [
@@ -366,12 +358,7 @@ class AdminMessageController extends Controller
                             ->orderBy('date_sent', 'DESC')
                             ->get();
                         }
-
-
                 }
-
-
-            
                 
             $data = [
                 'title' => 'Get all Message',
@@ -463,7 +450,6 @@ class AdminMessageController extends Controller
                     ->orderBy('message.date_sent', 'DESC')
                     ->get();
 
-                
                     foreach($messageContentData->messages as $messageDetails) {
                         $messageDetails->replies = DB::table('message_reply')
                         ->select(
@@ -532,7 +518,6 @@ class AdminMessageController extends Controller
             }
         }
 
-
         $data = [
             'title' => 'View Selected Message',
             'admin' => $adminSession,
@@ -560,8 +545,6 @@ class AdminMessageController extends Controller
             return redirect('/admin');
         }
     }
-
-
     public function reply(Request $request) {
         if (auth('admin')->check()) {
             $adminSession = session('admin');
@@ -590,7 +573,6 @@ class AdminMessageController extends Controller
                 'message_reply_id' => $messageReply->message_reply_id,
                 'message_reply_content' => $content,
                 'message_has_file' => $hasFiles,
-
             ]);
 
             DB::table('message_content')
@@ -613,7 +595,6 @@ class AdminMessageController extends Controller
                 foreach ($filesToSend as $file) {
                     $filename = time() . '-' . $file->getClientOriginalName();
 
-                    // $file->storeAs('uploads', $filename);
                     $filePath = $file->storeAs($folderPath, $filename, 'public');
 
                     $rowMessageContentFileData = [

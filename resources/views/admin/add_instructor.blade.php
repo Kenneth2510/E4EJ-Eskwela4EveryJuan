@@ -50,19 +50,19 @@
                         <div class="w-1/2 mx-2" id="userInfo_left">
                             <div class="mt-3" id="firstNameArea">
                                 <label for="instructor_fname">First Name</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" name="instructor_fname" id="instructor_fname" value="">
                                 <span id="firstNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="bdayArea">
                                 <label for="instructor_bday ">Birthday</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="date" name="instructor_bday" id="instructor_bday" value="">
                                 <span id="bdayError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="contactArea">
                                 <label for="instructor_contactno">Contact Number</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" maxlength="11" name="instructor_contactno" id="instructor_contactno"
                                     value="" placeholder="09">
                                 <span id="contactError" class="text-red-500"></span>
@@ -71,13 +71,13 @@
                         <div class="w-1/2 mx-2" id="userInfo_right">
                             <div class="mt-3" id="lastNameArea">
                                 <label for="instructor_lname">Last Name</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" name="instructor_lname" id="instructor_lname" value="">
                                 <span id="lastNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="genderArea">
                                 <label for="instructor_gender">Gender</label><br>
-                                <select class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <select class="w-full select select-bordered focus:select-primary"
                                     name="instructor_gender" id="instructor_gender">
                                     <option value="">-- select an option --</option>
                                     <option value="Male">Male</option>
@@ -88,7 +88,7 @@
                             </div>
                             <div class="mt-3" id="emailArea">
                                 <label for="instructor_email">Email Address</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="email" name="instructor_email" id="instructor_email" value="">
                                 <span id="emailError" class="text-red-500"></span>
                             </div>
@@ -117,14 +117,14 @@
 
                     <div class="mt-3" id="instructor_usernameArea">
                         <label for="instructor_username">Username</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="instructor_username" id="instructor_username" value="">
                         <span id="usernameError" class="text-red-500"></span>
                     </div>
 
                     <div class="mt-3" id="instructorPasswordArea">
                         <label for="password">Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="password" id="password">
                         <span id="passwordError" class="text-red-500"></span>
                     </div>
@@ -136,7 +136,7 @@
 
                     <div class="mt-3" id="instructorPasswordConfirmArea">
                         <label for="instructorNewPasswordConfirm">Confirm New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="instructorNewPasswordConfirm" id="instructorNewPasswordConfirm">
 
                         <span id="newPasswordConfirmError" class="text-red-500"></span>
@@ -145,7 +145,7 @@
 
                     <div class="mt-3" id="securityCodeArea">
                         <label for="instructor_security_code">Enter your Security Code</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             maxlength="6" name="instructor_security_code" id="instructor_security_code">
                         <span id="securityCodeGuide" class="text-gray-500">Enter 6 characters of security
                             code</span>
@@ -263,6 +263,31 @@
                 isValid = false;
             } else {
                 $('#contactError').text('');
+
+                var url = "/instructor/checkContact";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'number' : instructor_contactno,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#contactError').text('This contact number is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#contactError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
 
             if (instructor_email === '') {
@@ -270,6 +295,31 @@
                 isValid = false;
             } else {
                 $('#emailError').text('');
+
+                var url = "/instructor/checkEmail";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'email' : instructor_email,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#emailError').text('This email is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#emailError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
 
             if (!instructor_credentials) {
@@ -285,6 +335,31 @@
                 isValid = false;
             } else {
                 $('#usernameError').text('');
+
+                var url = "/instructor/checkUsername";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'username' : instructor_username,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#usernameError').text('This username is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#usernameError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
         
 

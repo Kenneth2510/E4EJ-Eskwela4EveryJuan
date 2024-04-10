@@ -70,7 +70,6 @@ class AdminPerformanceController extends Controller
         if (auth('admin')->check()) {
             $adminSession = session('admin');
                 try {
-
                     $data = [
                         'title' => 'Performance',
                         'scripts' => ['AD_performance.js'],
@@ -129,14 +128,6 @@ class AdminPerformanceController extends Controller
                 ->groupBy('month')
                 ->orderBy('month')
                 ->get();
-
-
-                // $hourlyCounts = DB::table('session_logs')
-                // ->select(DB::raw("DATE_FORMAT(session_in, '%W, %M %e, %Y %l:00 %p') AS hour_start"), DB::raw('COUNT(*) as session_count'))
-                // ->where('session_user_type', 'LEARNER')
-                // ->groupBy(DB::raw("DATE(session_in)"), DB::raw("HOUR(session_in)"))
-                // ->orderByRaw("DATE(session_in) DESC, HOUR(session_in) DESC")
-                // ->get();
             
    $hourlyCounts = DB::table('session_logs')
                 ->select(DB::raw("DATE_FORMAT(session_in, '%W, %M %e, %Y %l:00 %p') AS hour_start"), DB::raw('COUNT(*) as session_count'))
@@ -182,9 +173,6 @@ class AdminPerformanceController extends Controller
                         'monthlyCounts' => $monthlyCounts,
                     ];
 
-
-                    // return view('adminPerformance.performance')
-                    // ->with($data);
 
                     return response()->json($data);
 
@@ -238,13 +226,6 @@ class AdminPerformanceController extends Controller
                 ->orderBy('month')
                 ->get();
 
-
-                // $hourlyCounts = DB::table('session_logs')
-                // ->select(DB::raw("DATE_FORMAT(session_in, '%W, %M %e, %Y %l:00 %p') AS hour_start"), DB::raw('COUNT(*) as session_count'))
-                // ->where('session_user_type', 'LEARNER')
-                // ->groupBy(DB::raw("DATE(session_in)"), DB::raw("HOUR(session_in)"))
-                // ->orderByRaw("DATE(session_in) DESC, HOUR(session_in) DESC")
-                // ->get();
             
    $hourlyCounts = DB::table('session_logs')
                 ->select(DB::raw("DATE_FORMAT(session_in, '%W, %M %e, %Y %l:00 %p') AS hour_start"), DB::raw('COUNT(*) as session_count'))
@@ -290,9 +271,6 @@ class AdminPerformanceController extends Controller
                         'monthlyCounts' => $monthlyCounts,
                     ];
 
-
-                    // return view('adminPerformance.performance')
-                    // ->with($data);
 
                     return response()->json($data);
 
@@ -353,41 +331,6 @@ class AdminPerformanceController extends Controller
                 ->groupBy('course.course_name')
                 ->get();
 
-                // $hourlyCounts = DB::table('session_logs')
-                // ->select(DB::raw("DATE_FORMAT(session_in, '%W, %M %e, %Y %l:00 %p') AS hour_start"), DB::raw('COUNT(*) as session_count'))
-                // ->where('session_user_type', 'LEARNER')
-                // ->groupBy(DB::raw("DATE(session_in)"), DB::raw("HOUR(session_in)"))
-                // ->orderByRaw("DATE(session_in) DESC, HOUR(session_in) DESC")
-                // ->get();
-            
-//    $hourlyCounts = DB::table('session_logs')
-//                 ->select(DB::raw("DATE_FORMAT(session_in, '%W, %M %e, %Y %l:00 %p') AS hour_start"), DB::raw('COUNT(*) as session_count'))
-//                 ->where('session_user_type', 'INSTRUCTOR')
-//                 ->groupBy('hour_start')
-//                 ->orderBy('hour_start' , 'DESC')
-//                 ->get();
-
-//                 $dailyCounts = DB::table('session_logs')
-//                 ->select(DB::raw("DATE_FORMAT(session_in, '%W, %M %e, %Y') AS day_start"), DB::raw('COUNT(*) as session_count'))
-//                 ->where('session_user_type', 'INSTRUCTOR')
-//                 ->groupBy('day_start')
-//                 ->orderBy('day_start' ,  'DESC')
-//                 ->get();
-
-
-//                 $weeklyCounts = DB::table('session_logs')
-//                 ->select(DB::raw("CONCAT('Week ', WEEK(session_in), ', ', YEAR(session_in)) AS week_start"), DB::raw('COUNT(*) as session_count'))
-//                 ->where('session_user_type', 'INSTRUCTOR')
-//                 ->groupBy('week_start')
-//                 ->orderBy('week_start'  , 'DESC')
-//                 ->get();
-
-//                 $monthlyCounts = DB::table('session_logs')
-//                 ->select(DB::raw("DATE_FORMAT(session_in, '%M %Y') AS month_start"), DB::raw('COUNT(*) as session_count'))
-//                 ->where('session_user_type', 'INSTRUCTOR')
-//                 ->groupBy('month_start')
-//                 ->orderBy('month_start'  , 'DESC')
-//                 ->get();
 
                     $data = [
                         'title' => 'Performance',
@@ -399,15 +342,9 @@ class AdminPerformanceController extends Controller
                         'coursePerWeek' => $coursePerWeek,
                         'coursePerMonth' => $coursePerMonth,
                         'learnerCourseCount' => $learnerCourseCount,
-                        // 'hourlyCounts' => $hourlyCounts,
-                        // 'dailyCounts' => $dailyCounts,
-                        // 'weeklyCounts' => $weeklyCounts,
-                        // 'monthlyCounts' => $monthlyCounts,
+           
                     ];
 
-
-                    // return view('adminPerformance.performance')
-                    // ->with($data);
 
                     return response()->json($data);
 
@@ -430,7 +367,7 @@ class AdminPerformanceController extends Controller
         
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
+       
             $admin_codename = $admin['admin_codename'];
         } else {
             return redirect('/admin');
@@ -564,9 +501,6 @@ class AdminPerformanceController extends Controller
             }   
     }
 
-
-
-
     public function enrolledCoursesPerformances(Learner $learner) {
         if (auth('admin')->check()) {
             $adminSession = session('admin');
@@ -672,8 +606,6 @@ class AdminPerformanceController extends Controller
                     'title' => 'Performance',
                     'learnerCourseData' => $learnerCourseData,
                     'totalLearnerCourseCount' => $totalLearnerCourseCount,
-                    // 'totalLearnerCompletedCourseCount' => $totalLearnerCompletedCourseCount,
-                    // 'totalLearnerInProgressCourseCount' => $totalLearnerInProgressCourseCount,
                     'totalLearnerApprovedCourseCount' => $totalLearnerApprovedCourseCount,
                     'totalLearnerPendingCourseCount' => $totalLearnerPendingCourseCount,
                     'totalLearnerRejectedCourseCount' => $totalLearnerRejectedCourseCount,
@@ -1147,9 +1079,7 @@ class AdminPerformanceController extends Controller
                 ];
 
 
-                // dd($data);
-                // return view('learner_course.courseGrades', compact('learner'))
-                // ->with($data);
+   
                 return $data;
 
             } catch (\Exception $e) {
@@ -1366,7 +1296,7 @@ class AdminPerformanceController extends Controller
         
                 $action = "Opened Admin Learner Performance ID: " . $learner->learner_id . " on Course ID: " . $course->course_id;
                 $this->log($action);
-                // dd($data);
+          
                 return view('adminPerformance.learnerCoursePerformance' , compact('learner'))
                 ->with($data);
             } catch (\Exception $e) {
@@ -1470,7 +1400,7 @@ class AdminPerformanceController extends Controller
                     'courseData' => $courseData
                 ];
 
-                // dd($data);
+        
                 $action = "Viewed Post Assessment Output on Course ID: " . $course->course_id;
                 $this->log($action);
 
@@ -1580,10 +1510,7 @@ class AdminPerformanceController extends Controller
                     'postAssessmentOutputData' => $postAssessmentOutputData,
                 ];
 
-                // // dd($data);
-
-                // return view('learner_course.coursePreAssessmentOutput', compact('learner'))
-                // ->with($data);
+    
                 return response()->json($data);
     
 
@@ -1642,36 +1569,6 @@ class AdminPerformanceController extends Controller
                     $now = Carbon::now('Asia/Manila');
                     $timestampString = $now->toDateTimeString();
 
-/*        
-                        $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
-                        ->select(
-                            'learner_pre_assessment_output.learner_pre_assessment_output_id',
-                            'learner_pre_assessment_output.learner_course_id',
-                            'learner_pre_assessment_output.course_id',
-                            'learner_pre_assessment_output.question_id',
-                            'learner_pre_assessment_output.syllabus_id',
-                            'learner_pre_assessment_output.answer',
-                            'learner_pre_assessment_output.isCorrect',
-                            'questions.question',
-                            'questions.category',
-                            DB::raw('JSON_ARRAYAGG(question_answer.answer) as answers')
-                        )
-                        ->join('questions', 'learner_pre_assessment_output.question_id', '=', 'questions.question_id')
-                        ->leftJoin('question_answer', 'questions.question_id', '=', 'question_answer.question_id')
-                        ->where('learner_pre_assessment_output.course_id', $courseData->course_id)
-                        ->where('learner_pre_assessment_output.learner_course_id', $courseData->learner_course_id)
-                        ->groupBy(
-                            'learner_pre_assessment_output.learner_pre_assessment_output_id',
-                            'learner_pre_assessment_output.learner_course_id',
-                            'learner_pre_assessment_output.course_id',
-                            'learner_pre_assessment_output.question_id',
-                            'learner_pre_assessment_output.syllabus_id',
-                            'questions.question',
-                            'questions.category',
-                            'questions.question_id'
-                        )
-                        ->get();
-*/
 
 $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
     ->select(
@@ -1718,7 +1615,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'courseData' => $courseData,
                 ];
 
-                // dd($data);
+           
                 $action = "Viewed Pre Assessment Output on Course ID: " . $course->course_id;
                 $this->log($action);
 
@@ -1778,37 +1675,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     ->where('isCorrect', 1)
                     ->groupBy('question_id');
    
-/*$preAssessmentOutputData = DB::table('learner_pre_assessment_output')
-    ->select(
-        'learner_pre_assessment_output.learner_pre_assessment_output_id',
-        'learner_pre_assessment_output.learner_course_id',
-        'learner_pre_assessment_output.course_id',
-        'learner_pre_assessment_output.question_id',
-        'learner_pre_assessment_output.syllabus_id',
-        'learner_pre_assessment_output.answer',
-        'learner_pre_assessment_output.isCorrect',
-        'questions.question',
-        'questions.category',
-        DB::raw('JSON_ARRAYAGG(question_answer.answer) as answers')
-    )
-    ->join('questions', 'learner_pre_assessment_output.question_id', '=', 'questions.question_id')
-    ->leftJoin('question_answer', 'questions.question_id', '=', 'question_answer.question_id')
-    ->where('learner_pre_assessment_output.course_id', $courseData->course_id)
-    ->where('learner_pre_assessment_output.learner_course_id', $courseData->learner_course_id)
-    ->groupBy(
-        'learner_pre_assessment_output.learner_pre_assessment_output_id',
-        'learner_pre_assessment_output.learner_course_id',
-        'learner_pre_assessment_output.course_id',
-        'learner_pre_assessment_output.question_id',
-        'learner_pre_assessment_output.syllabus_id',
-        'learner_pre_assessment_output.answer', // Include 'answer' in the GROUP BY clause
-        'learner_pre_assessment_output.isCorrect',
-        'questions.question',
-        'questions.category',
-        'questions.question_id'
-    )
-    ->get();
-    */
     
      $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
     ->select(
@@ -1856,10 +1722,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'preAssessmentOutputData' => $preAssessmentOutputData,
                 ];
 
-                // // dd($data);
-
-                // return view('learner_course.coursePreAssessmentOutput', compact('learner'))
-                // ->with($data);
+    
                 return response()->json($data);
     
 
@@ -2340,7 +2203,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
 
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
+       
             $admin_codename = $admin['admin_codename'];
         } else {
             return redirect('/admin');
@@ -2431,7 +2294,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
         
                 $action = "Opened Admin Instructor Performance ID: ". $instructor->instructor_id;
                 $this->log($action);
-                // dd($data);
+         
                 return view('adminPerformance.instructorPerformance')
                 ->with($data);
 
@@ -2529,7 +2392,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 )
                 ->get();
             
-            // dd($allInstructorCourses);
 
                 $totalLearnersCount = 0;
                 $totalPendingLearnersCount = 0;
@@ -2600,8 +2462,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'totalRejectedCourseNum' => $totalRejectedCourseNum,
                 ];
 
-                // dd($data);
-        
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -2805,7 +2665,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
     
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
+        
     
     
             $search_by = request('searchBy');
@@ -2996,23 +2856,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
             ->orderBy('syllabus.topic_id',  'asc')
             ->get();
 
-/*            $quizSyllabusData = DB::table('quizzes')
-            ->select(
-                'quizzes.quiz_id',
-                'quizzes.course_id',
-                'quizzes.syllabus_id',
-
-                'quizzes.quiz_title',
-                DB::raw('COUNT(quiz_content.question_id) AS total_score'),
-                    'syllabus.topic_id',
-             )
-            ->join('syllabus', 'syllabus.syllabus_id', 'quizzes.syllabus_id')
-            ->join('quiz_content', 'quizzes.quiz_id', 'quiz_content.quiz_id')
-            ->where('quizzes.course_id', $course->course_id)
-            ->groupBy('quizzes.quiz_id', 'quizzes.course_id')
-            ->orderBy('syllabus.topic_id', 'asc')
-            ->get();*/
-
 
                 $quizSyllabusData = DB::table('quizzes')
                     ->select(
@@ -3083,7 +2926,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
 
                 $action = "Opened Admin Course Performance ID: " .$course->course_id;
                 $this->log($action);
-                // dd($data);
+              
                 return view('adminPerformance.coursePerformance')
                 ->with($data);
 
@@ -3193,7 +3036,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
 
                 $data = [
                     'title' => 'Performance',
-                    // 'learnerCourseData' => $learnerCourseData,
+                  
                     'learnerCourseProgressData' => $learnerCourseProgressData,
                     ];
 
@@ -3365,7 +3208,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 'admin' => $adminSession
             ];
     
-            // dd($data);
+  
 
             return view('adminPerformance.courseLessonPerformance')
         ->with($data);
@@ -3378,7 +3221,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 'admin' => $adminSession
             ];
     
-            // dd($data);
 
             return view('adminPerformance.courseActivityPerformance')
         ->with($data);
@@ -3391,7 +3233,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                 'admin' => $adminSession
             ];
     
-            // dd($data);
 
             return view('adminPerformance.courseQuizPerformance')
         ->with($data);
@@ -3486,7 +3327,7 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'averageTimeDifference' => $averageTimeFormatted,
                     ];
 
-                // dd($data);
+
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -3630,7 +3471,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'attemptCount' => $attemptCount
                     ];
 
-                // dd($data);
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -3829,7 +3669,6 @@ $preAssessmentOutputData = DB::table('learner_pre_assessment_output')
                     'attemptCount' => $attemptCount
                     ];
 
-                // dd($data);
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();

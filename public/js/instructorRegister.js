@@ -20,19 +20,226 @@ $(document).ready(function () {
     nextBtn.on("click", function (event) {
         event.preventDefault();
 
-        firstForm.addClass("hidden");
-        secondForm.removeClass("hidden");
-        header.addClass("hidden");
-        footer.addClass("hidden");
+        var instructor_fname = $("#instructor_fname").val();
+        var instructor_lname = $("#instructor_lname").val();
+        var instructor_bday = $("#instructor_bday").val();
+        var instructor_gender = $("#instructor_gender").val();
+        var instructor_email = $("#instructor_email").val();
+        var instructor_contactno = $("#instructor_contactno").val();
+        var instructor_username = $("#instructor_username").val();
+        var password = $("#password").val();
+        var password_confirmation = $("#password_confirmation").val();
+
+        var isValid = true;
+
+        if (instructor_fname === "") {
+            $("#firstNameError").text("Please enter a first name.");
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_fname)) {
+            $("#firstNameError").text(
+                "Special characters are not allowed in the first name except for one dash.",
+            );
+            isValid = false;
+        } else {
+            $("#firstNameError").text("");
+        }
+
+        if (instructor_bday === "") {
+            $("#bdayError").text("Please enter a birthday.");
+            isValid = false;
+        } else {
+            var today = new Date();
+            var birthDate = new Date(instructor_bday);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var monthDiff = today.getMonth() - birthDate.getMonth();
+            if (
+                monthDiff < 0 ||
+                (monthDiff === 0 && today.getDate() < birthDate.getDate())
+            ) {
+                age--;
+            }
+
+            if (age < 22) {
+                $("#bdayError").text(
+                    "The instructor must be at least 22 years old.",
+                );
+                isValid = false;
+            } else {
+                $("#bdayError").text("");
+            }
+        }
+
+        if (instructor_lname === "") {
+            $("#lastNameError").text("Please enter a last name.");
+            isValid = false;
+
+        } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_lname)) {
+            $("#lastNameError").text(
+                "Special characters are not allowed in the first name except for one dash.",
+            );
+            isValid = false;
+        } else {
+            $("#lastNameError").text("");
+        }
+
+        if (instructor_gender === "") {
+            $("#genderError").text("Please select a gender.");
+            isValid = false;
+
+        } else {
+            $("#genderError").text("");
+        }
+
+        if (instructor_email === "") {
+            $("#emailError").text("Please enter your email.");
+            isValid = false;
+        } else {
+            $("#emailError").text("");
+
+            var url = "/instructor/checkEmail";
+            $.ajax ({
+                type: "GET",
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    'email' : instructor_email,
+                },
+                success: function(response) {
+                    // console.log(response);
+                    if(response.exists) {
+                        $('#emailError').text('This email is already taken.');
+                        isValid = false;
+                    } else {
+                        $('#emailError').text('');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+
+                })
+        }
+
+        if (instructor_contactno === "" || instructor_contactno.length > 11) {
+            $("#contactnoError").text("Please enter valid contact number.");
+            isValid = false;
+        } else {
+            $("#contactnoError").text("");
+
+            var url = "/instructor/checkContact";
+            $.ajax ({
+                type: "GET",
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    'number' : instructor_contactno,
+                },
+                success: function(response) {
+                    // console.log(response);
+                    if(response.exists) {
+                        $('#contactnoError').text('This contact number is already taken.');
+                        isValid = false;
+                    } else {
+                        $('#contactnoError').text('');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+
+                })
+        }
+
+        if (instructor_username === "") {
+            $("#usernameError").text("Please enter a username.");
+            isValid = false;
+
+        } else {
+            $("#usernameError").text("");
+
+            var url = "/instructor/checkUsername";
+            $.ajax ({
+                type: "GET",
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    'username' : instructor_username,
+                },
+                success: function(response) {
+                    // console.log(response);
+                    if(response.exists) {
+                        $('#usernameError').text('This username is already taken.');
+                        isValid = false;
+                    } else {
+                        $('#usernameError').text('');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+
+                })
+        }
+
+        $("#password").trigger("keyup");
+
+        if (password === "") {
+            $("#passwordError").text("Please enter a password.");
+            isValid = false;
+
+        } else {
+            $("#passwordError").text("");
+        }
+
+        if (password_confirmation === "") {
+            $("#passwordConfirmationError").text(
+                "Please enter a password confirmation.",
+            );
+            isValid = false;
+       
+        } else if (password !== password_confirmation) {
+            $("#passwordConfirmationError").text(
+                "Your password does not match",
+            );
+            isValid = false;
+      
+        } else {
+            $("#passwordConfirmationError").text("");
+        }
+
+        if(isValid) {
+            firstForm.addClass("hidden");
+            secondForm.removeClass("hidden");
+            header.addClass("hidden");
+            footer.addClass("hidden");
+        }
     });
 
     nextBtn2.on("click", function (event) {
         event.preventDefault();
+        
+        var fileInput = $("#instructor_credentials")[0];
 
-        secondForm.addClass("hidden");
-        thirdForm.removeClass("hidden");
-        header.addClass("hidden");
-        footer.addClass("hidden");
+        if (fileInput.files.length === 0) {
+            $("#credentialsError").text("Please upload your CV or resume.");
+            isValid = false;
+        } else {
+            $("#credentialsError").text("");
+        }
+
+        if(isValid) {
+            secondForm.addClass("hidden");
+            thirdForm.removeClass("hidden");
+            header.addClass("hidden");
+            footer.addClass("hidden");
+        }
+
     });
 
     prevBtn.on("click", function (event) {
@@ -278,7 +485,7 @@ $(document).ready(function () {
             $("#security_code").addClass("hidden");
         } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_lname)) {
             $("#lastNameError").text(
-                "Special characters are not allowed in the first name except for one dash.",
+                "Special characters are not allowed in the last name except for one dash.",
             );
             isValid = false;
         } else {
@@ -305,7 +512,7 @@ $(document).ready(function () {
             $("#emailError").text("");
         }
 
-        if (instructor_contactno === "" || instructor_contactno.length > 11) {
+        if (instructor_contactno === "" || instructor_contactno.length != 11) {
             $("#contactnoError").text("Please enter valid contact number.");
             isValid = false;
             $("#first-form").removeClass("hidden");
