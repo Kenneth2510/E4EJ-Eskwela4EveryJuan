@@ -68,9 +68,9 @@ $(document).ready(function () {
         if (learner_lname === "") {
             $("#lastNameError").text("Please enter a last name.");
             isValid = false;
-        } else if (!/^[a-zA-Z0-9\s-]+$/.test(learner_fname)) {
+        } else if (!/^[a-zA-Z0-9\s-]+$/.test(learner_lname)) {
             $("#lastNameError").text(
-                "Special characters are not allowed in the first name except for one dash.",
+                "Special characters are not allowed in the last name except for one dash.",
             );
             isValid = false;
         } else {
@@ -91,7 +91,7 @@ $(document).ready(function () {
             $("#emailError").text("");
         }
 
-        if (learner_contactno === "" || learner_contactno.length < 11) {
+        if (learner_contactno === "" || learner_contactno.length != 11) {
             $("#contactnoError").text("Please enter your contact number.");
             isValid = false;
         } else {

@@ -278,7 +278,7 @@ $(document).ready(function () {
             $("#security_code").addClass("hidden");
         } else if (!/^[a-zA-Z0-9\s-]+$/.test(instructor_lname)) {
             $("#lastNameError").text(
-                "Special characters are not allowed in the first name except for one dash.",
+                "Special characters are not allowed in the last name except for one dash.",
             );
             isValid = false;
         } else {
@@ -305,7 +305,7 @@ $(document).ready(function () {
             $("#emailError").text("");
         }
 
-        if (instructor_contactno === "" || instructor_contactno.length > 11) {
+        if (instructor_contactno === "" || instructor_contactno.length != 11) {
             $("#contactnoError").text("Please enter valid contact number.");
             isValid = false;
             $("#first-form").removeClass("hidden");
