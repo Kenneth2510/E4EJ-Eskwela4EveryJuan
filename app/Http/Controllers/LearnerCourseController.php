@@ -864,7 +864,7 @@ class LearnerCourseController extends Controller
                     'pre_assessment_percent',
                     'post_assessment_percent',
                 )
-                ->where('course_id', $course->course_id)
+                ->where('course_id', $course)
                 ->first();
                 $activityGrade = 0;
                 $quizGrade = 0;
