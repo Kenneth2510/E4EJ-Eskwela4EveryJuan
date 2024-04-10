@@ -428,7 +428,7 @@
 
 
         $('#apply_change_btn').on('click', function() {
-            console.log("hello");
+          
             var instructor_fname = $('#instructor_fname').val();
             var instructor_bday = $('#instructor_bday').val();
             var instructor_lname = $('#instructor_lname').val();
@@ -509,6 +509,31 @@
                 isValid = false;
             } else {
                 $('#contactError').text('');
+
+                var url = "/instructor/" + {{$instructor->instructor_id}} + "/checkContact";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'number' : instructor_contactno,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#contactError').text('This contact number is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#contactError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
 
             if (instructor_email === '') {
@@ -516,6 +541,32 @@
                 isValid = false;
             } else {
                 $('#emailError').text('');
+                
+
+                var url = "/instructor/"+ {{$instructor->instructor_id}} +"/checkEmail";
+                $.ajax ({
+                    type: "GET",
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        'email' : instructor_email,
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        if(response.exists) {
+                            $('#emailError').text('This email is already taken.');
+                            isValid = false;
+                        } else {
+                            $('#emailError').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+
+                    })
             }
 
 
@@ -584,10 +635,8 @@
                 }
     
                 var url = baseUrl + '/update';
-    //             for (var pair of formData.entries()) {
-    //     console.log(pair[0] + ': ' + pair[1]);
-    // }
-    $('#loaderModal').removeClass('hidden');
+
+    // $('#loaderModal').removeClass('hidden');
 
                 $.ajax({
                     type: "POST",
@@ -602,7 +651,7 @@
                         console.log(response);
 
                         if (response.redirect_url) {
-                            $('#loaderModal').addClass('hidden');
+                            // $('#loaderModal').addClass('hidden');
 
                             window.location.href = response.redirect_url;
                         }

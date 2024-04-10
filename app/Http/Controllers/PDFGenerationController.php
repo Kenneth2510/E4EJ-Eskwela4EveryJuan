@@ -720,8 +720,6 @@ public function courseGradeSheet($course) {
             ->first();
 
         // Add the updated $activityData back to the main array
-        // $gradeWithActivityData[$key] = $activityData;
-    // }
 
     $activitySyllabusData = DB::table('activities')
     ->select(
@@ -1170,21 +1168,6 @@ public function learnerPreAssessmentOutput($learner, $course, $learner_course) {
             return "Learner data not found";
         }
 
-   //     $courseData = DB::table('learner_course')
-   //         ->select(
-   //             'learner_course.learner_course_id',
-   //             'learner_course.learner_id',
-   //             'course.course_id',
-   //             'course.course_name',
-  //              'course.instructor_id',
-  //              'instructor.instructor_fname',
- //               'instructor.instructor_lname',
- //           )
- //           ->join('course', 'learner_course.course_id', 'course.course_id')
-//            ->join('instructor', 'course.instructor_id', 'instructor.instructor_id')
- //           ->where('learner_course.course_id', $course)
- //           ->where('learner_course.learner_course_id', $learner_course)
- //           ->first();
  
          $courseData = DB::table('course')
             ->select(
@@ -1312,21 +1295,6 @@ public function learnerPostAssessmentOutput($learner, $course, $learner_course, 
         if (!$learnerData) {
             return "Learner data not found";
         }
-
-  //      $courseData = DB::table('learner_course')
-     //       ->select(
-    //            'learner_course.learner_course_id',
-   //             'learner_course.learner_id',
-  //              'course.course_id',
-  //              'course.course_name',
-   //             'course.instructor_id',
-   //             'instructor.instructor_fname',
-   //             'instructor.instructor_lname',
-   //         )
-  //         ->join('course', 'learner_course.course_id', 'course.course_id')
-    //        ->join('instructor', 'course.instructor_id', 'instructor.instructor_id')
-   //         ->where('learner_course.course_id', $course)
-   //        ->first();
    
             $courseData = DB::table('course')
             ->select(

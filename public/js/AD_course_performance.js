@@ -25,7 +25,6 @@ $(document).ready(function(){
             type: "GET",
             url: url,
             success: function (response) {
-                // console.log(response);
 
                 totalLearnerCourseCount = response['totalLearnerCourseCount']
                 totalApprovedLearnerCourseCount = response['totalApprovedLearnerCourseCount']
@@ -61,9 +60,6 @@ $(document).ready(function(){
                 type: "GET",
                 url: url,
                 success: function (response) {
-                    // console.log(response);
-
-                    // var learnerCourseData = response[learnerCourseData]
                     var learnerCourseProgressData = response['learnerCourseProgressData']
                     displayLearnerCourseProgressData(learnerCourseProgressData)
                     displayLearnerCourseProgressChart(learnerCourseProgressData)
@@ -170,7 +166,6 @@ $(document).ready(function(){
                     syllabus_id: syllabus_id
                 },
                 success: function (response) {
-                    console.log(response);
 
                     learnerSyllabusData = response['learnerSyllabusData'];
                     displayLearnerSyllabusProgressChart(learnerSyllabusData)

@@ -18,17 +18,15 @@ $(document).ready(function() {
 
 
       function getSyllabusData(courseID) {
-        // alert(courseID);
+      
 
         $.ajax ({
             type: "GET",
             url: "/admin/courseManage/content/" + courseID + "/json",
             dataType: 'json',
             success: function (response){
-                console.log(response)
-                // displaySyllabus(response['syllabus'])
+               
                 syllabusData = response['syllabus']
-                // console.log(syllabusData)
                 reDisplaySyllabus(syllabusData)
             },
             error: function(error) {
@@ -43,12 +41,11 @@ $(document).ready(function() {
         var syllabusRowDisp = ``;
         var location_selection_main = ``;
         var location_selection_sub =``;
-        // console.log(syllabusData);
         for (let i = 0; i < syllabusData.length; i++) {
             const syllabus_id = syllabusData[i]['syllabus_id'];
             const topic_title = syllabusData[i]['topic_title'];
             const category = syllabusData[i]['category'];
-            console.log(syllabusData[i])
+         
 
             syllabusRowDisp += `
             <tr>
@@ -134,7 +131,6 @@ $(document).ready(function() {
             const updated_topic_title = row.find('.rowtopic_title').val();
             const updated_category = row.find('.rowTopicType').val();
         
-            // Find the index of the corresponding syllabusData item
             const index = syllabusData.findIndex(item => item.syllabus_id === syllabus_id);
         
             if (index !== -1) {
@@ -172,13 +168,13 @@ $(document).ready(function() {
             e.preventDefault();
             var courseID = $(this).data("course-id");
             const fetch_syllabus_id = $(this).data('syllabus-id');
-            // console.log(fetch_syllabus_id)
+        
 
             if(isNaN(fetch_syllabus_id)) {
         
             } else {
                 edit_prior = 1;
-                // console.log(fetch_syllabus_id)
+               
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
                 var data = { 'fetch_syllabus_id': fetch_syllabus_id };
@@ -191,11 +187,7 @@ $(document).ready(function() {
                         'X-CSRF-TOKEN': csrfToken
                     },
                     success: function(response) {
-                        // Handle success if needed
-                            // if (response && response.redirect_url ) {
-                            //     window.location.href = response.redirect_url;
-                            // }
-                       
+             
                             $('#deleteCourseModal').addClass('hidden');
                             reDisplaySyllabus(syllabusData);
                     },
@@ -264,79 +256,6 @@ $(document).ready(function() {
 
 
 
-    // $('#saveChangesBtn').on('click', function(e) {
-    //     e.preventDefault();
-    //     // var topic_id_counter = 1;
-    //     // console.log(syllabusData)
-    //     var courseID = $(this).data("course-id");
-
-
-    //     // to rearrange the topic id
-    //     for (let i = 0; i < syllabusData.length; i++) {
-    //         syllabusData[i]['topic_id'] = i + 1;
-    //         // topic_id_counter++;
-
-    //         // console.log(syllabusData[i])
-    //     }
-
-
-    //     for (let i = 0; i < syllabusData.length; i++) {
-    //         var rowSyllabusData = {
-    //             'syllabus_id': syllabusData[i]['syllabus_id'],
-    //             'topic_id': syllabusData[i]['topic_id'],
-    //             'topic_title': syllabusData[i]['topic_title'],
-    //             'category': syllabusData[i]['category']
-    //         };
-    //         var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        
-    //         if (!/^none\d+$/.test(rowSyllabusData['syllabus_id'])) {
-    //             // AJAX for updating the values
-    //             $.ajax({
-    //                 type: "POST",
-    //                 url: "/admin/courseManage/content/syllabus/" + courseID + "/manage",
-    //                 data: rowSyllabusData,
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': csrfToken
-    //                 },
-    //                 async: false,
-    //                 success: function(response) {
-    //                     // Handle success if needed
-    //                     if(i + 1 == syllabusData.length){
-    //                         if (response && response.redirect_url ) {
-    //                             window.location.href = response.redirect_url;
-    //                         }
-    //                     }
-    //                 },
-    //                 error: function(error) {
-    //                     console.log(error);
-    //                 }
-    //             });
-    //         } else {
-    //             // AJAX for creating new syllabus
-    //             rowSyllabusData['syllabus_id'] = '';
-    //             $.ajax({
-    //                 type: "POST",
-    //                 url: "/admin/courseManage/content/syllabus/" + courseID + "/manage_add",
-    //                 data: rowSyllabusData,
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': csrfToken
-    //                 },
-    //                 async: false,
-    //                 success: function(response) {
-    //                     // Handle success if needed
-    //                     if(i + 1 == syllabusData.length){
-    //                         if (response && response.redirect_url ) {
-    //                             window.location.href = response.redirect_url;
-    //                         }
-    //                     }
-    //                 },
-    //                 error: function(error) {
-    //                     console.log(error);
-    //                 }
-    //             });
-    //         }
-    //     }
-    // })
 
 
     
@@ -450,7 +369,7 @@ $(document).ready(function() {
         $('#addTopicModal').addClass('hidden');
         reDisplaySyllabus(syllabusData)
         $('.row_editBtn').removeClass('hidden');
-        // console.log(syllabusData)
+      
     })
 
 

@@ -78,11 +78,6 @@ class AdminLearnerController extends Controller
         });
     }
     
-    
-    
-    
-    
-     
      public function learners() {
         return $this->search_learner();
     }
@@ -163,12 +158,8 @@ class AdminLearnerController extends Controller
                 }
             }
 
- 
-    
             $learners = $query->paginate(10);
 
-
-    
             return view('admin.learners', compact('learners'))
             ->with(['title' => 'Learner Management', 
                 'adminCodeName' => $admin_codename,
@@ -183,7 +174,7 @@ class AdminLearnerController extends Controller
     public function add_learner() {
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
+       
             if($admin->role === 'IT_DEPT' || $admin->role === 'SUPER_ADMIN' || $admin->role === 'USER_MANAGER') {
             $data = [
                 'title' => 'Add New Learner',
@@ -202,10 +193,10 @@ class AdminLearnerController extends Controller
     }
     
     public function store_new_learner(Request $request) {
-        // dd($request);
+   
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
+       
             if($admin->role === 'IT_DEPT' || $admin->role === 'SUPER_ADMIN' || $admin->role === 'USER_MANAGER') {
 
 
@@ -291,8 +282,6 @@ class AdminLearnerController extends Controller
 
                 $LearnerData = array_merge($LearnerPersonalData , $LearnerLoginData);
                 $LearnerData['password'] = bcrypt($LearnerData['password']);
-
-                // $folderName = Str::slug($course->course_name, '_');
                 
                 $folderName = "{$LearnerData['learner_lname']} {$LearnerData['learner_fname']}";
                 $folderName = Str::slug($folderName, '_');
@@ -300,15 +289,13 @@ class AdminLearnerController extends Controller
 
                 // Copy the default photo to the same directory
                 $defaultPhoto = '/public/images/default_profile.png';
-                // $isExists = Storage::exists($defaultPhoto);
 
                 $defaultPhoto_path = $folderPath . '/default_profile.png';
-                // dd($defaultPhoto_path);
+    
 
                 $LearnerData['profile_picture'] = $defaultPhoto_path;
                 Storage::copy($defaultPhoto, 'public/' . $defaultPhoto_path);
-                // $isExists = Storage::exists($defaultPhoto_path);
-                // dd($isExists);
+        
 
                 $newCreatedLearner = Learner::firstOrCreate($LearnerData);
 
@@ -323,9 +310,7 @@ class AdminLearnerController extends Controller
                 $folderName = "{$LearnerData['learner_lname']} {$LearnerData['learner_fname']}";
                 $folderName = Str::slug($folderName, '_');
                 
-                // $fileName = time() . '-' . $file->getClientOriginalName();
                 $folderPath = '/public/learners/' . $folderName;
-                // $filePath = $file->storeAs($folderPath, $fileName, 'public');
 
                 if(!Storage::exists($folderPath)) { 
                     Storage::makeDirectory($folderPath);
@@ -338,8 +323,6 @@ class AdminLearnerController extends Controller
                 $action = "Created New Learner ID: " . $latestStudentId;
                 $this->log($action);
 
-
-                // return redirect('/admin/learners')->with('title', 'Learner Management')->with('message' , 'Data was successfully stored');
                 session()->flash('message', 'Learner Added successfully');
                 $data = [
                     'message' => 'Learner changed successfully',
@@ -366,7 +349,6 @@ class AdminLearnerController extends Controller
     public function view_learner($id) {
         if (auth('admin')->check()) {
             $adminSession = session('admin');
-            // dd($admin);
 
             if($adminSession->role === 'IT_DEPT' || $adminSession->role === 'SUPER_ADMIN' || $adminSession->role === 'USER_MANAGER') {
 
@@ -381,8 +363,6 @@ class AdminLearnerController extends Controller
                     'learner' => $learnerdata,
                     'business' => $businessdata,
                 ];
-
-                // dd($data);
 
                 $action = "Viewed Learner ID: " . $id;
                 $this->log($action);
@@ -569,7 +549,6 @@ class AdminLearnerController extends Controller
         $this->log($action);
 
         session()->flash('message', 'Learner Updated successfully');
-        // return back()->with('message' , 'Data was successfully updated'); //add ->with('message') later
 
         $data = [
             'message' => 'Learner updated successfully',
@@ -591,36 +570,5 @@ class AdminLearnerController extends Controller
 }
 
     }
-
-    // public function destroy_learner(Learner $learner) {
-    //     // dd($learner);
-    //     try {
-
-    //         $relativeFilePath = str_replace('public/', '', $learner->profile_picture);
-    //         if (Storage::disk('public')->exists($relativeFilePath)) {
-    //             // Storage::disk('public')->delete($relativeFilePath);
-    //             $specifiedDir = explode('/', $relativeFilePath);
-    //             array_pop($specifiedDir);
-
-    //             $dirPath = implode('/', $specifiedDir);
-
-    //             // dd($dirPath);
-    //             Storage::disk('public')->deleteDirectory($dirPath);
-            
-    //             $learner->delete();
-    //         }
-    
-    
-    //         session()->flash('message', 'Learner deleted Successfully');
-    //         return response()->json(['message' => 'Learner deleted successfully', 'redirect_url' => "/admin/learners"]);
-            
-        
-    //     } catch (\Exception $e) {
-    //         dd($e->getMessage());
-    //     }
-
-    // }
-
-
 
 }

@@ -145,7 +145,6 @@ $(document).ready(function() {
             url: url,
             dataType: 'json',
             success: function (response){
-                console.log(response)
                 var learnerCourseData = response['learnerCourseData']
                 displayLearnerCoursePerformance(learnerCourseData)
             },

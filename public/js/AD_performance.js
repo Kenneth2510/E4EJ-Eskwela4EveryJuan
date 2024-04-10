@@ -14,7 +14,6 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function(response) {
-                // console.log(response)
 
                 var totalLearnerCount = response['totalLearnerCount']
                 var learnerStatusData = response['learnerStatusData']
@@ -442,7 +441,6 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function(response) {
-                // console.log(response)
 
                 var totalInstructorCount = response['totalInstructorCount']
                 var instructorStatusData = response['instructorStatusData']
@@ -870,7 +868,6 @@ $(document).ready(function() {
                 type: "GET",
                 url: url,
                 success: function(response) {
-                    console.log(response)
     
                     var totalCourseCount = response['totalCourseCount']
                     var courseStatusData = response['courseStatusData']

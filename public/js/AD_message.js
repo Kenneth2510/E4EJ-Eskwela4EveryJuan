@@ -28,14 +28,12 @@ $(document).ready(function () {
         const email = urlParams.get("email");
         const type = urlParams.get("type");
         if (email && type) {
-            // console.log('Email:', email);
             paramData = {
                 email: email,
                 type: type,
             };
 
             mainRecipientList.push(paramData);
-            // console.log(mainRecipientList);
             tinymce.get("reply_textarea").remove();
 
             displayMainRecipientList(mainRecipientList);
@@ -99,7 +97,6 @@ $(document).ready(function () {
                 },
                 url: url,
                 success: function (response) {
-                    // console.log(response);
 
                     var results = response["results"];
                     displaySearchResults(results);
@@ -131,7 +128,6 @@ $(document).ready(function () {
             };
 
             searchRecipientList.push(resultData);
-            // console.log(searchRecipientList);
             searchResultDisp += `
                 <li>
                     <button data-user-email="${email}" data-user-type="${type}" class="choose_search w-3/5 hover:bg-gray-200">
@@ -159,8 +155,6 @@ $(document).ready(function () {
 
             let userEmail = $(this).data("user-email");
             let userType = $(this).data("user-type");
-            console.log(searchRecipientList);
-            // console.log(tempRecipientList);
             let isExisting = tempRecipientList.some(
                 (result) =>
                     result?.email === userEmail && result.type === userType,
@@ -172,7 +166,6 @@ $(document).ready(function () {
                 );
                 if (selectedResultData) {
                     tempRecipientList.push(selectedResultData);
-                    // console.log(tempRecipientList);
                     dispTempResultsData(tempRecipientList);
                 } else {
                     console.log("Email not found in searchRecipientList");
@@ -185,7 +178,6 @@ $(document).ready(function () {
 
     function dispTempResultsData(tempRecipientList) {
         let tempRecipientDisp = ``;
-        // console.log(tempRecipientList);
         for (let j = 0; j < tempRecipientList.length; j++) {
             const email = tempRecipientList[j]["email"];
             const type = tempRecipientList[j]["type"];
@@ -221,7 +213,6 @@ $(document).ready(function () {
     });
 
     $("#confirmRecipientsBtn").on("click", function () {
-        // console.log(tempRecipientList);
         isValid = true;
         if (tempRecipientList.length === 0) {
             $("#recipientsError").text("Please select recipients");
@@ -249,13 +240,11 @@ $(document).ready(function () {
             // Empty tempRecipientList
             tempRecipientList = [];
             displayMainRecipientList(mainRecipientList);
-            // console.log(mainRecipientList);
             $("#selectRecipientsModal").addClass("hidden");
         }
     });
 
     function displayMainRecipientList(mainRecipientList) {
-        // console.log(tempRecipientList);
         var mainRecipientListDisp = ``;
 
         for (let i = 0; i < mainRecipientList.length; i++) {
@@ -370,7 +359,6 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    // console.log(response);
 
                     $("#loaderModal").addClass("hidden");
                     window.location.reload();
@@ -394,7 +382,6 @@ $(document).ready(function () {
                 searchVal: searchVal,
             },
             success: function (response) {
-                console.log(response);
 
                 var adminData = response["admin"];
                 var messageData = response["messageData"];
@@ -504,7 +491,7 @@ $(document).ready(function () {
 
         $(".selectThisMessage").on("click", function () {
             var message_content_id = $(this).data("message-content-id");
-            // alert(message_content_id)
+     
             messageContentID = message_content_id;
             getSelectedMessage(message_content_id);
         });
@@ -518,7 +505,7 @@ $(document).ready(function () {
             .find(".selectThisMessage")
             .data("message-content-id");
         messageContentID = message_content_id;
-        // alert(message_content_id)
+   
         getSelectedMessage(message_content_id);
     }
 
@@ -532,7 +519,6 @@ $(document).ready(function () {
                 messageContent: messageContent,
             },
             success: function (response) {
-                // console.log(response)
 
                 var adminData = response["admin"];
                 var messageData = response["messageData"];
@@ -563,7 +549,6 @@ $(document).ready(function () {
         const sender_name = messageData["sender_name"];
 
         $("#subjectArea").text(message_subject);
-        // $('#replyNowBtn').data('message-content-id' , message_content_id)
         messageContentID = message_content_id;
 
         messageAreaDisp += `
@@ -692,13 +677,7 @@ $(document).ready(function () {
                                 <h1 class="text-lg font-semibold">${reply_name}</h1>
                                 <h4 class="text-gray-700 text-md">`;
             }
-            // const type = reply_user_type.toLowerCase();
-            // const receiverEmail = reply_user_email;
-            // if (receiverEmail !== instructor['instructor_email']) {
-            //     replyAreaDisp += `<a href="/instructor/profile/${type}/${reply_user_email}">${reply_user_email}</a>, `;
-            // } else {
-            //     replyAreaDisp += `<a href="/instructor/profile">${receiverEmail}</a>, `;
-            // }
+           
 
             replyAreaDisp += `</h4>
                         </div>
@@ -790,7 +769,6 @@ $(document).ready(function () {
                 .attr("data-file-index", replyNowFilesArray.length - 1); // Set data attribute to track file index
             replyNowFileList.append(replyNowFileItem.append(removeButton));
         });
-        // console.log(replyNowFilesArray);
     });
 
     $(document).on("click", ".removeReplyNowFileBtn", function () {
@@ -803,11 +781,10 @@ $(document).ready(function () {
             $(this).attr("data-file-index", index);
         });
 
-        // console.log(replyNowFilesArray);
     });
 
     $("#replyNowBtn").on("click", function () {
-        // alert(messageContentID)
+      
         var content = tinyMCE.get("reply_textarea").getContent();
         var filesToSend = replyNowFilesArray;
 
@@ -840,7 +817,6 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    // console.log(response);
 
                     $("#loaderModal").addClass("hidden");
                     window.location.reload();

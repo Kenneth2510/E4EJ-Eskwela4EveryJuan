@@ -11,7 +11,7 @@ $(document).ready(function() {
             type: "GET",
             url: url,
             success: function (response) {
-                console.log(response);
+            
 
                 var totalLearnerProgressCount = response['totalLearnerLessonProgressCount']
                 var totalLearnerLessonCompleteCount = response['totalLearnerLessonCompleteCount']

@@ -221,7 +221,6 @@ class LearnerDiscussionController extends Controller
             $action = "Opened Learner Discussion Forums";
             $this->log($action);
 
-            // dd($data);
             return view('learner_discussions.learnerDiscussion' , compact('learner'))
             ->with($data);
 
@@ -283,7 +282,7 @@ class LearnerDiscussionController extends Controller
                     'title' => 'Discussions',
                     'threads' => $threadsData,
                 ];
-                // dd($data);
+
                 return response()->json($data);
             } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
@@ -318,7 +317,7 @@ class LearnerDiscussionController extends Controller
                 'courses' => $courseData,
             ];
 
-            // dd($data);
+
             return view('learner_discussions.learnerCreateThread' , compact('learner'))
             ->with($data);
 
@@ -538,7 +537,7 @@ class LearnerDiscussionController extends Controller
                     'thread' => $threadData,
                 ];
 
-            // dd($data);
+                
             return view('learner_discussions.learnerViewThread' , compact('learner'))
             ->with($data);
 

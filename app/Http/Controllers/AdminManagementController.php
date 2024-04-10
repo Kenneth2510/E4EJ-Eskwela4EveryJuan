@@ -64,8 +64,6 @@ class AdminManagementController extends Controller
         
         if (auth('admin')->check()) {
             $admin = session('admin');
-            // dd($admin);
-    
 
         $search_by = request('searchBy');
         $search_val = request('searchVal');
@@ -118,7 +116,6 @@ class AdminManagementController extends Controller
             if($admin->role === 'IT_DEPT' || $admin->role === 'SUPER_ADMIN') {
                 $data = [
                     'title' => 'Add Admin',
-                    // 'scripts' => ['AD_add_new_admin.js'],
                     'admin' => $admin,
                 ];
 
@@ -165,7 +162,6 @@ class AdminManagementController extends Controller
 
                 return response()->json($data);
             } else {
-                // return view('error.error');
                 
                 dd($admin);
                 session()->flash('message', 'You cannot create new admin account');
@@ -191,7 +187,6 @@ class AdminManagementController extends Controller
     public function view_admin(Admin $admin) {
         if (auth('admin')->check()) {
             $adminSession = session('admin');
-            // dd($admin);
 
             if($adminSession->role === 'IT_DEPT' || $adminSession->role === 'SUPER_ADMIN') {
 
@@ -209,7 +204,6 @@ class AdminManagementController extends Controller
                 $data = [
                     'title' => 'View Admin',
                     'adminData' => $adminData,
-                    // 'scripts' => ['AD_add_new_admin.js'],
                     'admin' => $adminSession,
                 ];
 
@@ -271,7 +265,6 @@ class AdminManagementController extends Controller
 
                 return response()->json($data);
             } else {
-                // return view('error.error');
                 
                 session()->flash('message', 'You cannot create new admin account');
                 $data = [
@@ -317,7 +310,6 @@ class AdminManagementController extends Controller
 
                 return response()->json($data);
             } else {
-                // return view('error.error');
                 
                 session()->flash('message', 'You cannot delete admin account');
                 $data = [
@@ -356,7 +348,6 @@ class AdminManagementController extends Controller
 
             $data = [
                 'title' => 'View Profile',
-                // 'scripts' => ['AD_add_new_admin.js'],
                 'admin' => $admin,
                 'adminData' => $adminData,
             ];
@@ -375,8 +366,6 @@ class AdminManagementController extends Controller
             $admin = session('admin');
             try {
                 $withPass = $request->input('withPass');
-
-
 
                 if($withPass == 1) {
                     $adminData = [
