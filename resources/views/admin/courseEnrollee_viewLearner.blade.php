@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="flex justify-center my-2" id="learnerAreaID">
-                    <select class="w-full input input-bordered" name="learnerID" id="learnerID" disabled>
+                    <select class="w-full select select-bordered focus:select-primary" name="learnerID" id="learnerID" disabled>
                         <option value="" selected disabled>choose a learner</option>
                         @foreach ($learners as $learner)
                         <option value="{{$learner->learner_id}}" {{$learnerCourse->learner_id ==
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="flex justify-center my-2" id="courseAreaID">
-                    <select class="w-full input input-bordered" name="courseID" id="courseID" disabled>
+                    <select class="w-full select select-bordered focus:select-primary" name="courseID" id="courseID" disabled>
                         <option value="" selected disabled>choose a course</option>
                         @foreach ($courses as $course)
                         <option value="{{$course->course_id}}" {{$learnerCourse->course_id == $course->course_id ?
@@ -142,21 +142,21 @@
                         <div class="w-1/2 mx-2" id="userInfo_left">
                             <div class="mt-3" id="firstNameArea">
                                 <label for="learner_fname">First Name</label><br>
-                                <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input disabled class="w-full input input-bordered focus:input-primary"
                                     type="text" name="learner_fname" id="learner_fname"
                                     value="{{$learnerCourse->learner_fname}}">
                                 <span id="firstNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="bdayArea">
                                 <label for="learner_bday ">Birthday</label><br>
-                                <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input disabled class="w-full input input-bordered focus:input-primary"
                                     type="date" name="learner_bday" id="learner_bday"
                                     value="{{$learnerCourse->learner_bday}}">
                                 <span id="bdayError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="contactArea">
                                 <label for="learner_contactno">Contact Number</label><br>
-                                <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input disabled class="w-full input input-bordered focus:input-primary"
                                     type="text" maxlength="11" name="learner_contactno" id="learner_contactno"
                                     value="{{$learnerCourse->learner_contactno}}" placeholder="09">
                                 <span id="contactError" class="text-red-500"></span>
@@ -165,7 +165,7 @@
                         <div class="w-1/2 mx-2" id="userInfo_right">
                             <div class="mt-3" id="lastNameArea">
                                 <label for="learner_lname">Last Name</label><br>
-                                <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input disabled class="w-full input input-bordered focus:input-primary"
                                     type="text" name="learner_lname" id="learner_lname"
                                     value="{{$learnerCourse->learner_lname}}">
                                 <span id="lastNameError" class="text-red-500"></span>
@@ -173,7 +173,7 @@
                             <div class="mt-3" id="genderArea">
                                 <label for="learner_gender">Gender</label><br>
                                 <select disabled
-                                    class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                    class="w-full select select-bordered focus:select-primary"
                                     name="learner_gender" id="learner_gender">
                                     <option value="" {{$learnerCourse->learner_gender = "" ? 'selected' : ''}}>--
                                         select disabled an option --</option>
@@ -188,7 +188,7 @@
                             </div>
                             <div class="mt-3" id="emailArea">
                                 <label for="learner_email">Email Address</label><br>
-                                <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input disabled class="w-full input input-bordered focus:input-primary"
                                     type="email" name="learner_email" id="learner_email"
                                     value="{{$learnerCourse->learner_email}}">
                                 <span id="emailError" class="text-red-500"></span>
@@ -205,7 +205,7 @@
 
                     <div class="mt-3" id="businessNameArea">
                         <label for="business_name">Business Name</label><br>
-                        <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                        <input disabled class="w-full input input-bordered focus:input-primary"
                             type="text" name="business_name" id="business_name"
                             value="{{$learnerCourse->business_name}}">
                         <span id="businessNameError" class="text-red-500"></span>
@@ -213,7 +213,7 @@
 
                     <div class="mt-3" id="businessAddressArea">
                         <label for="business_address">Business Address</label><br>
-                        <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                        <input disabled class="w-full input input-bordered focus:input-primary"
                             type="text" name="business_address" id="business_address"
                             value="{{$learnerCourse->business_address}}">
                         <span id="businessAddressError" class="text-red-500"></span>
@@ -221,7 +221,7 @@
 
                     <div class="mt-3" id="businessOwnerArea">
                         <label for="business_owner_name">Business Owner Name</label><br>
-                        <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                        <input disabled class="w-full input input-bordered focus:input-primary"
                             type="text" name="business_owner_name" id="business_owner_name"
                             value="{{$learnerCourse->business_owner_name}}">
                         <span id="businessOwnerNameError" class="text-red-500"></span>
@@ -229,7 +229,7 @@
 
                     <div class="mt-3" id="bplo_account_numberArea">
                         <label for="bplo_account_number">BPLO Account Number</label><br>
-                        <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                        <input disabled class="w-full input input-bordered focus:input-primary"
                             maxlength="13" type="text" name="bplo_account_number" id="bplo_account_number"
                             value="{{$learnerCourse->bplo_account_number}}">
                         <span id="bploError" class="text-red-500"></span>
@@ -239,7 +239,7 @@
 
                         <div class="w-full mt-3 mr-2" id="business_categoryArea">
                             <label for="business_category">Business Category</label><br>
-                            <select disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select disabled class="w-full select select-bordered focus:select-primary"
                                 name="business_category" id="business_category">
                                 <option value="" {{$learnerCourse->business_category == '' ? 'selected' : ''}}
                                     disabled>-- select an option --</option>
@@ -255,7 +255,7 @@
 
                         <div class="w-full mt-3 ml-2" id="business_classificationArea">
                             <label for="business_classification">Business Classification</label><br>
-                            <select disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select disabled class="w-full select select-bordered focus:select-primary"
                                 name="business_classification" id="business_classification">
                                 <option value="" {{$learnerCourse->business_classification == '' ? 'selected' : ''}}
                                     disabled>-- select an option --</option>
@@ -310,14 +310,14 @@
 
                         <div class="w-full mt-3" id="courseNameArea">
                             <label for="course_name">Course Name</label><br>
-                            <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <input disabled class="w-full input input-bordered focus:input-primary"
                                 type="text" name="course_name" id="course_name" value="{{$learnerCourse->course_name}}">
                             <span id="courseNameError" class="text-red-500"></span>
                         </div>
 
                         <div class="w-full mt-3" id="courseDifficultyArea">
                             <label for="course_difficulty">Course Difficulty</label><br>
-                            <select disabled class="w-full h-12 px-10 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select disabled class="w-full select select-bordered focus:select-primary"
                                 name="course_difficulty" id="course_difficulty">
                                 <option value="" {{$learnerCourse->course_difficulty == '' ? 'selected' : ''}}
                                     disabled>-- select disabled an option --</option>
@@ -349,7 +349,7 @@
 
                     <div class="w-full mt-3" id="courseInstructorArea">
                         <label for="course_instructor">Course Instructor</label><br>
-                        <select disabled class="w-full h-12 px-10 py-1 border-2 rounded-lg border-darthmouthgreen"
+                        <select disabled class="w-full select select-bordered focus:select-primary"
                             name="course_instructor" id="course_instructor">
                             <option value="" selected disabled>-- select an option --</option>
                             @foreach ($instructors as $instructor)

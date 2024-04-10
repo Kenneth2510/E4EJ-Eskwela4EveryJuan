@@ -51,7 +51,7 @@
 
                         <div class="w-full mt-3" id="codenameArea">
                             <label for="admin_codename">Code Name</label><br>
-                            <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                            <input class="w-full input input-bordered focus:input-primary" type="text"
                                 name="admin_codename" id="admin_codename" value="{{$adminData->admin_codename}}"
                                 disabled>
                             <span id="codenameError" class="text-red-500"></span>
@@ -59,7 +59,7 @@
 
                         <div class="w-full mt-3" id="roleArea">
                             <label for="role">Admin Role</label><br>
-                            <select class="w-full h-12 px-10 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select class="w-full select select-bordered focus:select-primary"
                                 name="role" id="role" disabled>
                                 <option value="SUPER_ADMIN" {{$adminData->role == "SUPER_ADMIN" ? 'selected' :
                                     ''}}disabled>SUPER_ADMIN</option>
@@ -88,14 +88,14 @@
 
                     <div class="mt-3" id="usernameArea">
                         <label for="admin_username">Username</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="admin_username" id="admin_username" value="{{$adminData->admin_username}}" disabled>
                         <span id="usernameError" class="text-red-500"></span>
                     </div>
 
                     <div class="mt-3" id="passwordArea">
                         <label for="password">Password</label><br>
-                        <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                        <input disabled class="w-full input input-bordered focus:input-primary"
                             type="password" name="password" id="password" disabled>
                         <span id="passwordError" class="text-red-500"></span>
                     </div>
@@ -109,7 +109,7 @@
 
                     <div class="hidden mt-3" id="newPasswordArea">
                         <label for="newPassword">New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="newPassword" id="newPassword">
                         <span id="newPasswordError" class="text-red-500"></span>
                     </div>
@@ -121,7 +121,7 @@
 
                     <div class="hidden mt-3" id="passwordConfirmationArea">
                         <label for="passwordConfirm">Confirm New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="passwordConfirm" id="passwordConfirm">
                         <span id="passwordConfirmError" class="text-red-500"></span>
                     </div>
