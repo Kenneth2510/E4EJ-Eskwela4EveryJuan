@@ -7,9 +7,9 @@
         <a href="{{ back()->getTargetUrl() }}" class="w-8 h-8 m-2">
             <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" width="24"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
         </a>
-        <div class="flex flex-col space-y-2 lg:flex-row" id="upper_container">
+        <div class="flex flex-col space-y-2 lg:space-y-0 lg:space-x-2 lg:flex-row" id="upper_container">
 
-            <div class="flex flex-col items-center justify-start bg-white rounded-lg shadow-lg lg:w-3/12" id="upper_left_container">
+            <div class="flex flex-col items-center justify-start p-3 bg-white rounded-lg shadow-lg lg:w-3/12" id="upper_left_container">
                 <div class="relative flex flex-col items-center justify-start">
                     <img class="z-0 w-16 h-16 rounded-full lg:h-40 lg:w-40" src="{{ asset('storage/' . $instructor->profile_picture) }}" alt="Profile Picture">
                 </div>
@@ -23,11 +23,11 @@
                     {{-- <h1 class="text-xl">ID: 1</h1> --}}
 
                     @if ($instructor->status == 'Approved')
-                    <div class="px-5 py-2 text-white bg-darthmouthgreen rounded-xl">Approved</div>
+                    <div class="rounded-full btn btn-primary">Approved</div>
                     @elseif ($instructor->status == 'Pending')
-                    <div class="px-5 py-2 text-white bg-yellow-600 rounded-xl">Pending</div>
+                    <div class="rounded-full btn btn-warning">Pending</div>
                     @else
-                    <div class="px-5 py-2 text-white bg-red-500 rounded-xl">Rejected</div>
+                    <div class="rounded-full btn btn-error">Rejected</div>
                     @endif
                 </div>
 
@@ -35,7 +35,7 @@
                     <h1 class="text-xl">Email</h1>
                     <h2 class="text-md mt-3 mb-5">{{$instructor->instructor_email}}</h2>
 
-                    <a href="{{ url('/learner/message') }}?email={{ $instructor->instructor_email }}&type=Instructor" class="px-5 py-3 mt-10 text-lg text-white bg-darthmouthgreen hover:border-2 hover:bg-white hover:border-darthmouthgreen hover:text-darthmouthgreen rounded-xl">Send Message</a>
+                    <a href="{{ url('/learner/message') }}?email={{ $instructor->instructor_email }}&type=Instructor" class="btn btn-primary">Send Message</a>
                 </div>
             </div> 
 

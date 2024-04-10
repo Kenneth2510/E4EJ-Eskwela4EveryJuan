@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var assessmentLearnerQuestions = [];
     var assessmentLearnerAnswers = [];
     var currentPage = 1;
@@ -6,91 +6,93 @@ $(document).ready(function() {
     var baseUrl = window.location.href;
     var durationVal;
 
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-    
-    getLearnerData()
+    getLearnerData();
 
-getLearnerAssessmentData();
+    getLearnerAssessmentData();
 
-    function getLearnerAssessmentData () {
-
+    function getLearnerAssessmentData() {
         var url = baseUrl + "/json";
 
         $.ajax({
             type: "GET",
             url: url,
 
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
 
-                durationVal = response['preAssessmentData']['max_duration'];
-                assessmentLearnerQuestions = response['preAssessmentOutputData'];
+                durationVal = response["preAssessmentData"]["max_duration"];
+                assessmentLearnerQuestions =
+                    response["preAssessmentOutputData"];
                 // console.log(assessmentLearnerQuestions);
 
                 displayLearnerAssessmentData(assessmentLearnerQuestions);
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
 
-
-     // Function to convert milliseconds to H:MM:SS format
-     function formatTime(milliseconds) {
+    // Function to convert milliseconds to H:MM:SS format
+    function formatTime(milliseconds) {
         const totalSeconds = Math.floor(milliseconds / 1000);
         const hours = Math.floor(totalSeconds / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
 
-        return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        return `${hours}:${String(minutes).padStart(2, "0")}:${String(
+            seconds,
+        ).padStart(2, "0")}`;
     }
 
     // Function to update the timer display
     function updateTimerDisplay() {
-        const timerElement = $('#timerArea'); // Updated to target #timerArea
+        const timerElement = $("#timerArea"); // Updated to target #timerArea
         const formattedTime = formatTime(durationVal);
 
-        timerElement.html('<h1>Time remaining: ' + formattedTime + '</h1>');
+        timerElement.html("<h1>Time remaining: " + formattedTime + "</h1>");
     }
 
     function displayLearnerAssessmentData(assessmentLearnerQuestions) {
         var questionDataDisp = ``;
         var questionIndicatorDisp = ``;
-    
-        // $('#questionContainer').empty();
-        $('#isAnsweredMeter').empty();
-        main_course_id = assessmentLearnerQuestions[0]['course_id'];
 
+        // $('#questionContainer').empty();
+        $("#isAnsweredMeter").empty();
+        main_course_id = assessmentLearnerQuestions[0]["course_id"];
 
         for (let i = 0; i < assessmentLearnerQuestions.length; i++) {
-            const learner_pre_assessment_output_id = assessmentLearnerQuestions[i]['learner_pre_assessment_output_id'];
-            const syllabus_id = assessmentLearnerQuestions[i]['syllabus_id'];
-            const course_id = assessmentLearnerQuestions[i]['course_id'];
-            const question_id = assessmentLearnerQuestions[i]['question_id'];
-            const category = assessmentLearnerQuestions[i]['category'];
-            const question = assessmentLearnerQuestions[i]['question'];
-            const answers = assessmentLearnerQuestions[i]['answers'];
-    
+            const learner_pre_assessment_output_id =
+                assessmentLearnerQuestions[i][
+                    "learner_pre_assessment_output_id"
+                ];
+            const syllabus_id = assessmentLearnerQuestions[i]["syllabus_id"];
+            const course_id = assessmentLearnerQuestions[i]["course_id"];
+            const question_id = assessmentLearnerQuestions[i]["question_id"];
+            const category = assessmentLearnerQuestions[i]["category"];
+            const question = assessmentLearnerQuestions[i]["question"];
+            const answers = assessmentLearnerQuestions[i]["answers"];
+
             const answersArray = JSON.parse(answers);
-    
+
             const questionCount = i + 1; // Start counting from 1
 
-
             const learnerAnswerRowData = {
-                learner_pre_assessment_output_id: learner_pre_assessment_output_id,
+                learner_pre_assessment_output_id:
+                    learner_pre_assessment_output_id,
                 syllabus_id: syllabus_id,
                 course_id: course_id,
                 question_id: question_id,
                 questionCount: questionCount,
                 question_id: question_id,
-                answer: ''
-            }
+                answer: "",
+            };
 
             assessmentLearnerAnswers.push(learnerAnswerRowData);
-    
-            if (category == 'MULTIPLECHOICE') {
+
+            if (category == "MULTIPLECHOICE") {
                 questionDataDisp += `
                     <div class="my-5 py-5 px-3 questionData border-darthmouthgreen border-2 rounded-lg">
                         <div class="questionContent">
@@ -99,20 +101,20 @@ getLearnerAssessmentData();
                         </div>
                         <div class="questionChoices mt-2 text-lg">
                 `;
-    
+
                 for (let x = 0; x < answersArray.length; x++) {
                     const choice = answersArray[x];
-    
+
                     questionDataDisp += `
                         <input type="radio" name="${questionCount}" class="w-5 h-5 questionChoice mx-3" value="${choice}">
                         ${choice}<br>`;
                 }
-    
+
                 questionDataDisp += `
                         </div>
                     </div>
                 `;
-            } else if (category == 'IDENTIFICATION') {
+            } else if (category == "IDENTIFICATION") {
                 questionDataDisp += `
                     <div class="my-5 py-5 px-3 questionData border-darthmouthgreen border-2 rounded-lg">
                         <div class="questionContent">
@@ -125,13 +127,15 @@ getLearnerAssessmentData();
                     </div>
                 `;
             }
-    
+
             // Assume isAnswered is false initially for each question
             const isAnswered = false;
-    
+
             // Conditionally add the bg-darthmouthgreen class based on the isAnswered variable
-            const questionIsAnsweredClass = isAnswered ? 'bg-darthmouthgreen' : '';
-    
+            const questionIsAnsweredClass = isAnswered
+                ? "bg-darthmouthgreen"
+                : "";
+
             questionIndicatorDisp += `
                 <div class="flex items-center justify-center question_isAnswered w-[35px] h-[45px] hover:cursor-pointer 
                             border border-darthmouthgreen transition-all duration-300 ${questionIsAnsweredClass}">
@@ -139,10 +143,9 @@ getLearnerAssessmentData();
                 </div>
             `;
         }
-    
-        $('#questionContainer').prepend(questionDataDisp);
-        $('#isAnsweredMeter').append(questionIndicatorDisp);
 
+        $("#questionContainer").prepend(questionDataDisp);
+        $("#isAnsweredMeter").append(questionIndicatorDisp);
 
         // Update the timer display initially
         updateTimerDisplay();
@@ -160,7 +163,7 @@ getLearnerAssessmentData();
             if (durationVal <= 0) {
                 clearInterval(timerInterval);
                 // Perform actions when time is up
-                console.log('Time is up!');
+                console.log("Time is up!");
             }
         }, 1000);
 
@@ -174,159 +177,175 @@ getLearnerAssessmentData();
         //             submitQuizContent();
         //         }
         //         event.preventDefault();
-            
+
         // });
 
-        window.onbeforeunload = function() {
-            $('#confirmSubmitQuizModal').removeClass('hidden');
-        }
-    
-        $('input[type="radio"]').on('change', function () {
-            const questionCount = $(this).attr('name');
+        window.onbeforeunload = function () {
+            $("#confirmSubmitQuizModal").removeClass("hidden");
+        };
+
+        $('input[type="radio"]').on("change", function () {
+            const questionCount = $(this).attr("name");
             const selectedAnswer = $(this).val();
-    
+
             // Update learnerAnswerRowData for the specific question
             updateLearnerAnswer(questionCount, selectedAnswer);
-    
+
             isAnswered = true;
             updateQuestionIsAnsweredClass(questionCount);
         });
-    
-        $('.identificationAns').on('input', function () {
-            const questionCount = $(this).closest('.questionData').find('.opacity-40').text().replace('Question ', '');
+
+        $(".identificationAns").on("input", function () {
+            const questionCount = $(this)
+                .closest(".questionData")
+                .find(".opacity-40")
+                .text()
+                .replace("Question ", "");
             const enteredText = $(this).val().trim();
-    
+
             // Update learnerAnswerRowData for the specific question
             updateLearnerAnswer(questionCount, enteredText);
-    
-            if (enteredText !== '') {
+
+            if (enteredText !== "") {
                 updateQuestionIsAnsweredClass(questionCount);
             }
         });
 
-
         function updateLearnerAnswer(questionCount, answer) {
             // Find the corresponding learnerAnswerRowData and update the answer
-            const learnerAnswer = assessmentLearnerAnswers.find(answer => answer.questionCount == questionCount);
+            const learnerAnswer = assessmentLearnerAnswers.find(
+                (answer) => answer.questionCount == questionCount,
+            );
             if (learnerAnswer) {
                 learnerAnswer.answer = answer;
             } else {
-                console.error('Learner answer not found for questionCount: ' + questionCount);
+                console.error(
+                    "Learner answer not found for questionCount: " +
+                        questionCount,
+                );
             }
         }
-    
+
         function updateQuestionIsAnsweredClass(questionCount) {
-            const questionIsAnsweredElement = $('.question_isAnswered:eq(' + (questionCount - 1) + ')');
-            questionIsAnsweredElement.addClass('bg-darthmouthgreen');
+            const questionIsAnsweredElement = $(
+                ".question_isAnswered:eq(" + (questionCount - 1) + ")",
+            );
+            questionIsAnsweredElement.addClass("bg-darthmouthgreen");
         }
-
-
 
         displayQuestionsByPage(currentPage);
 
         // Pagination event listeners
-        $('#prevPage').on('click', function () {
+        $("#prevPage").on("click", function () {
             if (currentPage > 1) {
                 currentPage--;
                 displayQuestionsByPage(currentPage);
+
+                $("#nextPage").removeClass("btn-disabled");
+            } else {
+                $("#prevPage").addClass("btn-disabled");
             }
         });
 
-        $('#nextPage').on('click', function () {
-            if (currentPage < Math.ceil(assessmentLearnerQuestions.length / questionsPerPage)) {
+        $("#nextPage").on("click", function () {
+            if (
+                currentPage <
+                Math.ceil(assessmentLearnerQuestions.length / questionsPerPage)
+            ) {
                 currentPage++;
                 displayQuestionsByPage(currentPage);
+
+                $("#prevPage").removeClass("btn-disabled");
+            } else {
+                $("#nextPage").addClass("btn-disabled");
+                $("#quizSubmitBtn").removeClass("hidden");
             }
         });
     }
 
-
     function displayQuestionsByPage(page) {
         // Hide all questions
-        $('.questionData').hide();
+        $(".questionData").hide();
 
         // Calculate the starting index for the current page
         const startIndex = (page - 1) * questionsPerPage;
 
         // Display questions for the current page
-        $('.questionData').slice(startIndex, startIndex + questionsPerPage).show();
+        $(".questionData")
+            .slice(startIndex, startIndex + questionsPerPage)
+            .show();
 
         // Update current page indicator
-        $('#currentPage').text('Page ' + page);
+        $("#currentPage").text("Page " + page);
     }
 
-
-
-    $('#quizSubmitBtn').on('click', function(e) {
+    $("#quizSubmitBtn").on("click", function (e) {
         e.preventDefault();
 
-        $('#confirmSubmitQuizModal').removeClass('hidden');
-    })
+        $("#confirmSubmitQuizModal").removeClass("hidden");
+    });
 
-    $('.cancelConfirmSubmitQuiz').on('click', function(e) {
+    $(".cancelConfirmSubmitQuiz").on("click", function (e) {
         e.preventDefault();
 
-        $('#confirmSubmitQuizModal').addClass('hidden');
-    })
-
+        $("#confirmSubmitQuizModal").addClass("hidden");
+    });
 
     function submitQuizContent() {
         let loopCounter = 0;
         console.log(assessmentLearnerAnswers);
-        
-        const csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        const csrfToken = $('meta[name="csrf-token"]').attr("content");
 
         for (let i = 0; i < assessmentLearnerAnswers.length; i++) {
             const rowData = assessmentLearnerAnswers[i];
-            
-            // console.log(element);
-            $('#confirmSubmitQuizModal').addClass('hidden');
-            $('#loaderModal').removeClass('hidden');
-            var url = baseUrl + "/submit";
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: rowData,
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken
-                        },
-                        success: function (response) {
-                            // Handle success if needed
-                            // var baseUrl = window.location.href;
-                            // var modifiedUrl = baseUrl.replace(/\/answer$/, '');
-                    
-                            // Continue with the rest of your logic
-                            loopCounter++;
-                            if (loopCounter == assessmentLearnerAnswers.length) {
-                                // alert('finished submitting quiz output');
 
-                                // window.location.href = modifiedUrl;
-                                compute_score(rowData);
-                            }
-                    
-                            // You can use the modifiedUrl variable as needed
-                            // console.log('Modified URL:', modifiedUrl);
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
+            // console.log(element);
+            $("#confirmSubmitQuizModal").addClass("hidden");
+            $("#loaderModal").removeClass("hidden");
+            var url = baseUrl + "/submit";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: rowData,
+                headers: {
+                    "X-CSRF-TOKEN": csrfToken,
+                },
+                success: function (response) {
+                    // Handle success if needed
+                    // var baseUrl = window.location.href;
+                    // var modifiedUrl = baseUrl.replace(/\/answer$/, '');
+
+                    // Continue with the rest of your logic
+                    loopCounter++;
+                    if (loopCounter == assessmentLearnerAnswers.length) {
+                        // alert('finished submitting quiz output');
+
+                        // window.location.href = modifiedUrl;
+                        compute_score(rowData);
+                    }
+
+                    // You can use the modifiedUrl variable as needed
+                    // console.log('Modified URL:', modifiedUrl);
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
         }
     }
 
     function compute_score(rowData) {
         var url = baseUrl + "/score";
 
-        const csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-
+        const csrfToken = $('meta[name="csrf-token"]').attr("content");
 
         $.ajax({
             type: "POST",
             url: url,
             data: rowData,
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                "X-CSRF-TOKEN": csrfToken,
             },
             success: function (response) {
                 // Handle success if needed
@@ -334,181 +353,165 @@ getLearnerAssessmentData();
                 // var modifiedUrl = baseUrl.replace(/\/answer\/\d+$/, '');
                 // window.location.href = "/learner/course/content/" + rowData.course_id + "/" + rowData.learner_course_id + "/pre_assessment";
                 // console.log(response)
-                    // window.location.href = modifiedUrl;
-                    $('#loaderModal').addClass('hidden');
+                // window.location.href = modifiedUrl;
+                $("#loaderModal").addClass("hidden");
                 window.location.href = response.redirect_url;
-                
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
         });
-
     }
 
-       $('#confirmSubmitQuizBtn').on('click', function(e) {
+    $("#confirmSubmitQuizBtn").on("click", function (e) {
         e.preventDefault();
         submitQuizContent();
-        $('#confirmSubmitQuizModal').addClass('hidden');
-    })
+        $("#confirmSubmitQuizModal").addClass("hidden");
+    });
 
-
-
-
-    
     function getLearnerData() {
         var url = `/learner/learnerData`;
-            $.ajax({
-                type: "GET",
-                url: url,
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                success: function(response) {
-                    console.log(response);
+        $.ajax({
+            type: "GET",
+            url: url,
+            headers: {
+                "X-CSRF-TOKEN": csrfToken,
+            },
+            success: function (response) {
+                console.log(response);
 
-                    var learner = response['learner']
-                    // init_chatbot(learner);
-                    
+                var learner = response["learner"];
+                // init_chatbot(learner);
 
-                    $.when(
-                        add_learner_data(learner)
-                    ).then(function() {
-                        getCourseData(learner)
-                    })
-
-
-
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+                $.when(add_learner_data(learner)).then(function () {
+                    getCourseData(learner);
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
     }
 
-    
     function add_learner_data(learner) {
-        
-        var course_id = $('#titleArea').data('course-id');
-        var learner_id = learner['learner_id'];
+        var course_id = $("#titleArea").data("course-id");
+        var learner_id = learner["learner_id"];
         var url = `/chatbot/learner/${learner_id}/course/${course_id}`;
         $.ajax({
             type: "GET",
             url: url,
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-                 },
-                 error: function(error) {
-                     console.log(error);
-                 }
-             });
-}
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
 
-function process_files(session_id) {
-    var url = `/chatbot/process/${session_id}`;
-    $.ajax({
-        type: "GET",
-        url: url,
-        success: function(response) {
-            console.log(response);
+    function process_files(session_id) {
+        var url = `/chatbot/process/${session_id}`;
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (response) {
+                console.log(response);
 
-            $('.loaderArea').addClass('hidden');
-            $('.mainchatbotarea').removeClass('hidden');
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
-}
+                $(".loaderArea").addClass("hidden");
+                $(".mainchatbotarea").removeClass("hidden");
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
 
     function getCourseData(learner) {
-        
-        var course_id = $('#titleArea').data('course-id');
+        var course_id = $("#titleArea").data("course-id");
         var url = `/chatbot/courseData/${course_id}`;
         $.ajax({
             type: "GET",
             url: url,
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                "X-CSRF-TOKEN": csrfToken,
             },
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-    
-                
-                var learner_id = learner['learner_id'];
+
+                var learner_id = learner["learner_id"];
                 // process_files(learner_id)
 
+                var courseData = response["course"];
 
-                var courseData = response['course'];
-    
-                $('.submitQuestion').on('click', function(e) {
+                $(".submitQuestion").on("click", function (e) {
                     e.preventDefault();
                     submitQuestion();
                 });
-    
-    
-                $('.question_input, .question_input_2').on('keydown', function(e) {
-                    if (e.keyCode === 13) {
-                        e.preventDefault();
-                        submitQuestion();
-                    }
-                });
-    
+
+                $(".question_input, .question_input_2").on(
+                    "keydown",
+                    function (e) {
+                        if (e.keyCode === 13) {
+                            e.preventDefault();
+                            submitQuestion();
+                        }
+                    },
+                );
+
                 function submitQuestion() {
-                    var learner_id = learner['learner_id'];
-                    var question = $('.question_input').val();
-                    if(!question) {
-                        var question = $('.question_input_2').val();
+                    var learner_id = learner["learner_id"];
+                    var question = $(".question_input").val();
+                    if (!question) {
+                        var question = $(".question_input_2").val();
                     }
-                    var course = courseData['course_name'];
-                    var lesson = 'ALL';
-    
+                    var course = courseData["course_name"];
+                    var lesson = "ALL";
+
                     displayUserMessage(question, learner);
-                    $('.botloader').removeClass('hidden');
+                    $(".botloader").removeClass("hidden");
                     var chatData = {
                         question: question,
                         course: course,
                         lesson: lesson,
                     };
-    
+
                     var url = `/chatbot/chat/${learner_id}`;
                     $.ajax({
                         type: "POST",
                         url: url,
                         data: chatData,
                         headers: {
-                            'X-CSRF-TOKEN': csrfToken
+                            "X-CSRF-TOKEN": csrfToken,
                         },
-                        success: function(response) {
+                        success: function (response) {
                             console.log(response);
                             displayBotMessage(response);
-                            $('.question_input').val('')
-                            $('.question_input_2').val('')
+                            $(".question_input").val("");
+                            $(".question_input_2").val("");
                         },
-                        error: function(error) {
+                        error: function (error) {
                             console.log(error);
-                        }
+                        },
                     });
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
-    
 
     function displayUserMessage(question, learner) {
         var userMessageDisp = ``;
-        var profile = learner['profile_picture']
+        var profile = learner["profile_picture"];
         var currentTime = new Date();
         var hours = currentTime.getHours();
         var minutes = currentTime.getMinutes();
 
-        minutes = minutes < 10 ? '0' + minutes : minutes;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
 
-        var timeString = hours + ':' + minutes;
-    
+        var timeString = hours + ":" + minutes;
+
         userMessageDisp += `
         
         <div class="mx-3 chat chat-end">
@@ -527,16 +530,14 @@ function process_files(session_id) {
         </div>
         `;
 
-        $('.chatContainer').append(userMessageDisp);
+        $(".chatContainer").append(userMessageDisp);
     }
 
-
     function displayBotMessage(response) {
+        var message = response["message"];
 
-        var message = response['message']
-
-        message = message.replace(/\n/g, '<br>');
-        var botMessageDisp = ``
+        message = message.replace(/\n/g, "<br>");
+        var botMessageDisp = ``;
         botMessageDisp += `
         
         <div class="chat chat-start">
@@ -549,8 +550,7 @@ function process_files(session_id) {
         </div>
         `;
 
-        $('.botloader').addClass('hidden')
-        $('.chatContainer').append(botMessageDisp);
+        $(".botloader").addClass("hidden");
+        $(".chatContainer").append(botMessageDisp);
     }
-})
-
+});

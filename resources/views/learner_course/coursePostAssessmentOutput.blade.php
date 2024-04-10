@@ -5,8 +5,7 @@
     <div class="h-full px-2 py-4 pt-24 overflow-hidden overflow-y-scroll rounded-lg shadow-lg md:pt-6">
 
         <div style="background-color:{{$mainBackgroundCol}};" class="z-50 p-2 text-white fill-white rounded-xl">
-            <a href="{{ url("/learner/course/manage/$learnerCourseData->course_id/overview") }}" class="my-2
-                bg-gray-300 rounded-full ">
+            <a href="{{ url("/learner/course/manage/$learnerCourseData->course_id/overview") }}" class="my-2 bg-gray-300 rounded-full ">
                 <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="24">
                     <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
                 </svg>
@@ -86,15 +85,15 @@
                         <button id="nextPage" class="btn btn-primary">Next</button>
                     </div>
 
-
+                    <div class="w-full my-2 text-center" id="">
+                        <a href="{{ url("/learner/course/content/$learnerCourseData->course_id/$learnerCourseData->learner_course_id/post_assessment")}}"
+                            class="w-1/2 btn btn-primary">Return</a>
+                    </div>
                 </div>
 
             </div>
 
-            <div class="w-full text-right" id="">
-                <a href="{{ url("/learner/course/content/$learnerCourseData->course_id/$learnerCourseData->learner_course_id/post_assessment")}}"
-                    class="btn btn-primary">Return</a>
-            </div>
+
 
         </div>
 

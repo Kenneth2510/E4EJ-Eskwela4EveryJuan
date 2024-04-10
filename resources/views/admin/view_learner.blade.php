@@ -68,6 +68,28 @@
                                 now</button>
                         </form>
                     </div>
+                    @elseif ($learner->status == 'Expired')
+                    <div id="status" class="btn btn-error text-white bg-gray-500">Expired
+                    </div>
+                    <div id="button" class="flex flex-col hidden space-y-2">
+                        <form action="/admin/pending_learner/{{$learner->learner_id}}" method="POST">
+                            @method('put')
+                            @csrf
+                            <button class="btn btn-warning">change
+                                to pending</button>
+                        </form>
+                        <form action="/admin/approve_learner/{{$learner->learner_id}}" method="POST">
+                            @method('put')
+                            @csrf
+                            <button type="submit" class="btn btn-primary">approve
+                                now</button>
+                        </form>
+                        <form action="/admin/block_learner/{{$learner->learner_id}}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <button class="btn btn-error">Block Learner</button>
+                        </form>
+                    </div>
                     @else
                     <div id="status" class="btn btn-warning">pending
                     </div>
@@ -559,11 +581,11 @@
                 $('#genderError').text('');
             }
 
-            if (learner_contactno === '') {
-                $('#contactError').text('Please enter your contact number.');
+            if (learner_contactno === "" || learner_contactno.length < 11) {
+                $("#contactnoError").text("Please enter your contact number.");
                 isValid = false;
             } else {
-                $('#contactError').text('');
+                $("#contactError").text("");
             }
 
             if (learner_email === '') {
@@ -595,11 +617,17 @@
                 $('#businessOwnerNameError').text('');
             }
 
-            if (bplo_account_number === '') {
-                $('#bploError').text('Please enter your BPLO id.');
+            if (
+                bplo_account_number === "" ||
+                bplo_account_number.length !== 7 ||
+                !/^.*[a-zA-Z].*[-].*$/.test(bplo_account_number)
+            ) {
+                $("#bploError").text(
+                    "Please enter a valid Account Number.",
+                );
                 isValid = false;
             } else {
-                $('#bploError').text('');
+                $("#bploError").text("");
             }
         
             if (business_category === '') {
