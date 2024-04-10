@@ -559,11 +559,11 @@
                 $('#genderError').text('');
             }
 
-            if (learner_contactno === '') {
-                $('#contactError').text('Please enter your contact number.');
+            if (learner_contactno === "" || learner_contactno.length < 11) {
+                $("#contactnoError").text("Please enter your contact number.");
                 isValid = false;
             } else {
-                $('#contactError').text('');
+                $("#contactError").text("");
             }
 
             if (learner_email === '') {
@@ -595,11 +595,17 @@
                 $('#businessOwnerNameError').text('');
             }
 
-            if (bplo_account_number === '') {
-                $('#bploError').text('Please enter your BPLO id.');
+            if (
+                bplo_account_number === "" ||
+                bplo_account_number.length !== 7 ||
+                !/^.*[a-zA-Z].*[-].*$/.test(bplo_account_number)
+            ) {
+                $("#bploError").text(
+                    "Please enter a valid Account Number.",
+                );
                 isValid = false;
             } else {
-                $('#bploError').text('');
+                $("#bploError").text("");
             }
         
             if (business_category === '') {
