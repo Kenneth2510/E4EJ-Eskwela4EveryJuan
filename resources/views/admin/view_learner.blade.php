@@ -69,7 +69,7 @@
                         </form>
                     </div>
                     @elseif ($learner->status == 'Expired')
-                    <div id="status" class="btn btn-error text-white bg-gray-500">Expired
+                    <div id="status" class="text-white bg-gray-500 btn btn-error">Expired
                     </div>
                     <div id="button" class="flex flex-col hidden space-y-2">
                         <form action="/admin/pending_learner/{{$learner->learner_id}}" method="POST">
@@ -141,21 +141,21 @@
                         <div class="w-1/2 mx-2" id="userInfo_left">
                             <div class="mt-3" id="firstNameArea">
                                 <label for="learner_fname">First Name</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" name="learner_fname" id="learner_fname"
                                     value="{{$learner->learner_fname}}" disabled>
                                 <span id="firstNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="bdayArea">
                                 <label for="learner_bday ">Birthday</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="date" name="learner_bday" id="learner_bday" value="{{$learner->learner_bday}}"
                                     disabled>
                                 <span id="bdayError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="contactArea">
                                 <label for="learner_contactno">Contact Number</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" maxlength="11" name="learner_contactno" id="learner_contactno"
                                     value="{{$learner->learner_contactno}}" disabled placeholder="09">
                                 <span id="contactError" class="text-red-500"></span>
@@ -164,14 +164,14 @@
                         <div class="w-1/2 mx-2" id="userInfo_right">
                             <div class="mt-3" id="lastNameArea">
                                 <label for="learner_lname">Last Name</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="text" name="learner_lname" id="learner_lname"
                                     value="{{$learner->learner_lname}}" disabled>
                                 <span id="lastNameError" class="text-red-500"></span>
                             </div>
                             <div class="mt-3" id="genderArea">
                                 <label for="learner_gender">Gender</label><br>
-                                <select class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <select class="w-full select select-bordered focus:select-primary"
                                     name="learner_gender" id="learner_gender" disabled>
                                     <option value="" {{$learner->learner_gender == '' ? 'selected' : ''}}>--
                                         select an option --</option>
@@ -186,7 +186,7 @@
                             </div>
                             <div class="mt-3" id="emailArea">
                                 <label for="learner_email">Email Address</label><br>
-                                <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                                <input class="w-full input input-bordered focus:input-primary"
                                     type="email" name="learner_email" id="learner_email"
                                     value="{{$learner->learner_email}}" disabled>
                                 <span id="emailError" class="text-red-500"></span>
@@ -203,14 +203,14 @@
 
                     <div class="mt-3" id="businessNameArea">
                         <label for="business_name">Business Name</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="business_name" id="business_name" value="{{$business->business_name}}" disabled>
                         <span id="businessNameError" class="text-red-500"></span>
                     </div>
 
                     <div class="mt-3" id="businessAddressArea">
                         <label for="business_address">Business Address</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="business_address" id="business_address" value="{{$business->business_address}}"
                             disabled>
                         <span id="businessAddressError" class="text-red-500"></span>
@@ -218,7 +218,7 @@
 
                     <div class="mt-3" id="businessOwnerArea">
                         <label for="business_owner_name">Business Owner Name</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="business_owner_name" id="business_owner_name"
                             value="{{$business->business_owner_name}}" disabled>
                         <span id="businessOwnerNameError" class="text-red-500"></span>
@@ -226,9 +226,9 @@
 
                     <div class="mt-3" id="bplo_account_numberArea">
                         <label for="bplo_account_number">BPLO Account Number</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" maxlength="13"
+                        <input class="w-full input input-bordered focus:input-primary" maxlength="7"
                             type="text" name="bplo_account_number" id="bplo_account_number"
-                            value="{{$business->bplo_account_number}}" disabled>
+                            value="{{$business->bplo_account_number}}" placeholder="A-00000" disabled>
                         <span id="bploError" class="text-red-500"></span>
                     </div>
 
@@ -236,8 +236,8 @@
 
                         <div class="w-full mt-3 mr-2" id="business_categoryArea">
                             <label for="business_category">Business Category</label><br>
-                            <select class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
-                                name="business_category" id="business_category">
+                            <select class="w-full select select-bordered focus:select-primary"
+                                name="business_category" id="business_category" disabled>
                                 <option value="" {{$business->business_category == '' ? 'selected' : ''}}
                                     disabled>-- select an option --</option>
                                 <option value="Micro" {{$business->business_category == 'Micro' ? 'selected' :
@@ -252,7 +252,7 @@
 
                         <div class="w-full mt-3 ml-2" id="business_classificationArea">
                             <label for="business_classification">Business Classification</label><br>
-                            <select class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select class="w-full select select-bordered focus:select-primary"
                                 name="business_classification" id="business_classification" disabled>
                                 <option value="" {{$business->business_classification == '' ? 'selected' : ''}}
                                     disabled>-- select an option --</option>
@@ -302,7 +302,7 @@
 
                     <div class="mt-3" id="learner_usernameArea">
                         <label for="learner_username">Username</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                        <input class="w-full input input-bordered focus:input-primary" type="text"
                             name="learner_username" id="learner_username" value="{{$learner->learner_username}}"
                             disabled>
                         <span id="usernameError" class="text-red-500"></span>
@@ -310,7 +310,7 @@
 
                     <div class="mt-3" id="passwordArea">
                         <label for="password">Password</label><br>
-                        <input disabled class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen"
+                        <input disabled class="w-full input input-bordered focus:input-primary"
                             type="password" name="password" id="password" disabled>
                         <span id="passwordError" class="text-red-500"></span>
                     </div>
@@ -324,7 +324,7 @@
 
                     <div class="hidden mt-3" id="newPasswordArea">
                         <label for="newPassword">New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="newPassword" id="newPassword">
                         <span id="newPasswordError" class="text-red-500"></span>
                     </div>
@@ -336,7 +336,7 @@
 
                     <div class="hidden mt-3" id="passwordConfirmationArea">
                         <label for="passwordConfirm">Confirm New Password</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
                             name="passwordConfirm" id="passwordConfirm">
                         <span id="passwordConfirmError" class="text-red-500"></span>
                     </div>
@@ -344,8 +344,8 @@
 
                     <div class="mt-3" id="securityCodeArea">
                         <label for="learner_security_code">Enter your Security Code</label><br>
-                        <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="password"
-                            maxlength="6" name="learner_security_code" id="learner_security_code">
+                        <input class="w-full input input-bordered focus:input-primary" type="password"
+                            maxlength="6" name="learner_security_code" id="learner_security_code" disabled>
                         <span id="securityCodeGuide" class="text-gray-500">Enter 6 characters of security
                             code</span>
                         <span id="securityCodeError" class="text-red-500"></span>
@@ -565,9 +565,9 @@
             if (learner_lname === '') {
                 $('#lastNameError').text('Please enter a last name.');
                 isValid = false;
-            } else if (!/^[a-zA-Z0-9\s-]+$/.test(learner_fname)) {
+            } else if (!/^[a-zA-Z0-9\s-]+$/.test(learner_lname)) {
                 $("#lastNameError").text(
-                    "Special characters are not allowed in the first name except for one dash.",
+                    "Special characters are not allowed in the last name except for one dash.",
                 );
                 isValid = false;
             } else {
@@ -581,7 +581,7 @@
                 $('#genderError').text('');
             }
 
-            if (learner_contactno === "" || learner_contactno.length < 11) {
+            if (learner_contactno === "" || learner_contactno.length != 11) {
                 $("#contactnoError").text("Please enter your contact number.");
                 isValid = false;
             } else {
@@ -617,6 +617,9 @@
 
             if (learner_email === '') {
                 $('#emailError').text('Please enter your email address.');
+                isValid = false;
+            } else if (!learner_email.includes('@')) {
+                $('#emailError').text('Input must be valid email address (eg. name@example.com)');
                 isValid = false;
             } else {
                 $('#emailError').text('');
@@ -675,7 +678,7 @@
                 !/^.*[a-zA-Z].*[-].*$/.test(bplo_account_number)
             ) {
                 $("#bploError").text(
-                    "Please enter a valid Account Number.",
+                    "Please enter a valid BPLO Account Number.",
                 );
                 isValid = false;
             } else {

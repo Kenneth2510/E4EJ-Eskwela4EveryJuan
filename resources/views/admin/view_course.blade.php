@@ -113,14 +113,14 @@
 
                         <div class="w-full mt-3" id="courseNameArea">
                             <label for="course_name">Course Name</label><br>
-                            <input class="w-full h-12 px-5 py-1 border-2 rounded-lg border-darthmouthgreen" type="text"
+                            <input class="w-full input input-bordered focus:input-primary" type="text"
                                 name="course_name" id="course_name" value="{{$course->course_name}}">
                             <span id="courseNameError" class="text-red-500"></span>
                         </div>
 
                         <div class="w-full mt-3" id="courseDifficultyArea">
                             <label for="course_difficulty">Course Difficulty</label><br>
-                            <select class="w-full h-12 px-10 py-1 border-2 rounded-lg border-darthmouthgreen"
+                            <select class="w-full select select-bordered focus:select-primary"
                                 name="course_difficulty" id="course_difficulty" disabled>
                                 <option value="" {{$course->course_status == '' ? 'selected' : ''}} disabled>--
                                     select an option --</option>
@@ -152,7 +152,7 @@
 
                     <div class="w-full mt-3" id="courseInstructorArea">
                         <label for="course_instructor">Course Instructor</label><br>
-                        <select class="w-full h-12 px-10 py-1 border-2 rounded-lg border-darthmouthgreen"
+                        <select class="w-full select select-bordered focus:select-primary"
                             name="course_instructor" id="course_instructor" disabled>
                             <option value="" selected disabled>-- select an option --</option>
                             @foreach ($instructors as $instructor)

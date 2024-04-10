@@ -11,7 +11,7 @@
         </div>
         <div class="w-full" id="selectCourseArea">
             <h1 class="text-xl font-semibold text-darthmouthgreen">Select a Course</h1>
-            <select name="selectedCourse" id="selectedCourse" class="input input-bordered input-primary">
+            <select name="selectedCourse" id="selectedCourse" class="select select-bordered focus:select-primary">
                 @forelse ($courses as $course)
                 <option value="{{$course->course_id}}">{{$course->course_name}}</option>
                 @empty
@@ -31,7 +31,7 @@
                 @endif
             </div>
             <div class="space-x-1" id="filterLearnerCourse">
-                <select class="input input-bordered input-primary" name="filterByStatus" id="filterByStatus">
+                <select class="select select-bordered focus:select-primary" name="filterByStatus" id="filterByStatus">
                     <option value="">Show All</option>
                     <option value="Pending">Pending</option>
                     <option value="Approved">Approved</option>

@@ -69,13 +69,13 @@
                                         <div class="w-2/4 mx-1">
                                             <label for="filterDate" class="">Filter by Date</label><br>
                                             <input type="date" name="filterDate"
-                                                class="w-full p-2 text-sm border-2 border-black rounded"
+                                                class="w-full input input-bordered focus:input-primary"
                                                 value="{{ request('filterDate') }}">
                                         </div>
                                         <div class="w-2/4 mx-1">
                                             <label for="filterStatus" class="">Filter by Status</label><br>
                                             <select name="filterStatus" id="filterStatus"
-                                                class="w-full p-2 text-sm border-2 border-black rounded">
+                                                class="select select-bordered focus:select-primary">
                                                 <option value="" {{ request('filterDate')=='' ? 'selected' : '' }}>
                                                     Select
                                                     Status</option>
@@ -99,7 +99,7 @@
                                         class="flex flex-row items-center justify-around w-full md:items-end lg:items-center lg:justify-center">
                                         <div class="w-2/4 mx-1">
                                             <select name="searchBy" id=""
-                                                class="w-full p-2 text-sm border-2 border-black rounded">
+                                                class="w-full select select-bordered focus:select-primary">
                                                 <option value="" {{request('searchBy')=='' ? 'selected' : '' }}class="">
                                                     Search By</option>
                                                 <option value="learner_course_id"
@@ -121,7 +121,7 @@
                                         </div>
                                         <div class="w-2/4 mx-1">
                                             <input type="text" name="searchVal"
-                                                class="w-full p-2 text-sm border-2 border-black rounded"
+                                                class="w-full input input-bordered focus:input-primary"
                                                 value="{{ request('searchVal') }}" placeholder="Type to search">
                                         </div>
                                     </div>

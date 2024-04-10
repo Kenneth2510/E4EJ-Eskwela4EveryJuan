@@ -20,7 +20,7 @@
                 <form action="{{ url('/admin/admins') }}" method="GET" class="flex items-center">
 
                     <div class="flex items-center space-x-2">
-                        <select name="searchBy" class="w-1/3 input input-bordered input-primary">
+                        <select name="searchBy" class="w-1/3 select select-bordered focus:select-primary">
                             <option value="">Search By</option>
                             <option value="admin_id">Admin ID</option>
                             <option value="admin_username">Admin Username</option>
